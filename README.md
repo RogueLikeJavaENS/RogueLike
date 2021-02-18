@@ -2,10 +2,10 @@
 
 ## Membre du projets
 `Nom`: Vidal-Mazuy Antoine 
-`Github`: Antoine-Vidal-Mazuy
+`Github`: Brotherta
 
 `Nom`: Juliette Sabatier
-`Github`: Juliette_Sabatier
+`Github`: Ju-png
 
 `Nom`: Luca Orengo
 `Github`: Mr0B
