@@ -39,6 +39,7 @@
 
     <dependencies>
         <dependency>
+            <!-- doc> https://github.com/dialex/JColor </doc -->
             <groupId>com.diogonunes</groupId>
             <artifactId>JColor</artifactId>
             <version>5.0.1</version>
