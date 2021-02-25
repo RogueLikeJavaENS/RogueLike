@@ -12,7 +12,7 @@
             <sprite>.</sprite>
         </tile>
         <tile>
-            <id>3</id>
+            <id>3</id> <!--chemin-->
             <isAccessible>true</isAccessible>
             <sprite>#</sprite>
         </tile>

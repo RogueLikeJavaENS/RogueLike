@@ -17,6 +17,7 @@ public class Tile {
         this.typeID = typeID;
     }
 
+    //fait office de toString
     public String getSprite() {
         return sprite;
     }

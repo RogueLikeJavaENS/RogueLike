@@ -54,6 +54,7 @@ public class TileFactory {
                 return tile;
             }
         }
+        //tile qui est buggée
         return (new Tile(0, "□", false));
     }
 }
