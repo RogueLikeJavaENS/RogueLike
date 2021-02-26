@@ -4,8 +4,8 @@
 public class GridMap {
     Room room;
     Tile[][] tiles;
-    Entity[][] entities;
-    Player player;
+    // Entity[][] entities;
+    // Player player;
 
     GridMap(Room room/*, Player player*/) {
         this.room = room;
@@ -27,6 +27,23 @@ public class GridMap {
     }
 
     private void fillEntityContent() {
-        // nothing
+        // nothing now
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(int x = 0; x < room.getWidth(); x++) {
+            for(int y = 0; y < room.getHeight(); y++) {
+                sb.append(tiles[x][y]);
+            }
+            sb.append("\n");
+            for(int y = 0; y < room.getHeight(); y++) {
+                sb.append(tiles[x][y]);
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
 }
