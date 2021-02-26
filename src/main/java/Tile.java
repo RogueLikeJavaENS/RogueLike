@@ -25,11 +25,9 @@ public class Tile {
     }
 
     /**
-     * Can be used as a toString for the Tile.
-     *
      * @return The sprite that will be displayed to represent the tile.
      */
-    public String getSprite() {
+    public String toString() {
         return sprite;
     }
 
