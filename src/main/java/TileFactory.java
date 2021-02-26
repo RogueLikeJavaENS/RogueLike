@@ -70,7 +70,7 @@ public class TileFactory {
      *
      * @param type Integer corresponding to the type of Tile you want to be returned
      * @return A Tile corresponding to the type given in parameter. Returns a "bugged"
-     * non-accessible Tile if none matches the given type.
+     * non-accessible Tile with a typeID of 0 if none matches the given type.
      *
      */
     public Tile getTile(int type) {
