@@ -1,19 +1,19 @@
 public class RoomStructure {
     public static Room createRoom(int current, int next, Seed seed, String direction){
         int[][] contents;
-        contents = new int[16][32];
+        contents = new int[10][22];
         switch (direction) {
             case "north" : contents[0][6]=3;
                 break;
-            case "south" : contents[15][6]=3;
+            case "south" : contents[9][6]=3;
                 break;
             case "east" : contents[6][0]=3;
                 break;
-            case "west" : contents[6][31]=3;
+            case "west" : contents[6][21]=3;
         }
-        for (int x = 0; x < 16; x++) {
-            for (int y = 0; y < 32; y++) {
-                if (x==0 || x==15 || y==0 || y==31){
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 22; y++) {
+                if (x==0 || x==9 || y==0 || y==21){
                     if(contents[x][y]!=3) {
                         contents[x][y] = 1;
                     }
@@ -26,6 +26,6 @@ public class RoomStructure {
                 }
             }
         }
-        return new Room(current, next, contents, 32, 16);
+        return new Room(current, next, contents, 22, 10);
     }
 }
