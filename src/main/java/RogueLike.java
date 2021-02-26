@@ -8,7 +8,7 @@ public class RogueLike {
     private Seed seed;
     private Dungeon dungeon;
     private GridMap gridMap;
-    private Player player;
+    //private Player player;
 
     /**
      * Create an instance of the game.
@@ -16,12 +16,9 @@ public class RogueLike {
     RogueLike() {
         this.seed = new Seed();
         this.dungeon = new Dungeon(seed);
-        this.player = new Player("Hero", 1, 100, 100);
-        this.gridMap = new GridMap();
-
-        while(true) {
-
-        }
+        // this.player = new Player("Hero", 1, 100, 100);
+        this.gridMap = new GridMap(dungeon.getRoom(0));
+        RendererUI.render(gridMap);
     }
 
     public static void main(String[] args) {

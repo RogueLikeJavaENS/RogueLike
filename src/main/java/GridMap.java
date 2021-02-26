@@ -9,19 +9,22 @@ public class GridMap {
 
     GridMap(Room room/*, Player player*/) {
         this.room = room;
+        this.tiles = new Tile[room.getHeight()][room.getWidth()];
+        fillRoomContent();
     }
 
     private void fillRoomContent() {
         int[][] contents = room.getContents();
         int width = room.getWidth();
         int height = room.getHeight();
-        TileFactory tileFactory = new TileFactory("/src/main/java/xmlExample.xml");
+        TileFactory tileFactory = new TileFactory("src/main/java/xmlExample.xml");
 
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                int contentId = contents[x][y];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                System.out.println(width);
+                int contentId = contents[y][x];
                 Tile tile = tileFactory.getTile(contentId);
-                tiles[x][y] = tile;
+                tiles[y][x] = tile;
             }
         }
     }
@@ -33,13 +36,15 @@ public class GridMap {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(int x = 0; x < room.getWidth(); x++) {
-            for(int y = 0; y < room.getHeight(); y++) {
-                sb.append(tiles[x][y]);
+        System.out.println(room.getHeight() + " " + room.getWidth());
+        for(int y = 0; y < room.getHeight(); y++) {
+
+            for(int x = 0; x < room.getWidth(); x++) {
+                sb.append(tiles[y][x]);
             }
             sb.append("\n");
-            for(int y = 0; y < room.getHeight(); y++) {
-                sb.append(tiles[x][y]);
+            for(int x = 0; x < room.getWidth(); x++) {
+                sb.append(tiles[y][x]);
             }
             sb.append("\n");
         }

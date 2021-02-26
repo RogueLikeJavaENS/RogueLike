@@ -1,7 +1,7 @@
 public class RoomStructure {
-    public static Room createRoom(int current, int next, seed, String direction){
+    public static Room createRoom(int current, int next, Seed seed, String direction){
         int[][] contents;
-        contents = new int[32][16];
+        contents = new int[16][32];
         switch (direction) {
             case "north" : contents[0][6]=3;
                 break;
@@ -26,7 +26,6 @@ public class RoomStructure {
                 }
             }
         }
-        Room room = new Room(current, next, contents, 32, 16);
-        return room;
+        return new Room(current, next, contents, 32, 16);
     }
 }
