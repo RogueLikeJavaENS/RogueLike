@@ -1,3 +1,10 @@
+/**
+ * A Tile contains its type (as an int), its sprite (how it will be displayed)
+ * and whether it is accessible or not.
+ *
+ * @author Raphael
+ */
+
 public class Tile {
     private int typeID;
     private String sprite;
@@ -17,7 +24,11 @@ public class Tile {
         this.typeID = typeID;
     }
 
-    //fait office de toString
+    /**
+     * Can be used as a toString for the Tile.
+     *
+     * @return The sprite that will be displayed to represent the tile.
+     */
     public String getSprite() {
         return sprite;
     }

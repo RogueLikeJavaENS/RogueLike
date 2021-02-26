@@ -4,17 +4,17 @@
         <tile>
             <id>1</id> <!--MUR-->
             <isAccessible>false</isAccessible>
-            <sprite>|</sprite>
+            <sprite>##\n##</sprite>
         </tile>
         <tile>
             <id>2</id> <!--SOL-->
             <isAccessible>true</isAccessible>
-            <sprite>.</sprite>
+            <sprite>..\n..</sprite>
         </tile>
         <tile>
-            <id>3</id> <!--chemin-->
+            <id>3</id> <!--PORTE-->
             <isAccessible>true</isAccessible>
-            <sprite>#</sprite>
+            <sprite>[]\n[]</sprite>
         </tile>
     </tiles>
 </data>
