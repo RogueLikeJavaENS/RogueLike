@@ -11,7 +11,7 @@ public class Seed {
 
     public Seed(){
         for (int i = 0; i < 16; i++) {
-            Seed.add(Integer.toHexString(ThreadLocalRandom.current().nextInt(0, 10 + 1)));
+            Seed.add(Integer.toHexString(ThreadLocalRandom.current().nextInt(0, 15 + 1)));
         }
     }
 }
