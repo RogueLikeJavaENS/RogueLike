@@ -5,7 +5,10 @@
  */
 
 public class RendererUI {
-    public static void render(GridMap gridMap/*, HUD hud*/) {
-        System.out.printf("%s/n/n", gridMap.toString()/*, hud.toString()*/);
+    public static void roomRender(GridMap gridMap) {
+        System.out.printf("%s", gridMap.toString());
+    }
+    public static void miniMapRender(MiniMap miniMap) {
+        System.out.printf("%s", miniMap.toString());
     }
 }

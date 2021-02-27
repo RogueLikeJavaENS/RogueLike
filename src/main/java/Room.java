@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * This class contains the content of all the elements of the game.
  *
@@ -10,20 +12,21 @@ public class Room {
     int[][] contents;
     int width;
     int height;
+    int[] nearRoom;
 
     /**
      *
      * @param roomNum Number of the room.
-     * @param nextRoomNum Number of the next room.
+     * @param nearRoom List of all rooms. 0-N, 1-E, 2-S, 3-W
      * @param contents Int table that content the id of the game's elements.
      * @param width Width of the Dungeon
      * @param height Height of the Dungeon
      *
      */
 
-    Room(int roomNum, int nextRoomNum, int[][] contents, int width, int height) {
+    Room(int roomNum, int[] nearRoom, int[][] contents, int width, int height) {
         this.roomNum = roomNum;
-        this.nextRoomNum = nextRoomNum;
+        this.nearRoom = nearRoom;
         this.contents = contents;
         this.width = width;
         this.height = height;
@@ -38,11 +41,11 @@ public class Room {
     }
 
     /**
-     *
-     * @return int The next room's Number.
+     * Get the near room list
+     * @return ArrayList<Integer>
      */
-    public int getNextRoomNum() {
-        return nextRoomNum;
+    public int[] getNearRoom() {
+        return nearRoom;
     }
 
     /**
@@ -67,5 +70,36 @@ public class Room {
      */
     public int getHeight() {
         return height;
+    }
+
+    /**
+     * Get the northern room number. If the room doesn't have north way, return -1
+     * @return int
+     */
+    public int getNorth() {
+        return this.nearRoom[0];
+    }
+
+    /**
+     * Get the eastern room number. If the room doesn't have north way, return -1
+     * @return int
+     */
+    public int getEast() {
+        return this.nearRoom[1];
+    }
+    /**
+     * Get the southern room number. If the room doesn't have north way, return -1
+     * @return int
+     */
+    public int getSouth() {
+        return this.nearRoom[2];
+    }
+
+    /**
+     * Get the western room number. If the room doesn't have north way, return -1
+     * @return int
+     */
+    public int getWest() {
+        return this.nearRoom[3];
     }
 }

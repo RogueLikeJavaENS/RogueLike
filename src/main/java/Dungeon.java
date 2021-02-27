@@ -1,14 +1,42 @@
 import java.util.List;
 
-public class Dungeon {
-    List<Room> roomList;
+/**
+ * This class is graph representation of the dungeon.
+ * 1 room can be connected by min 1 room and max 4 rooms.
+ *
+ * @author Antoine
+ */
 
-    Dungeon(Seed seed) {
-        this.roomList = DungeonStructure.createDungeon(seed);
+public class Dungeon {
+    public List<Room> getRoomList() {
+        return roomList;
+    }
+
+    List<Room> roomList;
+    // width -> max numbers of rooms in a column
+    // height -> max numbers of rooms in a row
+    /**
+     * List of List of roomNumber.
+     * Index 0 -> North,
+     *       1 -> East,
+     *       2 -> South,
+     *       3 -> West.
+     */
+
+    Dungeon(List<Room> roomList) {
+        this.roomList = roomList;
     }
 
     public Room getRoom(int roomNum) {
         return roomList.get(roomNum);
+    }
+
+    /**
+     * Get the dungeon size.
+     * @return int
+     */
+    public int getDungeonSize(){
+        return roomList.size();
     }
 
 }

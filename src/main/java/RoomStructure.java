@@ -1,5 +1,7 @@
+import java.util.ArrayList;
+
 public class RoomStructure {
-    public static Room createRoom(int current, int next, Seed seed, String direction){
+    public static Room createRoom(int current, int[] nextList, Seed seed, String direction){
         int[][] contents;
         contents = new int[10][22];
         switch (direction) {
@@ -26,6 +28,6 @@ public class RoomStructure {
                 }
             }
         }
-        return new Room(current, next, contents, 22, 10);
+        return new Room(current, nextList, contents, 22, 10);
     }
 }

@@ -5,20 +5,19 @@
  */
 
 public class RogueLike {
-    private Seed seed;
-    private Dungeon dungeon;
-    private GridMap gridMap;
-    //private Player player;
 
     /**
      * Create an instance of the game.
      */
     RogueLike() {
-        this.seed = new Seed();
-        this.dungeon = new Dungeon(seed);
+        Seed seed = new Seed();
+        Dungeon dungeon = DungeonStructure.createDungeon(seed);
         // this.player = new Player("Hero", 1, 100, 100);
-        this.gridMap = new GridMap(dungeon.getRoom(0));
-        RendererUI.render(gridMap);
+        GridMap gridMap = new GridMap(dungeon.getRoom(0));
+        MiniMap miniMap = new MiniMap(dungeon);
+
+        RendererUI.roomRender(gridMap);
+        RendererUI.miniMapRender(miniMap);
     }
 
     public static void main(String[] args) {

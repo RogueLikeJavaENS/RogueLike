@@ -21,7 +21,6 @@ public class GridMap {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                System.out.println(width);
                 int contentId = contents[y][x];
                 Tile tile = tileFactory.getTile(contentId);
                 tiles[y][x] = tile;
@@ -36,7 +35,6 @@ public class GridMap {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        System.out.println(room.getHeight() + " " + room.getWidth());
         for(int y = 0; y < room.getHeight(); y++) {
 
             for(int x = 0; x < room.getWidth(); x++) {
