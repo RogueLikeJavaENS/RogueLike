@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Room {
     int roomNum;
-    int nextRoomNum;
     int[][] contents;
     int width;
     int height;

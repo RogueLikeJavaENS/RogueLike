@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class DungeonStructure {
     public static Dungeon createDungeon(Seed seed){
     //number's of room is going to be seed defined later
