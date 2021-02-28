@@ -3,7 +3,7 @@ package display;
 import entity.*;
 
 /**
- * display.HUD is used to create a string of a player's info such as name, level, HP and MP.
+ * HUD is used to create a string of a player's info such as name, level, HP and MP.
  *
  * @author Raphael
  *

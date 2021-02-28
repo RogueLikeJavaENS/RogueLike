@@ -21,7 +21,7 @@ public class GridMap {
         int[][] contents = room.getContents();
         int width = room.getWidth();
         int height = room.getHeight();
-        TileFactory tileFactory = new TileFactory("src/main/java/xmlExample.xml");
+        TileFactory tileFactory = new TileFactory("src/main/resources/data.xml");
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
