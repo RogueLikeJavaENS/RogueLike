@@ -12,7 +12,7 @@ public class Seed {
     private final List Seed = new ArrayList();
 
     public Seed(){
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 15; i++) {
             Seed.add(Integer.toHexString(ThreadLocalRandom.current().nextInt(0, 15 + 1)));
         }
     }

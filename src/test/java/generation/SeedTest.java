@@ -8,5 +8,7 @@ class SeedTest {
 
     @Test
     void getSeed() {
+        Seed seed = new Seed();
+        assertEquals(15, seed.getSeed().size());
     }
 }
