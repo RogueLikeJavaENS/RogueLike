@@ -1,3 +1,5 @@
+package utils;
+
 /**
  * This class permit to have an access and create a position for something.
  * The position composed by the abscissa and the ordinate of a point.
@@ -13,7 +15,7 @@ public class Position {
     private int ord;
 
     /**
-     * This constructor create a Position with :
+     * This constructor create a utils.Position with :
      * @param abs : value of the absissa
      * @param ord : value of the ordinate
      * @throws IllegalArgumentException : if the absissa or the ordinate is negative

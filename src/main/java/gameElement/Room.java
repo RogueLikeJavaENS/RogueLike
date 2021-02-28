@@ -1,3 +1,5 @@
+package gameElement;
+
 import java.util.List;
 
 /**
@@ -18,12 +20,12 @@ public class Room {
      * @param roomNum Number of the room.
      * @param nearRoom List of all rooms. 0-N, 1-E, 2-S, 3-W
      * @param contents Int table that content the id of the game's elements.
-     * @param width Width of the Dungeon
-     * @param height Height of the Dungeon
+     * @param width Width of the gameElement.Dungeon
+     * @param height Height of the gameElement.Dungeon
      *
      */
 
-    Room(int roomNum, int[] nearRoom, int[][] contents, int width, int height) {
+    public Room(int roomNum, int[] nearRoom, int[][] contents, int width, int height) {
         this.roomNum = roomNum;
         this.nearRoom = nearRoom;
         this.contents = contents;
@@ -57,7 +59,7 @@ public class Room {
 
     /**
      *
-     * @return int Width of the Room.
+     * @return int Width of the gameElement.Room.
      */
     public int getWidth() {
         return width;

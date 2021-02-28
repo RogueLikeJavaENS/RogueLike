@@ -1,3 +1,5 @@
+package gameElement;
+
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ public class Dungeon {
      *       3 -> West.
      */
 
-    Dungeon(List<Room> roomList) {
+    public Dungeon(List<Room> roomList) {
         this.roomList = roomList;
     }
 

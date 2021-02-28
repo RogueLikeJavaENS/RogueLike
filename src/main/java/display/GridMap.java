@@ -1,5 +1,9 @@
+package display;
+
+import gameElement.Room;
+
 /**
- * This class Contains the actual Room. It contains a
+ * This class Contains the actual gameElement.Room. It contains a
  */
 public class GridMap {
     Room room;
@@ -7,7 +11,7 @@ public class GridMap {
     // Entity[][] entities;
     // Player player;
 
-    GridMap(Room room/*, Player player*/) {
+    public GridMap(Room room/*, Player player*/) {
         this.room = room;
         this.tiles = new Tile[room.getHeight()][room.getWidth()];
         fillRoomContent();

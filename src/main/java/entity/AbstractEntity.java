@@ -1,3 +1,7 @@
+package entity;
+
+import utils.Position;
+
 /**
  * This class represent an entity, which is an object or something alive who/which can be on the map
  * The entity has a position on the space

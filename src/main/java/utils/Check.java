@@ -1,3 +1,5 @@
+package utils;
+
 public class Check {
 
     public static int checkPositivity(int i) {

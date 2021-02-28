@@ -31,7 +31,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>HelloWorld</mainClass>
+                    <mainClass>RogueLike</mainClass>
                 </configuration>
             </plugin>
         </plugins>

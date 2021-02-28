@@ -1,3 +1,7 @@
+package entity;
+
+import utils.Position;
+
 public class Player extends LivingEntity{
 
     public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {

@@ -1,4 +1,6 @@
-import java.util.ArrayList;
+package generation;
+
+import gameElement.Room;
 
 public class RoomStructure {
     public static Room createRoom(int current, int[] nextList, Seed seed, String direction) {
