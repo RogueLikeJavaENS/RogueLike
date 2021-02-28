@@ -1,5 +1,8 @@
 # RogueLike
 
+## How to run
+-use maven compiler:compile then maven exec:java
+
 ## Membre du projets
 `Nom`: Vidal-Mazuy Antoine 
 `Github`: Brotherta
