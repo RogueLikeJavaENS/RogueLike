@@ -11,13 +11,10 @@ import java.util.Objects;
  */
 
 public class Dungeon {
-    public List<Room> getRoomList() {
-        return roomList;
-    }
+    private List<Room> roomList;
+    private int width; // width -> max numbers of rooms in a column
+    private int height;  // height -> max numbers of rooms in a row
 
-    List<Room> roomList;
-    // width -> max numbers of rooms in a column
-    // height -> max numbers of rooms in a row
     /**
      * List of List of roomNumber.
      * Index 0 -> North,
@@ -26,9 +23,20 @@ public class Dungeon {
      *       3 -> West.
      */
 
-    public Dungeon(List<Room> roomList) {
+    public Dungeon(List<Room> roomList, int width, int height) {
         this.roomList = roomList;
+        this.width = width;
+        this.height = height;
     }
+
+
+    public List<Room> getRoomList() {
+        return roomList;
+    }
+    public int getHeight() { return height; }
+    public int getWidth() { return width; }
+
+
 
     public Room getRoom(int roomNum) {
         return roomList.get(roomNum);
