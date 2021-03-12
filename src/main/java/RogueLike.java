@@ -27,9 +27,30 @@ public class RogueLike {
         MiniMap miniMap = new MiniMap(dungeon);
         HUD hud = new HUD(player);
 
-        RendererUI.roomRender(gridMap);
-        RendererUI.miniMapRender(miniMap);
-        RendererUI.hudRender(hud);
+        while(true) {
+            // print new GameState
+            RendererUI.roomRender(gridMap);
+            RendererUI.miniMapRender(miniMap);
+            RendererUI.hudRender(hud);
+
+            // Pause Scan input
+
+            // Process Player Input
+            /* switch case input
+                {
+                }
+            */
+            // If action is correct ok (GameState + input)
+            // Else break
+
+            // Monstres world interaction etc ...
+
+            // Animation
+
+            // Update GameState
+
+        }
+
     }
 
     public static void main(String[] args) {
