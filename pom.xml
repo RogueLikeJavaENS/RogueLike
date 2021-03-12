@@ -31,7 +31,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>HelloWorld</mainClass>
+                    <mainClass>RogueLike</mainClass>
                 </configuration>
             </plugin>
         </plugins>
@@ -43,6 +43,12 @@
             <groupId>com.diogonunes</groupId>
             <artifactId>JColor</artifactId>
             <version>5.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

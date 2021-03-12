@@ -1,20 +1,20 @@
-import java.util.ArrayList;
+package generation;
 
-/**
- * This class is used to fill based on the seed, the room structure.
- *
- * @author Luca
- */
-
+import gameElement.Room;
 
 public class RoomStructure {
-    /**
-     * createRoom create a Room object with the correct content
-     * @return Room
-     */
-    public static Room createRoom(int current, int[] nextList, Seed seed, String direction){
+    public static Room createRoom(int current, int[] nextList, Seed seed, String direction) {
         int[][] contents;
         contents = new int[10][22];
+        switch (direction) {
+            case "north" : contents[0][6]=3;
+                break;
+            case "south" : contents[9][6]=3;
+                break;
+            case "east" : contents[6][0]=3;
+                break;
+            case "west" : contents[6][21]=3;
+        }
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 22; y++) {
                 if (x==0 || x==9 || y==0 || y==21){

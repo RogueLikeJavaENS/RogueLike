@@ -1,5 +1,6 @@
+package gameElement;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class MiniMap {
     Dungeon dungeon;
     List<String>[][] miniMapString;
 
-    MiniMap(Dungeon dungeon) {
+    public MiniMap(Dungeon dungeon) {
         this.dungeon = dungeon;
         List<Room> roomList = dungeon.getRoomList();
 

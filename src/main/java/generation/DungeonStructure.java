@@ -1,18 +1,14 @@
+package generation;
+
+import gameElement.Dungeon;
+import gameElement.Room;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- *This class is used to generate the dungeon structure.
- *
- * @author Luca
- */
 
 public class DungeonStructure {
-    /**
-     * createDungeon fill roomList with Room by calling on createRoom
-     * @return Dungeon
-     */
     public static Dungeon createDungeon(Seed seed){
     //number's of room is going to be seed defined later
         List<Room> roomList = new ArrayList<>();

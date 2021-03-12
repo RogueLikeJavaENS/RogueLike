@@ -1,4 +1,7 @@
+package gameElement;
+
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class is graph representation of the dungeon.
@@ -23,7 +26,7 @@ public class Dungeon {
      *       3 -> West.
      */
 
-    Dungeon(List<Room> roomList) {
+    public Dungeon(List<Room> roomList) {
         this.roomList = roomList;
     }
 
@@ -39,4 +42,18 @@ public class Dungeon {
         return roomList.size();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dungeon dungeon = (Dungeon) o;
+        if ((this.roomList.size() == dungeon.roomList.size()) &&
+                (roomList.equals(dungeon.roomList))) return true;
+        else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roomList);
+    }
 }

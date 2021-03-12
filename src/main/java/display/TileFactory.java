@@ -1,3 +1,5 @@
+package display;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -66,11 +68,11 @@ public class TileFactory {
     }
 
     /**
-     *Checks in the tileList for a Tile corresponding to the type given in parameter.
+     *Checks in the tileList for a display.Tile corresponding to the type given in parameter.
      *
-     * @param type Integer corresponding to the type of Tile you want to be returned
-     * @return A Tile corresponding to the type given in parameter. Returns a "bugged"
-     * non-accessible Tile with a typeID of 0 if none matches the given type.
+     * @param type Integer corresponding to the type of display.Tile you want to be returned
+     * @return A display.Tile corresponding to the type given in parameter. Returns a "bugged"
+     * non-accessible display.Tile with a typeID of 0 if none matches the given type.
      *
      */
     public Tile getTile(int type) {
@@ -79,7 +81,7 @@ public class TileFactory {
                 return tile;
             }
         }
-        //bugged Tile
+        //bugged display.Tile
         return (new Tile(0, "□□\n□□", false));
     }
 }
