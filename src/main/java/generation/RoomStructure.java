@@ -1,9 +1,10 @@
 package generation;
 
 import gameElement.Room;
+import utils.Position;
 
 public class RoomStructure {
-    public static Room createRoom(int current, int[] nextList, Seed seed, String direction) {
+    public static Room createRoom(int current, int[] nextList, Seed seed, String direction, Position pos) {
         int[][] contents;
         contents = new int[10][22];
         switch (direction) {
@@ -30,6 +31,6 @@ public class RoomStructure {
                 }
             }
         }
-        return new Room(current, nextList, contents, 22, 10);
+        return new Room(current, nextList, contents, 22, 10,pos);
     }
 }
