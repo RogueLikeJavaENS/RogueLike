@@ -1,5 +1,7 @@
 package gameElement;
 
+import utils.Position;
+
 import java.util.List;
 
 /**
@@ -31,6 +33,10 @@ public class Room {
         this.contents = contents;
         this.width = width;
         this.height = height;
+    }
+
+    public Position getCenter() {
+        return (new Position((int) width/2, (int) height/2));
     }
 
     /**
