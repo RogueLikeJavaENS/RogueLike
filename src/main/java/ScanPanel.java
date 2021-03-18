@@ -20,12 +20,13 @@ public class ScanPanel extends JFrame implements KeyListener{
         setFocusTraversalKeysEnabled(true);
 
         setVisible(true);
-        setSize(600,600);
+        setSize(300,300);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public int getKeyPressed() {
         int a = pressed;
-        pressed = 0;
+        reset();
         return a;
     }
 

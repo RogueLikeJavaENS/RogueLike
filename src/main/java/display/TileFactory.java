@@ -82,6 +82,6 @@ public class TileFactory {
             }
         }
         //bugged display.Tile
-        return (new Tile(0, "□□\n□□", false));
+        return (new Tile(0, "□□□□", false));
     }
 }

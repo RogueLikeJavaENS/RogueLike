@@ -16,9 +16,9 @@ public class Position {
 
     /**
      * This constructor create a utils.Position with :
-     * @param abs : value of the absissa
+     * @param abs : value of the abscissa
      * @param ord : value of the ordinate
-     * @throws IllegalArgumentException : if the absissa or the ordinate is negative
+     * @throws IllegalArgumentException : if the abscissa or the ordinate is negative
      */
     public Position(int abs, int ord) throws IllegalArgumentException {
             this.abs = posCheck(abs);
@@ -36,8 +36,8 @@ public class Position {
     }
 
     /**
-     * This private method permit to check if an argument (abscissa or ordinate) is valid (a positive int)
-     * */
+     * This private method permits to check if an argument (abscissa or ordinate) is valid (a positive int)
+     */
     private int posCheck(int i){
         if (i < 0){throw new IllegalArgumentException();}
         else {return i;}
