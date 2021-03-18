@@ -17,7 +17,7 @@ import utils.Position;
 public class RogueLike {
 
     /**
-     * Create an instance of the game.
+     * Creates an instance of the game.
      */
     RogueLike() throws InterruptedException {
         Seed seed = new Seed();
