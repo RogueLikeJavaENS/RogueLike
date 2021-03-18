@@ -5,6 +5,6 @@ import display.AbstractTile;
 public class Wall extends AbstractTile {
 
     public Wall() {
-        super("####", false);
+        super("##", false);
     }
 }

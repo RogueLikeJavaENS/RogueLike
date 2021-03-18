@@ -68,7 +68,7 @@ public class RogueLike {
             // Animation
 
             // Update GameState
-            Thread.sleep(2000);
+            Thread.sleep(100);
             sp.reset();
         }
 

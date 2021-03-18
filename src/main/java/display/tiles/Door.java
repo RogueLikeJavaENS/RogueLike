@@ -5,6 +5,6 @@ import display.AbstractTile;
 public class Door extends AbstractTile {
 
     public Door() {
-        super("[  ]", true);
+        super("[]", true);
     }
 }
