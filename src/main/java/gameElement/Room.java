@@ -36,7 +36,8 @@ public class Room {
     }
 
     public Position getCenter() {
-        return (new Position((int) width/2, (int) height/2));
+        System.out.printf("POSITION %d %d\n",width /2, height /2);
+        return (new Position(width /2, height /2));
     }
 
     /**

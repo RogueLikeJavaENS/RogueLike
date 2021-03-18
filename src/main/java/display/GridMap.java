@@ -1,6 +1,9 @@
 package display;
 
+import entity.Entity;
+import entity.Player;
 import gameElement.Room;
+import utils.Position;
 
 /**
  * This class Contains the actual gameElement.Room. It contains a
@@ -8,15 +11,20 @@ import gameElement.Room;
 public class GridMap {
     Room room;
     Tile[][] tiles;
-    // Entity[][] entities;
-    // Player player;
+    Entity[][] entities;
+    Player player;
 
-    public GridMap(Room room/*, Player player*/) {
+    public GridMap(Room room, Player player) {
+        this.player = player;
         this.room = room;
         this.tiles = new Tile[room.getHeight()][room.getWidth()];
-        fillRoomContent();
+        this.entities = new Entity[room.getHeight()][room.getWidth()];
     }
 
+    public void update() {
+        fillEntityContent();
+        fillRoomContent();
+    }
     private void fillRoomContent() {
         int[][] contents = room.getContents();
         int width = room.getWidth();
@@ -33,22 +41,30 @@ public class GridMap {
     }
 
     private void fillEntityContent() {
-        // nothing now
+        Position pp = player.getPosition();
+        for (int y = 0; y < room.getHeight(); y++) {
+            for (int x = 0; x < room.getWidth(); x++) {
+                entities[y][x] = null;
+            }
+        }
+        System.out.printf("POSITION %d %d\n",pp.getAbs(), pp.getOrd());
+        entities[pp.getOrd()][pp.getAbs()] = player;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for(int y = 0; y < room.getHeight(); y++) {
-
-            for(int x = 0; x < room.getWidth(); x++) {
-                sb.append(tiles[y][x]);
+            for (int i = 0; i < 2; i++) {
+                for(int x = 0; x < room.getWidth(); x++) {
+                    if (entities[y][x] != null) {
+                        sb.append(entities[y][x]);
+                    } else {
+                        sb.append(tiles[y][x]);
+                    }
+                }
+                sb.append("\n");
             }
-            sb.append("\n");
-            for(int x = 0; x < room.getWidth(); x++) {
-                sb.append(tiles[y][x]);
-            }
-            sb.append("\n");
         }
         return sb.toString();
     }
