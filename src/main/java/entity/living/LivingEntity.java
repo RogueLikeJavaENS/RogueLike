@@ -1,4 +1,4 @@
-package entity;
+package entity.living;
 
 import entity.AbstractEntity;
 import utils.Check;
@@ -51,3 +51,4 @@ public class LivingEntity extends AbstractEntity {
     public void setHP(int hp) throws IllegalArgumentException { this.hp = Check.checkPositivity(hp); }
 
 }
+
