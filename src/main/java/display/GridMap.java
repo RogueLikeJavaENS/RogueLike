@@ -47,8 +47,6 @@ public class GridMap {
                 entities[y][x] = null;
             }
         }
-
-        room.
         entities[pp.getOrd()][pp.getAbs()] = player;
     }
 
