@@ -16,6 +16,11 @@
             <isAccessible>true</isAccessible>
             <sprite>[  ]</sprite>
         </tile>
+        <tile>
+            <id>4</id> <!--PLAYER-->
+            <isAccessible>false</isAccessible>
+            <sprite>@@@@</sprite>
+        </tile>
     </tiles>
 </data>
 

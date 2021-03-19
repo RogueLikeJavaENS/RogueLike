@@ -53,4 +53,15 @@ public class GridMap {
         return sb.toString();
     }
 
+    /**
+     * @param x Abscissa of the wanted tile.
+     * @param y Ordinate of the wanted tile.
+     * @return Returns the tile at the given coordinates.
+     *
+     * @author Raphael
+     */
+    public Tile getTileAt(int x, int y) {
+        return tiles[y][x]; //Needs to be tested, coordinates might be inverted.
+    }
+
 }
