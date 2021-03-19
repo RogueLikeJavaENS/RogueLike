@@ -15,13 +15,13 @@ public class TileFactory {
     public Tile getTile(int id) {
         switch(id) {
             case 1:
-                return new Wall(); //Wall = Type 1
+                return new WallTile(); //Wall = Type 1
 
             case 2:
-                return new Floor(); //Floor = Type 2
+                return new FloorTile(); //Floor = Type 2
 
             case 3:
-                return new Door(); // Door = Type 3
+                return new DoorTile(); // Door = Type 3
 
             default: return new GlitchedTile();
         }

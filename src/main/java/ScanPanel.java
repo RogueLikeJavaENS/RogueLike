@@ -3,6 +3,16 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
+/**
+ * This class create a JFrame that extend KeyListener. The player will focus the frame to
+ * play. The Frame listen the keyboard and return the keys released.
+ *
+ * @see JFrame
+ * @see KeyListener
+ *
+ * @author Antoine
+ */
+
 public class ScanPanel extends JFrame implements KeyListener{
     int pressed;
 

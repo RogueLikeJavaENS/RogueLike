@@ -1,7 +1,7 @@
 package display;
 
 import entity.Entity;
-import entity.Player;
+import entity.living.Player;
 import gameElement.Room;
 import utils.Position;
 
@@ -19,11 +19,11 @@ public class GridMap {
         this.room = room;
         this.tiles = new Tile[room.getHeight()][room.getWidth()];
         this.entities = new Entity[room.getHeight()][room.getWidth()];
+        fillRoomContent();
     }
 
     public void update() {
         fillEntityContent();
-        fillRoomContent();
     }
     private void fillRoomContent() {
         int[][] contents = room.getContents();
@@ -47,7 +47,8 @@ public class GridMap {
                 entities[y][x] = null;
             }
         }
-        System.out.printf("POSITION %d %d\n",pp.getAbs(), pp.getOrd());
+
+        room.
         entities[pp.getOrd()][pp.getAbs()] = player;
     }
 

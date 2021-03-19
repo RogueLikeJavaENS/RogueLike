@@ -1,6 +1,6 @@
 package display;
 
-import entity.*;
+import entity.living.Player;
 
 /**
  * HUD is used to create a string of a player's info such as name, level, HP and MP.

@@ -28,11 +28,9 @@ public class Position {
     public int getAbs() { return abs; }
     public int getOrd() { return ord; }
 
-    public void setOrd(int ord) throws IllegalArgumentException{
-        this.ord = posCheck(ord);
-    }
-    public void setAbs(int abs) throws IllegalArgumentException{
-        this.abs = posCheck(abs);
+    public void updatePos(int abs, int ord) {
+        setAbs(this.abs + abs);
+        setOrd(this.ord + ord);
     }
 
     /**
@@ -42,4 +40,11 @@ public class Position {
         if (i < 0){throw new IllegalArgumentException();}
         else {return i;}
     }
+    private void setOrd(int ord) throws IllegalArgumentException{
+        this.ord = posCheck(ord);
+    }
+    private void setAbs(int abs) throws IllegalArgumentException{
+        this.abs = posCheck(abs);
+    }
+
 }

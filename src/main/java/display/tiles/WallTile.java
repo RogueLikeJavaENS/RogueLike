@@ -2,9 +2,9 @@ package display.tiles;
 
 import display.AbstractTile;
 
-public class Wall extends AbstractTile {
+public class WallTile extends AbstractTile {
 
-    public Wall() {
+    public WallTile() {
         super("##", false);
     }
 }

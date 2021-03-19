@@ -1,7 +1,7 @@
 import display.GridMap;
 import display.HUD;
 import display.RendererUI;
-import entity.Player;
+import entity.living.Player;
 import gameElement.Dungeon;
 import gameElement.GameState;
 import generation.DungeonStructure;
@@ -28,37 +28,42 @@ public class RogueLike {
         MiniMap miniMap = new MiniMap(dungeon);
         HUD hud = new HUD(player);
         ScanPanel sp = new ScanPanel();
-        GameState gs = new GameState(player, dungeon, miniMap, gridMap);
+        GameState gs = new GameState(player, dungeon, gridMap);
+
+        System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right");
+        RendererUI.roomRender(gridMap);
 
         while(gs.getState() != 0) {
             // print new GameState
-              RendererUI.roomRender(gridMap);
 //            RendererUI.miniMapRender(miniMap);
 //            RendererUI.hudRender(hud);
 
             // Wait for a key to be pressed and return its ASCII code
             int a = retrieveKey(sp);
-
+            boolean acted = false;
             // Process Player Input
             switch ((char) a) {
                 case 'Z':
-                    gs.movePlayer(player, 0, -1, gridMap);
+                    acted = gs.movePlayer(0, -1);
                     //Tries to change the player's position, if something is blocking then the player's turn is not consumed.
                     break;
                 case 'Q':
-                    gs.movePlayer(player, -1, 0, gridMap);
+                    acted = gs.movePlayer(-1, 0);
                     break;
                 case 'S':
-                    gs.movePlayer(player, 0, 1, gridMap);
+                    acted = gs.movePlayer(0, 1);
                     break;
                 case 'D':
-                    gs.movePlayer(player, 1, 0, gridMap);
+                    acted = gs.movePlayer(1, 0);
                     break;
                 case '\u001B': // escape
-                    gs.displayMinimap();
+                    gs.exitGame();
                     break;
                 default:
                     continue;
+            }
+            if (!acted) {
+                continue;
             }
             // If action is correct ok (GameState + input)
             // Else break
@@ -68,10 +73,13 @@ public class RogueLike {
             // Animation
 
             // Update GameState
+            System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n");
+            RendererUI.roomRender(gridMap);
             Thread.sleep(100);
             sp.reset();
         }
 
+        System.exit(0);
     }
 
     public static void main(String[] args) throws InterruptedException {

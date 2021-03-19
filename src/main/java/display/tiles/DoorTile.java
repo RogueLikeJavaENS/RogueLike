@@ -2,9 +2,10 @@ package display.tiles;
 
 import display.AbstractTile;
 
-public class Door extends AbstractTile {
+public class DoorTile extends AbstractTile {
 
-    public Door() {
+    public DoorTile() {
         super("[]", true);
     }
+
 }
