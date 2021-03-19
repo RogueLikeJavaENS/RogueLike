@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.Objects;
+
 /**
  * This class permit to have an access and create a position for something.
  * The position composed by the abscissa and the ordinate of a point.
@@ -41,5 +43,19 @@ public class Position {
     private int posCheck(int i){
         if (i < 0){throw new IllegalArgumentException();}
         else {return i;}
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return abs == position.abs &&
+                ord == position.ord;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(abs, ord);
     }
 }

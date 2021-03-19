@@ -15,11 +15,11 @@ public class Seed {
      * getter for Seed
      * @return Seed
      */
-    public List getSeed() {
+    public List<String> getSeed() {
         return Seed;
     }
 
-    private final List Seed = new ArrayList();
+    private final List<String> Seed = new ArrayList();
 
     /**
      * @param Seed 15 characters long in hexadecimal
