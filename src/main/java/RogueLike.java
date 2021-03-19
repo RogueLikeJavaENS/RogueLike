@@ -31,7 +31,8 @@ public class RogueLike {
         GameState gs = new GameState(player, dungeon, gridMap);
 
         System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right");
-        RendererUI.roomRender(gridMap);
+        //RendererUI.roomRender(gridMap);
+        RendererUI.Renderer(gridMap,miniMap,hud);
 
         while(gs.getState() != 0) {
             // print new GameState
@@ -74,7 +75,8 @@ public class RogueLike {
 
             // Update GameState
             System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n");
-            RendererUI.roomRender(gridMap);
+            //RendererUI.roomRender(gridMap);
+            RendererUI.Renderer(gridMap,miniMap,hud);
             Thread.sleep(100);
             sp.reset();
         }

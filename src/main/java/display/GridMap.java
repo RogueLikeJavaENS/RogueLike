@@ -5,6 +5,9 @@ import entity.living.Player;
 import gameElement.Room;
 import utils.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class Contains the actual gameElement.Room. It contains a
  */
@@ -48,7 +51,7 @@ public class GridMap {
             }
         }
 
-        room.
+
         entities[pp.getOrd()][pp.getAbs()] = player;
     }
 
@@ -69,6 +72,26 @@ public class GridMap {
         }
         return sb.toString();
     }
+
+    public List<String> StrByLine (){
+        List<String> strLine = new ArrayList<>();
+        for (int ord = 0; ord<room.getHeight(); ord++){
+            for (int i = 0; i <2; i++) {
+                StringBuilder sb = new StringBuilder();
+                for (int abs = 0; abs < room.getWidth(); abs++) {
+                    if (entities[ord][abs] != null) {
+                        sb.append(entities[ord][abs]);
+                    } else {
+                        sb.append(tiles[ord][abs]);
+                    }
+                }
+                sb.append("\n");
+                strLine.add(sb.toString());
+            }
+        }
+        return strLine;
+    }
+
 
     /**
      * @param x Abscissa of the wanted tile.

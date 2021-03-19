@@ -27,10 +27,11 @@ public class MiniMap {
      * @return string
      */
     public String toString() {
-        List<String> strByLine = stringByLine(listToArray(dungeon));
+        List<String> strByLine = stringByLine();
 
         StringBuilder sb = new StringBuilder();
         for (String str : strByLine){
+            sb.append("".repeat(5));
             sb.append(str);
             sb.append("\n");
         }
@@ -52,7 +53,7 @@ public class MiniMap {
         Room[][] roomArray = new Room[height][width];
 
         for (Room room : roomList){
-            Position roomPos = room.getPos();
+            Position roomPos = room.getPosition();
             int abs = roomPos.getAbs();
             int ord = roomPos.getOrd();
             roomArray[ord][abs] = room;
@@ -64,10 +65,10 @@ public class MiniMap {
      * Transform the array of room into a list of String which contains each line to print
      * in order to see the minimap
      *
-     * @param roomArray
      * @return List<String>
      */
-    private List<String> stringByLine (Room[][] roomArray){
+    public List<String> stringByLine (){
+        Room[][] roomArray = listToArray(dungeon);
         List<String> listOfLine= new ArrayList<>();
 
         for (Room[] lineRoom : roomArray){

@@ -28,7 +28,7 @@ public class GameState {
         this.dungeon = dungeon;
         this.player = player;
         this.gridMap = gridMap;
-        this.currentRoom = dungeon.roomList.get(0);
+        this.currentRoom = dungeon.getRoomList().get(0);
         player.setPosition(currentRoom.getCenter());
         state = 1;
         gridMap.update();

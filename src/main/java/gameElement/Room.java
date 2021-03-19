@@ -16,6 +16,7 @@ public class Room {
     int width;
     int height;
     int[] nearRoom;
+    Position position;
 
     /**
      *
@@ -27,13 +28,16 @@ public class Room {
      *
      */
 
-    public Room(int roomNum, int[] nearRoom, int[][] contents, int width, int height) {
+    public Room(int roomNum, int[] nearRoom, int[][] contents, int width, int height, Position position) {
         this.roomNum = roomNum;
         this.nearRoom = nearRoom;
         this.contents = contents;
         this.width = width;
         this.height = height;
+        this.position = position;
     }
+
+    public Position getPosition(){ return position;}
 
     public Position getCenter() {
         return (new Position(width /2, height /2));
