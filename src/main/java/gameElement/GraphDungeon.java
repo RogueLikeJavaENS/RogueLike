@@ -5,11 +5,34 @@ import generation.Seed;
 import utils.Position;
 
 import javax.xml.transform.Source;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GraphDungeon {
+    private HashMap<Integer, int[]> graph;
+    private HashMap<Position, Integer> existingRoom;
+    private final Seed seed;
+    private int quantity;
+    private final int MAX_BOUND = 5;
+    private int acc;
+    private boolean created;
+    public ArrayList<Integer> probDirection;
+
+    public GraphDungeon(Seed seed) {
+        this.seed = seed;
+        this.quantity = DungeonStructure.numberOfRoom(seed);
+        this.graph = new HashMap<Integer,int[]>();
+        this.existingRoom = new HashMap<Position, Integer>();
+        this.acc=0;
+        created = false;
+        probDirection = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            probDirection.add(i);
+        }
+        attributePath();
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -18,20 +41,58 @@ public class GraphDungeon {
         return graph;
     }
 
-    private HashMap<Integer, int[]> graph;
-    private HashMap<Position, Integer> existingRoom;
-    private final Seed seed;
-    private int quantity;
-    private final int MAX_BOUND = 5;
-    private int acc;
+    public int calculDirection(int current, int oppositeDirection, int previousDirection) {
+        System.out.println(probDirection.toString());
+        List<Integer> copyOfProbDirection = List.copyOf(probDirection);
+        ArrayList<Integer> voisin = new ArrayList<>();
+        voisin.clear();
+        if (graph.get(current)[4] != 0) {
+            voisin.add(0);
+        }
+        if (graph.get(current)[5] < MAX_BOUND) {
+            voisin.add(1);
+        }
+        if (graph.get(current)[4] < MAX_BOUND) {
+            voisin.add(2);
+        }
+        if (graph.get(current)[5] != 0) {
+            voisin.add(3);
+        }
 
-    public GraphDungeon(Seed seed) {
-        this.seed = seed;
-        this.quantity = DungeonStructure.numberOfRoom(seed);
-        this.graph = new HashMap<Integer,int[]>();
-        this.existingRoom = new HashMap<Position, Integer>();
-        this.acc=0;
-        attributePath();
+        if (voisin.contains(oppositeDirection) && previousDirection!= -1) {
+            voisin.remove(Integer.valueOf(oppositeDirection));
+        }
+        copyOfProbDirection = copyOfProbDirection.stream()
+                                .filter(dir -> voisin.contains(Integer.valueOf(dir)))
+                                .collect(Collectors.toList());
+        int direction = moreProbable(copyOfProbDirection);
+        probDirection.add(direction);
+        return direction;
+    }
+
+    public int moreProbable(List<Integer> copyOfProbDirection) {
+        int size = copyOfProbDirection.size();
+        int index = Integer.valueOf(seed.getSeed().get(size%15), 16)%size;
+        return copyOfProbDirection.get(index);
+     }
+
+    private void attributePath() {
+        createSourceVertice();
+        int compteur = quantity-1;
+        int i = 1;
+        ArrayList<Integer> sizeList = new ArrayList<>();
+        if (compteur%2 == 0) {
+            sizeList.add(compteur/2);
+            sizeList.add(compteur/2);
+        }else {
+            sizeList.add(compteur/2);
+            sizeList.add(compteur/2+1);
+        }
+        for (int size : sizeList) {
+            drawPath(size, 0);
+            compteur -= size;
+            i++;
+        }
     }
 
     private void createSourceVertice() {
@@ -43,9 +104,39 @@ public class GraphDungeon {
         graph.put(0, sourceVertice);
     }
 
+    private void drawPath(int size, int source) {
+        ArrayList<Integer> voisin = new ArrayList<>();
+        int current = source;
+        int previousDirection = -1;
+        Random GEN = new Random();
+
+        // 0-N, 1-E, 2-S, 3-O
+        System.out.println("\n\nInitial size :"+size);
+        while (size>0) {
+
+            int oppositeDirection = (previousDirection+2) % 4;
+            int direction = calculDirection(current, oppositeDirection, previousDirection);
+
+            System.out.println("\nsize :"+size);
+            System.out.println("Current Pos : " + graph.get(current)[4] + ", "+ graph.get(current)[5]);
+            System.out.println("Current Voisin : "+voisin.toString());
+            int next = createVertice(current, direction);
+            graph.get(next)[(direction+2) % 4] = current;
+            graph.get(current)[direction] = next;
+
+            if (created) {
+               size --;
+            }
+
+            previousDirection = direction;
+            current=next;
+            voisin.clear();
+        }
+    }
+
     private int createVertice(int current, int direction) {
         int[] vertice = DungeonStructure.initNextlist();
-        switch (direction){
+        switch (direction) {
             //north
             case 0:
                 vertice[4] = graph.get(current)[4]-1;
@@ -67,55 +158,22 @@ public class GraphDungeon {
                 vertice[5] = graph.get(current)[5]-1;
                 break;
         }
-        Position testPosition = new Position(vertice[4], vertice[5]);
+        Position testPosition = new Position(vertice[5], vertice[4]);
         boolean exist = existingRoom.containsKey(testPosition);
-        int next = 0;
-        if(! exist) {
+        int next;
+        if(!exist) {
+            System.out.println("in verticCreate : Vertice :  "+ Arrays.toString(vertice)+ "\n");
             acc++;
             graph.put(acc, vertice);
             next = acc;
-        }
-        else {
+            existingRoom.put(testPosition, acc);
+            created = true;
+        } else {
             next = existingRoom.get(testPosition);
+            System.out.println("not created " + next + "\n");
+            created = false;
         }
         return next;
-    }
-
-    private void attributePath() {
-        createSourceVertice();
-        int compteur = quantity;
-        while (compteur>0){
-            int size = Integer.valueOf(seed.getSeed().get(4), 16)%(MAX_BOUND+1);
-            drawPath(size, 0);
-            compteur -= size;
-        }
-    }
-
-    private void drawPath(int size, int source) {
-        ArrayList<Integer> voisin = new ArrayList<>();
-        int current = source;
-        //0-N, 1-E, 2-S, 3-O
-        while (size>0) {
-            if (graph.get(current)[4] < MAX_BOUND) {
-                voisin.add(2);
-            }
-            if (graph.get(current)[5] < MAX_BOUND) {
-                voisin.add(1);
-            }
-            if (graph.get(current)[4] != 0) {
-                voisin.add(0);
-            }
-            if (graph.get(current)[5] != 0) {
-                voisin.add(3);
-            }
-            int index = Integer.valueOf(seed.getSeed().get(7), 16)%(voisin.size()-1);
-            int direction = voisin.get(index);
-            int next = createVertice(current, direction);
-            if(!(next < acc)){
-                size--;
-            }
-            current=next;
-        }
     }
 
     public static void main(String[] args) {
@@ -123,8 +181,9 @@ public class GraphDungeon {
         System.out.println("coucou");
         int quantite = test.getQuantity();
         HashMap<Integer, int[]> graphtest = test.getGraph();
-        for (int i = 0; i < quantite; i++) {
-            System.out.printf("%d, %d\n", graphtest.get(i)[4], graphtest.get(i)[5]);
+        System.out.println("final size : " + graphtest.size() + " Intitial size" + quantite);
+        for (int i = 0; i < graphtest.size(); i++) {
+            System.out.println(Arrays.toString(graphtest.get(i)) + " " + i);
         }
     }
 }

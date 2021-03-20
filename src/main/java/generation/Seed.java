@@ -2,6 +2,7 @@ package generation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -29,8 +30,10 @@ public class Seed {
      * Seed generation
      */
     public Seed(){
+        Random GEN = new Random();
         for (int i = 0; i < 15; i++) {
-            Seed.add(Integer.toHexString(ThreadLocalRandom.current().nextInt(0, 15 + 1)));
+            // Seed.add(Integer.toHexString(ThreadLocalRandom.current().nextInt(0, 15 + 1)));
+            Seed.add(Integer.toHexString(GEN.nextInt(16)));
         }
     }
 }

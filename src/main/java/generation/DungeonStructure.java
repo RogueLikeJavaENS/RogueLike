@@ -47,10 +47,10 @@ public class DungeonStructure {
         return seedValue;
     }
     public static int numberOfRoom(Seed seed){
-        int MIN_NUMBER_ROOM = 18;
-        int MAX_NUMBER_ROOM = 26;
+        int MIN_NUMBER_ROOM = 14;
+        int MAX_NUMBER_ROOM = 20;
         int seedValue=seedValue(seed);
-        int NbRoom= (int) Math.floor(seedValue%MAX_NUMBER_ROOM);
+        int NbRoom = (int) Math.floor(seedValue%MAX_NUMBER_ROOM);
         if (NbRoom<MIN_NUMBER_ROOM){
             NbRoom=MIN_NUMBER_ROOM;
         }
