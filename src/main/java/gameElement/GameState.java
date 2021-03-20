@@ -38,6 +38,8 @@ public class GameState {
         return state;
     }
 
+    public Room getCurrentRoom() { return currentRoom; }
+
     /**
      * Checks if the player can access the tile at his position + x & y, and changes its position if so.
      *

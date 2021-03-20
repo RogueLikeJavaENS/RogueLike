@@ -85,7 +85,6 @@ public class GridMap {
                         sb.append(tiles[ord][abs]);
                     }
                 }
-                sb.append("\n");
                 strLine.add(sb.toString());
             }
         }

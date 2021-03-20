@@ -1,24 +1,23 @@
 package gameElement;
 
 import utils.Position;
-
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class is used to see the whole dungeon as a minimap.
- * You can see the corridor between the room, the number of the room and in wich room is the player
+ * You can see the corridor between the room, the number of the room and in which room is the player
  *
  * @author Antoine Juliette
  */
 
 public class MiniMap {
     Dungeon dungeon;
+    GameState gameState;
 
-
-    public MiniMap(Dungeon dungeon) {
+    public MiniMap(Dungeon dungeon, GameState gameState) {
         this.dungeon = dungeon;
+        this.gameState = gameState;
     }
 
     /**
@@ -31,7 +30,6 @@ public class MiniMap {
 
         StringBuilder sb = new StringBuilder();
         for (String str : strByLine){
-            sb.append("".repeat(5));
             sb.append(str);
             sb.append("\n");
         }
@@ -42,7 +40,7 @@ public class MiniMap {
      * With an object dungeon, return an array which contain the room at its good coordinate
      * (example: a room at the position (1,3) will be on the array at the coordinate (1,3))
      *
-     * @param dungeon
+     * @param dungeon the dungeon to print
      * @return Room[][]
      */
     private Room[][] listToArray (Dungeon dungeon){
@@ -74,6 +72,7 @@ public class MiniMap {
         for (Room[] lineRoom : roomArray){
             for (int i=0; i<4; i++){
                 StringBuilder sb2 = new StringBuilder();
+                sb2.append("\t");
                 for (Room room : lineRoom){
                     sb2.append(buildRoom(room,i));
                 }
@@ -89,8 +88,8 @@ public class MiniMap {
      * For a room and a line of the room return the string to use in order to print it.
      * If there is no room it return a string full of blank
      *
-     * @param room
-     * @param line
+     * @param room the room to print
+     * @param line the line of the room to print
      * @return String
      */
 
@@ -114,10 +113,10 @@ public class MiniMap {
                         sb.append("#  ");
                     } else sb.append("|  ");
 
-                    //if (joueur in room){sb.append(@);} //TODO
-                    //else {
+                    if (gameState.getCurrentRoom().equals(room)){sb.append("@");}
+                    else {
                         sb.append(room.getRoomNum());
-                    //}
+                    }
 
                     if (room.getEast() != -1) {
                         sb.append("  #");
