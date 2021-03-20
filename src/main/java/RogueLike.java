@@ -33,7 +33,8 @@ public class RogueLike {
         System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right");
         RendererUI.roomRender(gridMap);
 
-        while(gs.getState() != 0) {
+        int state = gs.getState();
+        while(state != 0) {
             // print new GameState
 //            RendererUI.miniMapRender(miniMap);
 //            RendererUI.hudRender(hud);
@@ -63,20 +64,25 @@ public class RogueLike {
                     continue;
             }
             if (!acted) {
-                continue;
+                state = gs.getState();
+                Thread.sleep(100);
+            } else {
+                gs.isOnEntity(); // look if action need to be performed
+
+                // If action is correct ok (GameState + input)
+                // Else break
+
+                // Monsters world interaction etc ...
+
+                // Animation
+
+                // Update GameState
+                System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n");
+                RendererUI.roomRender(gs.getGridMap());
+                Thread.sleep(100);
+                sp.reset();
+                state = gs.getState();
             }
-            // If action is correct ok (GameState + input)
-            // Else break
-
-            // Monsters world interaction etc ...
-
-            // Animation
-
-            // Update GameState
-            System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n");
-            RendererUI.roomRender(gridMap);
-            Thread.sleep(100);
-            sp.reset();
         }
 
         System.exit(0);

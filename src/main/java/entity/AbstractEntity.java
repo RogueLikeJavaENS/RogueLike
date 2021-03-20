@@ -1,5 +1,6 @@
 package entity;
 
+import gameElement.GameState;
 import utils.Position;
 
 /**
@@ -12,11 +13,19 @@ import utils.Position;
 public class AbstractEntity implements Entity {
 
     private Position position;
+    private boolean isAccessible;
 
-    public AbstractEntity(Position position){
+    public AbstractEntity(Position position, boolean isAccessible){
         this.position = position;
+        this.isAccessible = isAccessible;
     }
 
     public Position getPosition() { return position; }
+
+    public void doAction(GameState gameState) {
+        // nothing
+    }
+
     public void setPosition(Position position) { this.position = position; }
+
 }

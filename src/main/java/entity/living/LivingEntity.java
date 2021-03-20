@@ -23,7 +23,7 @@ public class LivingEntity extends AbstractEntity {
     private int maxMp;
 
     public LivingEntity(Position position, int hp, int mp, String name, int level) throws IllegalArgumentException{
-        super(position);
+        super(position, false); // false because a living entity is never accessible.
         this.level = Check.checkPositivity(level);
         this.hp = Check.checkPositivity(hp);
         this.maxHp = Check.checkPositivity(hp);

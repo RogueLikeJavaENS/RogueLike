@@ -62,4 +62,12 @@ public class Position {
     public int hashCode() {
         return Objects.hash(abs, ord);
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "abs=" + abs +
+                ", ord=" + ord +
+                '}';
+    }
 }

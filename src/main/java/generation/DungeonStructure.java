@@ -1,7 +1,10 @@
 package generation;
 
+import entity.Entity;
+import entity.object.Door;
 import gameElement.Dungeon;
 import gameElement.Room;
+import utils.Position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +29,14 @@ public class DungeonStructure {
         roomList.add(room1);
         Room room2 = RoomStructure.createRoom(2 , nextList2, seed, "south");
         roomList.add(room2);
+
+        Door door1 = new Door(new Position(6,0),room2, 0);
+        Door door2 = new Door(new Position(6,9),room1, 2);
+        room1.addEntity(door1);
+        room2.addEntity(door2);
+
+        door1.setNext(door2);
+        door2.setNext(door1);
         return new Dungeon(roomList);
     }
 }

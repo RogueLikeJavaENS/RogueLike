@@ -5,26 +5,39 @@ import entity.living.Player;
 import gameElement.Room;
 import utils.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class Contains the actual gameElement.Room. It contains a
  */
 public class GridMap {
-    Room room;
-    Tile[][] tiles;
-    Entity[][] entities;
-    Player player;
+    private Room room;
+    private Tile[][] tiles;
+    private Entity[][] entitiess;
+    private List<Entity>[][] entities;
+    private Player player;
 
     public GridMap(Room room, Player player) {
         this.player = player;
         this.room = room;
         this.tiles = new Tile[room.getHeight()][room.getWidth()];
-        this.entities = new Entity[room.getHeight()][room.getWidth()];
+        this.entities = new List[room.getHeight()][room.getWidth()];
+        //this.entities = new Entity[room.getHeight()][room.getWidth()];
         fillRoomContent();
-    }
-
-    public void update() {
         fillEntityContent();
     }
+
+    public void update(List<Entity> entityList) {
+        for(Entity entity : entityList) {
+            int abs = entity.getPosition().getAbs();
+            int ord = entity.getPosition().getOrd();
+            if (!entities[ord][abs].contains(entity)) {
+                entities[ord][abs].add(entity);
+            }
+        }
+    }
+
     private void fillRoomContent() {
         int[][] contents = room.getContents();
         int width = room.getWidth();
@@ -44,10 +57,21 @@ public class GridMap {
         Position pp = player.getPosition();
         for (int y = 0; y < room.getHeight(); y++) {
             for (int x = 0; x < room.getWidth(); x++) {
-                entities[y][x] = null;
+                List<Entity> entityList = new ArrayList<>();
+                entities[y][x] = entityList;
             }
         }
-        entities[pp.getOrd()][pp.getAbs()] = player;
+        List<Entity> entityList = new ArrayList<>();
+        entityList.add(player);
+        entities[pp.getOrd()][pp.getAbs()] = entityList;
+    }
+
+    private void updtateEntityContent() {
+        Position pp = player.getPosition();
+
+        List<Entity> entityList = new ArrayList<>();
+        entityList.add(player);
+        entities[pp.getOrd()][pp.getAbs()] = entityList;
     }
 
     @Override
@@ -56,8 +80,8 @@ public class GridMap {
         for(int y = 0; y < room.getHeight(); y++) {
             for (int i = 0; i < 2; i++) {
                 for(int x = 0; x < room.getWidth(); x++) {
-                    if (entities[y][x] != null) {
-                        sb.append(entities[y][x]);
+                    if (entities[y][x].size() > 0) {
+                        sb.append(entities[y][x].get(0)); // Methods to determine which entityt to display
                     } else {
                         sb.append(tiles[y][x]);
                     }
@@ -79,4 +103,13 @@ public class GridMap {
         return tiles[y][x]; //Needs to be tested, coordinates might be inverted.
     }
 
+    public List<Entity> getEntitiesAt(int abs, int ord) {
+        return entities[ord][abs];
+    }
+
+    public void removeEntity(Entity entity) {
+        int abs = entity.getPosition().getAbs();
+        int ord = entity.getPosition().getOrd();
+        entities[ord][abs].remove(entity);
+    }
 }

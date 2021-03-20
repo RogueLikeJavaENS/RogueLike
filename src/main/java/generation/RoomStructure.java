@@ -1,6 +1,9 @@
 package generation;
 
+import entity.Entity;
 import gameElement.Room;
+
+import java.util.List;
 
 public class RoomStructure {
     public static Room createRoom(int current, int[] nextList, Seed seed, String direction) {
@@ -21,7 +24,7 @@ public class RoomStructure {
                     if(contents[x][y]!=3) {
                         contents[x][y] = 1;
                     }
-                    else{
+                    else {
                         contents[x][y] = 3;
                     }
                 }

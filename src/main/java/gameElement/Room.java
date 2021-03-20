@@ -1,7 +1,9 @@
 package gameElement;
 
+import entity.Entity;
 import utils.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,11 +13,13 @@ import java.util.List;
  */
 
 public class Room {
-    int roomNum;
-    int[][] contents;
-    int width;
-    int height;
-    int[] nearRoom;
+    private int roomNum;
+    private int[][] contents;
+    private int width;
+    private int height;
+    private int[] nearRoom;
+    private List<Entity> entities;
+
 
     /**
      *
@@ -33,6 +37,11 @@ public class Room {
         this.contents = contents;
         this.width = width;
         this.height = height;
+        this.entities = new ArrayList<>();
+    }
+
+    public void addEntity(Entity entity) {
+        entities.add(entity);
     }
 
     public Position getCenter() {
@@ -108,5 +117,9 @@ public class Room {
      */
     public int getWest() {
         return this.nearRoom[3];
+    }
+
+    public List<Entity> getEntities() {
+        return entities;
     }
 }
