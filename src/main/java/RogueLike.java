@@ -67,14 +67,16 @@ public class RogueLike {
                     continue;
             }
             if (!acted) {
-                continue;
-            }
-            // If action is correct ok (GameState + input)
-            // Else break
+                state = gs.getState();
+                Thread.sleep(100);
+            } else {
+                gs.isOnEntity();
+                // If action is correct ok (GameState + input)
+                // Else break
 
-            // Monsters world interaction etc ...
+                // Monsters world interaction etc ...
 
-            // Animation
+                // Animation
 
                 // Update GameState
                 System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n");
@@ -85,7 +87,6 @@ public class RogueLike {
                 state = gs.getState();
             }
         }
-
         System.exit(0);
     }
 

@@ -131,7 +131,10 @@ public class RendererUI {
      */
     public void updateMap(MiniMap miniMap){
         int i = 0;
-        while ( i<miniMap.stringByLine().size()){
+        System.out.println("size strall : "+ strAll.length);
+        System.out.println("size minimap : " + miniMap.stringByLine().size());
+        while (i < miniMap.stringByLine().size()){
+            System.out.println("i : " + i);
             strAll[i*2+1] = miniMap.stringByLine().get(i);
             i++;
         }

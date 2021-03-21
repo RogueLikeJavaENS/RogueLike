@@ -25,9 +25,6 @@ public class GridMap {
         this.entities = new List[room.getHeight()][room.getWidth()];
         //this.entities = new Entity[room.getHeight()][room.getWidth()];
         fillRoomContent();
-    }
-
-    public void update() {
         fillEntityContent();
     }
 
@@ -101,8 +98,8 @@ public class GridMap {
             for (int i = 0; i <2; i++) {
                 StringBuilder sb = new StringBuilder();
                 for (int abs = 0; abs < room.getWidth(); abs++) {
-                    if (entities[ord][abs] != null) {
-                        sb.append(entities[ord][abs]);
+                    if (entities[ord][abs].size() != 0) {
+                        sb.append(entities[ord][abs].get(0));
                     } else {
                         sb.append(tiles[ord][abs]);
                     }

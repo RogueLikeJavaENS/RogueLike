@@ -25,9 +25,9 @@ public class DungeonStructure {
         nextList2[2] = 1;
 
         //for (int i = 1; i <= quantity ; i++) {}
-        Room room1 = RoomStructure.createRoom(1 , nextList1, seed, "north");
+        Room room1 = RoomStructure.createRoom(1 , nextList1, seed, "north", new Position(0,1));
         roomList.add(room1);
-        Room room2 = RoomStructure.createRoom(2 , nextList2, seed, "south");
+        Room room2 = RoomStructure.createRoom(2 , nextList2, seed, "south", new Position(0,0));
         roomList.add(room2);
 
         Door door1 = new Door(new Position(6,0),room2, 0);
@@ -37,6 +37,6 @@ public class DungeonStructure {
 
         door1.setNext(door2);
         door2.setNext(door1);
-        return new Dungeon(roomList);
+        return new Dungeon(roomList, 6, 6);
     }
 }
