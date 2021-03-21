@@ -113,14 +113,17 @@ public class MiniMap {
                         sb.append("#  ");
                     } else sb.append("|  ");
 
-                    if (gameState.getCurrentRoom().equals(room)){sb.append("@");}
+                    if (gameState.getCurrentRoom().equals(room)){sb.append("@ ");}
                     else {
                         sb.append(room.getRoomNum());
+                        if (room.getRoomNum() < 10) {
+                            sb.append(" ");
+                        }
                     }
 
                     if (room.getEast() != -1) {
-                        sb.append("  #");
-                    } else sb.append("  |");
+                        sb.append(" #");
+                    } else sb.append(" |");
                     return  sb.toString();
                 }
 

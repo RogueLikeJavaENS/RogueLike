@@ -49,6 +49,8 @@ public class RoomStructure {
                 }
             }
         }
-        return new Room(current, nextList, contents, roomPosition, ROOM_WIDTH, ROOM_HEIGHT);
+        int[] nextRoom = new int[4];
+        System.arraycopy(nextList, 0, nextRoom, 0, 4);
+        return new Room(current, nextRoom, contents, roomPosition, ROOM_WIDTH, ROOM_HEIGHT);
     }
 }

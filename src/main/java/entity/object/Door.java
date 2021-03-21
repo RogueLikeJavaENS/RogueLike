@@ -23,6 +23,11 @@ public class Door extends ObjectEntity {
 
     @Override
     public void doAction(GameState gameState) {
+        System.out.println("door pos : " + getPosition().toString());
+        System.out.println("next door pos :" + next.getPosition().toString());
+        System.out.println("direction : " + direction);
+        System.out.println("nextRoom : " + nextRoom.getRoomNum());
+
         Player player = gameState.getPlayer();
         int abs = next.getPosition().getAbs();
         int ord = next.getPosition().getOrd();

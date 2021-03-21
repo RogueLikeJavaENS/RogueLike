@@ -15,12 +15,12 @@ import java.util.List;
  */
 
 public class Room {
-    int roomNum;
-    int[][] contents;
-    int width;
-    int height;
-    int[] nearRoom;
-    Position position;
+    private int roomNum;
+    private int[][] contents;
+    private int width;
+    private int height;
+    private int[] nearRoom;
+    private Position position;
     private List<Entity> entities;
 
     /**

@@ -42,10 +42,10 @@ public class Position {
         if (i < 0){throw new IllegalArgumentException();}
         else {return i;}
     }
-    private void setOrd(int ord) throws IllegalArgumentException{
+    public void setOrd(int ord) throws IllegalArgumentException{
         this.ord = posCheck(ord);
     }
-    private void setAbs(int abs) throws IllegalArgumentException{
+    public void setAbs(int abs) throws IllegalArgumentException{
         this.abs = posCheck(abs);
     }
 

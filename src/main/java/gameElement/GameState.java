@@ -113,6 +113,7 @@ public class GameState {
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
         setEntities(currentRoom.getEntities());
+        System.out.printf("\nentity of %d : %s\n",currentRoom.getRoomNum(),currentRoom.getEntities().toString());
     }
 
     public void setGridMap(GridMap gridMap) {
