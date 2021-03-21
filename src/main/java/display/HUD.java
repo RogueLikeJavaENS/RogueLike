@@ -39,7 +39,7 @@ public class HUD {
                 .append(player.getCurrentHP())
                 .append("/")
                 .append(player.getMaxHP())
-                .append("\t\t"); //"HP: xx/yy "
+                .append("\t"); //"HP: xx/yy "
         sb.append("MP: ")
                 .append(player.getCurrentMP())
                 .append("/")

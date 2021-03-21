@@ -65,12 +65,7 @@ public class GameState {
 
     public void isOnEntity() {
         for(Entity entity : entities) {
-            System.out.println("size of entity : " + entities.size());
-            System.out.println("player : " + player.getPosition().toString());
-            System.out.println("entity : " + entity.getPosition().toString());
-
             if (player.getPosition().equals(entity.getPosition()) && entity != player) {
-                System.out.println("yes !");
                 entity.doAction(this);
             }
         }
@@ -113,7 +108,6 @@ public class GameState {
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
         setEntities(currentRoom.getEntities());
-        System.out.printf("\nentity of %d : %s\n",currentRoom.getRoomNum(),currentRoom.getEntities().toString());
     }
 
     public void setGridMap(GridMap gridMap) {

@@ -41,11 +41,8 @@ public class Dungeon {
     private void createAllDoor(){
         for (Room room : roomList) {
             int[] nearRoom = room.getNearRoom();
-            System.out.printf("near room of %d : %s\n", room.getRoomNum(), Arrays.toString(nearRoom));
             for (int j = 0; j < nearRoom.length; j++) {
                 if (nearRoom[j] != -1) {
-
-                    System.out.printf("\n Creation of door from %d to room %d\n", room.getRoomNum() ,nearRoom[j]);
                     Door door = new Door(getDoorPosition(j, room), getRoom(nearRoom[j]), j);
                     room.addEntity(door);
                 }

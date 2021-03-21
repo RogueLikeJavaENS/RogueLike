@@ -42,7 +42,6 @@ public class GraphDungeon {
     }
 
     public int calculDirection(int current, int oppositeDirection, int previousDirection) {
-        System.out.println(probDirection.toString());
         List<Integer> copyOfProbDirection = List.copyOf(probDirection);
         ArrayList<Integer> voisin = new ArrayList<>();
         voisin.clear();
@@ -111,15 +110,9 @@ public class GraphDungeon {
         Random GEN = new Random();
 
         // 0-N, 1-E, 2-S, 3-O
-        System.out.println("\n\nInitial size :"+size);
         while (size>0) {
-
             int oppositeDirection = (previousDirection+2) % 4;
             int direction = calculDirection(current, oppositeDirection, previousDirection);
-
-            System.out.println("\nsize :"+size);
-            System.out.println("Current Pos : " + graph.get(current)[4] + ", "+ graph.get(current)[5]);
-            System.out.println("Current Voisin : "+voisin.toString());
             int next = createVertice(current, direction);
             graph.get(next)[(direction+2) % 4] = current;
             graph.get(current)[direction] = next;
@@ -162,7 +155,6 @@ public class GraphDungeon {
         boolean exist = existingRoom.containsKey(testPosition);
         int next;
         if(!exist) {
-            System.out.println("in verticCreate : Vertice :  "+ Arrays.toString(vertice)+ "\n");
             acc++;
             graph.put(acc, vertice);
             next = acc;
@@ -170,7 +162,6 @@ public class GraphDungeon {
             created = true;
         } else {
             next = existingRoom.get(testPosition);
-            System.out.println("not created " + next + "\n");
             created = false;
         }
         return next;
@@ -178,10 +169,8 @@ public class GraphDungeon {
 
     public static void main(String[] args) {
         GraphDungeon test = new GraphDungeon(new Seed());
-        System.out.println("coucou");
         int quantite = test.getQuantity();
         HashMap<Integer, int[]> graphtest = test.getGraph();
-        System.out.println("final size : " + graphtest.size() + " Intitial size" + quantite);
         for (int i = 0; i < graphtest.size(); i++) {
             System.out.println(Arrays.toString(graphtest.get(i)) + " " + i);
         }
