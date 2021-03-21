@@ -1,6 +1,7 @@
 package generation;
 
 import gameElement.Dungeon;
+import gameElement.GraphDungeon;
 import gameElement.Room;
 import utils.Position;
 
@@ -38,6 +39,16 @@ public class DungeonStructure {
 //        roomList.add(room2);*/
 //        return new Dungeon(roomList);
 //    }
+    public static Dungeon createDungeon(Seed seed){
+        List<Room> roomList = new ArrayList<>();
+        GraphDungeon dungeon1 = new GraphDungeon(seed);
+        HashMap<Integer,int[]> graph = dungeon1.getGraph();
+        for (int i = 0; i < graph.size(); i++) {
+            Room room = RoomStructure.createRoom(i, seed, graph.get(i));
+            roomList.add(room);
+        }
+        return new Dungeon(roomList, dungeon1);
+    }
     private static int seedValue(Seed seed){
         List<String> iterseed = seed.getSeed();
         int seedValue = 0;

@@ -15,6 +15,11 @@ public class Dungeon {
         return roomList;
     }
 
+    public GraphDungeon getGraph() {
+        return graph;
+    }
+
+    private GraphDungeon graph;
     List<Room> roomList;
     // width -> max numbers of rooms in a column
     // height -> max numbers of rooms in a row
@@ -26,8 +31,9 @@ public class Dungeon {
      *       3 -> West.
      */
 
-    public Dungeon(List<Room> roomList) {
+    public Dungeon(List<Room> roomList, GraphDungeon graph) {
         this.roomList = roomList;
+        this.graph = graph;
     }
 
     public Room getRoom(int roomNum) {

@@ -1,5 +1,7 @@
 package gameElement;
 
+import utils.Position;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,7 @@ import java.util.List;
 public class Room {
     int roomNum;
     int[][] contents;
+    Position roomPosition;
     int width;
     int height;
     int[] nearRoom;
@@ -25,10 +28,11 @@ public class Room {
      *
      */
 
-    public Room(int roomNum, int[] nearRoom, int[][] contents, int width, int height) {
+    public Room(int roomNum, int[] nearRoom, int[][] contents, Position roomPosition, int width, int height) {
         this.roomNum = roomNum;
         this.nearRoom = nearRoom;
         this.contents = contents;
+        this.roomPosition = roomPosition;
         this.width = width;
         this.height = height;
     }
