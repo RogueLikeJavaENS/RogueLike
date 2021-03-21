@@ -25,7 +25,7 @@ public class RendererUI {
      * @param hud : the current HUD
      */
     public RendererUI(GridMap gridMap, MiniMap miniMap, HUD hud) {
-        this.strAll = new String[Math.max(gridMap.StrByLine().size()+hud.strByLine().size(),hud.strByLine().size())*2];
+        this.strAll = new String[Math.max(gridMap.StrByLine().size()+hud.strByLine().size(),miniMap.stringByLine().size())*2];
         updateGrid(gridMap,hud);
         updateHUD(hud,gridMap);
         updateMap(miniMap);
@@ -131,10 +131,7 @@ public class RendererUI {
      */
     public void updateMap(MiniMap miniMap){
         int i = 0;
-        System.out.println("size strall : "+ strAll.length);
-        System.out.println("size minimap : " + miniMap.stringByLine().size());
         while (i < miniMap.stringByLine().size()){
-            System.out.println("i : " + i);
             strAll[i*2+1] = miniMap.stringByLine().get(i);
             i++;
         }

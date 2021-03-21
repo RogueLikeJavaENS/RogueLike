@@ -23,7 +23,8 @@ public class RogueLike {
     RogueLike() throws InterruptedException {
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed);
-        Player player = new Player(new Position(0,0),100, 100, "Hero", 1);
+        Position initialPosition = dungeon.getRoomList().get(0).getCenter();
+        Player player = new Player(initialPosition,100, 100, "Hero", 1);
         GridMap gridMap = new GridMap(dungeon.getRoom(0), player);
         HUD hud = new HUD(player);
         ScanPanel sp = new ScanPanel();
@@ -37,7 +38,7 @@ public class RogueLike {
         System.out.println(rendererUI.toString());
 
         int state = gs.getState();
-        while(gs.getState() != 0) {
+        while(state != 0) {
             // print new GameState
 //            RendererUI.miniMapRender(miniMap);
 //            RendererUI.hudRender(hud);
@@ -80,7 +81,7 @@ public class RogueLike {
 
                 // Update GameState
                 System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n");
-                rendererUI.updateAll(gridMap,hud,miniMap);
+                rendererUI.updateAll(gs.getGridMap(),hud,miniMap);
                 System.out.println(rendererUI.toString());
                 Thread.sleep(100);
                 sp.reset();

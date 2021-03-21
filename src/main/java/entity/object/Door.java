@@ -40,7 +40,7 @@ public class Door extends ObjectEntity {
                 player.setPosition(new Position(abs-1, ord));
                 break;
         }
-        gameState.update(nextRoom);
+        gameState.updateChangingRoom(nextRoom);
     }
 
     @Override
