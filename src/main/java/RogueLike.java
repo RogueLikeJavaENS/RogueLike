@@ -37,10 +37,9 @@ public class RogueLike {
         MiniMap miniMap = new MiniMap(dungeon, gs);
 
         // Create the renderer and first print of it
-        RendererUI.clearConsole();
-        System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right");
+
         RendererUI rendererUI = new RendererUI(gridMap, miniMap, hud);
-        System.out.println(rendererUI.toString());
+        rendererUI.display();
 
         int state = gs.getState();
         while(state != 0) {
@@ -85,10 +84,8 @@ public class RogueLike {
                 // Animation
 
                 // Update GameState
-                RendererUI.clearConsole();
-                System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n");
                 rendererUI.updateAll(gs.getGridMap(),hud,miniMap);
-                System.out.println(rendererUI.toString());
+                rendererUI.display();
                 Thread.sleep(100);
                 sp.reset();
                 state = gs.getState();
@@ -96,6 +93,8 @@ public class RogueLike {
         }
         System.exit(0);
     }
+
+
 
     private int retrieveKey(ScanPanel sp) throws InterruptedException {
         int a = 0;

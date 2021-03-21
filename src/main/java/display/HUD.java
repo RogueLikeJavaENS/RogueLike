@@ -29,23 +29,32 @@ public class HUD {
      */
     public List<String> strByLine() {
         List<String> listStrHud = new ArrayList<>();
-        StringBuilder finalString = new StringBuilder();
-        finalString.append(player.getName())
-                .append(":\t"); //"Name:    "
-        finalString.append("Lvl: ")
+        StringBuilder sb = new StringBuilder();
+        sb.append(player.getName())
+                .append(": "); //"Name:    "
+        sb.append("Lvl: ")
                 .append(player.getLevel())
-                .append("\t\t"); //"Lvl: xx  "
-        finalString.append("HP: ")
+                .append("\t"); //"Lvl: xx  "
+        sb.append("HP: ")
                 .append(player.getCurrentHP())
                 .append("/")
                 .append(player.getMaxHP())
-                .append("\t\t"); //"HP: xx/yy"
-        finalString.append("MP: ")
+                .append("\t\t"); //"HP: xx/yy "
+        sb.append("MP: ")
                 .append(player.getCurrentMP())
                 .append("/")
                 .append(player.getMaxMP()); //"MP: xx/yy"
-        listStrHud.add(finalString.toString());
+        sb.append("\n");
+        String finalString = sb.toString();
+        //String emptyString = " ".repeat(finalString.length());
+        //listStrHud.add(emptyString);
+        listStrHud.add(finalString);
         return listStrHud; //"Name:    Lvl: 42    HP: 69/420    MP: 42/56" (example)
+    }
+
+    @Override
+    public String toString() {
+        return strByLine().get(0);
     }
 
     // Pour l'instant le HUD est petit, quand il s'aggrandira, Juliette le modifira afin qu'il s'affiche sur plusieurs

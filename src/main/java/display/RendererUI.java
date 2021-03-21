@@ -15,6 +15,7 @@ import java.util.List;
 
 public class RendererUI {
     private String[] strAll;
+    private HUD hud;
 
     /**
      * Constructor of the Object Renderer UI
@@ -25,9 +26,10 @@ public class RendererUI {
      * @param hud : the current HUD
      */
     public RendererUI(GridMap gridMap, MiniMap miniMap, HUD hud) {
-        this.strAll = new String[Math.max(gridMap.StrByLine().size()+hud.strByLine().size(),miniMap.stringByLine().size())*2];
+        this.hud = hud;
+        this.strAll = new String[Math.max(gridMap.StrByLine().size(),miniMap.stringByLine().size())*2];
         updateGrid(gridMap,hud);
-        updateHUD(hud,gridMap);
+        updateHUD(hud);
         updateMap(miniMap);
     }
 
@@ -75,7 +77,15 @@ public class RendererUI {
 
 
         }
-        return sb.toString();
+        String hudString = hud.toString();
+        String renderer = sb.toString();
+        String help = "Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n\n";
+        return help+hud+renderer;
+    }
+
+    public void display (){
+        clearConsole();
+        System.out.println(this.toString());
     }
 
     /**
@@ -87,7 +97,8 @@ public class RendererUI {
      */
     public void updateAll(GridMap gridMap, HUD hud, MiniMap miniMap){
         updateGrid(gridMap, hud);
-        updateHUD(hud,gridMap);
+        //updateHUD(hud,gridMap);
+        updateHUD(hud);
         updateMap(miniMap);
     }
 
@@ -95,14 +106,17 @@ public class RendererUI {
      * Permit to update only the HUD on the print
      *
      * @param hud the new Hud
-     * @param gridMap the current GridMap
      */
-    public void updateHUD(HUD hud,GridMap gridMap){
+   /* public void updateHUD(HUD hud,GridMap gridMap){
         fillStr(hud,gridMap);
         int heightGrid = gridMap.StrByLine().size();
         for (int i = 0; i < hud.strByLine().size(); i++){
             strAll[heightGrid*2 + i] = hud.strByLine().get(i);
         }
+    }*/
+
+    public void updateHUD(HUD hud){
+        this.hud = hud;
     }
 
     /**
