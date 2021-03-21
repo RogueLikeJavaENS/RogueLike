@@ -3,40 +3,49 @@ package generation;
 import entity.Entity;
 import entity.object.Door;
 import gameElement.Dungeon;
+import gameElement.GraphDungeon;
 import gameElement.Room;
 import utils.Position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.lang.*;
 
 
 public class DungeonStructure {
     public static Dungeon createDungeon(Seed seed){
-    //number's of room is going to be seed defined later
         List<Room> roomList = new ArrayList<>();
-        int quantity = 2;
-
-        int[] nextList1 = new int[4];
-        int[] nextList2 = new int[4];
-        Arrays.fill(nextList1, -1);
-        Arrays.fill(nextList2, -1);
-        nextList1[0] = 2;
-        nextList2[2] = 1;
-
-        //for (int i = 1; i <= quantity ; i++) {}
-        Room room1 = RoomStructure.createRoom(1 , nextList1, seed, "north", new Position(0,1));
-        roomList.add(room1);
-        Room room2 = RoomStructure.createRoom(2 , nextList2, seed, "south", new Position(0,0));
-        roomList.add(room2);
-
-        Door door1 = new Door(new Position(6,0),room2, 0);
-        Door door2 = new Door(new Position(6,9),room1, 2);
-        room1.addEntity(door1);
-        room2.addEntity(door2);
-
-        door1.setNext(door2);
-        door2.setNext(door1);
-        return new Dungeon(roomList, 6, 6);
+        GraphDungeon dungeon1 = new GraphDungeon(seed);
+        HashMap<Integer,int[]> graph = dungeon1.getGraph();
+        for (int i = 0; i < graph.size(); i++) {
+            Room room = RoomStructure.createRoom(i, seed, graph.get(i));
+            roomList.add(room);
+        }
+        return new Dungeon(roomList, dungeon1);
+    }
+    private static int seedValue(Seed seed){
+        List<String> iterseed = seed.getSeed();
+        int seedValue = 0;
+        for (int i = 0; i < iterseed.size(); i++) {
+              seedValue += Integer.valueOf(iterseed.get(i), 16);
+        }
+        return seedValue;
+    }
+    public static int numberOfRoom(Seed seed){
+        int MIN_NUMBER_ROOM = 14;
+        int MAX_NUMBER_ROOM = 20;
+        int seedValue=seedValue(seed);
+        int NbRoom = (int) Math.floor(seedValue%MAX_NUMBER_ROOM);
+        if (NbRoom<MIN_NUMBER_ROOM){
+            NbRoom=MIN_NUMBER_ROOM;
+        }
+        return NbRoom;
+    }
+    public static int[] initNextlist(){
+        int[] nextList = new int[6];
+        Arrays.fill(nextList, -1);
+        return nextList;
     }
 }

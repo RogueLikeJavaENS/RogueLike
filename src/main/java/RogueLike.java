@@ -4,10 +4,15 @@ import display.RendererUI;
 import entity.living.Player;
 import gameElement.Dungeon;
 import gameElement.GameState;
+import gameElement.Room;
 import generation.DungeonStructure;
 import gameElement.MiniMap;
 import generation.Seed;
 import utils.Position;
+
+import javax.xml.transform.Source;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This is the main class of the RogueLike Game.
@@ -91,10 +96,6 @@ public class RogueLike {
         System.exit(0);
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        RogueLike rogueLike = new RogueLike();
-    }
-
     private int retrieveKey(ScanPanel sp) throws InterruptedException {
         int a = 0;
         while(a == 0) {
@@ -103,5 +104,30 @@ public class RogueLike {
         }
         return a;
     }
+
+    public static void main(String[] args) throws InterruptedException {
+        RogueLike rogueLike = new RogueLike();
+    }
+//    public static void main(String[] args) {
+//        Seed seed = new Seed();
+//        Dungeon dungeon = DungeonStructure.createDungeon(seed);
+//        List<Room> test=dungeon.getRoomList();
+//        for (int i = 0; i < dungeon.getGraph().getGraph().size(); i++) {
+//            System.out.println(Arrays.toString(dungeon.getGraph().getGraph().get(i)) + " " + i);
+//        }
+//        for (Room room:
+//                test) {
+//            System.out.println(room.getHeight());
+//            System.out.println(room.getWidth());
+//            System.out.println(room.getContents().length);
+//            System.out.println(room.getContents()[0].length);
+//            for (int i = 0; i < room.getHeight(); i++) {
+//                for (int j = 0; j < room.getWidth(); j++) {
+//                    System.out.printf("%d ",room.getContents()[i][j]);
+//                }
+//                System.out.println("\n");
+//            }
+//            System.out.println("-------------------");
+//        }
 
 }
