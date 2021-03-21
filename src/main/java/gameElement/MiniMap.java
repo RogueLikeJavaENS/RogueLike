@@ -1,82 +1,142 @@
 package gameElement;
 
+import utils.Position;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is used to see the whole dungeon as a minimap
+ * This class is used to see the whole dungeon as a minimap.
+ * You can see the corridor between the room, the number of the room and in which room is the player
  *
- * @author Antoine
+ * @author Antoine Juliette
  */
 
 public class MiniMap {
     Dungeon dungeon;
-    List<String>[][] miniMapString;
+    GameState gameState;
 
-    public MiniMap(Dungeon dungeon) {
+    public MiniMap(Dungeon dungeon, GameState gameState) {
         this.dungeon = dungeon;
-        List<Room> roomList = dungeon.getRoomList();
-
-        // TODO : Create dynamically the minimap in space, and print it
-        miniMapString = new List[2][3];
-        for (int y = 0; y < 2; y++) {
-            for (int x =0; x < 3; x++) {
-                miniMapString[y][x] = getEmptyRoom();
-            }
-        }
-
-        miniMapString[0][1] = buildRoom(roomList.get(1));
-        miniMapString[1][1] = buildRoom(roomList.get(0));
+        this.gameState = gameState;
     }
 
-
-    @Override
+    /**
+     * Return the String which permit to print the minimap on the terminal
+     *
+     * @return string
+     */
     public String toString() {
+        List<String> strByLine = stringByLine();
+
         StringBuilder sb = new StringBuilder();
-        for (int y = 0; y < 2; y++) {
-            for (int i = 0; i<4; i++) {
-                for (int x = 0; x<3; x++) {
-                    sb.append(miniMapString[y][x].get(i));
-                }
-                sb.append("\n");
-            }
+        for (String str : strByLine){
+            sb.append(str);
+            sb.append("\n");
         }
         return sb.toString();
     }
 
-    private List<String> buildRoom(Room room) {
-        List<String> sl = new ArrayList<>();
-        // North Row
+    /**
+     * With an object dungeon, return an array which contain the room at its good coordinate
+     * (example: a room at the position (1,3) will be on the array at the coordinate (1,3))
+     *
+     * @param dungeon the dungeon to print
+     * @return Room[][]
+     */
+    private Room[][] listToArray (Dungeon dungeon){
+        List<Room> roomList = dungeon.getRoomList();
+        int width = dungeon.getWidth();
+        int height = dungeon.getHeight();
 
-        if (room.getNorth() != -1) {
-            sl.add(" __#__ ");
-        } else sl.add(" _____ ");
-        sl.add("|     |");
+        Room[][] roomArray = new Room[height][width];
 
-        // West and East row
-        StringBuilder sb = new StringBuilder();
-        if (room.getWest() != -1) {
-            sb.append("#  ");
-        } else sb.append("|  ");
-        sb.append(room.getRoomNum());
-        if (room.getEast() != -1) {
-            sb.append("  #");
-        } else sb.append("  |");
-        sl.add(sb.toString());
-
-        // South Row
-        if (room.getSouth() != -1) {
-            sl.add("|__#__|");
-        } else sl.add("|_____|");
-        return sl;
+        for (Room room : roomList){
+            Position roomPos = room.getPosition();
+            int abs = roomPos.getAbs();
+            int ord = roomPos.getOrd();
+            roomArray[ord][abs] = room;
+        }
+        return roomArray;
     }
 
-    private List<String> getEmptyRoom() {
-        List<String> sl = new ArrayList<>();
-        sl.add("       ");
-        sl.add("       ");
-        sl.add("       ");
-        sl.add("       ");
-        return sl;
+    /**
+     * Transform the array of room into a list of String which contains each line to print
+     * in order to see the minimap
+     *
+     * @return List<String>
+     */
+    public List<String> stringByLine (){
+        Room[][] roomArray = listToArray(dungeon);
+        List<String> listOfLine= new ArrayList<>();
+
+        for (Room[] lineRoom : roomArray){
+            for (int i=0; i<4; i++){
+                StringBuilder sb2 = new StringBuilder();
+                sb2.append("\t");
+                for (Room room : lineRoom){
+                    sb2.append(buildRoom(room,i));
+                }
+                String line = sb2.toString();
+                listOfLine.add(line);
+            }
+        }
+        return listOfLine;
     }
+
+
+    /**
+     * For a room and a line of the room return the string to use in order to print it.
+     * If there is no room it return a string full of blank
+     *
+     * @param room the room to print
+     * @param line the line of the room to print
+     * @return String
+     */
+
+    private String buildRoom(Room room, int line) {
+        String strLine = "";
+
+        if (room == null){
+            strLine = "       ";
+        }
+        else {
+            switch (line){
+                case 0: {
+                    if (room.getNorth() != -1){ return " __#__ "; }
+                    else { return " _____ "; }}
+
+                case 1: { return  "|     |"; }
+
+                case 2:{
+                    StringBuilder sb = new StringBuilder();
+                    if (room.getWest() != -1) {
+                        sb.append("#  ");
+                    } else sb.append("|  ");
+
+                    if (gameState.getCurrentRoom().equals(room)){sb.append("@");}
+                    else {
+                        sb.append(room.getRoomNum());
+                    }
+
+                    if (room.getEast() != -1) {
+                        sb.append("  #");
+                    } else sb.append("  |");
+                    return  sb.toString();
+                }
+
+                 //case 2:{ return "|     |"; }
+
+                case 3:{
+                    if (room.getSouth() != -1){ return "|__#__|";}
+                    else {return "|_____|";}
+                }
+            }
+        }
+        return strLine;
+    }
+
+
+
+
+
 }

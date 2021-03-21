@@ -13,13 +13,13 @@ import java.util.List;
  */
 
 public class Room {
-    private int roomNum;
-    private int[][] contents;
-    private int width;
-    private int height;
-    private int[] nearRoom;
+    int roomNum;
+    int[][] contents;
+    int width;
+    int height;
+    int[] nearRoom;
+    Position position;
     private List<Entity> entities;
-
 
     /**
      *
@@ -31,18 +31,21 @@ public class Room {
      *
      */
 
-    public Room(int roomNum, int[] nearRoom, int[][] contents, int width, int height) {
+    public Room(int roomNum, int[] nearRoom, int[][] contents, int width, int height, Position position) {
         this.roomNum = roomNum;
         this.nearRoom = nearRoom;
         this.contents = contents;
         this.width = width;
         this.height = height;
+        this.position = position;
         this.entities = new ArrayList<>();
     }
 
     public void addEntity(Entity entity) {
         entities.add(entity);
     }
+
+    public Position getPosition(){ return position;}
 
     public Position getCenter() {
         return (new Position(width /2, height /2));

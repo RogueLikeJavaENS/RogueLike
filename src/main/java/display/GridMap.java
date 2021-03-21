@@ -25,6 +25,9 @@ public class GridMap {
         this.entities = new List[room.getHeight()][room.getWidth()];
         //this.entities = new Entity[room.getHeight()][room.getWidth()];
         fillRoomContent();
+    }
+
+    public void update() {
         fillEntityContent();
     }
 
@@ -91,6 +94,25 @@ public class GridMap {
         }
         return sb.toString();
     }
+
+    public List<String> StrByLine (){
+        List<String> strLine = new ArrayList<>();
+        for (int ord = 0; ord<room.getHeight(); ord++){
+            for (int i = 0; i <2; i++) {
+                StringBuilder sb = new StringBuilder();
+                for (int abs = 0; abs < room.getWidth(); abs++) {
+                    if (entities[ord][abs] != null) {
+                        sb.append(entities[ord][abs]);
+                    } else {
+                        sb.append(tiles[ord][abs]);
+                    }
+                }
+                strLine.add(sb.toString());
+            }
+        }
+        return strLine;
+    }
+
 
     /**
      * @param x Abscissa of the wanted tile.

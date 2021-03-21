@@ -25,16 +25,19 @@ public class RogueLike {
         Dungeon dungeon = DungeonStructure.createDungeon(seed);
         Player player = new Player(new Position(0,0),100, 100, "Hero", 1);
         GridMap gridMap = new GridMap(dungeon.getRoom(0), player);
-        MiniMap miniMap = new MiniMap(dungeon);
         HUD hud = new HUD(player);
         ScanPanel sp = new ScanPanel();
         GameState gs = new GameState(player, dungeon, gridMap);
+        MiniMap miniMap = new MiniMap(dungeon, gs);
 
         System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right");
-        RendererUI.roomRender(gridMap);
+
+        // Create the renderer and first print of it
+        RendererUI rendererUI = new RendererUI(gridMap, miniMap, hud);
+        System.out.println(rendererUI.toString());
 
         int state = gs.getState();
-        while(state != 0) {
+        while(gs.getState() != 0) {
             // print new GameState
 //            RendererUI.miniMapRender(miniMap);
 //            RendererUI.hudRender(hud);
@@ -64,21 +67,19 @@ public class RogueLike {
                     continue;
             }
             if (!acted) {
-                state = gs.getState();
-                Thread.sleep(100);
-            } else {
-                gs.isOnEntity(); // look if action need to be performed
+                continue;
+            }
+            // If action is correct ok (GameState + input)
+            // Else break
 
-                // If action is correct ok (GameState + input)
-                // Else break
+            // Monsters world interaction etc ...
 
-                // Monsters world interaction etc ...
-
-                // Animation
+            // Animation
 
                 // Update GameState
                 System.out.println("Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n");
-                RendererUI.roomRender(gs.getGridMap());
+                rendererUI.updateAll(gridMap,hud,miniMap);
+                System.out.println(rendererUI.toString());
                 Thread.sleep(100);
                 sp.reset();
                 state = gs.getState();
