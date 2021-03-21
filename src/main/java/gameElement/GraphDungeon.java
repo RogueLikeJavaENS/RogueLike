@@ -9,6 +9,12 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This class generates randomly and procedurally a Hashmap containing the couple Int number of the Room
+ * with the int[] containing its linked neighbor and its a relative position.
+ *
+ * @author Antoine && Luca
+ */
 public class GraphDungeon {
     private HashMap<Integer, int[]> graph;
     private HashMap<Position, Integer> existingRoom;
@@ -18,6 +24,18 @@ public class GraphDungeon {
     private int acc;
     private boolean created;
     public ArrayList<Integer> probDirection;
+
+    /**
+     * This constructor creates a gameElement.GraphDungeon from the seed given in parameter.
+     * initialises acc at 0, acc being used to manage the global number of room.
+     * initialises created at false, created being used to verify globally if the room we're iterating on
+     * has been created or was already.
+     * initialises probDirection as an ArrayList containing one of each direction (0,1,2,3), probDirection is the ArrayList
+     * used to manage the pseudo-reinforcement learning used to generate the graph.
+     * Calls GraphDungeon.attributePath.
+     * @param seed
+     * @see Seed
+     */
 
     public GraphDungeon(Seed seed) {
         this.seed = seed;
@@ -41,6 +59,17 @@ public class GraphDungeon {
         return graph;
     }
 
+    /**
+     * This method chooses a direction for the graph (to add a new room)
+     * by reinforcement learning and deleting the impossible pathway.
+     * It then increments probDirection with the chosen direction to up
+     * the probability to continue in this direction.
+     *
+     * @param current
+     * @param oppositeDirection
+     * @param previousDirection
+     * @return direction
+     */
     public int calculDirection(int current, int oppositeDirection, int previousDirection) {
         System.out.println(probDirection.toString());
         List<Integer> copyOfProbDirection = List.copyOf(probDirection);
@@ -70,7 +99,7 @@ public class GraphDungeon {
         return direction;
     }
 
-    public int moreProbable(List<Integer> copyOfProbDirection) {
+    private int moreProbable(List<Integer> copyOfProbDirection) {
         int size = copyOfProbDirection.size();
         int index = Integer.valueOf(seed.getSeed().get(size%15), 16)%size;
         return copyOfProbDirection.get(index);

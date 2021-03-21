@@ -23,6 +23,7 @@ public class Room {
      * @param roomNum Number of the room.
      * @param nearRoom List of all rooms. 0-N, 1-E, 2-S, 3-W
      * @param contents Int table that content the id of the game's elements.
+     * @param roomPosition Position object of the Room.
      * @param width Width of the gameElement.Dungeon
      * @param height Height of the gameElement.Dungeon
      *

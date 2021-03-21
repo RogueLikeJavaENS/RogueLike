@@ -11,34 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.lang.*;
 
-
+/**
+ * This class uses the graphDungeon to generate a Dungeon
+ *
+ * @author Luca
+ */
 public class DungeonStructure {
-//    public static Dungeon createDungeon(Seed seed){
-//    //number's of room is going to be seed defined later
-//        List<Room> roomList = new ArrayList<>();
-//        //HashMap<Room,int[]> DungeonStructure;
-//        int quantity = NumberOfRoom(seed);
-//
-//        /*int[] nextList1 = new int[4];
-//        int[] nextList2 = new int[4];
-//        Arrays.fill(nextList1, -1);
-//        Arrays.fill(nextList2, -1);
-//        nextList1[0] = 2;
-//        nextList2[2] = 1;*/
-//
-//        for (int i = 1; i <= quantity ; i++) {
-//            if (i==1){
-//                Position StartingPosition = new Position(Integer.parseInt(seed.getSeed().get(1)) , Integer.parseInt(seed.getSeed().get(2)));
-//                roomList.add(RoomStructure.createRoom(i, seed, StartingPosition));
-//            }
-//            Position position = new
-//        }
-//        /*Room room1 = RoomStructure.createRoom(1 , seed, "north");
-//        roomList.add(room1);
-//        Room room2 = RoomStructure.createRoom(2 , seed, "south");
-//        roomList.add(room2);*/
-//        return new Dungeon(roomList);
-//    }
     public static Dungeon createDungeon(Seed seed){
         List<Room> roomList = new ArrayList<>();
         GraphDungeon dungeon1 = new GraphDungeon(seed);
@@ -49,6 +27,13 @@ public class DungeonStructure {
         }
         return new Dungeon(roomList, dungeon1);
     }
+
+    /**
+     * This method takes the seed List and concatenates it in one Integer.
+     *
+     * @param seed
+     * @return seedValue
+     */
     private static int seedValue(Seed seed){
         List<String> iterseed = seed.getSeed();
         int seedValue = 0;
@@ -57,6 +42,13 @@ public class DungeonStructure {
         }
         return seedValue;
     }
+
+    /**
+     * This method takes the seed and uses it to generate a random number for our dungeon.
+     *
+     * @param seed
+     * @return NbRoom
+     */
     public static int numberOfRoom(Seed seed){
         int MIN_NUMBER_ROOM = 14;
         int MAX_NUMBER_ROOM = 20;
@@ -67,6 +59,13 @@ public class DungeonStructure {
         }
         return NbRoom;
     }
+
+    /**
+     * This method initialize the nextList, a list of integer that contains the linked room respectively in North, East, South, West
+     * and the Ordinate and Abscissa of the room, at -1 to be filled later.
+     *
+     * @return nextList
+     */
     public static int[] initNextlist(){
         int[] nextList = new int[6];
         Arrays.fill(nextList, -1);
