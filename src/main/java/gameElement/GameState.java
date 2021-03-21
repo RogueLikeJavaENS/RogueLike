@@ -76,9 +76,14 @@ public class GameState {
         }
     }
 
+    public void update(Room room) {
+        setCurrentRoom(room);
+        setGridMap(new GridMap(room, player));
+        fillEntities();
+    }
+
     public void fillEntities() {
         entities = currentRoom.getEntities();
-
     }
 
     public void exitGame() {

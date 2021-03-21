@@ -23,7 +23,6 @@ public class Door extends ObjectEntity {
 
     @Override
     public void doAction(GameState gameState) {
-        gameState.setCurrentRoom(nextRoom);
         Player player = gameState.getPlayer();
         int abs = next.getPosition().getAbs();
         int ord = next.getPosition().getOrd();
@@ -41,7 +40,7 @@ public class Door extends ObjectEntity {
                 player.setPosition(new Position(abs-1, ord));
                 break;
         }
-        gameState.setGridMap(new GridMap(nextRoom, player));
+        gameState.update(nextRoom);
     }
 
     @Override
