@@ -15,6 +15,9 @@ import java.lang.*;
 
 
 public class DungeonStructure {
+    private final static int DUNGEON_HEIGHT = 6;
+    private final static int DUNGEON_WIDTH = 6;
+
     public static Dungeon createDungeon(Seed seed){
         List<Room> roomList = new ArrayList<>();
         GraphDungeon dungeon1 = new GraphDungeon(seed);
@@ -23,7 +26,7 @@ public class DungeonStructure {
             Room room = RoomStructure.createRoom(i, seed, graph.get(i));
             roomList.add(room);
         }
-        return new Dungeon(roomList, dungeon1);
+        return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1);
     }
     private static int seedValue(Seed seed){
         List<String> iterseed = seed.getSeed();

@@ -31,14 +31,8 @@ public class Dungeon {
         this.height = height;
     }
 
-
-    public List<Room> getRoomList() {
-        return roomList;
-    }
     public int getHeight() { return height; }
     public int getWidth() { return width; }
-
-
 
     public Room getRoom(int roomNum) {
         return roomList.get(roomNum);

@@ -33,7 +33,7 @@ public class Room {
      *
      */
 
-    public Room(int roomNum, int[] nearRoom, int[][] contents, int width, int height, Position position) {
+    public Room(int roomNum, int[] nearRoom, int[][] contents,  Position position, int width, int height) {
         this.roomNum = roomNum;
         this.nearRoom = nearRoom;
         this.contents = contents;
