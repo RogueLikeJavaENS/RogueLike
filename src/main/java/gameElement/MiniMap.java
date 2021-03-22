@@ -1,5 +1,6 @@
 package gameElement;
 
+import utils.Direction;
 import utils.Position;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,17 +102,18 @@ public class MiniMap {
         }
         else {
             switch (line){
-                case 0: {
-                    if (room.getNorth() != -1){ return " __#__ "; }
-                    else { return " _____ "; }}
+                case 0:
+                    if (room.getRoomAt(Direction.NORTH) != -1){ return " __#__ "; }
+                    else { return " _____ "; }
 
-                case 1: { return  "|     |"; }
+                case 1:
+                    return  "|     |";
 
-                case 2:{
+                case 2:
                     StringBuilder sb = new StringBuilder();
-                    if (room.getWest() != -1) {
+                    if (room.getRoomAt(Direction.WEST) != -1) {
                         sb.append("#  ");
-                    } else sb.append("|  ");
+                    } else {sb.append("|  ");}
 
                     if (gameState.getCurrentRoom().equals(room)){sb.append("@ ");}
                     else {
@@ -121,16 +123,15 @@ public class MiniMap {
                         }
                     }
 
-                    if (room.getEast() != -1) {
+                    if (room.getRoomAt(Direction.EAST) != -1) {
                         sb.append(" #");
                     } else sb.append(" |");
                     return  sb.toString();
-                }
 
                  //case 2:{ return "|     |"; }
 
                 case 3:{
-                    if (room.getSouth() != -1){ return "|__#__|";}
+                    if (room.getRoomAt(Direction.SOUTH) != -1){ return "|__#__|";}
                     else {return "|_____|";}
                 }
             }

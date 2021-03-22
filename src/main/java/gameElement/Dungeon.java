@@ -2,6 +2,7 @@ package gameElement;
 
 import entity.Entity;
 import entity.object.Door;
+import utils.Direction;
 import utils.Position;
 
 import java.util.Arrays;
@@ -43,7 +44,7 @@ public class Dungeon {
             int[] nearRoom = room.getNearRoom();
             for (int j = 0; j < nearRoom.length; j++) {
                 if (nearRoom[j] != -1) {
-                    Door door = new Door(getDoorPosition(j, room), getRoom(nearRoom[j]), j);
+                    Door door = new Door(getDoorPosition(j, room), getRoom(nearRoom[j]), Direction.intToDirection(j));
                     room.addEntity(door);
                 }
             }

@@ -1,36 +1,31 @@
 package generation;
 
-import entity.Entity;
 import gameElement.Room;
+import utils.Direction;
 import utils.Position;
-
-import java.util.List;
-import utils.Position;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class RoomStructure {
-    public static Room createRoom(int current, Seed seed, int[] nextList) {
-        int ROOM_WIDTH = 22;
-        int ROOM_HEIGHT = 10;
+    private final static int ROOM_WIDTH = 22;
+    private final static int ROOM_HEIGHT = 10;
 
-        Position roomPosition = new Position(nextList[5], nextList[4]); // using y x might need to reverse because i'm a dumbass
+    public static Room createRoom(int current, int[] nextList) {
+
+        Position roomPosition = new Position(nextList[5], nextList[4]); // using y x might need to reverse
         int[][] contents;
         contents = new int[ROOM_HEIGHT][ROOM_WIDTH];
         for (int z = 0; z < 4; z++) {
             if (nextList[z] != -1) {
-                switch (z) {
-                    case 0:
+                switch (Direction.intToDirection(z)) {
+                    case NORTH:
                         contents[0][ROOM_WIDTH/2] = 3;
                         break;
-                    case 1:
+                    case EAST:
                         contents[ROOM_HEIGHT/2][ROOM_WIDTH-1] = 3;
                         break;
-                    case 2:
+                    case SOUTH:
                         contents[ROOM_HEIGHT-1][ROOM_WIDTH/2] = 3;
                         break;
-                    case 3:
+                    case WEST:
                         contents[ROOM_HEIGHT/2][0] = 3;
                         break;
                 }

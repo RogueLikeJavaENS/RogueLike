@@ -1,17 +1,17 @@
 package entity.object;
 
-import display.GridMap;
 import entity.living.Player;
 import gameElement.GameState;
 import gameElement.Room;
+import utils.Direction;
 import utils.Position;
 
 public class Door extends ObjectEntity {
-    private Room nextRoom;
-    private int direction;
+    private final Room nextRoom;
+    private final Direction direction;
     private Door next;
 
-    public Door(Position position, Room nextRoom, int direction) {
+    public Door(Position position, Room nextRoom, Direction direction) {
         super(position, true);
         this.direction = direction;
         this.nextRoom = nextRoom;
@@ -27,16 +27,16 @@ public class Door extends ObjectEntity {
         int abs = next.getPosition().getAbs();
         int ord = next.getPosition().getOrd();
         switch (direction) {
-            case 0: // North
+            case NORTH:
                 player.setPosition(new Position(abs, ord-1));
                 break;
-            case 1: // East
+            case EAST:
                 player.setPosition(new Position(abs+1, ord));
                 break;
-            case 2: // South
+            case SOUTH:
                 player.setPosition(new Position(abs, ord+1));
                 break;
-            case 3: // West
+            case WEST:
                 player.setPosition(new Position(abs-1, ord));
                 break;
         }

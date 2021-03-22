@@ -12,18 +12,16 @@ import java.util.List;
  * This class Contains the actual gameElement.Room. It contains a
  */
 public class GridMap {
-    private Room room;
-    private Tile[][] tiles;
-    private Entity[][] entitiess;
-    private List<Entity>[][] entities;
-    private Player player;
+    private final Room room;
+    private final Tile[][] tiles;
+    private final List<Entity>[][] entities;
+    private final Player player;
 
     public GridMap(Room room, Player player) {
         this.player = player;
         this.room = room;
         this.tiles = new Tile[room.getHeight()][room.getWidth()];
         this.entities = new List[room.getHeight()][room.getWidth()];
-        //this.entities = new Entity[room.getHeight()][room.getWidth()];
         fillRoomContent();
         fillEntityContent();
     }
@@ -66,7 +64,7 @@ public class GridMap {
         entities[pp.getOrd()][pp.getAbs()] = entityList;
     }
 
-    private void updtateEntityContent() {
+    private void updateEntityContent() {
         Position pp = player.getPosition();
 
         List<Entity> entityList = new ArrayList<>();

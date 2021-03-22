@@ -1,10 +1,10 @@
 package gameElement;
 
 import entity.Entity;
+import utils.Direction;
 import utils.Position;
 
 import java.util.ArrayList;
-import utils.Position;
 
 import java.util.List;
 
@@ -15,20 +15,20 @@ import java.util.List;
  */
 
 public class Room {
-    private int roomNum;
-    private int[][] contents;
-    private int width;
-    private int height;
-    private int[] nearRoom;
-    private Position position;
-    private List<Entity> entities;
+    private final int roomNum;
+    private final int[][] contents;
+    private final int width;
+    private final int height;
+    private final int[] nearRoom;
+    private final Position position;
+    private final List<Entity> entities;
 
     /**
      *
      * @param roomNum Number of the room.
      * @param nearRoom List of all rooms. 0-N, 1-E, 2-S, 3-W
      * @param contents Int table that content the id of the game's elements.
-     * @param roomPosition Position object of the Room.
+     * @param position Position object of the Room.
      * @param width Width of the gameElement.Dungeon
      * @param height Height of the gameElement.Dungeon
      *
@@ -94,35 +94,16 @@ public class Room {
         return height;
     }
 
-    /**
-     * Get the northern room number. If the room doesn't have north way, return -1
-     * @return int
-     */
-    public int getNorth() {
-        return this.nearRoom[0];
-    }
 
     /**
-     * Get the eastern room number. If the room doesn't have north way, return -1
-     * @return int
+     * Returns the roomNum of the room at the given direction.
+     * @param direction NORTH, SOUTH, EAST or WEST
+     * @return the corresponding roomNum in nearRoom, -1 if there's none
+     *
+     * @author Raphael
      */
-    public int getEast() {
-        return this.nearRoom[1];
-    }
-    /**
-     * Get the southern room number. If the room doesn't have north way, return -1
-     * @return int
-     */
-    public int getSouth() {
-        return this.nearRoom[2];
-    }
-
-    /**
-     * Get the western room number. If the room doesn't have north way, return -1
-     * @return int
-     */
-    public int getWest() {
-        return this.nearRoom[3];
+    public int getRoomAt(Direction direction) {
+        return nearRoom[direction.getValue()];
     }
 
     public List<Entity> getEntities() {

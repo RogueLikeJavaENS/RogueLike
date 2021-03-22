@@ -1,11 +1,8 @@
 package generation;
 
-import entity.Entity;
-import entity.object.Door;
 import gameElement.Dungeon;
 import gameElement.GraphDungeon;
 import gameElement.Room;
-import utils.Position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +24,7 @@ public class DungeonStructure {
         GraphDungeon dungeon1 = new GraphDungeon(seed);
         HashMap<Integer,int[]> graph = dungeon1.getGraph();
         for (int i = 0; i < graph.size(); i++) {
-            Room room = RoomStructure.createRoom(i, seed, graph.get(i));
+            Room room = RoomStructure.createRoom(i, graph.get(i));
             roomList.add(room);
         }
         return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1);
@@ -36,14 +33,14 @@ public class DungeonStructure {
     /**
      * This method takes the seed List and concatenates it in one Integer.
      *
-     * @param seed
-     * @return seedValue
+     * @param seed seed from which the value will be returned.
+     * @return the seed as an int.
      */
     private static int seedValue(Seed seed){
         List<String> iterseed = seed.getSeed();
         int seedValue = 0;
-        for (int i = 0; i < iterseed.size(); i++) {
-              seedValue += Integer.valueOf(iterseed.get(i), 16);
+        for (String s : iterseed) {
+            seedValue += Integer.valueOf(s, 16);
         }
         return seedValue;
     }
@@ -51,8 +48,8 @@ public class DungeonStructure {
     /**
      * This method takes the seed and uses it to generate a random number for our dungeon.
      *
-     * @param seed
-     * @return NbRoom
+     * @param seed seed from which the number of room will be decided.
+     * @return the number of room decided from the seed.
      */
     public static int numberOfRoom(Seed seed){
         int MIN_NUMBER_ROOM = 14;
