@@ -1,5 +1,6 @@
 package display;
 
+import gameElement.GameState;
 import gameElement.MiniMap;
 import java.util.List;
 
@@ -21,14 +22,14 @@ public class RendererUI {
      * Constructor of the Object Renderer UI
      * Initialize the array strAll with its size
      *
-     * @param gridMap : the GridMap of current room
+     * @param gs : the actual GameState
      * @param miniMap : the Minimap of the dungeon
      * @param hud : the current HUD
      */
-    public RendererUI(GridMap gridMap, MiniMap miniMap, HUD hud) {
+    public RendererUI(GameState gs, MiniMap miniMap, HUD hud) {
         this.hud = hud;
-        this.strAll = new String[Math.max(gridMap.StrByLine().size(),miniMap.stringByLine().size())*2];
-        updateGrid(gridMap,hud);
+        this.strAll = new String[Math.max(gs.getGridMap().StrByLine().size(),miniMap.stringByLine().size())*2];
+        updateGrid(gs.getGridMap(),hud);
         updateHUD(hud);
         updateMap(miniMap);
     }
