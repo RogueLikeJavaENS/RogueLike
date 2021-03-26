@@ -1,10 +1,12 @@
 package gameElement;
 
+import display.GridMap;
 import entity.Entity;
 import entity.object.Door;
 import utils.Direction;
 import utils.Position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +23,7 @@ public class Dungeon {
     private int width; // width -> max numbers of rooms in a column
     private int height;  // height -> max numbers of rooms in a row
     private GraphDungeon graph;
+    private List<GridMap> gridMapList; // list of gridMap, index by room number.
 
     /**
      * List of List of roomNumber.
@@ -37,6 +40,14 @@ public class Dungeon {
         this.height = height;
         createAllDoor();
         setAllNextDoor();
+        initGridMapList();
+    }
+
+    private void initGridMapList(){
+        this.gridMapList = new ArrayList<>();
+        for (Room room : roomList) {
+            gridMapList.add(new GridMap(room));
+        }
     }
 
     private void createAllDoor(){
@@ -123,9 +134,15 @@ public class Dungeon {
     }
 
     public int getHeight() { return height; }
+
     public int getWidth() { return width; }
+
     public Room getRoom(int roomNum) {
         return roomList.get(roomNum);
+    }
+
+    public GridMap getGridMap(Room room) {
+        return gridMapList.get(room.getRoomNum());
     }
 
     /**

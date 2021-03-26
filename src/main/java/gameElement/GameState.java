@@ -27,18 +27,15 @@ public class GameState {
     private final Player player;
     private final Dungeon dungeon;
     private GridMap gridMap;
-    private List<Entity> entities;
 
-    public GameState(Player player, Dungeon dungeon, GridMap gridMap) {
+    public GameState(Player player, Dungeon dungeon) {
         this.dungeon = dungeon;
         this.player = player;
-        this.gridMap = gridMap;
         this.currentRoom = dungeon.getRoomList().get(0);
-        entities = currentRoom.getEntities();
-        entities.add(player);
+        this.gridMap = dungeon.getGridMap(currentRoom);
         player.setPosition(currentRoom.getCenter());
         state = 1;
-        gridMap.update(entities);
+        gridMap.update(player, true);
     }
 
     /**
@@ -55,32 +52,28 @@ public class GameState {
         int ord = player.getPosition().getOrd();
 
         if (gridMap.getTileAt(abs + x, ord + y).isAccessible()) {
-            gridMap.removeEntity(player);
             player.getPosition().updatePos(x, y);
-            gridMap.update(entities);
             acted = true;
         }
         return acted;
     }
 
     public void isOnEntity() {
-        for(Entity entity : entities) {
-            if (player.getPosition().equals(entity.getPosition()) && entity != player) {
+        int playerAbs = player.getPosition().getAbs();
+        int playerOrd = player.getPosition().getOrd();
+        List<Entity> entitiesAt = gridMap.getEntitiesAt(playerAbs, playerOrd);
+        for(Entity entity : entitiesAt) {
+            if (entity != player) {
                 entity.doAction(this);
             }
         }
     }
 
     public void updateChangingRoom(Room room) {
+        gridMap.update(player, false);
         setCurrentRoom(room);
-        setGridMap(new GridMap(room, player));
-        fillEntities();
-
-    }
-
-    public void fillEntities() {
-        entities = currentRoom.getEntities();
-        entities.add(player);
+        setGridMap(dungeon.getGridMap(room));
+        gridMap.update(player, true);
     }
 
     public void exitGame() {
@@ -93,9 +86,6 @@ public class GameState {
     public GridMap getGridMap() {
         return gridMap;
     }
-    public List<Entity> getEntities() {
-        return entities;
-    }
     public Player getPlayer() {
         return player;
     }
@@ -107,14 +97,9 @@ public class GameState {
     }
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
-        setEntities(currentRoom.getEntities());
     }
 
     public void setGridMap(GridMap gridMap) {
         this.gridMap = gridMap;
-    }
-
-    public void setEntities(List<Entity> entities) {
-        this.entities = entities;
     }
 }

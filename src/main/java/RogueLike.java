@@ -1,4 +1,3 @@
-import display.GridMap;
 import display.HUD;
 import display.RendererUI;
 import entity.living.Player;
@@ -26,22 +25,18 @@ public class RogueLike {
         Dungeon dungeon = DungeonStructure.createDungeon(seed);
         Position initialPosition = dungeon.getRoomList().get(0).getCenter();
         Player player = new Player(initialPosition,100, 100, "Hero", 1);
-        GridMap gridMap = new GridMap(dungeon.getRoom(0), player);
         HUD hud = new HUD(player);
         ScanPanel sp = new ScanPanel();
-        GameState gs = new GameState(player, dungeon, gridMap);
+        GameState gs = new GameState(player, dungeon);
         MiniMap miniMap = new MiniMap(dungeon, gs);
 
         // Create the renderer and first print of it
 
-        RendererUI rendererUI = new RendererUI(gridMap, miniMap, hud);
+        RendererUI rendererUI = new RendererUI(gs, miniMap, hud);
         rendererUI.display();
 
         int state = gs.getState();
         while(state != 0) {
-            // print new GameState
-//            RendererUI.miniMapRender(miniMap);
-//            RendererUI.hudRender(hud);
 
             // Wait for a key to be pressed and return its ASCII code
             int a = retrieveKey(sp);
