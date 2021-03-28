@@ -1,4 +1,6 @@
 package items.weapons;
 
-public interface Weapon {
+import items.Item;
+
+public interface Weapon extends Item {
 }

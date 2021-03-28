@@ -1,5 +1,10 @@
 package items.weapons;
 
-public class WeaponFactory {
-    // print
+import items.AbstractItemFactory;
+
+public class WeaponFactory extends AbstractItemFactory {
+
+    public Weapon getWeapon(int weaponType){
+        return null;
+    }
 }
