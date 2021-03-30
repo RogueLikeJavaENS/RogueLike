@@ -10,6 +10,6 @@ public class Player extends LivingEntity {
     }
 
     public String toString(){
-        return "@@";
+        return "@@@";
     }
 }

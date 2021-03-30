@@ -23,6 +23,9 @@ public class TileFactory {
             case 3:
                 return new DoorTile(); // Door = Type 3
 
+            case 4:
+                return new EmptyTile(); // Empty = Type 4
+
             default: return new GlitchedTile();
         }
     }

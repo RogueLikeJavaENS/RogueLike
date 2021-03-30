@@ -45,6 +45,6 @@ public class Door extends ObjectEntity {
 
     @Override
     public String toString() {
-        return "[]";
+        return "[ ]";
     }
 }
