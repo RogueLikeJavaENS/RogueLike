@@ -32,7 +32,6 @@ public class Coins extends ObjectEntity {
 
     @Override
     public String toString() {
-        return colorize("OO", Colors.YELLOW.textApply());
-        //return colorize("OO", Attribute.TEXT_COLOR(3));
+        return colorize(" O ", Colors.YELLOW.textApply());
     }
 }
