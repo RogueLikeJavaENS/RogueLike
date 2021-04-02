@@ -1,6 +1,5 @@
-package entity.monster;
+package entity.living.monster;
 
-import entity.AbstractMonster;
 import utils.Position;
 
 public class Skeleton extends AbstractMonster {

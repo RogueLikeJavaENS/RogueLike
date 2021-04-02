@@ -1,7 +1,6 @@
-package entity;
+package entity.living.monster;
 
 import entity.living.NPC;
-import entity.monster.Monster;
 import utils.Position;
 
 public class AbstractMonster extends NPC implements Monster {

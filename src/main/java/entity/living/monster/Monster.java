@@ -1,4 +1,4 @@
-package entity.monster;
+package entity.living.monster;
 
 import entity.Entity;
 
