@@ -3,8 +3,10 @@ package entity.object;
 import entity.living.Player;
 import gameElement.GameState;
 import gameElement.Room;
+import utils.Colors;
 import utils.Direction;
 import utils.Position;
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class Door extends ObjectEntity {
     private final Room nextRoom;
@@ -45,6 +47,6 @@ public class Door extends ObjectEntity {
 
     @Override
     public String toString() {
-        return "[ ]";
+        return colorize("[ ]", Colors.BROWN.textApply());
     }
 }
