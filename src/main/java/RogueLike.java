@@ -6,6 +6,7 @@ import gameElement.GameState;
 import generation.DungeonStructure;
 import gameElement.MiniMap;
 import generation.Seed;
+import utils.Direction;
 import utils.Position;
 import utils.ScanPanel;
 
@@ -44,16 +45,20 @@ public class RogueLike {
             // Process Player Input
             switch ((char) a) {
                 case 'Z':
+                    player.setDirection(Direction.NORTH);
                     acted = gs.movePlayer(0, -1);
                     //Tries to change the player's position, if something is blocking then the player's turn is not consumed.
                     break;
                 case 'Q':
+                    player.setDirection(Direction.WEST);
                     acted = gs.movePlayer(-1, 0);
                     break;
                 case 'S':
+                    player.setDirection(Direction.SOUTH);
                     acted = gs.movePlayer(0, 1);
                     break;
                 case 'D':
+                    player.setDirection(Direction.EAST);
                     acted = gs.movePlayer(1, 0);
                     break;
                 case '\u001B': // escape

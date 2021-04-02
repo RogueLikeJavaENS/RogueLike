@@ -10,6 +10,8 @@ public class Player extends LivingEntity {
     }
 
     public String toString(){
-        return "@@";
+        String currentLine = getDisplay();
+        setDisplay("@@");
+        return currentLine;
     }
 }

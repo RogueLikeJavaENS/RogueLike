@@ -2,6 +2,7 @@ package entity.living;
 
 import entity.AbstractEntity;
 import utils.Check;
+import utils.Direction;
 import utils.Position;
 
 /**
@@ -15,12 +16,14 @@ import utils.Position;
 
 public class LivingEntity extends AbstractEntity {
 
-    private String name;
+    private final String name;
     private int level;
     private int hp;
     private int maxHp;
     private int mp;
     private int maxMp;
+    private Direction direction;
+    private String display;
 
     public LivingEntity(Position position, int hp, int mp, String name, int level) throws IllegalArgumentException{
         super(position, false); // false because a living entity is never accessible.
@@ -30,6 +33,7 @@ public class LivingEntity extends AbstractEntity {
         this.mp = Check.checkPositivity(mp);
         this.maxMp = Check.checkPositivity(mp);
         this.name = name;
+        setDirection(Direction.SOUTH);
     }
 
     public String getName() { return name; }
@@ -40,6 +44,8 @@ public class LivingEntity extends AbstractEntity {
     public int getMaxHP() { return maxHp; }
     public int getCurrentMP() { return mp; }
     public int getCurrentHP() { return hp; }
+    public String getDisplay() { return display; }
+    public Direction getDirection() { return direction; }
 
     @Override
     public void setPosition(Position position) { super.setPosition(position); }
@@ -49,6 +55,23 @@ public class LivingEntity extends AbstractEntity {
     public void setMaxHP(int maxHp) throws IllegalArgumentException{ this.maxHp = Check.checkPositivity(maxHp); }
     public void setMP(int mp) throws IllegalArgumentException { this.mp = Check.checkPositivity(mp); }
     public void setHP(int hp) throws IllegalArgumentException { this.hp = Check.checkPositivity(hp); }
+    public void setDisplay(String display) { this.display = display; }
 
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+        switch (direction) {
+            case NORTH:
+                setDisplay("^^");
+                break;
+            case WEST:
+                setDisplay("<<");
+                break;
+            case SOUTH:
+                setDisplay("oo");
+                break;
+            case EAST:
+                setDisplay(">>");
+        }
+    }
 }
 
