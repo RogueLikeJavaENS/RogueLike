@@ -22,7 +22,7 @@ public class GraphDungeon {
     private final int MAX_BOUND = 5;
     private int acc;
     private boolean created;
-    public ArrayList<Direction> probDirection;
+    private final ArrayList<Direction> probDirection;
 
     /**
      * This constructor creates a gameElement.GraphDungeon from the seed given in parameter.
@@ -68,7 +68,7 @@ public class GraphDungeon {
      * @param previousDirection last selected direction.
      * @return direction
      */
-    public Direction calculDirection(int current,  Direction previousDirection) {
+    private Direction calculDirection(int current,  Direction previousDirection) {
         Direction oppositeDirection = previousDirection.oppositeDirection();
         List<Direction> copyOfProbDirection = List.copyOf(probDirection);
         ArrayList<Direction> voisin = new ArrayList<>();

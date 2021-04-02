@@ -3,8 +3,6 @@ package gameElement;
 import display.GridMap;
 import entity.Entity;
 import entity.living.Player;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**

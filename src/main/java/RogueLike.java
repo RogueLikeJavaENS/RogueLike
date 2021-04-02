@@ -38,6 +38,7 @@ public class RogueLike {
         int state = gs.getState();
         while(state != 0) {
 
+
             // Wait for a key to be pressed and return its ASCII code
             int a = retrieveKey(sp);
             boolean acted = false;
