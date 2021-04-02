@@ -58,6 +58,43 @@ public class GraphDungeon {
         return graph;
     }
 
+    private void attributePath() {
+        createSourceVertice();
+        int compteur = quantity-1;
+        ArrayList<Integer> sizeList = new ArrayList<>();
+        if (compteur%2 == 0) {
+            sizeList.add(compteur/2);
+            sizeList.add(compteur/2);
+        }else {
+            sizeList.add(compteur/2);
+            sizeList.add(compteur/2+1);
+        }
+        for (int size : sizeList) {
+            drawPath(size, 0);
+            compteur -= size;
+        }
+    }
+
+    private void drawPath(int size, int source) { //source will change in the future
+        int current = source;
+        Direction previousDirection = Direction.NONE;
+
+        // 0-N, 1-E, 2-S, 3-O
+        while (size>0) {
+            Direction direction = calculDirection(current, previousDirection);
+            int next = createVertice(current, direction);
+            graph.get(next)[direction.oppositeDirection().getValue()] = current;
+            graph.get(current)[direction.getValue()] = next;
+
+            if (created) {
+                size --;
+            }
+
+            previousDirection = direction;
+            current=next;
+        }
+    }
+
     /**
      * This method chooses a direction for the graph (to add a new room)
      * by reinforcement learning and deleting the impossible pathway.
@@ -88,7 +125,7 @@ public class GraphDungeon {
         voisin.remove(oppositeDirection);
 
         copyOfProbDirection = copyOfProbDirection.stream()
-                                .filter(dir -> voisin.contains(dir))
+                                .filter(voisin::contains)
                                 .collect(Collectors.toList());
         Direction direction = moreProbable(copyOfProbDirection);
         probDirection.add(direction);
@@ -101,23 +138,6 @@ public class GraphDungeon {
         return copyOfProbDirection.get(index);
      }
 
-    private void attributePath() {
-        createSourceVertice();
-        int compteur = quantity-1;
-        ArrayList<Integer> sizeList = new ArrayList<>();
-        if (compteur%2 == 0) {
-            sizeList.add(compteur/2);
-            sizeList.add(compteur/2);
-        }else {
-            sizeList.add(compteur/2);
-            sizeList.add(compteur/2+1);
-        }
-        for (int size : sizeList) {
-            drawPath(size, 0);
-            compteur -= size;
-        }
-    }
-
     private void createSourceVertice() {
         int[] sourceVertice = DungeonStructure.initNextlist();
         sourceVertice[4]= Integer.valueOf(seed.getSeed().get(1), 16)%(MAX_BOUND+1);
@@ -125,26 +145,6 @@ public class GraphDungeon {
         Position sourcePos = new Position(sourceVertice[5], sourceVertice[4]);
         existingRoom.put(sourcePos, 0);
         graph.put(0, sourceVertice);
-    }
-
-    private void drawPath(int size, int source) { //source will change in the future
-        int current = source;
-        Direction previousDirection = Direction.NONE;
-
-        // 0-N, 1-E, 2-S, 3-O
-        while (size>0) {
-            Direction direction = calculDirection(current, previousDirection);
-            int next = createVertice(current, direction);
-            graph.get(next)[direction.oppositeDirection().getValue()] = current;
-            graph.get(current)[direction.getValue()] = next;
-
-            if (created) {
-               size --;
-            }
-
-            previousDirection = direction;
-            current=next;
-        }
     }
 
     private int createVertice(int current, Direction direction) {

@@ -2,6 +2,7 @@ package gameElement;
 
 import display.GridMap;
 import entity.Entity;
+import entity.object.Coins;
 import entity.object.Door;
 import utils.Direction;
 import utils.Position;
@@ -38,6 +39,7 @@ public class Dungeon {
         this.graph = graph;
         this.width = width;
         this.height = height;
+        placeTestCoins();
         createAllDoor();
         setAllNextDoor();
         initGridMapList();
@@ -47,6 +49,12 @@ public class Dungeon {
         this.gridMapList = new ArrayList<>();
         for (Room room : roomList) {
             gridMapList.add(new GridMap(room));
+        }
+    }
+
+    private void placeTestCoins(){
+        for (Room room : roomList){
+            room.addEntity(new Coins(new Position(3, 3)));
         }
     }
 

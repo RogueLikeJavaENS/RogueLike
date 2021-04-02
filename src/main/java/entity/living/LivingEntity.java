@@ -22,6 +22,7 @@ public class LivingEntity extends AbstractEntity {
     private int maxHp;
     private int mp;
     private int maxMp;
+    private int moneyCount;
     private Direction direction;
     private String display;
 
@@ -34,6 +35,7 @@ public class LivingEntity extends AbstractEntity {
         this.maxMp = Check.checkPositivity(mp);
         this.name = name;
         setDirection(Direction.SOUTH);
+        this.moneyCount = 0;
     }
 
     public String getName() { return name; }
@@ -46,6 +48,7 @@ public class LivingEntity extends AbstractEntity {
     public int getCurrentHP() { return hp; }
     public String getDisplay() { return display; }
     public Direction getDirection() { return direction; }
+    public int getMoneyCount() { return moneyCount; }
 
     @Override
     public void setPosition(Position position) { super.setPosition(position); }
@@ -73,5 +76,6 @@ public class LivingEntity extends AbstractEntity {
                 setDisplay(">>");
         }
     }
+    public void setMoneyCount (int moneyCount) throws IllegalArgumentException { this.moneyCount = Check.checkPositivity(moneyCount); }
 }
 
