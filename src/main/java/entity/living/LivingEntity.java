@@ -64,16 +64,17 @@ public class LivingEntity extends AbstractEntity {
         this.direction = direction;
         switch (direction) {
             case NORTH:
-                setDisplay("^^");
+                setDisplay("^ ^");
                 break;
             case WEST:
-                setDisplay("<<");
+                setDisplay("< <");
                 break;
             case SOUTH:
-                setDisplay("oo");
+                //setDisplay("o o");
+                setDisplay("v v");
                 break;
             case EAST:
-                setDisplay(">>");
+                setDisplay("> >");
         }
     }
     public void setMoneyCount (int moneyCount) throws IllegalArgumentException { this.moneyCount = Check.checkPositivity(moneyCount); }
