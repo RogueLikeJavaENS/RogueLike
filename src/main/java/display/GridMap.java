@@ -1,6 +1,7 @@
 package display;
 
 import entity.Entity;
+import entity.living.Player;
 import gameElement.Room;
 import java.util.ArrayList;
 import java.util.List;

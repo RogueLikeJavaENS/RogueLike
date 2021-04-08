@@ -2,6 +2,8 @@ package display;
 
 import gameElement.GameState;
 import gameElement.MiniMap;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -127,14 +129,15 @@ public class RendererUI {
      * @param hud the current HUD
      */
     public void updateGrid(GridMap gridMap,HUD hud){
+        List<String> gridmapString = gridMap.StrByLine();
         fillStr(hud, gridMap);
         int i = 0;
-        while ( i < gridMap.StrByLine().size()){
-            strAll[i*2] = gridMap.StrByLine().get(i);
+        while ( i < gridmapString.size()){
+            strAll[i*2] = gridmapString.get(i);
             i++;
         }
         while (i*2 < strAll.length){
-            strAll[i*2] = " ".repeat(gridMap.StrByLine().get(0).length());
+            strAll[i*2] = " ".repeat(gridmapString.get(0).length());
             i++;
         }
     }
@@ -145,13 +148,14 @@ public class RendererUI {
      * @param miniMap the new Minimap
      */
     public void updateMap(MiniMap miniMap){
+        List<String> minimapString = miniMap.stringByLine();
         int i = 0;
-        while (i < miniMap.stringByLine().size()){
-            strAll[i*2+1] = miniMap.stringByLine().get(i);
+        while (i < minimapString.size()){
+            strAll[i*2+1] = minimapString.get(i);
             i++;
         }
         while (i*2+1  < strAll.length){
-            strAll[i*2+1] = " ".repeat(miniMap.stringByLine().get(0).length());
+            strAll[i*2+1] = " ".repeat(minimapString.get(0).length());
             i++;
         }
     }
