@@ -1,9 +1,8 @@
 package entity.monster;
 
-import entity.AbstractMonster;
 import utils.Position;
 
-public class Skeleton extends AbstractMonster {
+public class Skeleton extends AbstractMonster implements Monster {
     private final static int basicHP = 5;
     private final static int basicMP = 1;
 
@@ -14,6 +13,6 @@ public class Skeleton extends AbstractMonster {
 
     @Override
     public String toString() {
-        return "++++";
+        return "++";
     }
 }

@@ -2,15 +2,14 @@ package gameElement;
 
 import display.GridMap;
 import entity.Entity;
+import entity.monster.Monster;
+import entity.monster.MonsterFactory;
 import entity.object.Coins;
 import entity.object.Door;
 import utils.Direction;
 import utils.Position;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * This class is graph representation of the dungeon.
@@ -40,6 +39,7 @@ public class Dungeon {
         this.width = width;
         this.height = height;
         placeTestCoins();
+        createMonster();
         createAllDoor();
         setAllNextDoor();
         initGridMapList();
@@ -55,6 +55,23 @@ public class Dungeon {
     private void placeTestCoins(){
         for (Room room : roomList){
             room.addEntity(new Coins(new Position(3, 3)));
+        }
+    }
+
+    private void createMonster(){
+        Random GEN = new Random(); // Use the seed
+        for (Room room : roomList){
+            int nbMonster = GEN.nextInt(5); // A determiner
+            for (int i=0; i<nbMonster; i++){
+                int monsterType = GEN.nextInt(2); // Use the seed
+                int abs = GEN.nextInt(room.getWidth()-1)+1; // Use the seed
+                int ord = GEN.nextInt(room.getHeight()-1)+1; // Use the seed
+                Position monsterPos = new Position(abs,ord);
+                String name = "Skeleton";
+                int level = 1;
+                Monster monster = MonsterFactory.getMonster(monsterType,monsterPos,name, level);
+                room.addEntity(monster);
+            }
         }
     }
 
