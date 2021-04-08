@@ -49,6 +49,10 @@ public class Position {
         this.abs = posCheck(abs);
     }
 
+    public boolean equals(int abs, int ord) {
+        return (abs == this.abs && ord == this.ord);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

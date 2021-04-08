@@ -43,7 +43,10 @@ public class HUD {
         sb.append("MP: ")
                 .append(player.getCurrentMP())
                 .append("/")
-                .append(player.getMaxMP()); //"MP: xx/yy"
+                .append(player.getMaxMP()) //"MP: xx/yy"
+                .append("\t");
+        sb.append("BTC: ")
+                .append(player.getMoneyCount()); //"BTC: xxx"
         sb.append("\n");
         String finalString = sb.toString();
         //String emptyString = " ".repeat(finalString.length());

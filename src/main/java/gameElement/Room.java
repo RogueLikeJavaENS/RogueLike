@@ -1,6 +1,7 @@
 package gameElement;
 
 import entity.Entity;
+import entity.object.Door;
 import utils.Direction;
 import utils.Position;
 
@@ -107,6 +108,6 @@ public class Room {
     }
 
     public List<Entity> getEntities() {
-        return entities;
+        return new ArrayList<>(entities);
     }
 }

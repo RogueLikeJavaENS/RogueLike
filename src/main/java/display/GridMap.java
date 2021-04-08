@@ -1,10 +1,7 @@
 package display;
 
 import entity.Entity;
-import entity.living.Player;
 import gameElement.Room;
-import utils.Position;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,26 +11,13 @@ import java.util.List;
 public class GridMap {
     private final Room room;
     private final Tile[][] tiles;
-    private final List<Entity>[][] entities;
-    private final Player player;
+    private List<Entity> entities;
 
-    public GridMap(Room room, Player player) {
-        this.player = player;
+    public GridMap(Room room) {
         this.room = room;
         this.tiles = new Tile[room.getHeight()][room.getWidth()];
-        this.entities = new List[room.getHeight()][room.getWidth()];
         fillRoomContent();
         fillEntityContent();
-    }
-
-    public void update(List<Entity> entityList) {
-        for(Entity entity : entityList) {
-            int abs = entity.getPosition().getAbs();
-            int ord = entity.getPosition().getOrd();
-            if (!entities[ord][abs].contains(entity)) {
-                entities[ord][abs].add(entity);
-            }
-        }
     }
 
     private void fillRoomContent() {
@@ -52,42 +36,35 @@ public class GridMap {
     }
 
     private void fillEntityContent() {
-        Position pp = player.getPosition();
-        for (int y = 0; y < room.getHeight(); y++) {
-            for (int x = 0; x < room.getWidth(); x++) {
-                List<Entity> entityList = new ArrayList<>();
-                entities[y][x] = entityList;
-            }
-        }
-        List<Entity> entityList = new ArrayList<>();
-        entityList.add(player);
-        entities[pp.getOrd()][pp.getAbs()] = entityList;
+        entities = room.getEntities();
     }
 
-    private void updateEntityContent() {
-        Position pp = player.getPosition();
-
-        List<Entity> entityList = new ArrayList<>();
-        entityList.add(player);
-        entities[pp.getOrd()][pp.getAbs()] = entityList;
+    public void update(List<Entity> entitiesToAdd, List<Entity> entitiesToRemove) {
+        for(Entity entity : entitiesToAdd) {
+            addEntity(entity);
+        }
+        for(Entity entity : entitiesToRemove) {
+            removeEntity(entity);
+        }
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for(int y = 0; y < room.getHeight(); y++) {
-            for (int i = 0; i < 2; i++) {
-                for(int x = 0; x < room.getWidth(); x++) {
-                    if (entities[y][x].size() > 0) {
-                        sb.append(entities[y][x].get(0)); // Methods to determine which entityt to display
-                    } else {
-                        sb.append(tiles[y][x]);
-                    }
-                }
-                sb.append("\n");
-            }
+    public void update(Entity entity, boolean add) {
+        if(add) {
+            addEntity(entity);
         }
-        return sb.toString();
+        else {
+            removeEntity(entity);
+        }
+    }
+
+    private void addEntity(Entity entity) {
+        if (!entities.contains(entity)) {
+            entities.add(entity);
+        }
+    }
+
+    private void removeEntity(Entity entity) {
+        entities.remove(entity);
     }
 
     public List<String> StrByLine (){
@@ -96,8 +73,9 @@ public class GridMap {
             for (int i = 0; i <2; i++) {
                 StringBuilder sb = new StringBuilder();
                 for (int abs = 0; abs < room.getWidth(); abs++) {
-                    if (entities[ord][abs].size() != 0) {
-                        sb.append(entities[ord][abs].get(0));
+                    List<Entity> entitiesAt = getEntitiesAt(abs, ord);
+                    if (entitiesAt.size() != 0) {
+                        sb.append(entitiesAt.get(0));
                     } else {
                         sb.append(tiles[ord][abs]);
                     }
@@ -108,6 +86,15 @@ public class GridMap {
         return strLine;
     }
 
+    public List<Entity> getEntitiesAt(int abs, int ord) {
+        List<Entity> entitiesAt = new ArrayList<>();
+        for (Entity entity : entities) {
+            if (entity.getPosition().equals(abs, ord)) {
+                entitiesAt.add(entity);
+            }
+        }
+        return entitiesAt;
+    }
 
     /**
      * @param x Abscissa of the wanted tile.
@@ -120,13 +107,4 @@ public class GridMap {
         return tiles[y][x]; //Needs to be tested, coordinates might be inverted.
     }
 
-    public List<Entity> getEntitiesAt(int abs, int ord) {
-        return entities[ord][abs];
-    }
-
-    public void removeEntity(Entity entity) {
-        int abs = entity.getPosition().getAbs();
-        int ord = entity.getPosition().getOrd();
-        entities[ord][abs].remove(entity);
-    }
 }

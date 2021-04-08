@@ -21,6 +21,7 @@ public class LivingEntity extends AbstractEntity {
     private int maxHp;
     private int mp;
     private int maxMp;
+    private int moneyCount;
 
     public LivingEntity(Position position, int hp, int mp, String name, int level) throws IllegalArgumentException{
         super(position, false); // false because a living entity is never accessible.
@@ -30,6 +31,7 @@ public class LivingEntity extends AbstractEntity {
         this.mp = Check.checkPositivity(mp);
         this.maxMp = Check.checkPositivity(mp);
         this.name = name;
+        this.moneyCount = 0;
     }
 
     public String getName() { return name; }
@@ -40,6 +42,7 @@ public class LivingEntity extends AbstractEntity {
     public int getMaxHP() { return maxHp; }
     public int getCurrentMP() { return mp; }
     public int getCurrentHP() { return hp; }
+    public int getMoneyCount() { return moneyCount; }
 
     @Override
     public void setPosition(Position position) { super.setPosition(position); }
@@ -49,6 +52,6 @@ public class LivingEntity extends AbstractEntity {
     public void setMaxHP(int maxHp) throws IllegalArgumentException{ this.maxHp = Check.checkPositivity(maxHp); }
     public void setMP(int mp) throws IllegalArgumentException { this.mp = Check.checkPositivity(mp); }
     public void setHP(int hp) throws IllegalArgumentException { this.hp = Check.checkPositivity(hp); }
-
+    public void setMoneyCount (int moneyCount) throws IllegalArgumentException { this.moneyCount = Check.checkPositivity(moneyCount); }
 }
 
