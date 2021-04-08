@@ -50,8 +50,18 @@ public class GameState {
         int ord = player.getPosition().getOrd();
 
         if (gridMap.getTileAt(abs + x, ord + y).isAccessible()) {
-            player.getPosition().updatePos(x, y);
-            acted = true;
+            boolean accessibilityEntity = true;
+            List<Entity> entitiesAt = gridMap.getEntitiesAt(abs + x, ord + y);
+            for (Entity entity : entitiesAt){
+                if (!entity.getIsAccessible()){
+                    accessibilityEntity = false;
+                    break;
+                }
+            }
+            if (accessibilityEntity){
+                player.getPosition().updatePos(x, y);
+                acted = true;
+            }
         }
         return acted;
     }

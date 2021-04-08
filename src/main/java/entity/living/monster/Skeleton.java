@@ -13,6 +13,6 @@ public class Skeleton extends AbstractMonster {
 
     @Override
     public String toString() {
-        return "++++";
+        return "+++";
     }
 }
