@@ -3,6 +3,8 @@ package gameElement;
 import display.GridMap;
 import entity.Entity;
 import entity.living.Player;
+import utils.State;
+
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ import java.util.List;
  */
 
 public class GameState {
-    private int state;
+    private State state;
     private Room currentRoom;
     private final Player player;
     private final Dungeon dungeon;
@@ -32,7 +34,7 @@ public class GameState {
         this.currentRoom = dungeon.getRoomList().get(0);
         this.gridMap = dungeon.getGridMap(currentRoom);
         player.setPosition(currentRoom.getCenter());
-        state = 1;
+        state = State.NORMAL;
         gridMap.update(player, true);
     }
 
@@ -66,6 +68,7 @@ public class GameState {
         return acted;
     }
 
+
     public void isOnEntity() {
         int playerAbs = player.getPosition().getAbs();
         int playerOrd = player.getPosition().getOrd();
@@ -85,7 +88,7 @@ public class GameState {
     }
 
     public void exitGame() {
-        state = 0;
+        state = State.LOOSE;
     }
 
     public Dungeon getDungeon() {
@@ -100,7 +103,7 @@ public class GameState {
     public Room getCurrentRoom() {
         return currentRoom;
     }
-    public int getState() {
+    public State getState() {
         return state;
     }
     public void setCurrentRoom(Room currentRoom) {

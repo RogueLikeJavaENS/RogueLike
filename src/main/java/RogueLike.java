@@ -9,6 +9,7 @@ import generation.Seed;
 import utils.Direction;
 import utils.Position;
 import utils.ScanPanel;
+import utils.State;
 
 /**
  * This is the main class of the RogueLike Game.
@@ -36,8 +37,8 @@ public class RogueLike {
         RendererUI rendererUI = new RendererUI(gs, miniMap, hud);
         rendererUI.display();
 
-        int state = gs.getState();
-        while(state != 0) {
+        State state = gs.getState();
+        while(state != State.LOOSE) {
 
 
             // Wait for a key to be pressed and return its ASCII code
@@ -47,23 +48,23 @@ public class RogueLike {
             // Process Player Input
             switch ((char) a) {
                 case 'Z':
-                    turned = true;
+                    turned = hadTurned(player, Direction.NORTH);
                     player.setDirection(Direction.NORTH);
                     acted = gs.movePlayer(0, -1);
                     //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
                     break;
                 case 'Q':
-                    turned = true;
+                    turned = hadTurned(player, Direction.WEST);
                     player.setDirection(Direction.WEST);
                     acted = gs.movePlayer(-1, 0);
                     break;
                 case 'S':
-                    turned = true;
+                    turned = hadTurned(player, Direction.SOUTH);
                     player.setDirection(Direction.SOUTH);
                     acted = gs.movePlayer(0, 1);
                     break;
                 case 'D':
-                    turned = true;
+                    turned = hadTurned(player, Direction.EAST);
                     player.setDirection(Direction.EAST);
                     acted = gs.movePlayer(1, 0);
                     break;
@@ -98,6 +99,10 @@ public class RogueLike {
             }
         }
         System.exit(0);
+    }
+
+    private boolean hadTurned(Player player, Direction dir) {
+        return !player.getDirection().equals(dir);
     }
 
     private int retrieveKey(ScanPanel sp) throws InterruptedException {
