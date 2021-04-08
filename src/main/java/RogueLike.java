@@ -43,22 +43,27 @@ public class RogueLike {
             // Wait for a key to be pressed and return its ASCII code
             int a = retrieveKey(sp);
             boolean acted = false;
+            boolean turned = false;
             // Process Player Input
             switch ((char) a) {
                 case 'Z':
+                    turned = true;
                     player.setDirection(Direction.NORTH);
                     acted = gs.movePlayer(0, -1);
-                    //Tries to change the player's position, if something is blocking then the player's turn is not consumed.
+                    //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
                     break;
                 case 'Q':
+                    turned = true;
                     player.setDirection(Direction.WEST);
                     acted = gs.movePlayer(-1, 0);
                     break;
                 case 'S':
+                    turned = true;
                     player.setDirection(Direction.SOUTH);
                     acted = gs.movePlayer(0, 1);
                     break;
                 case 'D':
+                    turned = true;
                     player.setDirection(Direction.EAST);
                     acted = gs.movePlayer(1, 0);
                     break;
@@ -70,6 +75,10 @@ public class RogueLike {
             }
             if (!acted) {
                 state = gs.getState();
+                if(turned) {
+                    rendererUI.updateGrid(gs.getGridMap(), hud);
+                    rendererUI.display();
+                }
                 Thread.sleep(100);
             } else {
                 gs.isOnEntity();
