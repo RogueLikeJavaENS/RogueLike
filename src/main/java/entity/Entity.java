@@ -14,4 +14,5 @@ public interface Entity {
     String toString();
     Position getPosition();
     void doAction(GameState gameState);
+    boolean getIsAccessible();
 }

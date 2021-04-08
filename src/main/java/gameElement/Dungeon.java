@@ -2,6 +2,7 @@ package gameElement;
 
 import display.GridMap;
 import entity.Entity;
+import entity.living.monster.MonsterFactory;
 import entity.object.Coins;
 import entity.object.Door;
 import utils.Direction;
@@ -40,6 +41,7 @@ public class Dungeon {
         this.width = width;
         this.height = height;
         placeTestCoins();
+        placeTestMonster();
         createAllDoor();
         setAllNextDoor();
         initGridMapList();
@@ -57,6 +59,16 @@ public class Dungeon {
             room.addEntity(new Coins(new Position(3, 3)));
         }
     }
+
+    private void placeTestMonster(){
+        MonsterFactory monsterFactory = new MonsterFactory(1);
+        for (Room room : roomList){
+            room.addEntity(monsterFactory.getMonster(0,new Position(4,4),"Skeleton"));
+            room.addEntity(monsterFactory.getMonster(1,new Position(7,7),"Goblin"));
+        }
+    }
+
+
 
     private void createAllDoor(){
         for (Room room : roomList) {
