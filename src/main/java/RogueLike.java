@@ -9,6 +9,7 @@ import generation.Seed;
 import utils.Direction;
 import utils.Position;
 import utils.ScanPanel;
+import utils.State;
 
 /**
  * This is the main class of the RogueLike Game.
@@ -36,12 +37,13 @@ public class RogueLike {
         RendererUI rendererUI = new RendererUI(gs, miniMap, hud);
         rendererUI.display();
 
-        int state = gs.getState();
-        while(state != 0) {
+        State state = gs.getState();
+        while(state != State.LOOSE) {
 
 
             // Wait for a key to be pressed and return its ASCII code
             int a = retrieveKey(sp);
+            System.out.printf("%d",a);
             boolean acted = false;
             boolean turned = false;
             // Process Player Input
@@ -70,6 +72,21 @@ public class RogueLike {
                 case '\u001B': // escape
                     gs.exitGame();
                     break;
+                case 'M':
+                    if (gs.getState() == State.MAP){ // quit the minimap and return to the game
+
+                    }
+                    else { // print the minimap
+
+                        gs.setState(State.MAP);
+                    }
+                case 'I':
+                    if (gs.getState() == State.INVENTORY){ // quit the inventory and return to the game
+
+                    }
+                    else { // print the inventory
+
+                    }
                 default:
                     continue;
             }

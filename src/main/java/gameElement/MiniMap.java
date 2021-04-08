@@ -16,9 +16,11 @@ public class MiniMap {
     Dungeon dungeon;
     GameState gameState;
 
+
     public MiniMap(Dungeon dungeon, GameState gameState) {
         this.dungeon = dungeon;
         this.gameState = gameState;
+
     }
 
     /**
@@ -66,7 +68,7 @@ public class MiniMap {
      *
      * @return List<String>
      */
-    public List<String> stringByLine (){
+    public List<String> stringByLine (){ //minimap big
         Room[][] roomArray = listToArray(dungeon);
         List<String> listOfLine= new ArrayList<>();
 
