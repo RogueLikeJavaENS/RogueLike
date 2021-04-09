@@ -16,15 +16,15 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class MiniMap {
     private GameState gameState;
-    private Room[][] structDungeon;
-    private Room[][] structCutMap;
+    private List<List<Room>> structDungeon;
+    private List<List<Room>> structCutMap;
     private List<String> cutMap;
     private String map;
 
     public MiniMap(Dungeon dungeon, GameState gameState) {
         this.gameState = gameState;
         this.structDungeon = listToArray(dungeon);
-        structCutMap = new Room[3][3];
+        structCutMap = new ArrayList<>();
         updateCutMap();
         updateMap();
     }
@@ -43,21 +43,21 @@ public class MiniMap {
 
         if (posPlayerDungeon.getAbs() == 0)
             { absMin = 0; }
-        else if (posPlayerDungeon.getAbs() == structDungeon[0].length -1){
-            absMin = structDungeon[0].length -3; }
+        else if (posPlayerDungeon.getAbs() == structDungeon.get(0).size() -1){
+            absMin = structDungeon.get(0).size() -3; }
         else{
             absMin = posPlayerDungeon.getAbs() -1; }
 
         if (posPlayerDungeon.getOrd() == 0)
         { ordMin = 0; }
-        else if (posPlayerDungeon.getOrd() == structDungeon.length -1)
-        { ordMin = structDungeon.length -3; }
+        else if (posPlayerDungeon.getOrd() == structDungeon.size() -1)
+        { ordMin = structDungeon.size() -3; }
         else
         { ordMin = posPlayerDungeon.getOrd() -1; }
 
         for (int abs = 0; abs<3; abs++){
             for (int ord = 0; ord<3; ord++){
-                structCutMap[ord][abs] = structDungeon[ordMin+ord][absMin+abs];
+                structCutMap.get(ord).set(abs, structDungeon.get(ordMin+ord).get(absMin+abs));
             }
         }
         cutMap = stringByLine(structCutMap);
@@ -86,19 +86,31 @@ public class MiniMap {
      * @param dungeon the dungeon to print
      * @return Room[][]
      */
-    private Room[][] listToArray (Dungeon dungeon){
+    private List<List<Room>> listToArray (Dungeon dungeon){
         List<Room> roomList = dungeon.getRoomList();
         int width = dungeon.getWidth();
         int height = dungeon.getHeight();
 
-        Room[][] roomArray = new Room[height][width];
+        List<List<Room>> roomArray = new ArrayList<>();
 
         for (Room room : roomList){
             Position roomPos = room.getPosition();
             int abs = roomPos.getAbs();
             int ord = roomPos.getOrd();
-            roomArray[ord][abs] = room;
+            roomArray.get(ord).set(abs,room);
         }
+        for (int line=0; line<height; line++){
+            int col = 0;
+            while (col <= width){
+                if (col == width){
+
+                }
+                else if (roomArray.get(line).get(col) != null){
+                    break;
+                }
+            }
+        }
+
         return roomArray;
     }
 
@@ -108,10 +120,10 @@ public class MiniMap {
      *
      * @return List<String>
      */
-    private List<String> stringByLine (Room[][] struct){ //minimap big
+    private List<String> stringByLine (List<List<Room>> struct){
         List<String> listOfLine= new ArrayList<>();
 
-        for (Room[] lineRoom : struct){
+        for (List<Room> lineRoom : struct){
             for (int i=0; i<4; i++){
                 StringBuilder sb2 = new StringBuilder();
                 sb2.append("\t");
