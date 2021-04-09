@@ -113,7 +113,7 @@ public class RendererUI {
                 globalRenderer += renderer;
                 //globalRenderer += infoFight;
                 break;
-            case LOOSE:
+            case LOSE:
                 globalRenderer += "\n\n\n\n YOU LOOSE \n\n\n\n";
                 break;
             case WIN:

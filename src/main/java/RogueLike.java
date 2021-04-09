@@ -72,7 +72,6 @@ public class RogueLike {
                 case INVENTORY:
                     inventoryStateInput();
                     break;
-
             }
 
             if (!acted) {
@@ -80,21 +79,14 @@ public class RogueLike {
                     rendererUI.updateGrid(gs.getGridMap(), hud);
                     rendererUI.display();
                 }
-                if(modifiedMenu){
+                if(modifiedMenu) {
                     rendererUI.updateAll(gs.getGridMap(), hud,miniMap);
                     rendererUI.display();
                 }
                 Thread.sleep(100);
             } else {
                 gs.isOnEntity();
-                // If action is correct ok (GameState + input)
-                // Else break
 
-                // Monsters world interaction etc ...
-
-                // Animation
-
-                // Update GameState
                 rendererUI.updateAll(gs.getGridMap(),hud,miniMap);
                 rendererUI.display();
                 Thread.sleep(100);
@@ -164,7 +156,7 @@ public class RogueLike {
         }
     }
 
-    private void minimapStateInput() {
+    private void minimapStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
         acted = false;
         turned = false;
@@ -209,6 +201,15 @@ public class RogueLike {
                 turned = hadTurned(player, Direction.EAST);
                 player.setDirection(Direction.EAST);
                 acted = gs.movePlayer(1, 0);
+                break;
+            case 'M':
+                miniMap.updateMap();
+                gs.setState(State.MAP);
+                modifiedMenu = true;
+                break;
+            case 'I':
+                gs.setState(State.INVENTORY);
+                modifiedMenu = true;
                 break;
             case '\u001B': // escape
                 gs.exitGame();
