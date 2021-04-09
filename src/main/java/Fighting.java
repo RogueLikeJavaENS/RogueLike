@@ -22,7 +22,6 @@ public class Fighting {
 
     private void sortTurnOrder() {
         turnOrder.sort(Comparator.comparingInt(LivingEntity::getSpeed).reversed());
-        System.out.printf("%s %s %s %s", turnOrder.get(0).getName(), turnOrder.get(1).getName(), turnOrder.get(2).getName(), turnOrder.get(3).getName());
     }
 
     @Override
