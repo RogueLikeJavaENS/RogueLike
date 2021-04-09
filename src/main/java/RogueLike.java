@@ -21,13 +21,13 @@ public class RogueLike {
     private State state;
     private boolean acted;
     private boolean turned;
-    private Seed seed;
-    private Dungeon dungeon;
-    private Player player;
-    private HUD hud;
-    private ScanPanel sp;
-    private GameState gs;
-    private MiniMap miniMap;
+    private final Seed seed;
+    private final Dungeon dungeon;
+    private final Player player;
+    private final HUD hud;
+    private final ScanPanel sp;
+    private final GameState gs;
+    private final MiniMap miniMap;
 
     /**
      * Creates an instance of the game.
@@ -67,7 +67,6 @@ public class RogueLike {
                 case INVENTORY:
                     break;
 
-
             }
 
             if (!acted) {
@@ -99,9 +98,11 @@ public class RogueLike {
     }
 
     private void normalStateInput() throws InterruptedException {
+
         int a = retrieveKey(sp);
         acted = false;
         turned = false;
+
         // Process Player Input
         switch ((char) a) {
             case 'Z':
@@ -127,8 +128,6 @@ public class RogueLike {
                 break;
             case '\u001B': // escape
                 gs.exitGame();
-                break;
-            default:
                 break;
         }
     }

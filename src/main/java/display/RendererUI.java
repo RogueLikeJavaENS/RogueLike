@@ -81,9 +81,11 @@ public class RendererUI {
 
         }
         String hudString = hud.toString();
+        String spellBar = hud.spellListDisplay();
         String renderer = sb.toString();
         String help = "Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n\n";
-        return help+hud+renderer;
+        //return help+hud+renderer;
+        return help+hudString+renderer+spellBar;
     }
 
     public void display (){
