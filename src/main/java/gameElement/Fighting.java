@@ -1,3 +1,5 @@
+package gameElement;
+
 import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.Player;
@@ -9,7 +11,7 @@ import java.util.List;
 
 public class Fighting {
     private List<LivingEntity> turnOrder;
-    private Entity currentEntity;
+    private LivingEntity currentEntity;
     private List<LivingEntity> bufferEntity;
 
 
@@ -20,9 +22,14 @@ public class Fighting {
         currentEntity = bufferEntity.remove(0);
     }
 
-    private void sortTurnOrder() {
-        turnOrder.sort(Comparator.comparingInt(LivingEntity::getSpeed).reversed());
+    public void refillBuffer() {
+        bufferEntity.addAll(turnOrder);
     }
+
+    public void next() {
+        currentEntity = bufferEntity.remove(0);
+    }
+
 
     @Override
     public String toString() {
@@ -37,6 +44,20 @@ public class Fighting {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public LivingEntity getCurrentEntity() {
+        return currentEntity;
+    }
+    public List<LivingEntity> getBufferEntity() {
+        return bufferEntity;
+    }
+    public List<LivingEntity> getTurnOrder() {
+        return turnOrder;
+    }
+
+    private void sortTurnOrder() {
+        turnOrder.sort(Comparator.comparingInt(LivingEntity::getSpeed).reversed());
     }
 
     public static void main(String[] args) {

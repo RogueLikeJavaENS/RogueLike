@@ -1,10 +1,14 @@
 package display;
 
 import entity.Entity;
+import entity.living.LivingEntity;
 import entity.living.Player;
+import entity.living.monster.Monster;
 import gameElement.Room;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * This class Contains the actual gameElement.Room. It contains a
@@ -107,5 +111,25 @@ public class GridMap {
     public Tile getTileAt(int x, int y) {
         return tiles[y][x]; //Needs to be tested, coordinates might be inverted.
     }
-
+    public List<Entity> getEntities() {
+        return entities;
+    }
+    public List<LivingEntity> getLivingEntities() {
+        List<LivingEntity> livingEntities = new ArrayList<>();
+        for(Entity entity : entities) {
+            if (entity instanceof LivingEntity) {
+                livingEntities.add((LivingEntity) entity);
+            }
+        }
+        return livingEntities;
+    }
+    public List<LivingEntity> getMonsters() {
+        List<LivingEntity> monsters = new ArrayList<>();
+        for (Entity entity : entities) {
+            if (entity instanceof Monster) {
+                monsters.add((LivingEntity) entity);
+            }
+        }
+        return monsters;
+    }
 }
