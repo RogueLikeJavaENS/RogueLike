@@ -2,9 +2,10 @@ package gameElement;
 
 import display.GridMap;
 import entity.Entity;
+import entity.living.LivingEntity;
 import entity.living.Player;
 import utils.State;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +28,7 @@ public class GameState {
     private final Player player;
     private final Dungeon dungeon;
     private GridMap gridMap;
+    private Fighting fighting;
 
     public GameState(Player player, Dungeon dungeon) {
         this.dungeon = dungeon;
@@ -36,6 +38,15 @@ public class GameState {
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
+
+    }
+
+    public void updateChangingRoom(Room room) {
+        gridMap.update(player, false);
+        setCurrentRoom(room);
+        setGridMap(dungeon.getGridMap(room));
+        gridMap.update(player, true);
+        isFighting();
     }
 
     /**
@@ -65,9 +76,9 @@ public class GameState {
                 acted = true;
             }
         }
+        isFighting();
         return acted;
     }
-
 
     public void isOnEntity() {
         int playerAbs = player.getPosition().getAbs();
@@ -78,13 +89,24 @@ public class GameState {
                 entity.doAction(this);
             }
         }
+        isFighting();
     }
 
-    public void updateChangingRoom(Room room) {
-        gridMap.update(player, false);
-        setCurrentRoom(room);
-        setGridMap(dungeon.getGridMap(room));
-        gridMap.update(player, true);
+    public void isFighting() {
+        List<LivingEntity> monsters = getGridMap().getMonsters();
+        if (monsters.size() > 0) {
+            state = State.FIGHT;
+            initFight(monsters);
+        }
+        else {
+            state = State.NORMAL;
+        }
+    }
+
+    public void initFight(List<LivingEntity> monsters) {
+        List<LivingEntity> fightList = new ArrayList<>(monsters);
+        fightList.add(player);
+        fighting = new Fighting(fightList);
     }
 
     public void exitGame() {
@@ -106,6 +128,10 @@ public class GameState {
     public State getState() {
         return state;
     }
+    public Fighting getFighting() {
+        return fighting;
+    }
+    public void setState(State newState) {this.state = newState; }
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
