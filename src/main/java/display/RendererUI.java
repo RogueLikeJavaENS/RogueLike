@@ -36,7 +36,7 @@ public class RendererUI {
         this.hud = hud;
         this.gs = gs;
         this.miniMap = miniMap;
-        this.strAll = new String[Math.max(gs.getGridMap().StrByLine().size(),miniMap.stringByLine().size())*2];
+        this.strAll = new String[Math.max(gs.getGridMap().StrByLine().size(),miniMap.getLineCutMap().size())*2];
         updateGrid(gs.getGridMap(),hud);
         updateHUD(hud);
         updateMap(miniMap);
@@ -92,7 +92,7 @@ public class RendererUI {
                     + "| Escape : Exit the game | \n"
                     + "| Z : Up | Q : Left | S : Down | D : Right \n"
                     + "| I : Inventory | M : Minimap | Escape with the same button\n"
-                    + "\n\n";
+                    + "\n";
         String hudString = hud.toString();
 
         // Global Renderer
@@ -100,7 +100,8 @@ public class RendererUI {
 
         switch (gs.getState()){
             case MAP:
-                globalRenderer += "\n\n\n\n Minimap \n\n\n\n";
+                //globalRenderer += "\n\n\n\n Minimap \n\n\n\n";
+                globalRenderer += miniMap.toStringMap();
                 break;
             case INVENTORY:
                 globalRenderer += "\n\n\n\n Inventory \n\n\n\n";
@@ -171,7 +172,8 @@ public class RendererUI {
      * @param miniMap the new Minimap
      */
     public void updateMap(MiniMap miniMap){
-        List<String> minimapString = miniMap.stringByLine();
+        miniMap.updateCutMap();
+        List<String> minimapString = miniMap.getLineCutMap();
         int i = 0;
         while (i < minimapString.size()){
             strAll[i*2+1] = minimapString.get(i);

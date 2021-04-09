@@ -46,46 +46,64 @@ public class RogueLike {
             System.out.printf("%d",a);
             boolean acted = false;
             boolean turned = false;
+            boolean modifiedMenu = false;
             // Process Player Input
             switch ((char) a) {
                 case 'Z':
-                    turned = true;
-                    player.setDirection(Direction.NORTH);
-                    acted = gs.movePlayer(0, -1);
+                    if (gs.getState() == State.FIGHT || gs.getState() == State.NORMAL){
+                        turned = true;
+                        player.setDirection(Direction.NORTH);
+                        acted = gs.movePlayer(0, -1);
+                    }
                     //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
                     break;
                 case 'Q':
-                    turned = true;
-                    player.setDirection(Direction.WEST);
-                    acted = gs.movePlayer(-1, 0);
+                    if (gs.getState() == State.FIGHT || gs.getState() == State.NORMAL) {
+                        turned = true;
+                        player.setDirection(Direction.WEST);
+                        acted = gs.movePlayer(-1, 0);
+                    }
                     break;
                 case 'S':
-                    turned = true;
-                    player.setDirection(Direction.SOUTH);
-                    acted = gs.movePlayer(0, 1);
+                    if (gs.getState() == State.FIGHT || gs.getState() == State.NORMAL) {
+                        turned = true;
+                        player.setDirection(Direction.SOUTH);
+                        acted = gs.movePlayer(0, 1);
+
+                    }
                     break;
                 case 'D':
-                    turned = true;
-                    player.setDirection(Direction.EAST);
-                    acted = gs.movePlayer(1, 0);
+                    if (gs.getState() == State.FIGHT || gs.getState() == State.NORMAL) {
+                        turned = true;
+                        player.setDirection(Direction.EAST);
+                        acted = gs.movePlayer(1, 0);
+                    }
                     break;
                 case '\u001B': // escape
                     gs.exitGame();
                     break;
                 case 'M':
                     if (gs.getState() == State.MAP){ // quit the minimap and return to the game
-
+                        gs.setState(State.NORMAL);
+                        modifiedMenu = true;
+                        break;
                     }
                     else { // print the minimap
-
+                        miniMap.updateMap();
                         gs.setState(State.MAP);
+                        modifiedMenu = true;
+                        break;
                     }
                 case 'I':
                     if (gs.getState() == State.INVENTORY){ // quit the inventory and return to the game
-
+                        gs.setState(State.NORMAL);
+                        modifiedMenu = true;
+                        break;
                     }
                     else { // print the inventory
-
+                        gs.setState(State.INVENTORY);
+                        modifiedMenu = true;
+                        break;
                     }
                 default:
                     continue;
@@ -94,6 +112,10 @@ public class RogueLike {
                 state = gs.getState();
                 if(turned) {
                     rendererUI.updateGrid(gs.getGridMap(), hud);
+                    rendererUI.display();
+                }
+                if(modifiedMenu){
+                    rendererUI.updateAll(gs.getGridMap(), hud,miniMap);
                     rendererUI.display();
                 }
                 Thread.sleep(100);

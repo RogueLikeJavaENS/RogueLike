@@ -4,6 +4,8 @@ import utils.Direction;
 import utils.Position;
 import java.util.ArrayList;
 import java.util.List;
+import utils.Colors;
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
  * This class is used to see the whole dungeon as a minimap.
@@ -13,14 +15,18 @@ import java.util.List;
  */
 
 public class MiniMap {
-    Dungeon dungeon;
-    GameState gameState;
-
+    private GameState gameState;
+    private Room[][] structDungeon;
+    private Room[][] structCutMap;
+    private List<String> cutMap;
+    private String map;
 
     public MiniMap(Dungeon dungeon, GameState gameState) {
-        this.dungeon = dungeon;
         this.gameState = gameState;
-
+        this.structDungeon = listToArray(dungeon);
+        structCutMap = new Room[3][3];
+        updateCutMap();
+        updateMap();
     }
 
     /**
@@ -28,16 +34,50 @@ public class MiniMap {
      *
      * @return string
      */
-    public String toString() {
-        List<String> strByLine = stringByLine();
+
+
+    public void updateCutMap(){
+        Position posPlayerDungeon = gameState.getCurrentRoom().getPosition();
+        int absMin;
+        int ordMin;
+
+        if (posPlayerDungeon.getAbs() == 0)
+            { absMin = 0; }
+        else if (posPlayerDungeon.getAbs() == structDungeon[0].length -1){
+            absMin = structDungeon[0].length -3; }
+        else{
+            absMin = posPlayerDungeon.getAbs() -1; }
+
+        if (posPlayerDungeon.getOrd() == 0)
+        { ordMin = 0; }
+        else if (posPlayerDungeon.getOrd() == structDungeon.length -1)
+        { ordMin = structDungeon.length -3; }
+        else
+        { ordMin = posPlayerDungeon.getOrd() -1; }
+
+        for (int abs = 0; abs<3; abs++){
+            for (int ord = 0; ord<3; ord++){
+                structCutMap[ord][abs] = structDungeon[ordMin+ord][absMin+abs];
+            }
+        }
+        cutMap = stringByLine(structCutMap);
+    }
+
+
+    public void updateMap(){
+        List<String> strByLine = stringByLine(structDungeon);
 
         StringBuilder sb = new StringBuilder();
         for (String str : strByLine){
             sb.append(str);
             sb.append("\n");
         }
-        return sb.toString();
+        map = sb.toString();
     }
+
+
+
+
 
     /**
      * With an object dungeon, return an array which contain the room at its good coordinate
@@ -68,11 +108,10 @@ public class MiniMap {
      *
      * @return List<String>
      */
-    public List<String> stringByLine (){ //minimap big
-        Room[][] roomArray = listToArray(dungeon);
+    private List<String> stringByLine (Room[][] struct){ //minimap big
         List<String> listOfLine= new ArrayList<>();
 
-        for (Room[] lineRoom : roomArray){
+        for (Room[] lineRoom : struct){
             for (int i=0; i<4; i++){
                 StringBuilder sb2 = new StringBuilder();
                 sb2.append("\t");
@@ -117,7 +156,7 @@ public class MiniMap {
                         sb.append("#  ");
                     } else {sb.append("|  ");}
 
-                    if (gameState.getCurrentRoom().equals(room)){sb.append("@ ");}
+                    if (gameState.getCurrentRoom().equals(room)){sb.append(colorize("@ ", Colors.RED.textApply()));}
                     else {
                         sb.append(room.getRoomNum());
                         if (room.getRoomNum() < 10) {
@@ -141,6 +180,9 @@ public class MiniMap {
         return strLine;
     }
 
+
+    public String toStringMap() { return map; }
+    public List<String> getLineCutMap() { return cutMap; }
 
 
 
