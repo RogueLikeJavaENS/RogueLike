@@ -1,6 +1,5 @@
 import display.HUD;
 import display.RendererUI;
-import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.Player;
 import gameElement.Dungeon;
@@ -24,6 +23,7 @@ public class RogueLike {
     private boolean acted;
     private boolean turned;
     private boolean modifiedMenu;
+    private boolean monsterTurned;
     private Seed seed;
     private Dungeon dungeon;
     private Player player;
@@ -31,6 +31,7 @@ public class RogueLike {
     private ScanPanel sp;
     private GameState gs;
     private MiniMap miniMap;
+    private RendererUI rendererUI;
 
     /**
      * Creates an instance of the game.
@@ -47,7 +48,7 @@ public class RogueLike {
 
         // Create the renderer and first print of it
 
-        RendererUI rendererUI = new RendererUI(gs, miniMap, hud);
+        rendererUI = new RendererUI(gs, miniMap, hud);
         rendererUI.display();
 
         while(gs.getState() != State.END) {
@@ -55,6 +56,7 @@ public class RogueLike {
             acted = false;
             turned = false;
             modifiedMenu = false;
+            monsterTurned = false;
 
             switch(gs.getState()) {
                 case NORMAL:    //default state
@@ -72,6 +74,9 @@ public class RogueLike {
                 case INVENTORY:
                     inventoryStateInput();
                     break;
+
+                case MONSTER:
+                    monsterStateInput();
             }
 
             if (!acted) {
@@ -79,11 +84,13 @@ public class RogueLike {
                     rendererUI.updateGrid(gs.getGridMap(), hud);
                     rendererUI.display();
                 }
-                if(modifiedMenu) {
+                else if (modifiedMenu) {
                     rendererUI.updateAll(gs.getGridMap(), hud,miniMap);
                     rendererUI.display();
                 }
+                else if (monsterTurned)
                 Thread.sleep(100);
+                sp.reset();
             } else {
                 gs.isOnEntity();
 
@@ -103,10 +110,14 @@ public class RogueLike {
         }
         LivingEntity entity = fight.getCurrentEntity();
         if (entity instanceof Player) {
+            sp.reset();
             fightingStateInput();
         } else {
             entity.doAction(gs);
-            Thread.sleep(1000);
+            rendererUI.updateAll(gs.getGridMap(),hud,miniMap);
+            rendererUI.display();
+            sp.reset();
+            Thread.sleep(2000);
         }
         fight.next();
     }
@@ -217,6 +228,14 @@ public class RogueLike {
             default:
                 break;
         }
+    }
+
+    private void monsterStateInput() throws InterruptedException {
+        int a = retrieveKey(sp);
+        acted = false;
+        turned = false;
+        modifiedMenu = false;
+        gs.setState(State.FIGHT);
     }
 
     private void inventoryStateInput() throws InterruptedException {

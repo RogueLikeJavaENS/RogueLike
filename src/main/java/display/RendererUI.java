@@ -111,7 +111,7 @@ public class RendererUI {
                 break;
             case FIGHT:
                 globalRenderer += renderer;
-                //globalRenderer += infoFight;
+                globalRenderer += gs.getFighting().toString();
                 break;
             case LOSE:
                 globalRenderer += "\n\n\n\n YOU LOOSE \n\n\n\n";

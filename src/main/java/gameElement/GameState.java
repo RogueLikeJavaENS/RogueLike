@@ -38,7 +38,7 @@ public class GameState {
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
-
+        isFighting();
     }
 
     public void updateChangingRoom(Room room) {
