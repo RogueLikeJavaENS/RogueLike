@@ -51,9 +51,13 @@ public class RogueLike {
         acted = false;
         turned = false;
 
-        while(state != State.RUNNING) {
+        while(state != State.END) {
 
             switch(state) {
+                case NORMAL:    //default state
+                    normalStateInput();
+                    break;
+
                 case FIGHT:
                     break;
 
@@ -63,9 +67,7 @@ public class RogueLike {
                 case INVENTORY:
                     break;
 
-                case NORMAL:    //default state
-                    normalStateInput();
-                    break;
+
             }
 
             if (!acted) {
@@ -95,7 +97,6 @@ public class RogueLike {
         }
         System.exit(0);
     }
-
 
     private void normalStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
@@ -143,7 +144,6 @@ public class RogueLike {
     private void inventoryStateInput() {
 
     }
-
 
     private boolean hadTurned(Player player, Direction dir) {
         return !player.getDirection().equals(dir);
