@@ -33,14 +33,14 @@ public class RogueLike {
      * Creates an instance of the game.
      */
     RogueLike() throws InterruptedException {
-        Seed seed = new Seed();
-        Dungeon dungeon = DungeonStructure.createDungeon(seed);
+        seed = new Seed();
+        dungeon = DungeonStructure.createDungeon(seed);
         Position initialPosition = dungeon.getRoomList().get(0).getCenter();
-        Player player = new Player(initialPosition,100, 100, "Hero", 1);
-        HUD hud = new HUD(player);
-        ScanPanel sp = new ScanPanel();
-        GameState gs = new GameState(player, dungeon);
-        MiniMap miniMap = new MiniMap(dungeon, gs);
+        player = new Player(initialPosition,100, 100, "Hero", 1);
+        hud = new HUD(player);
+        sp = new ScanPanel();
+        gs = new GameState(player, dungeon);
+        miniMap = new MiniMap(dungeon, gs);
 
         // Create the renderer and first print of it
 

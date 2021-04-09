@@ -88,7 +88,7 @@ public class GameState {
     }
 
     public void exitGame() {
-        state = State.LOOSE;
+        state = State.LOSE;
     }
 
     public Dungeon getDungeon() {
