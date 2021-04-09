@@ -5,7 +5,6 @@ import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.Player;
 import utils.State;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +80,6 @@ public class GameState {
         return acted;
     }
 
-
     public void isOnEntity() {
         int playerAbs = player.getPosition().getAbs();
         int playerOrd = player.getPosition().getOrd();
@@ -133,6 +131,7 @@ public class GameState {
     public Fighting getFighting() {
         return fighting;
     }
+    public void setState(State newState) {this.state = newState; }
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
