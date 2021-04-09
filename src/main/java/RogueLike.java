@@ -18,6 +18,16 @@ import utils.State;
  */
 
 public class RogueLike {
+    private State state;
+    private boolean acted;
+    private boolean turned;
+    private Seed seed;
+    private Dungeon dungeon;
+    private Player player;
+    private HUD hud;
+    private ScanPanel sp;
+    private GameState gs;
+    private MiniMap miniMap;
 
     /**
      * Creates an instance of the game.
@@ -37,49 +47,34 @@ public class RogueLike {
         RendererUI rendererUI = new RendererUI(gs, miniMap, hud);
         rendererUI.display();
 
-        State state = gs.getState();
-        while(state != State.LOOSE) {
+        state = gs.getState();
+        acted = false;
+        turned = false;
 
+        while(state != State.RUNNING) {
 
-            // Wait for a key to be pressed and return its ASCII code
-            int a = retrieveKey(sp);
-            boolean acted = false;
-            boolean turned = false;
-            // Process Player Input
-            switch ((char) a) {
-                case 'Z':
-                    turned = hadTurned(player, Direction.NORTH);
-                    player.setDirection(Direction.NORTH);
-                    acted = gs.movePlayer(0, -1);
-                    //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
+            switch(state) {
+                case FIGHT:
                     break;
-                case 'Q':
-                    turned = hadTurned(player, Direction.WEST);
-                    player.setDirection(Direction.WEST);
-                    acted = gs.movePlayer(-1, 0);
+
+                case MAP:
                     break;
-                case 'S':
-                    turned = hadTurned(player, Direction.SOUTH);
-                    player.setDirection(Direction.SOUTH);
-                    acted = gs.movePlayer(0, 1);
+
+                case INVENTORY:
                     break;
-                case 'D':
-                    turned = hadTurned(player, Direction.EAST);
-                    player.setDirection(Direction.EAST);
-                    acted = gs.movePlayer(1, 0);
+
+                case NORMAL:    //default state
+                    normalStateInput();
                     break;
-                case '\u001B': // escape
-                    gs.exitGame();
-                    break;
-                default:
-                    continue;
             }
+
             if (!acted) {
                 state = gs.getState();
                 if(turned) {
                     rendererUI.updateGrid(gs.getGridMap(), hud);
                     rendererUI.display();
                 }
+
                 Thread.sleep(100);
             } else {
                 gs.isOnEntity();
@@ -100,6 +95,55 @@ public class RogueLike {
         }
         System.exit(0);
     }
+
+
+    private void normalStateInput() throws InterruptedException {
+        int a = retrieveKey(sp);
+        acted = false;
+        turned = false;
+        // Process Player Input
+        switch ((char) a) {
+            case 'Z':
+                turned = hadTurned(player, Direction.NORTH);
+                player.setDirection(Direction.NORTH);
+                acted = gs.movePlayer(0, -1);
+                //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
+                break;
+            case 'Q':
+                turned = hadTurned(player, Direction.WEST);
+                player.setDirection(Direction.WEST);
+                acted = gs.movePlayer(-1, 0);
+                break;
+            case 'S':
+                turned = hadTurned(player, Direction.SOUTH);
+                player.setDirection(Direction.SOUTH);
+                acted = gs.movePlayer(0, 1);
+                break;
+            case 'D':
+                turned = hadTurned(player, Direction.EAST);
+                player.setDirection(Direction.EAST);
+                acted = gs.movePlayer(1, 0);
+                break;
+            case '\u001B': // escape
+                gs.exitGame();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void minimapStateInput() {
+
+    }
+
+    private void fightingStateInput() {
+
+    }
+
+    private void inventoryStateInput() {
+
+    }
+
 
     private boolean hadTurned(Player player, Direction dir) {
         return !player.getDirection().equals(dir);
