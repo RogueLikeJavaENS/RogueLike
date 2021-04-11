@@ -1,11 +1,10 @@
 package display;
 
-import com.sun.jna.platform.win32.IPHlpAPI;
 import gameElement.GameState;
 import gameElement.MiniMap;
-import utils.State;
 
-import java.util.ArrayList;
+import javax.sound.midi.Soundbank;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,39 +35,11 @@ public class RendererUI {
         this.hud = hud;
         this.gs = gs;
         this.miniMap = miniMap;
-        this.strAll = new String[Math.max(gs.getGridMap().StrByLine().size(),miniMap.getLineCutMap().size())*2];
-        updateGrid(gs.getGridMap(),hud);
+        gs.getGridMap().updateDisplayGridMap();
+        this.strAll = new String[gs.getDungeon().getMaxRoomHeight()*4];
+        updateGrid(gs.getGridMap());
         updateHUD(hud);
         updateMap(miniMap);
-    }
-
-
-    /**
-     * In order to have String of the same size for the HUD and the GridMap fillStr
-     * complete the smaller
-     *
-     * @param hud th current HUD
-     * @param gridMap the current GridMap
-     */
-    private void fillStr(HUD hud, GridMap gridMap){
-        List<String> strLineGrid = gridMap.StrByLine();
-        int widthStrGrid = strLineGrid.get(0).length();
-        int heightStrGrid = strLineGrid.size();
-
-        List<String> strLineHud = hud.strByLine();
-        int heightHud = strLineHud.size();
-        int widthHud = strLineHud.get(0).length();
-
-        if (widthHud>widthStrGrid){
-            for (int i=0; i<heightStrGrid; i++){
-                strLineGrid.set(i, " ".repeat(widthHud - widthStrGrid));
-            }
-        }
-        else {
-            for (int i=0; i<heightHud; i++){
-                strLineHud.set(i, " ".repeat(widthStrGrid - widthHud));
-            }
-        }
     }
 
     /**
@@ -77,11 +48,11 @@ public class RendererUI {
      * @return String
      */
     public String toString(){
-        // Renderer Game
+        // Renderer Game gridmap + cut minimap
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < strAll.length; i++){
             sb.append(strAll[i]);
-            if (i%2 != 0) {
+            if (i>27 && i%2 !=0 && (strAll[i-1] != "")) { //tail cut minimap * 2 (cf strAll)
                 sb.append("\n");
             }
         }
@@ -100,7 +71,6 @@ public class RendererUI {
 
         switch (gs.getState()){
             case MAP:
-                //globalRenderer += "\n\n\n\n Minimap \n\n\n\n";
                 globalRenderer += miniMap.toStringMap();
                 break;
             case INVENTORY:
@@ -133,11 +103,10 @@ public class RendererUI {
      * Permit to update all the element on the print
      *
      * @param gridMap the new GriMap
-     * @param hud the new Hud
      * @param miniMap the new minimap
      */
-    public void updateAll(GridMap gridMap, HUD hud, MiniMap miniMap){
-        updateGrid(gridMap, hud);
+    public void updateAll(GridMap gridMap, MiniMap miniMap, HUD hud){
+        updateGrid(gridMap);
         updateHUD(hud);
         updateMap(miniMap);
     }
@@ -150,20 +119,18 @@ public class RendererUI {
      * Permit to update only the GridMap
      *
      * @param gridMap the new GridMap
-     * @param hud the current HUD
      */
-    public void updateGrid(GridMap gridMap,HUD hud){
-        List<String> gridmapString = gridMap.StrByLine();
-        fillStr(hud, gridMap);
+    public void updateGrid(GridMap gridMap){
+        Arrays.fill(strAll,"");
+        gridMap.updateDisplayGridMap();
+        List<String> gridmapString = gridMap.getStrByLine();
         int i = 0;
         while ( i < gridmapString.size()){
             strAll[i*2] = gridmapString.get(i);
             i++;
         }
-        while (i*2 < strAll.length){
-            strAll[i*2] = " ".repeat(gridmapString.get(0).length());
-            i++;
-        }
+
+
     }
 
     /**
@@ -175,6 +142,7 @@ public class RendererUI {
         miniMap.updateCutMap();
         List<String> minimapString = miniMap.getLineCutMap();
         int i = 0;
+
         while (i < minimapString.size()){
             strAll[i*2+1] = minimapString.get(i);
             i++;

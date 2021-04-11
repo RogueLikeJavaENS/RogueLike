@@ -29,6 +29,7 @@ public class GameState {
     private final Dungeon dungeon;
     private GridMap gridMap;
     private Fighting fighting;
+    private boolean help;
 
     public GameState(Player player, Dungeon dungeon) {
         this.dungeon = dungeon;
@@ -38,7 +39,7 @@ public class GameState {
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
-
+        this.help = true;
     }
 
     public void updateChangingRoom(Room room) {
@@ -135,8 +136,9 @@ public class GameState {
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
-
     public void setGridMap(GridMap gridMap) {
         this.gridMap = gridMap;
     }
+    public boolean getHelp(){ return help;}
+    public void setHelp(boolean help){ this.help = help; }
 }

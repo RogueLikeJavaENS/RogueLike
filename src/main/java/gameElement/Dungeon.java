@@ -21,6 +21,8 @@ import java.util.Objects;
  */
 
 public class Dungeon {
+    private final int maxRoomHeight;
+    private final int maxRoomWidth;
     private List<Room> roomList;
     private int width; // width -> max numbers of rooms in a column
     private int height;  // height -> max numbers of rooms in a row
@@ -35,11 +37,13 @@ public class Dungeon {
      *       3 -> West.
      */
 
-    public Dungeon(List<Room> roomList, int width, int height, GraphDungeon graph) {
+    public Dungeon(List<Room> roomList, int width, int height, GraphDungeon graph, int maxRoomHeight, int maxRoomWidth) {
         this.roomList = roomList;
         this.graph = graph;
         this.width = width;
         this.height = height;
+        this.maxRoomHeight = maxRoomHeight;
+        this.maxRoomWidth = maxRoomWidth;
         placeTestCoins();
         placeTestMonster();
         createAllDoor();
@@ -164,6 +168,10 @@ public class Dungeon {
     public GridMap getGridMap(Room room) {
         return gridMapList.get(room.getRoomNum());
     }
+
+    public int getMaxRoomHeight() { return maxRoomHeight; }
+
+    public int getMaxRoomWidth() { return maxRoomWidth; }
 
     /**
      * Get the dungeon size.

@@ -76,18 +76,18 @@ public class RogueLike {
 
             if (!acted) {
                 if(turned) {
-                    rendererUI.updateGrid(gs.getGridMap(), hud);
+                    rendererUI.updateGrid(gs.getGridMap());
                     rendererUI.display();
                 }
                 if(modifiedMenu) {
-                    rendererUI.updateAll(gs.getGridMap(), hud,miniMap);
+                    rendererUI.updateAll(gs.getGridMap(), miniMap, hud);
                     rendererUI.display();
                 }
                 Thread.sleep(100);
             } else {
                 gs.isOnEntity();
 
-                rendererUI.updateAll(gs.getGridMap(),hud,miniMap);
+                rendererUI.updateAll(gs.getGridMap(), miniMap, hud);
                 rendererUI.display();
                 Thread.sleep(100);
                 sp.reset();
@@ -106,7 +106,7 @@ public class RogueLike {
             fightingStateInput();
         } else {
             entity.doAction(gs);
-            Thread.sleep(1000);
+            Thread.sleep(1);
         }
         fight.next();
     }

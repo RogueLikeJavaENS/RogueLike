@@ -24,7 +24,7 @@ public class MiniMap {
     public MiniMap(Dungeon dungeon, GameState gameState) {
         this.gameState = gameState;
         this.structDungeon = listToArray(dungeon);
-        structCutMap = new ArrayList<>();
+        structCutMap = createArray(2,2);
         updateCutMap();
         updateMap();
     }
@@ -34,6 +34,7 @@ public class MiniMap {
      *
      * @return string
      */
+
 
 
     public void updateCutMap(){
@@ -49,11 +50,11 @@ public class MiniMap {
             absMin = posPlayerDungeon.getAbs() -1; }
 
         if (posPlayerDungeon.getOrd() == 0)
-        { ordMin = 0; }
+            { ordMin = 0; }
         else if (posPlayerDungeon.getOrd() == structDungeon.size() -1)
-        { ordMin = structDungeon.size() -3; }
+            { ordMin = structDungeon.size() -3; }
         else
-        { ordMin = posPlayerDungeon.getOrd() -1; }
+            { ordMin = posPlayerDungeon.getOrd() -1; }
 
         for (int abs = 0; abs<3; abs++){
             for (int ord = 0; ord<3; ord++){
@@ -63,6 +64,17 @@ public class MiniMap {
         cutMap = stringByLine(structCutMap);
     }
 
+    private List<List<Room>> createArray(int height, int width){
+        List<List<Room>> roomArray = new ArrayList<>();
+        for (int ord = 0; ord<=height; ord++){
+            List<Room> line = new ArrayList<>();
+            for (int abs = 0; abs<=width; abs++){
+                line.add(null);
+            }
+            roomArray.add(line);
+        }
+        return roomArray;
+    }
 
     public void updateMap(){
         List<String> strByLine = stringByLine(structDungeon);
@@ -70,7 +82,6 @@ public class MiniMap {
         StringBuilder sb = new StringBuilder();
         for (String str : strByLine){
             sb.append(str);
-            sb.append("\n");
         }
         map = sb.toString();
     }
@@ -91,7 +102,7 @@ public class MiniMap {
         int width = dungeon.getWidth();
         int height = dungeon.getHeight();
 
-        List<List<Room>> roomArray = new ArrayList<>();
+        List<List<Room>> roomArray = createArray(height,width);
 
         for (Room room : roomList){
             Position roomPos = room.getPosition();
@@ -101,13 +112,15 @@ public class MiniMap {
         }
         for (int line=0; line<height; line++){
             int col = 0;
-            while (col <= width){
+            while (col < width){
                 if (col == width){
-
+                    roomArray.remove(line);
+                    break;
                 }
                 else if (roomArray.get(line).get(col) != null){
                     break;
                 }
+                col++;
             }
         }
 
@@ -122,7 +135,9 @@ public class MiniMap {
      */
     private List<String> stringByLine (List<List<Room>> struct){
         List<String> listOfLine= new ArrayList<>();
-
+        String fstLine = "\t "+"_".repeat(7*struct.size()+4)+" \n";
+        String lastLine = "\t|"+"_".repeat(7*struct.size()+4)+"|\n";
+        listOfLine.add(fstLine);
         for (List<Room> lineRoom : struct){
             for (int i=0; i<4; i++){
                 StringBuilder sb2 = new StringBuilder();
@@ -130,10 +145,13 @@ public class MiniMap {
                 for (Room room : lineRoom){
                     sb2.append(buildRoom(room,i));
                 }
-                String line = sb2.toString();
+
+                String line = "\t| "+sb2.toString();
+                line+=" |\n";
                 listOfLine.add(line);
             }
         }
+        listOfLine.add(lastLine);
         return listOfLine;
     }
 
