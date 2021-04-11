@@ -191,7 +191,7 @@ public class RendererUI {
      * Use it before re-print the renderer
      *
      */
-    public static void clearConsole() {
+    public void clearConsole() {
         try {
             String os = System.getProperty("os.name");
             if (os.contains("Windows")) {
