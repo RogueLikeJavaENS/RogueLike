@@ -168,7 +168,7 @@ public class RogueLike {
 
         switch((char) a) {
             case 'M':
-                gs.setState(State.NORMAL);
+                gs.isFighting();
                 modifiedMenu = true;
                 break;
             case 'I':
@@ -243,7 +243,7 @@ public class RogueLike {
                 modifiedMenu = true;
                 break;
             case 'I':
-                gs.setState(State.NORMAL);
+                gs.isFighting();
                 modifiedMenu = true;
                 break;
             case 'H':

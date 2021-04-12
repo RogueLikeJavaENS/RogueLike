@@ -31,7 +31,7 @@ public class RendererUI {
 
     /**
      * Constructor of the Object Renderer UI
-     * Initialize the array strAll with its size
+     * Initialize the array gridAndMapArray with its size
      *
      * @param gs : the actual GameState
      * @param miniMap : the Minimap of the dungeon
@@ -43,19 +43,27 @@ public class RendererUI {
         this.miniMap = miniMap;
 
         gs.getGridMap().updateDisplayGridMap();
-        this.gridAndMapArray = new String[gs.getDungeon().getMaxRoomHeight()*4];    // Create an array for the String of GridMap and Minimap
-                                                                                    // size = maximum height of a room * 2 (a tile is print on 2 line) * 2 (lines of the minimap)
-                                                                                    // gridAndMapArray contain the gridMap on even index and the minimap on uneven index
+        this.gridAndMapArray = new String[gs.getDungeon().getMaxRoomHeight()*4];
+
+        // Create an array for the String of GridMap and Minimap
+        // size = maximum height of a room * 2 (a tile is print on 2 line) * 2 (lines of the minimap)
+        // gridAndMapArray contain the gridMap on even index and the minimap on uneven index
+
         updateGrid(gs.getGridMap());
         updateHUD(hud);
         updateMap(miniMap);
     }
 
+    /**
+     * Return the string to print the gridmap and the minimap
+     *
+      * @return String
+     */
     private String midRenderer(){
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < gridAndMapArray.length; i++){
+        for (int i = 0; i < gridAndMapArray.length; i++){           // concatenate the string of gridMapAndArray which represente the gridMap and minimap
             sb.append(gridAndMapArray[i]);
-            if (i>27 && i%2 !=0 && (gridAndMapArray[i-1] != "")) { //tail cut minimap * 2 (cf strAll)
+            if (i>27 && i%2 !=0 && (gridAndMapArray[i-1] != "")) {  // put a \n after the uneven line without print of the minimap, "" (the strings of minimap already have a \n)
                 sb.append("\n");
             }
         }
@@ -67,11 +75,10 @@ public class RendererUI {
      *
      * @return String
      */
-    public String toString(){
+    public String toStringGame(){
         StringBuilder globalSB = new StringBuilder();
 
         // Controls always print
-        String controls;
         if (gs.getHelp()){
             globalSB.append(help);
         }
@@ -122,9 +129,9 @@ public class RendererUI {
      * Clear the console and print the game
      *
      */
-    public void display (){
+    public void display(){
         clearConsole();
-        System.out.println(this.toString());
+        System.out.println(toStringGame());
     }
 
     /**
@@ -157,12 +164,14 @@ public class RendererUI {
         gridMap.updateDisplayGridMap();                         // update of the Strings of Gridmap
         List<String> gridMapString = gridMap.getStrByLine();    // get the List of Strings
         int i = 0;
-        while ( i < gridMapString.size()){                      // put the Strings on strAll
-            gridAndMapArray[i*2] = gridMapString.get(i);                 // only on even places (uneven are for the minimap)
+        while ( i < gridMapString.size()){                      // put the Strings on gridAndMapArray
+            gridAndMapArray[i*2] = gridMapString.get(i);        // only on even places (uneven are for the minimap)
             i++;
         }
-        while (i < gridAndMapArray.length){                              // fill the rest of strAll with ""
+        while (i*2 < gridAndMapArray.length){                     // fill the rest of gridAndMapArray with ""
             gridAndMapArray[i*2] = "";
+            i++;
+
         }
     }
 
@@ -175,11 +184,11 @@ public class RendererUI {
         miniMap.updateCutMap();                                         // update of the Map
         List<String> minimapString = miniMap.getLineCutMap();           //  get the list of String
         int i = 0;
-        while (i < minimapString.size()){                               // put the String on strAll
-            gridAndMapArray[i*2+1] = minimapString.get(i);                       // only on uneven places (even are for the gridMap)
+        while (i < minimapString.size()){                               // put the String on gridAndMapArray
+            gridAndMapArray[i*2+1] = minimapString.get(i);              // only on uneven places (even are for the gridMap)
             i++;
         }
-        while (i*2+1  < gridAndMapArray.length){                                 // fill the rest of strAll with ""
+        while (i*2+1  < gridAndMapArray.length){                        // fill the rest of gridAndMapArray with ""
             gridAndMapArray[i*2+1] = "";
             i++;
         }
@@ -187,7 +196,7 @@ public class RendererUI {
 
 
     /**
-     * In order to have a better visibility, it permit to clear the console
+     * In order to have a better visibility, this function clear the console
      * Use it before re-print the renderer
      *
      */

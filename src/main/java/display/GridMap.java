@@ -71,26 +71,30 @@ public class GridMap {
         entities.remove(entity);
     }
 
+    /**
+     * Update the List of String used to print the GridMap
+     *
+     */
     public void updateDisplayGridMap (){
         List<String> strLine = new ArrayList<>();
-        System.out.println("Room height gm: "+ room.getHeight());
         for (int ord = 0; ord<room.getHeight(); ord++){
-            for (int i = 0; i <2; i++) {
-                StringBuilder sb = new StringBuilder();
+            for (int i = 0; i <2; i++) {                    // made 2 times because the tile has a height of 2
+                StringBuilder sb = new StringBuilder();     // create each line
                 int nbEmptyTile = 0;
                 for (int abs = 0; abs < room.getWidth(); abs++) {
                     List<Entity> entitiesAt = getEntitiesAt(abs, ord);
-                    if (entitiesAt.size() != 0) {
+                    if (entitiesAt.size() != 0) { // print the first entity of the tile
                         sb.append(entitiesAt.get(0));
-                    } else {
+                    } else {                       // if no entity, print the tile
                         sb.append(tiles[ord][abs]);
-                        if (tiles[ord][abs] instanceof EmptyTile){
+                        if (tiles[ord][abs] instanceof EmptyTile){ // if the tile is empty increment nbEmptyTile
                             nbEmptyTile++;
                         }
                     }
                 }
-                if (nbEmptyTile != room.getWidth()){
+                if (nbEmptyTile != room.getWidth()){        // if all the tile on the line are empty, don't add the line on the result
                     strLine.add(sb.toString());
+
                 }
 
             }
@@ -98,6 +102,11 @@ public class GridMap {
         strByLine = strLine;
     }
 
+    /**
+     * Return the list of the line of gridmap
+     *
+     * @return the list which contains all the line in order to print gridMap
+     */
     public List<String> getStrByLine() { return strByLine; }
 
     public List<Entity> getEntitiesAt(int abs, int ord) {
