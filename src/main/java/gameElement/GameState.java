@@ -103,14 +103,16 @@ public class GameState {
         List<LivingEntity> monsters = getGridMap().getMonsters();
         if (monsters.size() > 0) {  // if there is no monsters in the current map
             if (state == State.NORMAL) {    // if the state was at Normal, the fight is initialized.
-                state = State.FIGHT;
                 initFight(monsters);
             }
+            state = State.FIGHT;
         }
         else {
             state = State.NORMAL;
         }
     }
+
+
 
     /**
      *
@@ -149,12 +151,6 @@ public class GameState {
     public void setState(State newState) {this.state = newState; }
     public void setCurrentRoom(Room currentRoom) { this.currentRoom = currentRoom; }
     public void setGridMap(GridMap gridMap) { this.gridMap = gridMap; }
-    public void setCurrentRoom(Room currentRoom) {
-        this.currentRoom = currentRoom;
-    }
-    public void setGridMap(GridMap gridMap) {
-        this.gridMap = gridMap;
-    }
     public boolean getHelp(){ return help;}
     public void setHelp(boolean help){ this.help = help; }
 }
