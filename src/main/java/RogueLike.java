@@ -1,6 +1,5 @@
 import display.HUD;
 import display.RendererUI;
-import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.Player;
 import gameElement.Dungeon;
@@ -31,6 +30,7 @@ public class RogueLike {
     private final ScanPanel sp;
     private final GameState gs;
     private final MiniMap miniMap;
+    private final RendererUI rendererUI;
 
     /**
      * Creates an instance of the game.
@@ -47,14 +47,12 @@ public class RogueLike {
 
         // Create the renderer and first print of it
 
-        RendererUI rendererUI = new RendererUI(gs, miniMap, hud);
+        rendererUI = new RendererUI(gs, miniMap, hud);
         rendererUI.display();
 
         while(gs.getState() != State.END) {
 
-            acted = false;
-            turned = false;
-            modifiedMenu = false;
+            resetBools();
 
             switch(gs.getState()) {
                 case NORMAL:    //default state
@@ -114,10 +112,7 @@ public class RogueLike {
     private void normalStateInput() throws InterruptedException {
 
         int a = retrieveKey(sp);
-        acted = false;
-        turned = false;
-
-        modifiedMenu = false;
+        resetBools();
         // Process Player Input
         switch ((char) a) {
             case 'Z':
@@ -160,9 +155,7 @@ public class RogueLike {
 
     private void minimapStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
-        acted = false;
-        turned = false;
-        modifiedMenu = false;
+        resetBools();
 
         switch((char) a) {
             case 'M':
@@ -178,9 +171,7 @@ public class RogueLike {
 
     private void fightingStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
-        acted = false;
-        turned = false;
-        modifiedMenu = false;
+        resetBools();
         // Process Player Input
         switch ((char) a) {
             case 'Z':
@@ -213,19 +204,99 @@ public class RogueLike {
                 gs.setState(State.INVENTORY);
                 modifiedMenu = true;
                 break;
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                int ASCII_CODE_FOR_ZERO = 48;
+                int playerInput = a%ASCII_CODE_FOR_ZERO;
+                if (playerInput <= player.getSpells().size()){
+                    hud.spellSelectionString(playerInput);
+                    updateHUDDisplay();
+                    skillSelectionInput(playerInput);
+                } else {
+                    fightingStateInput();
+                }
+                break;
+            case '0':
+                if (player.getSpells().size() == 10) { //0 is after 9 on the keyboard, so it stands for 10
+                    hud.spellSelectionString(10);
+                    updateHUDDisplay();
+                    skillSelectionInput(10);
+                } else {
+                    fightingStateInput();
+                }
+                break;
             case '\u001B': // escape
                 gs.exitGame();
                 break;
             default:
+                fightingStateInput(); //break; statement was only skipping the player's turn
+        }
+    }
+
+    private void skillSelectionInput(int firstInput) throws InterruptedException {
+        int ASCII_CODE_FOR_ZERO = 48;
+        int a = retrieveKey(sp);
+        resetBools();
+
+        int secondInput = a%ASCII_CODE_FOR_ZERO;
+
+        switch ((char) a) {
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                if (secondInput == firstInput) {
+                    hud.spellListString(); //resets the spellBar (removes the highlightning)
+                    System.out.println(player.getName() + " uses " + player.getSpells().get(secondInput-1).toString()); //dummy string to simulate the use of the spell
+                } else if (secondInput <= player.getSpells().size()) {
+                    hud.spellSelectionString(secondInput); //updates the spellBar (moves the highlightning)
+                    updateHUDDisplay();
+                    skillSelectionInput(secondInput);
+                } else {
+                    hud.spellListString();
+                    updateHUDDisplay();
+                    skillSelectionInput(-1);
+                }
                 break;
+            case '0':
+                if (firstInput == 10) { //0 is after 9 on the keyboard, so it stands for 10
+                    hud.spellListString(); //resets the spellListString (removes the highlightning)
+                    System.out.println(player.getName() + " uses " + player.getSpells().get(firstInput-1).toString());
+                } else if (secondInput <= player.getSpells().size()) {
+                    hud.spellSelectionString(10); //updates the spellBar (moves the highlightning)
+                    updateHUDDisplay();
+                    skillSelectionInput(10);
+                } else {
+                    hud.spellListString();
+                    updateHUDDisplay();
+                    skillSelectionInput(-1);
+                }
+                break;
+            case '\u001B': // escape
+                hud.spellListString(); //resets the spellListString (removes the highlightning) and gets out of the spell selection
+                updateHUDDisplay();
+                fightingStateInput(); //gets back to fighting inputs
+                break;
+            default:
+                skillSelectionInput(-1);
         }
     }
 
     private void inventoryStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
-        acted = false;
-        turned = false;
-        modifiedMenu = false;
+        resetBools();
 
         switch((char) a) {
             case 'M':
@@ -250,6 +321,17 @@ public class RogueLike {
             Thread.sleep(1);  // Without that, Java deletes the loop
         }
         return a;
+    }
+
+    private void updateHUDDisplay(){
+        rendererUI.updateHUD(hud);
+        rendererUI.display();
+    }
+
+    private void resetBools() {
+        acted = false;
+        turned = false;
+        modifiedMenu = false;
     }
 
     public static void main(String[] args) throws InterruptedException {

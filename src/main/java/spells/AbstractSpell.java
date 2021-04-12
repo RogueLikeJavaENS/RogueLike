@@ -4,12 +4,14 @@ public abstract class AbstractSpell implements Spell {
     String name;
     double damageMult;
     int range;
+    int manaCost;
     String ingameDisplay;
 
-    public AbstractSpell(String name, double damageMult, int range, String ingameDisplay) {
+    public AbstractSpell(String name, double damageMult, int range, int manaCost, String ingameDisplay) {
         this.name = name;
         this.damageMult = damageMult;
         this.range = range;
+        this.manaCost = manaCost;
         this.ingameDisplay = ingameDisplay;
     }
 
@@ -28,5 +30,9 @@ public abstract class AbstractSpell implements Spell {
 
     public String getIngameDisplay() {
         return ingameDisplay;
+    }
+
+    public int getManaCost() {
+        return manaCost;
     }
 }

@@ -1,11 +1,8 @@
 package display;
 
-import com.sun.jna.platform.win32.IPHlpAPI;
 import gameElement.GameState;
 import gameElement.MiniMap;
-import utils.State;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,9 +17,9 @@ import java.util.List;
 
 public class RendererUI {
     GameState gs;
-    private String[] strAll;
+    private final String[] strAll;
     private HUD hud;
-    private MiniMap miniMap;
+    private final MiniMap miniMap;
 
     /**
      * Constructor of the Object Renderer UI
@@ -86,12 +83,7 @@ public class RendererUI {
             }
         }
 
-        String hudString = hud.toString();
-        String spellBar = hud.spellListDisplay();
         String renderer = sb.toString();
-        String help = "Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n\n";
-        //return help+hud+renderer;
-        return help+hudString+renderer+spellBar;
 
         // Control and HUD
         String controls = "Controls :\n"
@@ -116,11 +108,12 @@ public class RendererUI {
                 globalRenderer += renderer;
                 break;
             case FIGHT:
-                globalRenderer += renderer;
+                String spellBar = hud.getSpellBar();
+                globalRenderer += renderer + spellBar;
                 //globalRenderer += infoFight;
                 break;
             case LOSE:
-                globalRenderer += "\n\n\n\n YOU LOOSE \n\n\n\n";
+                globalRenderer += "\n\n\n\n YOU LOSE \n\n\n\n";
                 break;
             case WIN:
                 globalRenderer += "\n\n\n\n YOU WIN \n\n\n\n";
@@ -132,7 +125,7 @@ public class RendererUI {
 
     public void display (){
         clearConsole();
-        System.out.println(this.toString());
+        System.out.println(this); //appel implicite à toString() dans le print
     }
 
     /**
@@ -210,4 +203,5 @@ public class RendererUI {
             e.printStackTrace();
         }
     }
+
 }

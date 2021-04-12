@@ -1,5 +1,6 @@
 package entity.living;
 
+import spells.FireAura;
 import spells.FireBall;
 import spells.Spell;
 import utils.Position;
@@ -15,6 +16,7 @@ public class Player extends LivingEntity {
         super(position, pv, pm, name, level);
         spellList = new ArrayList<>();
         addSpell(new FireBall()); //hard coded to test
+        addSpell(new FireAura());
     }
 
     public String toString(){
