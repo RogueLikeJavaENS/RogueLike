@@ -11,13 +11,7 @@ import java.util.List;
 /**
  * This class represents the State of the Game at any moment. Each action will pass by this class.
  * It determines rather or not if the action is permitted.
- *
- * Each state of the game is determined by an int :
- * states :
- *         0 -> End
- *         1 -> Game
- *         2 -> Menu
- *         3 -> MiniMap
+
  *
  * @author Antoine
  */
@@ -39,15 +33,20 @@ public class GameState {
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
+        isThereMonsters();
         this.help = true;
     }
 
+    /**
+     * Use to change the current room.
+     * @param room The new room
+     */
     public void updateChangingRoom(Room room) {
-        gridMap.update(player, false);
-        setCurrentRoom(room);
-        setGridMap(dungeon.getGridMap(room));
-        gridMap.update(player, true);
-        isFighting();
+        gridMap.update(player, false);      // remove the player from the previous room
+        setCurrentRoom(room);                   // set the current room with the new room
+        setGridMap(dungeon.getGridMap(room));   // take the gridmap that represent the new room
+        gridMap.update(player, true);       // add the ^player to the new room
+        changeRoomFight();                       // check if the Room contains monster
     }
 
     /**
@@ -59,14 +58,14 @@ public class GameState {
      * @author Raphael
      */
     public boolean movePlayer(int x, int y) {
-        boolean acted = false;
+        boolean acted = false;                  // boolean used in RogueLike to see if the player consumed his action.
         int abs = player.getPosition().getAbs();
         int ord = player.getPosition().getOrd();
 
-        if (gridMap.getTileAt(abs + x, ord + y).isAccessible()) {
+        if (gridMap.getTileAt(abs + x, ord + y).isAccessible()) {  // check if the wanted direction is accessible.
             boolean accessibilityEntity = true;
             List<Entity> entitiesAt = gridMap.getEntitiesAt(abs + x, ord + y);
-            for (Entity entity : entitiesAt){
+            for (Entity entity : entitiesAt){   // check if there are no Entity that prevent the player to move on.
                 if (!entity.getIsAccessible()){
                     accessibilityEntity = false;
                     break;
@@ -77,10 +76,13 @@ public class GameState {
                 acted = true;
             }
         }
-        isFighting();
         return acted;
     }
 
+    /**
+     * Check if the player moved on Entity.
+     * The methods throw the action related to the entity.
+     */
     public void isOnEntity() {
         int playerAbs = player.getPosition().getAbs();
         int playerOrd = player.getPosition().getOrd();
@@ -90,49 +92,63 @@ public class GameState {
                 entity.doAction(this);
             }
         }
-        isFighting();
+        isThereMonsters();
     }
 
-    public void isFighting() {
+    /**
+     * The methods check if there is any monsters in the current Room.
+     * set the state NORMAL with no Monsters or FIGHT with monsters.
+     */
+    public void isThereMonsters() {
         List<LivingEntity> monsters = getGridMap().getMonsters();
-        if (monsters.size() > 0) {
-            state = State.FIGHT;
-            initFight(monsters);
+        if (monsters.size() > 0) {  // if there is no monsters in the current map
+            if (state == State.NORMAL) {    // if the state was at Normal, the fight is initialized.
+                state = State.FIGHT;
+                initFight(monsters);
+            }
         }
         else {
             state = State.NORMAL;
         }
     }
 
-    public void initFight(List<LivingEntity> monsters) {
+    /**
+     *
+     */
+    public void changeRoomFight() {
+        setState(State.NORMAL);
+        isThereMonsters();
+    }
+
+    /**
+     * Create the fight with the monsters encountered by the player.
+     * @param monsters the monsters present in the current room.
+     */
+    private void initFight(List<LivingEntity> monsters) {
         List<LivingEntity> fightList = new ArrayList<>(monsters);
         fightList.add(player);
         fighting = new Fighting(fightList);
     }
 
+    /**
+     * Exit the games by setting the state at END.
+     */
     public void exitGame() {
         state = State.END;
     }
 
-    public Dungeon getDungeon() {
-        return dungeon;
-    }
-    public GridMap getGridMap() {
-        return gridMap;
-    }
-    public Player getPlayer() {
-        return player;
-    }
-    public Room getCurrentRoom() {
-        return currentRoom;
-    }
-    public State getState() {
-        return state;
-    }
-    public Fighting getFighting() {
-        return fighting;
-    }
+    /* GETTERS */
+    public Dungeon getDungeon() { return dungeon; }
+    public GridMap getGridMap() { return gridMap; }
+    public Player getPlayer() { return player; }
+    public Room getCurrentRoom() { return currentRoom; }
+    public State getState() { return state; }
+    public Fighting getFighting() { return fighting; }
+
+    /* SETTERS */
     public void setState(State newState) {this.state = newState; }
+    public void setCurrentRoom(Room currentRoom) { this.currentRoom = currentRoom; }
+    public void setGridMap(GridMap gridMap) { this.gridMap = gridMap; }
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }

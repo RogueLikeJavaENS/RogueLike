@@ -1,8 +1,11 @@
 package display;
 
+import com.sun.jna.platform.win32.IPHlpAPI;
 import gameElement.GameState;
 import gameElement.MiniMap;
+import utils.State;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,6 +56,7 @@ public class RendererUI {
         updateHUD(hud);
         updateMap(miniMap);
     }
+
 
     /**
      * Return the string to print the gridmap and the minimap
@@ -111,7 +115,7 @@ public class RendererUI {
                 globalSB.append(hud.toString());
                 globalSB.append(midRenderer());
                 globalSB.append(hud.getSpellBar());
-                //globalRenderer += infoFight;
+                globalSB.append(gs.getFighting().toString());
                 break;
 
             case LOSE: // Lose Screen
@@ -200,7 +204,7 @@ public class RendererUI {
      * Use it before re-print the renderer
      *
      */
-    public static void clearConsole() {
+    public void clearConsole() {
         try {
             String os = System.getProperty("os.name");
             if (os.contains("Windows")) {

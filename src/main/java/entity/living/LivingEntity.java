@@ -81,5 +81,6 @@ public class LivingEntity extends AbstractEntity {
                 setDisplay("> >");
         }
     }
+
     public void setMoneyCount (int moneyCount) throws IllegalArgumentException { this.moneyCount = Check.checkPositivity(moneyCount); }
 }
