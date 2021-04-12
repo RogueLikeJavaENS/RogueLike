@@ -9,6 +9,11 @@ import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * this class manage the coin object, and what it does when picked up by a player.
+ * @author luca
+ */
+
 public class Coins extends ObjectEntity {
 
     public int getValue() {

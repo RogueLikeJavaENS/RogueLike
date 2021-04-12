@@ -10,7 +10,7 @@ import utils.Position;
  * @author Juliette
  * */
 
-public class AbstractEntity implements Entity {
+public abstract class AbstractEntity implements Entity {
 
     private Position position;
     private boolean isAccessible;
