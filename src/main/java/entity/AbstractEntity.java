@@ -20,8 +20,12 @@ public abstract class AbstractEntity implements Entity {
         this.isAccessible = isAccessible;
     }
 
+    @Override
     public Position getPosition() { return position; }
+    @Override
+    public boolean getIsAccessible() { return isAccessible; }
 
+    @Override
     public void doAction(GameState gameState) {
         // nothing
     }

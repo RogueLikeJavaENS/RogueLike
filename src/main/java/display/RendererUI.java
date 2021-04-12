@@ -3,7 +3,6 @@ package display;
 import gameElement.GameState;
 import gameElement.MiniMap;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,8 +16,10 @@ import java.util.List;
  */
 
 public class RendererUI {
-    private String[] strAll;
+    GameState gs;
+    private final String[] strAll;
     private HUD hud;
+    private final MiniMap miniMap;
 
     /**
      * Constructor of the Object Renderer UI
@@ -30,7 +31,9 @@ public class RendererUI {
      */
     public RendererUI(GameState gs, MiniMap miniMap, HUD hud) {
         this.hud = hud;
-        this.strAll = new String[Math.max(gs.getGridMap().StrByLine().size(),miniMap.stringByLine().size())*2];
+        this.gs = gs;
+        this.miniMap = miniMap;
+        this.strAll = new String[Math.max(gs.getGridMap().StrByLine().size(),miniMap.getLineCutMap().size())*2];
         updateGrid(gs.getGridMap(),hud);
         updateHUD(hud);
         updateMap(miniMap);
@@ -71,24 +74,58 @@ public class RendererUI {
      * @return String
      */
     public String toString(){
+        // Renderer Game
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < strAll.length; i++){
             sb.append(strAll[i]);
             if (i%2 != 0) {
                 sb.append("\n");
             }
-
-
         }
-        String hudString = hud.toString();
+
         String renderer = sb.toString();
-        String help = "Escape : Exit | Z : Up | Q : Left | S : Down | D : Right\n\n";
-        return help+hud+renderer;
+
+        // Control and HUD
+        String controls = "Controls :\n"
+                    + "| Escape : Exit the game | \n"
+                    + "| Z : Up | Q : Left | S : Down | D : Right \n"
+                    + "| I : Inventory | M : Minimap | Escape with the same button\n"
+                    + "\n";
+        String hudString = hud.toString();
+
+        // Global Renderer
+        String globalRenderer = controls+hudString;
+
+        switch (gs.getState()){
+            case MAP:
+                //globalRenderer += "\n\n\n\n Minimap \n\n\n\n";
+                globalRenderer += miniMap.toStringMap();
+                break;
+            case INVENTORY:
+                globalRenderer += "\n\n\n\n Inventory \n\n\n\n";
+                break;
+            case NORMAL:
+                globalRenderer += renderer;
+                break;
+            case FIGHT:
+                String spellBar = hud.getSpellBar();
+                globalRenderer += renderer + spellBar;
+                //globalRenderer += infoFight;
+                break;
+            case LOSE:
+                globalRenderer += "\n\n\n\n YOU LOSE \n\n\n\n";
+                break;
+            case WIN:
+                globalRenderer += "\n\n\n\n YOU WIN \n\n\n\n";
+                break;
+        }
+
+        return globalRenderer;
     }
 
     public void display (){
         clearConsole();
-        System.out.println(this.toString());
+        System.out.println(this); //appel implicite à toString() dans le print
     }
 
     /**
@@ -100,23 +137,9 @@ public class RendererUI {
      */
     public void updateAll(GridMap gridMap, HUD hud, MiniMap miniMap){
         updateGrid(gridMap, hud);
-        //updateHUD(hud,gridMap);
         updateHUD(hud);
         updateMap(miniMap);
     }
-
-    /**
-     * Permit to update only the HUD on the print
-     *
-     * @param hud the new Hud
-     */
-   /* public void updateHUD(HUD hud,GridMap gridMap){
-        fillStr(hud,gridMap);
-        int heightGrid = gridMap.StrByLine().size();
-        for (int i = 0; i < hud.strByLine().size(); i++){
-            strAll[heightGrid*2 + i] = hud.strByLine().get(i);
-        }
-    }*/
 
     public void updateHUD(HUD hud){
         this.hud = hud;
@@ -148,7 +171,8 @@ public class RendererUI {
      * @param miniMap the new Minimap
      */
     public void updateMap(MiniMap miniMap){
-        List<String> minimapString = miniMap.stringByLine();
+        miniMap.updateCutMap();
+        List<String> minimapString = miniMap.getLineCutMap();
         int i = 0;
         while (i < minimapString.size()){
             strAll[i*2+1] = minimapString.get(i);
@@ -179,4 +203,5 @@ public class RendererUI {
             e.printStackTrace();
         }
     }
+
 }

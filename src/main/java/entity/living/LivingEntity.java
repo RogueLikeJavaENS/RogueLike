@@ -23,6 +23,7 @@ public class LivingEntity extends AbstractEntity {
     private int mp;
     private int maxMp;
     private int moneyCount;
+    private int speed;
     private Direction direction;
     private String display;
 
@@ -36,6 +37,7 @@ public class LivingEntity extends AbstractEntity {
         this.name = name;
         setDirection(Direction.SOUTH);
         this.moneyCount = 0;
+        this.speed = 1;
     }
 
     public String getName() { return name; }
@@ -49,6 +51,7 @@ public class LivingEntity extends AbstractEntity {
     public String getDisplay() { return display; }
     public Direction getDirection() { return direction; }
     public int getMoneyCount() { return moneyCount; }
+    public int getSpeed() { return speed; }
 
     @Override
     public void setPosition(Position position) { super.setPosition(position); }
@@ -59,6 +62,7 @@ public class LivingEntity extends AbstractEntity {
     public void setMP(int mp) throws IllegalArgumentException { this.mp = Check.checkPositivity(mp); }
     public void setHP(int hp) throws IllegalArgumentException { this.hp = Check.checkPositivity(hp); }
     public void setDisplay(String display) { this.display = display; }
+    public void setSpeed(int speed) { this.speed = speed; }
 
     public void setDirection(Direction direction) {
         this.direction = direction;
@@ -79,4 +83,3 @@ public class LivingEntity extends AbstractEntity {
     }
     public void setMoneyCount (int moneyCount) throws IllegalArgumentException { this.moneyCount = Check.checkPositivity(moneyCount); }
 }
-
