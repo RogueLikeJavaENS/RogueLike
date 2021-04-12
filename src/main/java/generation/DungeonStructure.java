@@ -18,6 +18,8 @@ import java.lang.*;
 public class DungeonStructure {
     private final static int DUNGEON_HEIGHT = 6;
     private final static int DUNGEON_WIDTH = 6;
+    private final static int ROOM_WIDTH = 15;
+    private final static int ROOM_HEIGHT = 11;
 
     public static Dungeon createDungeon(Seed seed){
         List<Room> roomList = new ArrayList<>();
@@ -27,7 +29,7 @@ public class DungeonStructure {
             Room room = RoomStructure.createRoom(i, graph.get(i));
             roomList.add(room);
         }
-        return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1);
+        return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1,ROOM_HEIGHT,ROOM_WIDTH);
     }
 
     /**

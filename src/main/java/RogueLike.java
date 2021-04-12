@@ -1,5 +1,6 @@
 import display.HUD;
 import display.RendererUI;
+import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.Player;
 import gameElement.Dungeon;
@@ -74,18 +75,18 @@ public class RogueLike {
 
             if (!acted) {
                 if(turned) {
-                    rendererUI.updateGrid(gs.getGridMap(), hud);
+                    rendererUI.updateGrid(gs.getGridMap());
                     rendererUI.display();
                 }
                 if(modifiedMenu) {
-                    rendererUI.updateAll(gs.getGridMap(), hud,miniMap);
+                    rendererUI.updateAll(gs.getGridMap(), miniMap, hud);
                     rendererUI.display();
                 }
                 Thread.sleep(100);
             } else {
                 gs.isOnEntity();
 
-                rendererUI.updateAll(gs.getGridMap(),hud,miniMap);
+                rendererUI.updateAll(gs.getGridMap(), miniMap, hud);
                 rendererUI.display();
                 Thread.sleep(100);
                 sp.reset();
@@ -110,7 +111,6 @@ public class RogueLike {
     }
 
     private void normalStateInput() throws InterruptedException {
-
         int a = retrieveKey(sp);
         resetBools();
         // Process Player Input
@@ -145,6 +145,10 @@ public class RogueLike {
                 gs.setState(State.INVENTORY);
                 modifiedMenu = true;
                 break;
+            case 'H':
+                gs.setHelp(!gs.getHelp());
+                modifiedMenu = true;
+                break;
             case '\u001B': // escape
                 gs.exitGame();
                 break;
@@ -159,11 +163,15 @@ public class RogueLike {
 
         switch((char) a) {
             case 'M':
-                gs.setState(State.NORMAL);
+                gs.isFighting();
                 modifiedMenu = true;
                 break;
             case 'I':
                 gs.setState(State.INVENTORY);
+                modifiedMenu = true;
+                break;
+            case 'H':
+                gs.setHelp(!gs.getHelp());
                 modifiedMenu = true;
                 break;
         }
@@ -202,6 +210,10 @@ public class RogueLike {
                 break;
             case 'I':
                 gs.setState(State.INVENTORY);
+                modifiedMenu = true;
+                break;
+            case 'H':
+                gs.setHelp(!gs.getHelp());
                 modifiedMenu = true;
                 break;
             case '1':
@@ -304,7 +316,11 @@ public class RogueLike {
                 modifiedMenu = true;
                 break;
             case 'I':
-                gs.setState(State.NORMAL);
+                gs.isFighting();
+                modifiedMenu = true;
+                break;
+            case 'H':
+                gs.setHelp(!gs.getHelp());
                 modifiedMenu = true;
                 break;
         }
