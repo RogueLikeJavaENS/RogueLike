@@ -16,9 +16,9 @@ import java.util.stream.Stream;
  */
 
 public class PlayerStats extends AbstractStats{
-    private int[] classFactor;
+    private final int[] classFactor;
     private int level;
-    private Map<Integer, Integer> levelCap;
+    private final Map<Integer, Integer> levelCap;
     private int xp;
     private int xpRequired;
 
@@ -38,9 +38,9 @@ public class PlayerStats extends AbstractStats{
         return xp;
     }
 
-    public PlayerStats(int lifePoint, int manaPoint, int range, int rawDamage, int level) {
-        super(lifePoint, manaPoint, range, rawDamage, level);
-        this.classFactor= new int[] {10,10,1};
+    public PlayerStats(int lifePoint, int manaPoint, int range, int rawDamage, int naturalArmor, int level) {
+        super(lifePoint, manaPoint, range, rawDamage, naturalArmor, level);
+        this.classFactor= new int[] {10,10,1,1};
         this.xp=0;
         this.levelCap=loadXpPerLevel();
     }
@@ -75,12 +75,13 @@ public class PlayerStats extends AbstractStats{
 
     private void checkCurrentXP() {
         setXpRequired(levelCap.get(getLevel()));
-        while (getXp() >= getXpRequired() && getLevel()<100) {
+        int MAX_LEVEL = 100;
+        while (getXp() >= getXpRequired() && getLevel()< MAX_LEVEL) {
             levelUp();
             setXp(getXp() - getXpRequired());
             setXpRequired(levelCap.get(getLevel()));
         }
-        if (getLevel()==100){
+        if (getLevel()== MAX_LEVEL){
             setXp(0);
         }
     }
@@ -89,6 +90,7 @@ public class PlayerStats extends AbstractStats{
         setLifePoint(getLifePoint()+classFactor[0]);
         setManaPoint(getManaPoint()+classFactor[1]);
         setRawDamage(getRawDamage()+classFactor[2]);
+        setNaturalArmor(getNaturalArmor()+classFactor[3]);
         setLevel(getLevel()+1);
     }
 }

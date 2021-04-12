@@ -12,7 +12,16 @@ public abstract class AbstractStats {
     private int manaPoint;
     private int range;
     private int rawDamage;
+    private int naturalArmor;
     private int level;
+
+    public int getNaturalArmor() {
+        return naturalArmor;
+    }
+
+    public void setNaturalArmor(int naturalArmor) {
+        this.naturalArmor = naturalArmor;
+    }
 
     public int getLifePoint() {
         return lifePoint;
@@ -54,11 +63,12 @@ public abstract class AbstractStats {
         this.level = level;
     }
 
-    public AbstractStats(int lifePoint, int manaPoint, int range, int rawDamage, int level) {
+    public AbstractStats(int lifePoint, int manaPoint, int range, int rawDamage, int naturalArmor, int level) {
         this.lifePoint = lifePoint;
         this.manaPoint = manaPoint;
         this.range = range;
         this.rawDamage = rawDamage;
+        this.naturalArmor = naturalArmor;
         this.level = level;
     }
 }
