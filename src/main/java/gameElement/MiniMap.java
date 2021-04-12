@@ -135,13 +135,12 @@ public class MiniMap {
      */
     private List<String> stringByLine (List<List<Room>> struct){
         List<String> listOfLine= new ArrayList<>();
-        String fstLine = "\t "+"_".repeat(7*struct.size()+4)+" \n";
-        String lastLine = "\t|"+"_".repeat(7*struct.size()+4)+"|\n";
+        String fstLine = "\t "+"_".repeat(7*struct.size()+2)+" \n";
+        String lastLine = "\t|"+"_".repeat(7*struct.size()+2)+"|\n";
         listOfLine.add(fstLine);
         for (List<Room> lineRoom : struct){
             for (int i=0; i<4; i++){
                 StringBuilder sb2 = new StringBuilder();
-                sb2.append("\t");
                 for (Room room : lineRoom){
                     sb2.append(buildRoom(room,i));
                 }

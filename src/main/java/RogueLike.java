@@ -148,6 +148,10 @@ public class RogueLike {
                 gs.setState(State.INVENTORY);
                 modifiedMenu = true;
                 break;
+            case 'H':
+                gs.setHelp(!gs.getHelp());
+                modifiedMenu = true;
+                break;
             case '\u001B': // escape
                 gs.exitGame();
                 break;
@@ -169,6 +173,10 @@ public class RogueLike {
                 break;
             case 'I':
                 gs.setState(State.INVENTORY);
+                modifiedMenu = true;
+                break;
+            case 'H':
+                gs.setHelp(!gs.getHelp());
                 modifiedMenu = true;
                 break;
         }
@@ -211,6 +219,10 @@ public class RogueLike {
                 gs.setState(State.INVENTORY);
                 modifiedMenu = true;
                 break;
+            case 'H':
+                gs.setHelp(!gs.getHelp());
+                modifiedMenu = true;
+                break;
             case '\u001B': // escape
                 gs.exitGame();
                 break;
@@ -232,6 +244,10 @@ public class RogueLike {
                 break;
             case 'I':
                 gs.setState(State.NORMAL);
+                modifiedMenu = true;
+                break;
+            case 'H':
+                gs.setHelp(!gs.getHelp());
                 modifiedMenu = true;
                 break;
         }
