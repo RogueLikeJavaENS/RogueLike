@@ -13,8 +13,6 @@ import utils.Position;
 import utils.ScanPanel;
 import utils.State;
 
-import java.util.Scanner;
-
 /**
  * This is the main class of the RogueLike Game.
  *
@@ -84,7 +82,7 @@ public class RogueLike {
                     break;
             }
             if (!gs.getState().equals(State.END)) {
-                if (!acted) { // The player didn't consumed his action
+                if (!acted) { // The player didn't consume his action
                     if(turned) {
                         rendererUI.updateGrid(gs.getGridMap());
                         rendererUI.display();
@@ -135,24 +133,24 @@ public class RogueLike {
         int a = retrieveKey(sp);
         switch ((char) a) { // Process the pressed key bu the player.
             case 'Z':
-                turned = hadTurned(player, Direction.NORTH);
+                turned = hasTurned(player, Direction.NORTH);
                 player.setDirection(Direction.NORTH);
                 acted = gs.movePlayer(0, -1); //
                 // Tries to modify the player's position,
                 // if something is blocking then the player's turned is not consumed.
                 break;
             case 'Q':
-                turned = hadTurned(player, Direction.WEST);
+                turned = hasTurned(player, Direction.WEST);
                 player.setDirection(Direction.WEST);
                 acted = gs.movePlayer(-1, 0);
                 break;
             case 'S':
-                turned = hadTurned(player, Direction.SOUTH);
+                turned = hasTurned(player, Direction.SOUTH);
                 player.setDirection(Direction.SOUTH);
                 acted = gs.movePlayer(0, 1);
                 break;
             case 'D':
-                turned = hadTurned(player, Direction.EAST);
+                turned = hasTurned(player, Direction.EAST);
                 player.setDirection(Direction.EAST);
                 acted = gs.movePlayer(1, 0);
                 break;
@@ -210,130 +208,83 @@ public class RogueLike {
      * @throws InterruptedException
      */
     private void fightingStateInput() throws InterruptedException {
-        int a = retrieveKey(sp);
         // Process Player Input
-        switch ((char) a) {
-            case 'Z':
-                turned = hadTurned(player, Direction.NORTH);
-                player.setDirection(Direction.NORTH);
-                acted = gs.movePlayer(0, -1);
-                //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
-                break;
-            case 'Q':
-                turned = hadTurned(player, Direction.WEST);
-                player.setDirection(Direction.WEST);
-                acted = gs.movePlayer(-1, 0);
-                break;
-            case 'S':
-                turned = hadTurned(player, Direction.SOUTH);
-                player.setDirection(Direction.SOUTH);
-                acted = gs.movePlayer(0, 1);
-                break;
-            case 'D':
-                turned = hadTurned(player, Direction.EAST);
-                player.setDirection(Direction.EAST);
-                acted = gs.movePlayer(1, 0);
-                break;
-            case 'M':
-                miniMap.updateMap();
-                gs.setState(State.MAP);
-                modifiedMenu = true;
-                break;
-            case 'I':
-                gs.setState(State.INVENTORY);
-                modifiedMenu = true;
-                break;
-            case 'H':
-                gs.setHelp(!gs.getHelp());
-                modifiedMenu = true;
-                break;
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-                int ASCII_CODE_FOR_ZERO = 48;
-                int playerInput = a%ASCII_CODE_FOR_ZERO;
-                if (playerInput <= player.getSpells().size()){
-                    hud.spellSelectionString(playerInput);
-                    updateHUDDisplay();
-                    skillSelectionInput(playerInput);
-                } else {
-                    fightingStateInput();
-                }
-                break;
-            case '0':
-                if (player.getSpells().size() == 10) { //0 is after 9 on the keyboard, so it stands for 10
-                    hud.spellSelectionString(10);
-                    updateHUDDisplay();
-                    skillSelectionInput(10);
-                } else {
-                    fightingStateInput();
-                }
-                break;
-            case '\u001B': // escape
-                exitStateInput();
-                break;
-            default:
-                fightingStateInput(); //break; statement was only skipping the player's turn
-        }
-    }
+        while (!(turned || acted)) {
+            int a = retrieveKey(sp);
 
-    private void skillSelectionInput(int firstInput) throws InterruptedException {
-        int ASCII_CODE_FOR_ZERO = 48;
-        int a = retrieveKey(sp);
-        resetBools();
-
-        int secondInput = a%ASCII_CODE_FOR_ZERO;
-
-        switch ((char) a) {
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-                if (secondInput == firstInput) {
-                    hud.spellListString(); //resets the spellBar (removes the highlightning)
-                    System.out.println(player.getName() + " uses " + player.getSpells().get(secondInput-1).toString()); //dummy string to simulate the use of the spell
-                } else if (secondInput <= player.getSpells().size()) {
-                    hud.spellSelectionString(secondInput); //updates the spellBar (moves the highlightning)
+            switch ((char) a) {
+                case 'A':
+                    System.out.println(player.getName() + " used " + player.getSelectedSpell().toString());
+                    hud.spellListString(); //remove the highlightning of the selected spell
+                    rendererUI.updateHUD(hud);
+                    acted = true;
+                    break;
+                case 'Z':
+                    turned = hasTurned(player, Direction.NORTH);
+                    player.setDirection(Direction.NORTH);
+                    acted = gs.movePlayer(0, -1);
+                    //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
+                    break;
+                case 'Q':
+                    turned = hasTurned(player, Direction.WEST);
+                    player.setDirection(Direction.WEST);
+                    acted = gs.movePlayer(-1, 0);
+                    break;
+                case 'S':
+                    turned = hasTurned(player, Direction.SOUTH);
+                    player.setDirection(Direction.SOUTH);
+                    acted = gs.movePlayer(0, 1);
+                    break;
+                case 'D':
+                    turned = hasTurned(player, Direction.EAST);
+                    player.setDirection(Direction.EAST);
+                    acted = gs.movePlayer(1, 0);
+                    break;
+                case 'M':
+                    miniMap.updateMap();
+                    gs.setState(State.MAP);
+                    modifiedMenu = true;
+                    break;
+                case 'I':
+                    gs.setState(State.INVENTORY);
+                    modifiedMenu = true;
+                    break;
+                case 'H':
+                    gs.setHelp(!gs.getHelp());
+                    modifiedMenu = true;
+                    break;
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    int ASCII_CODE_FOR_ZERO = 48;
+                    int playerInput = a % ASCII_CODE_FOR_ZERO;
+                    if (playerInput <= player.getSpells().size()) {
+                        hud.spellSelectionString(playerInput);
+                    } else {
+                        hud.spellListString();
+                    }
                     updateHUDDisplay();
-                    skillSelectionInput(secondInput);
-                } else {
-                    hud.spellListString();
+                    break;
+                case '0':
+                    if (player.getSpells().size() == 10) { //0 is after 9 on the keyboard, so it stands for 10
+                        hud.spellSelectionString(10);
+                    } else {
+                        hud.spellListString();
+                    }
                     updateHUDDisplay();
-                    skillSelectionInput(-1);
-                }
-                break;
-            case '0':
-                if (firstInput == 10) { //0 is after 9 on the keyboard, so it stands for 10
-                    hud.spellListString(); //resets the spellListString (removes the highlightning)
-                    System.out.println(player.getName() + " uses " + player.getSpells().get(firstInput-1).toString());
-                } else if (secondInput <= player.getSpells().size()) {
-                    hud.spellSelectionString(10); //updates the spellBar (moves the highlightning)
-                    updateHUDDisplay();
-                    skillSelectionInput(10);
-                } else {
-                    hud.spellListString();
-                    updateHUDDisplay();
-                    skillSelectionInput(-1);
-                }
-                break;
-            case '\u001B': // escape
-                hud.spellListString(); //resets the spellListString (removes the highlightning) and gets out of the spell selection
-                updateHUDDisplay();
-                fightingStateInput(); //gets back to fighting inputs
-                break;
-            default:
-                skillSelectionInput(-1);
+                    break;
+                case '\u001B': // escape
+                    exitStateInput();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -403,7 +354,7 @@ public class RogueLike {
      * @param dir current direction.
      * @return a boolean if the player turned or not.
      */
-    private boolean hadTurned(Player player, Direction dir) {
+    private boolean hasTurned(Player player, Direction dir) {
         return !player.getDirection().equals(dir);
     }
 
@@ -427,12 +378,12 @@ public class RogueLike {
         rendererUI.display();
     }
 
-    private void resetBools() {
+    /*private void resetBools() {
         acted = false;
         turned = false;
         modifiedMenu = false;
         monsterPlayed = false;
-    }
+    }*/
 
     public static void main(String[] args) throws InterruptedException {
         new RogueLike();

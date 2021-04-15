@@ -52,8 +52,11 @@ public class HUD {
                 .append(colorize(String.valueOf(player.getMaxMP()), Colors.BLUE.textApply())) //"MP: xx/yy"
                 .append("   ");
         sb.append(colorize("BTC: ",Colors.YELLOW.textApply()))
-                .append(colorize(String.valueOf(player.getMoneyCount()), Colors.YELLOW.textApply())); //"BTC: xxx"
-        sb.append("\n");
+                .append(colorize(String.valueOf(player.getMoneyCount()), Colors.YELLOW.textApply())) //"BTC: xxx"
+                .append("\n");
+        sb.append("A : ")
+                .append(player.getSelectedSpell().toString())
+                .append("\n");
         String finalString = sb.toString();
         listStrHud.add(finalString);
         return listStrHud; //"Name:    Lvl: 42    HP: 69/420    MP: 42/56" (example)
@@ -72,20 +75,22 @@ public class HUD {
      */
     public void spellSelectionString(int spellPosition) {
         StringBuilder spellsString = new StringBuilder();
-        StringBuilder currentSpell = new StringBuilder();
+        StringBuilder currentSpellString = new StringBuilder();
         List<Spell> playerSpells = player.getSpells();
 
         for (int i = 0; i < playerSpells.size(); i++) {
+            Spell currentSpell = playerSpells.get(i);
             spellsString.append("| ");
-            currentSpell.append(i + 1).append(" : ")
-                    .append(playerSpells.get(i).toString()); //Example : "| 1 : Fire Ball | 2 : Thanos' Snap | 3 : Tactical Nuke
-            if (i + 1 == spellPosition) {
-                spellsString.append(colorize(currentSpell.toString(),Colors.BLACK.textApply(), Colors.WHITE.bgApply()));
+            currentSpellString.append(i + 1).append(" : ")
+                    .append(currentSpell.toString()); //Example : "| 1 : Fire Ball | 2 : Thanos' Snap | 3 : Tactical Nuke
+            if (i + 1 == spellPosition) { //if it's the spell we want to select
+                spellsString.append(colorize(currentSpellString.toString(),Colors.BLACK.textApply(), Colors.WHITE.bgApply()));
+                player.setSelectedSpell(currentSpell);
             } else {
-                spellsString.append(currentSpell);
+                spellsString.append(currentSpellString);
             }
             spellsString.append(' ');
-            currentSpell.setLength(0); //resets the StringBuilder
+            currentSpellString.setLength(0); //resets the StringBuilder
         }
 
         spellBar = spellsString + "\n";
