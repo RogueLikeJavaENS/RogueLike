@@ -10,19 +10,6 @@ public class MonsterFactory {
     private int level;
 
 
-    private static boolean midLifeOrLess = (Monster monster) -> monster.getMonsterStats().getLifePoint() < monster.getMonsterStats().getMaxLifePoint()/2;
-
-
-
-    private static final Strategy skeletonStrategy =
-            new ApproachStrategy(
-                    new AttackStrategy()
-            );
-
-    private static final Strategy goblinStrategy =
-            new EscapeStrategy(midLifeOrLess, new ApproachStrategy( new AttackStrategy()));
-
-
     public MonsterFactory(int level){
         this.level = level;
     }

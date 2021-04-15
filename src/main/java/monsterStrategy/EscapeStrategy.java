@@ -6,7 +6,6 @@ import entity.living.monster.Monster;
 public class EscapeStrategy implements Strategy{
 
     public EscapeStrategy(boolean condition, Strategy nextStrategy){
-        if (condition)
 
     }
 
