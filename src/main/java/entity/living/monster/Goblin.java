@@ -7,7 +7,7 @@ public class Goblin extends AbstractMonster implements Monster {
     private final static int basicMP = 2;
 
     public Goblin(Position position, String name, int level){
-        super(position, basicHP*level,basicMP*level, name, level);
+        super(position, name, level);
 
     }
 

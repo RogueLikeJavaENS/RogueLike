@@ -54,13 +54,13 @@ public class Fighting {
      */
     private void sortTurnOrder() {
         turnOrder.sort((o1, o2) -> {
-            if (o1.getSpeed() == o2.getSpeed()) {   // In case the player is o1 or o2, the player is placed in first.
+            if (o1.getStats().getInitiativeActual() == o2.getStats().getInitiativeActual()) {   // In case the player is o1 or o2, the player is placed in first.
                 if (o1 instanceof Player) {
                     return -1;
                 } else if (o2 instanceof Player) {
                     return 1;
                 } else return 1;
-            } else return o1.getSpeed() - o2.getSpeed();
+            } else return o1.getStats().getInitiativeActual() - o2.getStats().getInitiativeActual();
         });
     }
 
@@ -77,7 +77,7 @@ public class Fighting {
             }
             sb.append(entity.getName());
             sb.append(" ".repeat(15 - entity.getName().length()));
-            sb.append("HP: ").append(entity.getCurrentHP()).append("\n");
+            sb.append("HP: ").append(entity.getStats().getLifePointActual()).append("\n");
         }
         sb.append("#----------------------------------------#\n");
         return sb.toString();
@@ -97,16 +97,16 @@ public class Fighting {
     public static void main(String[] args) {
         List<LivingEntity> entities = new ArrayList<>();
         Player p1 = new Player(new Position(1,2),5,5,"p1",1);
-        p1.setSpeed(2);
+        p1.getStats().upInitiativeNatural(1);
         entities.add(p1);
         Player p2 = new Player(new Position(1,2),5,5,"p2",1);
-        p2.setSpeed(2);
+        p2.getStats().upInitiativeNatural(1);
         entities.add(p2);
         Player p3 = new Player(new Position(1,2),5,5,"p3",1);
-        p3.setSpeed(4);
+        p3.getStats().upInitiativeNatural(3);
         entities.add(p3);
         Player p4 = new Player(new Position(1,2),5,5,"p4",1);
-        p4.setSpeed(5);
+        p4.getStats().upInitiativeNatural(4);
         entities.add(p4);
 
         Fighting fighting = new Fighting(entities);

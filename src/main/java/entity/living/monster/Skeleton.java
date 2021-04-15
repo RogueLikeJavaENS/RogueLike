@@ -7,8 +7,7 @@ public class Skeleton extends AbstractMonster {
     private final static int basicMP = 1;
 
     public Skeleton(Position position, String name, int level) {
-        super(position, basicHP*level,basicMP*level, name, level);
-
+        super(position, name, level);
     }
 
     @Override

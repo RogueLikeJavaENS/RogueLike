@@ -17,7 +17,6 @@ import java.util.stream.Stream;
 
 public class PlayerStats extends AbstractStats{
     private final int[] classFactor;
-    private int level;
     private final Map<Integer, Integer> levelCap;
     private int xp;
     private int xpRequired;
@@ -38,8 +37,8 @@ public class PlayerStats extends AbstractStats{
         return xp;
     }
 
-    public PlayerStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int level) {
-        super(lifePoint, manaPoint, range, initiative, damage, armor, level);
+    public PlayerStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int money, int level) {
+        super(lifePoint, manaPoint, range, initiative, damage, armor, money, level);
         this.classFactor= new int[] {10,10,1,1,1};
         this.xp=0;
         this.levelCap=loadXpPerLevel();
@@ -51,13 +50,23 @@ public class PlayerStats extends AbstractStats{
      * with some adjustment.
      * @return Map of xp cap necessary to reach a level
      */
-    private Map<Integer, Integer> loadXpPerLevel() {
+//    private Map<Integer, Integer> loadXpPerLevel() {
+//        Map<Integer, Integer> xpPerLevel = new LinkedHashMap<>();
+//        AtomicInteger capForLevel = new AtomicInteger(1);
+//        try (Stream<String> lines = Files.lines(Paths.get("xpPerLevel.txt"))) {
+//            lines.forEach(line -> xpPerLevel.put(capForLevel.getAndIncrement(), Integer.valueOf(line)));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return xpPerLevel;
+//    }
+
+    private Map<Integer, Integer> loadXpPerLevel(){
+        int baseXPneeded = 100;
+        int xpGivenByAMonster = 10;
         Map<Integer, Integer> xpPerLevel = new LinkedHashMap<>();
-        AtomicInteger capForLevel = new AtomicInteger(1);
-        try (Stream<String> lines = Files.lines(Paths.get("xpPerLevel.txt"))) {
-            lines.forEach(line -> xpPerLevel.put(capForLevel.getAndIncrement(), Integer.valueOf(line)));
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (int i = 1; i <= 100; i++) {
+            xpPerLevel.put(i, baseXPneeded+(xpGivenByAMonster*i));
         }
         return xpPerLevel;
     }

@@ -20,8 +20,8 @@ public class MonsterStats extends AbstractStats {
         this.xpWorth = xpWorth;
     }
 
-    public MonsterStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int level, int xpWorth) {
-        super(lifePoint, manaPoint, range, initiative, damage, armor, level);
+    public MonsterStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int money, int level, int xpWorth) {
+        super(lifePoint, manaPoint, range, initiative, damage, armor, money, level);
         this.xpWorth = xpWorth;
     }
 }

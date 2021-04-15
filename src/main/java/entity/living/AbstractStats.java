@@ -70,12 +70,6 @@ public abstract class AbstractStats {
         return rangeTotal;
     }
 
-    public void upRangeNatural(int upgrade){
-        Check.checkPositivity(upgrade);
-        this.rangeNatural=getRangeNatural()+upgrade;
-        editRangeTotal(upgrade);
-    }
-
     public void editRangeTotal(int modify){
         this.rangeTotal = Math.max((getRangeTotal() + modify), getRangeNatural());
     }
@@ -134,6 +128,19 @@ public abstract class AbstractStats {
         this.armorTotal = Math.max((getArmorTotal() + modifier), getArmorNatural());
     }
 
+    public int getMoneyCount() {
+        return moneyCount;
+    }
+
+    public void gainMoney(int up) {
+        Check.checkPositivity(up);
+        this.moneyCount = getMoneyCount()+up;
+    }
+
+    public void spendMoney(int down) {
+        this.moneyCount = Math.max((getMoneyCount()-down), 0);
+    }
+
     public int getLevel() {
         return level;
     }
@@ -151,7 +158,7 @@ public abstract class AbstractStats {
     private int lifePointActual;
     private int manaPointTotal;
     private int manaPointActual;
-    private int rangeNatural;
+    private final int rangeNatural;
     private int rangeTotal;
     private int initiativeNatural;
     private int initiativeActual;
@@ -159,11 +166,12 @@ public abstract class AbstractStats {
     private int damageTotal;
     private int armorNatural;
     private int armorTotal;
+    private int moneyCount;
     private int level;
 
 
 
-    public AbstractStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int level) {
+    public AbstractStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int moneyCount, int level) {
         this.lifePointTotal = lifePoint;
         this.lifePointActual = lifePoint;
         this.manaPointTotal = manaPoint;
@@ -176,6 +184,7 @@ public abstract class AbstractStats {
         this.damageTotal = damage;
         this.armorNatural = armor;
         this.armorTotal = armor;
+        this.moneyCount = moneyCount;
         this.level = level;
     }
 }
