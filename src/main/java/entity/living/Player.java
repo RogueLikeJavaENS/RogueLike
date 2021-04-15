@@ -17,7 +17,7 @@ public class Player extends LivingEntity {
 
     public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
         super(position, pv, pm, name, level);
-        this.Stats = new PlayerStats(pv, pm, 1, 1, 1, level);
+        Stats = new PlayerStats(pv, pm, 1, 1, 1, 1, level);
         spellList = new ArrayList<>();
         addSpell(new FireBall()); //hard coded to test
         addSpell(new FireAura());

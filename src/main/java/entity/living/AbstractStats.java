@@ -1,6 +1,6 @@
 package entity.living;
 
-import java.util.List;
+import utils.Check;
 
 /**
  * Abstract class managing the stats of any living entity
@@ -8,51 +8,130 @@ import java.util.List;
  */
 
 public abstract class AbstractStats {
-    private int lifePoint;
-    private int manaPoint;
-    private int range;
-    private int rawDamage;
-    private int naturalArmor;
-    private int level;
-
-    public int getNaturalArmor() {
-        return naturalArmor;
+    public int getLifePointTotal() {
+        return lifePointTotal;
     }
 
-    public void setNaturalArmor(int naturalArmor) {
-        this.naturalArmor = naturalArmor;
+    public int getLifePointActual() {
+        return lifePointActual;
     }
 
-    public int getLifePoint() {
-        return lifePoint;
+    public void upgradeLifePointTotal(int modifier){
+        Check.checkPositivity(modifier);
+        this.lifePointTotal=getLifePointTotal()+modifier;
+        recoverHp(modifier);
     }
 
-    public void setLifePoint(int lifePoint) {
-        this.lifePoint = lifePoint;
+    public void sufferDamage(int damage) {
+        Check.checkPositivity(damage);
+        this.lifePointActual = Math.max((getLifePointActual() - damage), 0);
     }
 
-    public int getManaPoint() {
-        return manaPoint;
+    public void recoverHp(int heal) {
+        Check.checkPositivity(heal);
+        this.lifePointActual = Math.min((getLifePointActual() + heal), getLifePointTotal());
     }
 
-    public void setManaPoint(int manaPoint) {
-        this.manaPoint = manaPoint;
+    public int getManaPointTotal() {
+        return manaPointTotal;
     }
 
-    public int getRange() {
-        return range;
+    public int getManaPointActual() {
+        return manaPointActual;
     }
 
-    public void setRange(int range) {
-        this.range = range;
+    public void upgradeManaPointTotal(int modifier){
+        Check.checkPositivity(modifier);
+        this.manaPointTotal=getManaPointTotal()+modifier;
+        recoverMp(modifier);
     }
 
-    public int getRawDamage() {
-        return rawDamage;
+    public Boolean consumeMp(int cost) {
+        Check.checkPositivity(cost);
+        if ((getManaPointActual()-cost)>0){
+            this.manaPointActual = getManaPointActual()-cost;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    public void setRawDamage(int rawDamage) {
-        this.rawDamage = rawDamage;
+    public void recoverMp(int recover) {
+        Check.checkPositivity(recover);
+        this.manaPointActual = Math.min((getManaPointActual() + recover), getManaPointTotal());
+    }
+
+    public int getRangeNatural() {
+        return rangeNatural;
+    }
+
+    public int getRangeTotal() {
+        return rangeTotal;
+    }
+
+    public void upRangeNatural(int upgrade){
+        Check.checkPositivity(upgrade);
+        this.rangeNatural=getRangeNatural()+upgrade;
+        editRangeTotal(upgrade);
+    }
+
+    public void editRangeTotal(int modify){
+        this.rangeTotal = Math.max((getRangeTotal() + modify), getRangeNatural());
+    }
+
+    public int getInitiativeNatural(){
+        return initiativeNatural;
+    }
+
+    public int getInitiativeActual(){
+        return initiativeActual;
+    }
+
+    public void upInitiativeNatural(int upgrade){
+        Check.checkPositivity(upgrade);
+        this.initiativeNatural=getInitiativeNatural()+upgrade;
+        editInitiativeActual(upgrade);
+    }
+
+    public void editInitiativeActual(int modify){
+        this.initiativeActual = Math.max((getInitiativeActual() + modify), getInitiativeNatural());
+    }
+
+    public int getDamageRaw() {
+        return damageRaw;
+    }
+
+    public int getDamageTotal() {
+        return damageTotal;
+    }
+
+    public void changeDamageRaw(int modifier) {
+        Check.checkPositivity(modifier);
+        this.damageRaw = getDamageRaw()+modifier;
+        changeDamageTotal(modifier);
+    }
+
+    public void changeDamageTotal(int modifier) {
+        this.damageTotal = Math.max((getDamageTotal() + modifier), getDamageRaw());
+    }
+
+    public int getArmorNatural() {
+        return armorNatural;
+    }
+
+    public int getArmorTotal() {
+        return armorTotal;
+    }
+
+    public void changeArmorNatural(int modifier) {
+        Check.checkPositivity(modifier);
+        this.armorNatural = getArmorNatural()+modifier;
+        changeArmorTotal(modifier);
+    }
+
+    public void changeArmorTotal(int modifier) {
+        this.armorTotal = Math.max((getArmorTotal() + modifier), getArmorNatural());
     }
 
     public int getLevel() {
@@ -60,15 +139,43 @@ public abstract class AbstractStats {
     }
 
     public void setLevel(int level) {
-        this.level = level;
+        if (level>=1){
+            this.level=level;
+        }
+        else {
+            throw new IllegalArgumentException("this level input need to be above or equal 1");
+        }
     }
 
-    public AbstractStats(int lifePoint, int manaPoint, int range, int rawDamage, int naturalArmor, int level) {
-        this.lifePoint = lifePoint;
-        this.manaPoint = manaPoint;
-        this.range = range;
-        this.rawDamage = rawDamage;
-        this.naturalArmor = naturalArmor;
+    private int lifePointTotal;
+    private int lifePointActual;
+    private int manaPointTotal;
+    private int manaPointActual;
+    private int rangeNatural;
+    private int rangeTotal;
+    private int initiativeNatural;
+    private int initiativeActual;
+    private int damageRaw;
+    private int damageTotal;
+    private int armorNatural;
+    private int armorTotal;
+    private int level;
+
+
+
+    public AbstractStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int level) {
+        this.lifePointTotal = lifePoint;
+        this.lifePointActual = lifePoint;
+        this.manaPointTotal = manaPoint;
+        this.manaPointActual = manaPoint;
+        this.rangeNatural = range;
+        this.rangeTotal = range;
+        this.initiativeNatural = initiative;
+        this.initiativeActual = initiative;
+        this.damageRaw = damage;
+        this.damageTotal = damage;
+        this.armorNatural = armor;
+        this.armorTotal = armor;
         this.level = level;
     }
 }

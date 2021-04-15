@@ -38,9 +38,9 @@ public class PlayerStats extends AbstractStats{
         return xp;
     }
 
-    public PlayerStats(int lifePoint, int manaPoint, int range, int rawDamage, int naturalArmor, int level) {
-        super(lifePoint, manaPoint, range, rawDamage, naturalArmor, level);
-        this.classFactor= new int[] {10,10,1,1};
+    public PlayerStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int level) {
+        super(lifePoint, manaPoint, range, initiative, damage, armor, level);
+        this.classFactor= new int[] {10,10,1,1,1};
         this.xp=0;
         this.levelCap=loadXpPerLevel();
     }
@@ -65,7 +65,7 @@ public class PlayerStats extends AbstractStats{
     /**
      * check if xp amount is not inferior to zero, grant the xpAmount awarded to the player.
      * Then check if that was enough xp to allow him to up is level.
-     * @param xpAmount
+     * @param xpAmount xp to be added
      */
     public void grantXP(int xpAmount) {
         utils.Check.checkPositivity(xpAmount);
@@ -87,10 +87,11 @@ public class PlayerStats extends AbstractStats{
     }
 
     private void levelUp(){
-        setLifePoint(getLifePoint()+classFactor[0]);
-        setManaPoint(getManaPoint()+classFactor[1]);
-        setRawDamage(getRawDamage()+classFactor[2]);
-        setNaturalArmor(getNaturalArmor()+classFactor[3]);
+        upgradeLifePointTotal(classFactor[0]);
+        upgradeManaPointTotal(classFactor[1]);
+        upInitiativeNatural(classFactor[2]);
+        changeDamageRaw(classFactor[3]);
+        changeArmorNatural(classFactor[4]);
         setLevel(getLevel()+1);
     }
 }
