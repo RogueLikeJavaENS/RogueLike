@@ -9,22 +9,16 @@ import utils.Direction;
 import utils.Position;
 
 public class AbstractMonster extends NPC implements Monster {
-    private MonsterStats monsterStats;
 
-    public AbstractMonster(Position position, int pv, int pm, int range, int rawDamage, int naturalArmor, String name, int level, int xpWorth) throws IllegalArgumentException {
-        super(position,name);
-        monsterStats = new MonsterStats(pv, pm, range, rawDamage, naturalArmor,level, xpWorth);
+    public AbstractMonster(Position position, String name, int level) throws IllegalArgumentException {
+        super(position, name);
+        this.stats=new MonsterStats(10,10,1,1,1,1, 0,level, 10);
     }
 
     @Override
-    public  void doAction(GameState gameState) {
+    public void doAction(GameState gameState) {
         System.out.println("my turn ! " + getName());
     }
-
-    public MonsterStats getMonsterStats() { return monsterStats; }
-    public void setMonsterStats(MonsterStats stats) { this.monsterStats = stats; }
-
-
 
 
 

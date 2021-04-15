@@ -31,7 +31,7 @@ public class Coins extends ObjectEntity {
     public void doAction(GameState gameState) {
         Player player = gameState.getPlayer();
         GridMap gridMap = gameState.getGridMap();
-        player.setMoneyCount(player.getMoneyCount()+value);
+        player.getStats().gainMoney(value);
         gridMap.update(this, false);
     }
 

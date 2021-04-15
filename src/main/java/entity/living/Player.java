@@ -17,7 +17,7 @@ public class Player extends LivingEntity {
 
     public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
         super(position, name);
-        this.stats = new PlayerStats(pv, pm, 1, 1, 1, level);
+        stats = new PlayerStats(pv, pm, 1, 1, 1, 1, 0, level);
         spellList = new ArrayList<>();
         addSpell(new FireBall()); //hard coded to test
         addSpell(new FireAura());
@@ -37,6 +37,7 @@ public class Player extends LivingEntity {
         return spellList;
     }
 
-    public void setStats(PlayerStats stats) { this.stats = stats; }
-    public PlayerStats getStats() { return stats; }
+    public PlayerStats getStats() {
+        return stats;
+    }
 }
