@@ -29,12 +29,10 @@ public class LivingEntity extends AbstractEntity {
         this.name = name;
         setDirection(Direction.SOUTH);
         this.stats = stats;
-        System.out.println("Stats :"+this.stats.getArmorTotal());
 
     }
 
     public AbstractStats getStats() {
-        System.out.println("getStats in living");
         return stats;
     }
 

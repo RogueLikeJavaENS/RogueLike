@@ -13,10 +13,10 @@ import java.util.List;
 public class Player extends LivingEntity {
     private final List<Spell> spellList;
     private Spell selectedSpell;
-    private static PlayerStats stats;
 
     public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
         super(position, name, new PlayerStats(pv, pm, 1, 3, 1, 1, 0, level));
+
         spellList = new ArrayList<>();
         addSpell(new BasicAttack());
         addSpell(new FireBall()); //hard coded to test
@@ -39,7 +39,7 @@ public class Player extends LivingEntity {
     }
 
     public PlayerStats getPlayerStats() {
-        return stats;
+        return (PlayerStats) stats;
     }
 
     public Spell getSelectedSpell() {

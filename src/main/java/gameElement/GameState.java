@@ -152,7 +152,6 @@ public class GameState {
             for (Entity currentEntity : entityList) {
                 if (pos.equals(currentEntity.getPosition()) && currentEntity instanceof Monster) {
                     Monster monster = (Monster) currentEntity;
-                    monster.setHP(0); //c'est ici qu'il faut changer
                 }
             }
         }

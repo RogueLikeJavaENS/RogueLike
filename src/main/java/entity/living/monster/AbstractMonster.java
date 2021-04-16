@@ -1,13 +1,9 @@
 package entity.living.monster;
 
 import entity.living.*;
-import gameElement.GameState;
 import monsterStrategy.Strategy;
-import monsterStrategy.StrategyUtils;
-import utils.Direction;
 import utils.Position;
 
-import java.util.List;
 
 public abstract class AbstractMonster extends NPC implements Monster {
     private Strategy strategy;
@@ -23,10 +19,6 @@ public abstract class AbstractMonster extends NPC implements Monster {
         return (MonsterStats) stats;
     }
 
-    @Override
-    public void setHP(int hp) {
-        super.setHP(hp);
-    }
     public Strategy getStrategy() { return strategy; }
 
 }

@@ -52,7 +52,7 @@ public class HUD {
                 .append(colorize(String.valueOf(player.getStats().getLifePointTotal()), Colors.BLUE.textApply())) //"MP: xx/yy"
                 .append("   ");
         sb.append(colorize("BTC: ",Colors.YELLOW.textApply()))
-                .append(colorize(String.valueOf(player.getMoneyCount()), Colors.YELLOW.textApply())) //"BTC: xxx"
+                .append(colorize(String.valueOf(player.getPlayerStats().getMoneyCount()), Colors.YELLOW.textApply())) //"BTC: xxx"
                 .append("\n");
         sb.append("A : ")
                 .append(player.getSelectedSpell().toString())

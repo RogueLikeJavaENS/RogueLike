@@ -80,7 +80,6 @@ public abstract class AbstractStats{
     }
 
     public int getInitiativeActual(){
-        System.out.println("Init : "+initiativeActual);
         return initiativeActual;
     }
 
