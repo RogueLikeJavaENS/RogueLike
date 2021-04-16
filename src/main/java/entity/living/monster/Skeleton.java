@@ -13,9 +13,8 @@ public class Skeleton extends AbstractMonster {
     private final static int basicMP = 1;
 
 
-
     public Skeleton(Position position, String name, int level, Strategy strategy) {
-        super(position, name, level, strategy,new MonsterStats(100,100,1,1,5,5,5,1,10));
+        super(position, name, level, strategy, new MonsterStats(100, 100, 1, 1, 5, 5, 5, 1, 10));
         ArrayList<String> sprites = new ArrayList<>();
         sprites.add("_#_");
         sprites.add("/ \\");
@@ -29,8 +28,6 @@ public class Skeleton extends AbstractMonster {
 
     @Override
     public void doAction(GameState gameState) {
-        getStrategy().doAct(this, gameState.getPlayer(),gameState.getGridMap());
+        getStrategy().doAct(this, gameState.getPlayer(), gameState.getGridMap());
     }
-
-
 }

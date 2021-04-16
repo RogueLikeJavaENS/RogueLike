@@ -28,7 +28,7 @@ public class LivingEntity extends AbstractEntity {
     public LivingEntity(Position position, String name, AbstractStats stats) throws IllegalArgumentException {
         super(position, false); // false because a living entity is never accessible.
         this.name = name;
-        setDirection(Direction.SOUTH);
+        //setDirection(Direction.SOUTH);
         this.stats = stats;
 
     }
@@ -57,13 +57,6 @@ public class LivingEntity extends AbstractEntity {
 
     @Override
     public void setPosition(Position position) { super.setPosition(position); }
-    public void setLevel(int level) throws IllegalArgumentException{ this.level = Check.checkPositivity(level); }
-    public void setMaxMP(int maxMp) throws IllegalArgumentException{ this.maxMp = Check.checkPositivity(maxMp); }
-    public void setMaxHP(int maxHp) throws IllegalArgumentException{ this.maxHp = Check.checkPositivity(maxHp); }
-    public void setMP(int mp) throws IllegalArgumentException { this.mp = Check.checkPositivity(mp); }
-    public void setHP(int hp) throws IllegalArgumentException { this.hp = Check.checkPositivity(hp); }
-
-    public void setSpeed(int speed) { this.speed = speed; }
 
     public void setDirection(Direction direction) {
         this.direction = direction;

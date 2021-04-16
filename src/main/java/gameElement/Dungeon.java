@@ -66,13 +66,6 @@ public class Dungeon {
         }
     }
 
-    private void placeTestMonster(){
-        MonsterFactory monsterFactory = new MonsterFactory(1);
-        for (Room room : roomList){
-            room.addEntity(monsterFactory.getMonster(0,new Position(4,4)));
-            room.addEntity(monsterFactory.getMonster(1,new Position(7,7)));
-        }
-    }
 
 
 

@@ -205,13 +205,13 @@ public class RoomFactory {
     }
 
     private void fillMonsters(Room room, ArrayList<Position> availablePositions, Seed seed) {
-        MonsterFactory mf = new MonsterFactory(floor);
+        MonsterFactory monsterFactory = new MonsterFactory(floor);
         Random GEN = new Random();
         int monsterCount = GEN.nextInt(10) % 2 + 2;
         int type;
         for (int i = 0; i < monsterCount; i++) {
             type = GEN.nextInt(2);
-            room.addEntity(mf.getMonster(type, availablePositions.remove(0)));
+            room.addEntity(monsterFactory.getMonster(type, availablePositions.remove(0)));
         }
         for (int i = 0; i < monsterCount; i++) {
             room.addEntity(new Coins(availablePositions.remove(0)));
