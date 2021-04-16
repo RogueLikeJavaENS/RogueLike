@@ -1,5 +1,6 @@
 package gameElement;
 
+import display.tiles.Tile;
 import entity.Entity;
 import entity.object.Door;
 import utils.Direction;
@@ -47,6 +48,18 @@ public class Room {
 
     public void addEntity(Entity entity) {
         entities.add(entity);
+    }
+
+    public ArrayList<Position> getAvailablePositions() {
+        ArrayList<Position> positions = new ArrayList<>();
+        for (int ord = 0; ord < contents.length; ord++) {
+            for (int abs = 0; abs < contents[0].length; abs++) {
+                if (contents[ord][abs] == Tile.FLOOR.getId()) {
+                    positions.add(new Position(abs, ord));
+                }
+            }
+        }
+        return positions;
     }
 
     public Position getPosition(){ return position;}

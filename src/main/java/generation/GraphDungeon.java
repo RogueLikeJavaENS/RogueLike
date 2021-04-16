@@ -1,7 +1,5 @@
-package gameElement;
+package generation;
 
-import generation.DungeonStructure;
-import generation.Seed;
 import utils.Direction;
 import utils.Position;
 
@@ -17,6 +15,7 @@ import java.util.stream.Collectors;
 public class GraphDungeon {
     private final HashMap<Integer, int[]> graph;
     private final HashMap<Position, Integer> existingRoom;
+    private final ArrayList<RoomType> roomsType;
     private final Seed seed;
     private final int quantity;
     private final int MAX_BOUND = 5;
@@ -25,7 +24,7 @@ public class GraphDungeon {
     private final ArrayList<Direction> probDirection;
 
     /**
-     * This constructor creates a gameElement.GraphDungeon from the seed given in parameter.
+     * This constructor creates a generation.GraphDungeon from the seed given in parameter.
      * initialises acc at 0, acc being used to manage the global number of room.
      * initialises created at false, created being used to verify globally if the room we're iterating on
      * has been created or was already.
@@ -41,6 +40,7 @@ public class GraphDungeon {
         this.quantity = DungeonStructure.numberOfRoom(seed);
         this.graph = new HashMap<>();
         this.existingRoom = new HashMap<>();
+        this.roomsType = new ArrayList<>();
         this.acc=0;
         created = false;
         probDirection = new ArrayList<>();
@@ -48,14 +48,59 @@ public class GraphDungeon {
             probDirection.add(Direction.intToDirection(i));
         }
         attributePath();
+        attributeType();
     }
 
-    public int getQuantity() {
-        return quantity;
+    /**
+     * Fills roomsType list with the proper amount of each room's type.
+     * At least the half of the total rooms are monsters type, the half of the rest Normal, and the orthers are rest and
+     * treasure type.
+     */
+    private void attributeType() {
+        int combatType = 0, normalType = 0, restType = 0, tresType = 0;
+        int allRooms = graph.size();
+
+        allRooms -= 2; // start + end
+
+        if (allRooms %2 != 0) {
+            allRooms -= 1;
+            combatType += 1;
+        }
+        allRooms /= 2;
+        combatType += allRooms;
+
+        if (allRooms %2 != 0) {
+            allRooms -= 1;
+            restType += 1;
+        }
+        allRooms /= 2;
+        normalType += allRooms;
+
+        //
+        if (allRooms %2 != 0) {
+            allRooms -= 1;
+            tresType += 1;
+        }
+        allRooms /= 2;
+        restType += allRooms;
+        tresType += allRooms;
+
+        attributeType(RoomType.MONSTER, combatType);
+        attributeType(RoomType.MONSTER, normalType);
+        attributeType(RoomType.REST, restType);
+        attributeType(RoomType.TREASURE, tresType);
+
+        // TODO CHANGE THE SHUFFLE METHODS BY A SHUFFLE METHODS ACCORDING TO THE SEED !!
+        Collections.shuffle(roomsType);
+        Collections.shuffle(roomsType);
+        roomsType.add(0, RoomType.START);
+        roomsType.add(RoomType.END);
     }
 
-    public HashMap<Integer, int[]> getGraph() {
-        return graph;
+    private void attributeType(RoomType type, int amount) {
+        for (int i = 0; i < amount; i++) {
+            roomsType.add(type);
+        }
     }
 
     private void attributePath() {
@@ -65,7 +110,7 @@ public class GraphDungeon {
         if (compteur%2 == 0) {
             sizeList.add(compteur/2);
             sizeList.add(compteur/2);
-        }else {
+        } else {
             sizeList.add(compteur/2);
             sizeList.add(compteur/2+1);
         }
@@ -125,13 +170,18 @@ public class GraphDungeon {
         voisin.remove(oppositeDirection);
 
         copyOfProbDirection = copyOfProbDirection.stream()
-                                .filter(voisin::contains)
-                                .collect(Collectors.toList());
+                .filter(voisin::contains)
+                .collect(Collectors.toList());
         Direction direction = moreProbable(copyOfProbDirection);
         probDirection.add(direction);
         return direction;
     }
 
+    /**
+     * Take a random Direction of a Direction list.
+     * @param copyOfProbDirection
+     * @return return a direction using the probDirection list.
+     */
     private Direction moreProbable(List<Direction> copyOfProbDirection) {
         int size = copyOfProbDirection.size();
         int index = Integer.valueOf(seed.getSeed().get(size%15), 16)%size;
@@ -182,6 +232,10 @@ public class GraphDungeon {
         }
         return next;
     }
+
+    public HashMap<Integer, int[]> getGraph() { return graph; }
+    public ArrayList<RoomType> getRoomsType() { return roomsType; }
+    public int getQuantity() { return quantity; }
 
     public static void main(String[] args) {
         GraphDungeon test = new GraphDungeon(new Seed());

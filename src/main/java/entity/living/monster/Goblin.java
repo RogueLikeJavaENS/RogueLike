@@ -3,8 +3,11 @@ package entity.living.monster;
 import entity.living.MonsterStats;
 import gameElement.GameState;
 import monsterStrategy.Strategy;
+import utils.Colors;
 import utils.Position;
 
+import java.util.ArrayList;
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class Goblin extends AbstractMonster implements Monster {
     private final static int basicHP = 4;
@@ -12,7 +15,10 @@ public class Goblin extends AbstractMonster implements Monster {
 
     public Goblin(Position position, String name, int level, Strategy strategy) {
         super(position, name, level,strategy,new MonsterStats(100,100,1,2,5,5,5,1,10));
-        getStats().setLifePointActual(49);
+        ArrayList<String> sprites = new ArrayList<>();
+        sprites.add(colorize("_o_", Colors.GREEN.textApply()));
+        sprites.add(colorize("| |", Colors.GREEN.textApply()));
+        setSprites(sprites);
     }
 
 

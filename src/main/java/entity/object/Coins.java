@@ -7,6 +7,8 @@ import gameElement.GameState;
 import utils.Colors;
 import utils.Position;
 
+import java.util.ArrayList;
+
 import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
@@ -25,6 +27,10 @@ public class Coins extends ObjectEntity {
     public Coins(Position position) {
         super(position, true);
         this.value = 1;
+        ArrayList<String> sprites = new ArrayList<>();
+        sprites.add(colorize(" O ", Colors.YELLOW.textApply()));
+        sprites.add("   ");
+        setSprites(sprites);
     }
 
     @Override

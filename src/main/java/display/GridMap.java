@@ -93,6 +93,11 @@ public class GridMap {
                 for (int abs = 0; abs < room.getWidth(); abs++)
                 {
                     List<Entity> entitiesAt = getEntitiesAt(abs, ord);
+                    if (entitiesAt.size() != 0) { // print the first entity of the tile
+                        sb.append(entitiesAt.get(entitiesAt.size()-1).getSprites(i)); // The last one is always the one who moved in last.
+                    } else {                       // if no entity, print the tile
+                        sb.append(tiles[ord][abs]);
+                        if (tiles[ord][abs] instanceof EmptyTile){ // if the tile is empty increment nbEmptyTile
                     if (entitiesAt.size() != 0)// print the first entity of the tile
                     {
                         if (isInRange(abs, ord) && !(entities.get(0) instanceof Player)) {
@@ -116,8 +121,7 @@ public class GridMap {
                         }
                     }
                 }
-                if (nbEmptyTile != room.getWidth()) // if all the tile on the line are empty, don't add the line on the result
-                {
+                if (nbEmptyTile != room.getWidth()) {        // if all the tile on the line are empty, don't add the line on the result
                     strLine.add(sb.toString());
                 }
             }

@@ -4,6 +4,7 @@ import spells.BasicAttack;
 import spells.FireAura;
 import spells.FireBall;
 import spells.Spell;
+import utils.Direction;
 import utils.Position;
 
 import java.util.ArrayList;
@@ -22,11 +23,16 @@ public class Player extends LivingEntity {
         addSpell(new FireBall()); //hard coded to test
         addSpell(new FireAura());
         selectedSpell = spellList.get(0); //Default selected attack is the BasicAttack
+        ArrayList<String> sprites = new ArrayList<>();
+        sprites.add("o-o");
+        sprites.add("/^\\");
+        setSprites(sprites);
+        setDirection(Direction.SOUTH);
     }
 
     public String toString(){
         String currentLine = getDisplay();
-        setDisplay("@@@");
+        setUpSprites("@@@");
         return currentLine;
     }
 

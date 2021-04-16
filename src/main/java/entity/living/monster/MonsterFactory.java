@@ -7,14 +7,25 @@ import monsterStrategy.*;
 import utils.Direction;
 import utils.Position;
 
+import java.util.Random;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MonsterFactory {
+    int floor;
 
     public final Condition isMidlife = (Monster monster) -> monster.getMonsterStats().getLifePointActual() <= monster.getMonsterStats().getLifePointTotal()/2;
 
+    public MonsterFactory(int floor){
+        this.floor = floor;
+    }
+
+
+    public Monster getMonster(int monsterType, Position position){
+        if (monsterType == 0){
+            return new Skeleton( position, getLevel());
     private final Strategy goblinStrategy = new EscapeStrategy(isMidlife, new ApproachStrategy( new AttackStrategy(null)));
     private final Strategy skeletonStrategy = new ApproachStrategy(new AttackStrategy(null));
 
@@ -37,5 +48,8 @@ public class MonsterFactory {
         return null;
     }
 
-
+    private int getLevel() {
+        Random GEN = new Random();
+        return GEN.nextInt(floor+2) + 1;
+    }
 }

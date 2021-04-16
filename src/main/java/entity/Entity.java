@@ -12,6 +12,8 @@ import utils.Position;
 public interface Entity {
 
     String toString();
+    String getSprites(int i);
+
     Position getPosition();
     void doAction(GameState gameState);
     boolean getIsAccessible();
