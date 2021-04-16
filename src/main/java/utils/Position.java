@@ -1,5 +1,9 @@
 package utils;
 
+import entity.Entity;
+import entity.living.Player;
+import entity.living.monster.Monster;
+
 import java.util.Objects;
 
 /**
@@ -34,6 +38,7 @@ public class Position {
         setAbs(this.abs + abs);
         setOrd(this.ord + ord);
     }
+
 
     /**
      * This private method permits to check if an argument (abscissa or ordinate) is valid (a positive int)

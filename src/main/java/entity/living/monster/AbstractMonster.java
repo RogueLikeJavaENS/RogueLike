@@ -1,22 +1,32 @@
 package entity.living.monster;
 
-import entity.living.NPC;
+import entity.living.*;
 import gameElement.GameState;
+import monsterStrategy.Strategy;
+import monsterStrategy.StrategyUtils;
+import utils.Direction;
 import utils.Position;
 
-public class AbstractMonster extends NPC implements Monster {
+import java.util.List;
 
-    public AbstractMonster(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
-        super(position, pv, pm, name, level);
+public abstract class AbstractMonster extends NPC implements Monster {
+    private Strategy strategy;
+
+
+    public AbstractMonster(Position position, String name, int level, Strategy strategy, AbstractStats stats) throws IllegalArgumentException {
+        super(position, name, stats);
+        this.strategy = strategy;
     }
 
     @Override
-    public void doAction(GameState gameState) {
-        System.out.println("my turn ! " + getName());
+    public MonsterStats getMonsterStats() {
+        return (MonsterStats) stats;
     }
 
     @Override
     public void setHP(int hp) {
         super.setHP(hp);
     }
+    public Strategy getStrategy() { return strategy; }
+
 }

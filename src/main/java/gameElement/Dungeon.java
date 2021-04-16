@@ -3,6 +3,7 @@ package gameElement;
 import display.GridMap;
 import entity.Entity;
 import entity.living.monster.MonsterFactory;
+import entity.living.monster.MonsterType;
 import entity.object.Coins;
 import entity.object.Door;
 import utils.Direction;
@@ -44,11 +45,12 @@ public class Dungeon {
         this.height = height;
         this.maxRoomHeight = maxRoomHeight;
         this.maxRoomWidth = maxRoomWidth;
-        placeTestCoins();
-        placeTestMonster();
         createAllDoor();
         setAllNextDoor();
+        placeTestCoins();
+        placeTestMonster();
         initGridMapList();
+
     }
 
     private void initGridMapList(){
@@ -67,8 +69,8 @@ public class Dungeon {
     private void placeTestMonster(){
         MonsterFactory monsterFactory = new MonsterFactory(1);
         for (Room room : roomList){
-            room.addEntity(monsterFactory.getMonster(0,new Position(4,4),"Skeleton"));
-            room.addEntity(monsterFactory.getMonster(1,new Position(7,7),"Goblin"));
+            room.addEntity(monsterFactory.getMonster(MonsterType.SKELETON,new Position(4,4),"Skeleton",1));
+            room.addEntity(monsterFactory.getMonster(MonsterType.GOBLIN,new Position(7,7),"Goblin",1));
         }
     }
 

@@ -12,12 +12,11 @@ import java.util.List;
 
 public class Player extends LivingEntity {
     private final List<Spell> spellList;
-    private static PlayerStats Stats;
     private Spell selectedSpell;
+    private static PlayerStats stats;
 
     public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
-        super(position, pv, pm, name, level);
-        this.Stats = new PlayerStats(pv, pm, 1, 1, 1, level);
+        super(position, name, new PlayerStats(pv, pm, 1, 3, 1, 1, 0, level));
         spellList = new ArrayList<>();
         addSpell(new BasicAttack());
         addSpell(new FireBall()); //hard coded to test
@@ -27,7 +26,6 @@ public class Player extends LivingEntity {
 
     public String toString(){
         String currentLine = getDisplay();
-
         setDisplay("@@@");
         return currentLine;
     }
@@ -38,6 +36,10 @@ public class Player extends LivingEntity {
 
     public List<Spell> getSpells() {
         return spellList;
+    }
+
+    public PlayerStats getPlayerStats() {
+        return stats;
     }
 
     public Spell getSelectedSpell() {

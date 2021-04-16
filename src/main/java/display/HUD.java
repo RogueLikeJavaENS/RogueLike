@@ -39,17 +39,17 @@ public class HUD {
         sb.append(player.getName())
                 .append(": "); //"Name:    "
         sb.append("Lvl: ")
-                .append(player.getLevel())
+                .append(player.getStats().getLevel())
                 .append("   "); //"Lvl: xx  "
         sb.append(colorize("HP: ", Colors.RED.textApply()))
-                .append(colorize(String.valueOf(player.getCurrentHP()), Colors.RED.textApply()))
+                .append(colorize(String.valueOf(player.getStats().getLifePointActual()), Colors.RED.textApply()))
                 .append(colorize("/", Colors.RED.textApply()))
-                .append(colorize(String.valueOf(player.getMaxHP()), Colors.RED.textApply()))
+                .append(colorize(String.valueOf(player.getStats().getLifePointTotal()), Colors.RED.textApply()))
                 .append("   "); //"HP: xx/yy "
         sb.append(colorize("MP: ", Colors.BLUE.textApply()))
-                .append(colorize(String.valueOf(player.getCurrentMP()), Colors.BLUE.textApply()))
+                .append(colorize(String.valueOf(player.getStats().getManaPointActual()), Colors.BLUE.textApply()))
                 .append(colorize("/", Colors.BLUE.textApply()))
-                .append(colorize(String.valueOf(player.getMaxMP()), Colors.BLUE.textApply())) //"MP: xx/yy"
+                .append(colorize(String.valueOf(player.getStats().getLifePointTotal()), Colors.BLUE.textApply())) //"MP: xx/yy"
                 .append("   ");
         sb.append(colorize("BTC: ",Colors.YELLOW.textApply()))
                 .append(colorize(String.valueOf(player.getMoneyCount()), Colors.YELLOW.textApply())) //"BTC: xxx"
