@@ -2,18 +2,22 @@ package entity.living.monster;
 
 import utils.Position;
 
-public class MonsterFactory {
-    int level;
+import java.util.Random;
 
-    public MonsterFactory(int level){
-        this.level = level;
+public class MonsterFactory {
+    int floor;
+
+    public MonsterFactory(int floor){
+        this.floor = floor;
     }
-    public Monster getMonster(int monsterType, Position position, String name){
+
+
+    public Monster getMonster(int monsterType, Position position){
         if (monsterType == 0){
-            return new Skeleton( position, name, level);
+            return new Skeleton( position, getLevel());
         }
         else if (monsterType == 1){
-            return new Goblin(position,name,level);
+            return new Goblin(position, getLevel());
         }
 
         ///// in order to create a monster you have to write
@@ -23,4 +27,8 @@ public class MonsterFactory {
         return null;
     }
 
+    private int getLevel() {
+        Random GEN = new Random();
+        return GEN.nextInt(floor+2) + 1;
+    }
 }

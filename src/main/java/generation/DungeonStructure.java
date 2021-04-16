@@ -1,7 +1,6 @@
 package generation;
 
 import gameElement.Dungeon;
-import gameElement.GraphDungeon;
 import gameElement.Room;
 
 import java.util.ArrayList;
@@ -21,12 +20,14 @@ public class DungeonStructure {
     private final static int ROOM_WIDTH = 15;
     private final static int ROOM_HEIGHT = 11;
 
-    public static Dungeon createDungeon(Seed seed){
+    public static Dungeon createDungeon(Seed seed, int floor){
         List<Room> roomList = new ArrayList<>();
         GraphDungeon dungeon1 = new GraphDungeon(seed);
         HashMap<Integer,int[]> graph = dungeon1.getGraph();
+        List<RoomType> roomTypes = dungeon1.getRoomsType();
         for (int i = 0; i < graph.size(); i++) {
-            Room room = RoomStructure.createRoom(i, graph.get(i));
+            RoomFactory rs = new RoomFactory(15, 11, 2, floor);
+            Room room = rs.getRoom(seed, roomTypes.get(i), i, graph.get(i));
             roomList.add(room);
         }
         return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1,ROOM_HEIGHT,ROOM_WIDTH);

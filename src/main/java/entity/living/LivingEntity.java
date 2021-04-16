@@ -5,6 +5,8 @@ import utils.Check;
 import utils.Direction;
 import utils.Position;
 
+import java.util.ArrayList;
+
 /**
  * This class describe all the living entity that could exist, it could be the player or the monster or possibly a merchant, etc...
  *  A living entity is describe by his name, level, his maximum number of PV and PM, his current number of PV and PM
@@ -35,7 +37,6 @@ public class LivingEntity extends AbstractEntity {
         this.mp = Check.checkPositivity(mp);
         this.maxMp = Check.checkPositivity(mp);
         this.name = name;
-        setDirection(Direction.SOUTH);
         this.moneyCount = 0;
         this.speed = 1;
     }
@@ -55,30 +56,29 @@ public class LivingEntity extends AbstractEntity {
 
     @Override
     public void setPosition(Position position) { super.setPosition(position); }
-
     public void setLevel(int level) throws IllegalArgumentException{ this.level = Check.checkPositivity(level); }
     public void setMaxMP(int maxMp) throws IllegalArgumentException{ this.maxMp = Check.checkPositivity(maxMp); }
     public void setMaxHP(int maxHp) throws IllegalArgumentException{ this.maxHp = Check.checkPositivity(maxHp); }
     public void setMP(int mp) throws IllegalArgumentException { this.mp = Check.checkPositivity(mp); }
     public void setHP(int hp) throws IllegalArgumentException { this.hp = Check.checkPositivity(hp); }
-    public void setDisplay(String display) { this.display = display; }
+
     public void setSpeed(int speed) { this.speed = speed; }
 
     public void setDirection(Direction direction) {
         this.direction = direction;
         switch (direction) {
             case NORTH:
-                setDisplay("^ ^");
+                setUpSprites("^ ^");
                 break;
             case WEST:
-                setDisplay("< <");
+                setUpSprites("< <");
                 break;
             case SOUTH:
                 //setDisplay("o o");
-                setDisplay("v v");
+                setUpSprites("v v");
                 break;
             case EAST:
-                setDisplay("> >");
+                setUpSprites("> >");
         }
     }
 

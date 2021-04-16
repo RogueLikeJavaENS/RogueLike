@@ -21,7 +21,6 @@ import java.util.List;
 public class RendererUI {
     GameState gs;
     private HUD hud;
-    private MiniMap miniMap;
 
     private String[] gridAndMapArray;
     private static final String help = "Controls :\n"
@@ -37,13 +36,11 @@ public class RendererUI {
      * Initialize the array gridAndMapArray with its size
      *
      * @param gs : the actual GameState
-     * @param miniMap : the Minimap of the dungeon
      * @param hud : the current HUD
      */
-    public RendererUI(GameState gs, MiniMap miniMap, HUD hud) {
+    public RendererUI(GameState gs, HUD hud) {
         this.hud = hud;
         this.gs = gs;
-        this.miniMap = miniMap;
 
         gs.getGridMap().updateDisplayGridMap();
         this.gridAndMapArray = new String[gs.getDungeon().getMaxRoomHeight()*4];
@@ -54,7 +51,7 @@ public class RendererUI {
 
         updateGrid(gs.getGridMap());
         updateHUD(hud);
-        updateMap(miniMap);
+        updateMap(gs.getMiniMap());
     }
 
 
@@ -96,7 +93,7 @@ public class RendererUI {
                 globalSB.append("\t\t###################################\n" +
                                 "\t\t#             MINIMAP             #\n" +
                                 "\t\t###################################\n");
-                globalSB.append(miniMap.toStringMap());
+                globalSB.append(gs.getMiniMap().toStringMap());
                 break;
 
             case INVENTORY: // Print the inventory of the dungeon plus the HUD
@@ -142,13 +139,12 @@ public class RendererUI {
     /**
      * Update all the element of the game
      *
-     * @param gridMap the new GriMap
-     * @param miniMap the new minimap
+     * @param gs gameState
      */
-    public void updateAll(GridMap gridMap, MiniMap miniMap, HUD hud){
-        updateGrid(gridMap);
+    public void updateAll(GameState gs, HUD hud){
+        updateGrid(gs.getGridMap());
         updateHUD(hud);
-        updateMap(miniMap);
+        updateMap(gs.getMiniMap());
     }
 
     /**

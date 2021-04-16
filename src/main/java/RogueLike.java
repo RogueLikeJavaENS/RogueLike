@@ -30,7 +30,6 @@ public class RogueLike {
     private final HUD hud;
     private final ScanPanel sp;
     private final GameState gs;
-    private final MiniMap miniMap;
     private final RendererUI rendererUI;
 
     /**
@@ -38,14 +37,13 @@ public class RogueLike {
      */
     RogueLike() throws InterruptedException {
         Seed seed = new Seed();
-        Dungeon dungeon = DungeonStructure.createDungeon(seed);
-        Position initialPosition = dungeon.getRoomList().get(0).getCenter();
+        Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
+        Position initialPosition = dungeon.getRoom(0).getCenter();
         player = new Player(initialPosition,100, 100, "Hero", 1);
         hud = new HUD(player);
         sp = new ScanPanel();
         gs = new GameState(player, dungeon);
-        miniMap = new MiniMap(dungeon, gs);
-        rendererUI = new RendererUI(gs, miniMap, hud);
+        rendererUI = new RendererUI(gs, hud);
         rendererUI.display();
 
         gameLoop();
@@ -97,7 +95,7 @@ public class RogueLike {
                     }
                 } else {
                     gs.isOnEntity();
-                    rendererUI.updateAll(gs.getGridMap(),miniMap,hud);
+                    rendererUI.updateAll(gs, hud);
                     rendererUI.display();
                 }
                 Thread.sleep(100);
@@ -157,7 +155,7 @@ public class RogueLike {
                 acted = gs.movePlayer(1, 0);
                 break;
             case 'M':
-                miniMap.updateMap();
+                gs.getMiniMap().updateMap();
                 gs.setState(State.MAP);
                 modifiedMenu = true;
                 break;
@@ -235,7 +233,7 @@ public class RogueLike {
                 acted = gs.movePlayer(1, 0);
                 break;
             case 'M':
-                miniMap.updateMap();
+                gs.getMiniMap().updateMap();
                 gs.setState(State.MAP);
                 modifiedMenu = true;
                 break;

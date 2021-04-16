@@ -6,6 +6,9 @@ import gameElement.Room;
 import utils.Colors;
 import utils.Direction;
 import utils.Position;
+
+import java.util.ArrayList;
+
 import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class Door extends ObjectEntity {
@@ -17,6 +20,10 @@ public class Door extends ObjectEntity {
         super(position, true);
         this.direction = direction;
         this.nextRoom = nextRoom;
+        ArrayList<String> sprites = new ArrayList<>();
+        sprites.add(colorize("[ ]", Colors.BROWN.textApply()));
+        sprites.add(colorize("[ ]", Colors.BROWN.textApply()));
+        setSprites(sprites);
     }
 
     public void setNext(Door next) {

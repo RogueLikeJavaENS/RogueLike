@@ -3,9 +3,8 @@ package entity.living;
 import spells.FireAura;
 import spells.FireBall;
 import spells.Spell;
+import utils.Direction;
 import utils.Position;
-
-import java.util.Map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +20,16 @@ public class Player extends LivingEntity {
         spellList = new ArrayList<>();
         addSpell(new FireBall()); //hard coded to test
         addSpell(new FireAura());
+        ArrayList<String> sprites = new ArrayList<>();
+        sprites.add("o-o");
+        sprites.add("/^\\");
+        setSprites(sprites);
+        setDirection(Direction.SOUTH);
     }
 
     public String toString(){
         String currentLine = getDisplay();
-        setDisplay("@@@");
+        setUpSprites("@@@");
         return currentLine;
     }
 

@@ -5,11 +5,11 @@ import entity.Entity;
 import entity.living.monster.MonsterFactory;
 import entity.object.Coins;
 import entity.object.Door;
+import generation.GraphDungeon;
 import utils.Direction;
 import utils.Position;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,10 +23,10 @@ import java.util.Objects;
 public class Dungeon {
     private final int maxRoomHeight;
     private final int maxRoomWidth;
-    private List<Room> roomList;
-    private int width; // width -> max numbers of rooms in a column
-    private int height;  // height -> max numbers of rooms in a row
-    private GraphDungeon graph;
+    private final List<Room> roomList;
+    private final int width; // width -> max numbers of rooms in a column
+    private final int height;  // height -> max numbers of rooms in a row
+    private final GraphDungeon graph;
     private List<GridMap> gridMapList; // list of gridMap, index by room number.
 
     /**
@@ -44,8 +44,8 @@ public class Dungeon {
         this.height = height;
         this.maxRoomHeight = maxRoomHeight;
         this.maxRoomWidth = maxRoomWidth;
-        placeTestCoins();
-        placeTestMonster();
+        // placeTestCoins();
+        // placeTestMonster();
         createAllDoor();
         setAllNextDoor();
         initGridMapList();
@@ -67,8 +67,8 @@ public class Dungeon {
     private void placeTestMonster(){
         MonsterFactory monsterFactory = new MonsterFactory(1);
         for (Room room : roomList){
-            room.addEntity(monsterFactory.getMonster(0,new Position(4,4),"Skeleton"));
-            room.addEntity(monsterFactory.getMonster(1,new Position(7,7),"Goblin"));
+            room.addEntity(monsterFactory.getMonster(0,new Position(4,4)));
+            room.addEntity(monsterFactory.getMonster(1,new Position(7,7)));
         }
     }
 
@@ -158,35 +158,14 @@ public class Dungeon {
     }
 
     public int getHeight() { return height; }
-
     public int getWidth() { return width; }
-
-    public Room getRoom(int roomNum) {
-        return roomList.get(roomNum);
-    }
-
-    public GridMap getGridMap(Room room) {
-        return gridMapList.get(room.getRoomNum());
-    }
-
+    public Room getRoom(int roomNum) { return roomList.get(roomNum); }
+    public GridMap getGridMap(Room room) { return gridMapList.get(room.getRoomNum()); }
     public int getMaxRoomHeight() { return maxRoomHeight; }
-
     public int getMaxRoomWidth() { return maxRoomWidth; }
-
-    /**
-     * Get the dungeon size.
-     * @return int
-     */
-    public int getDungeonSize(){
-        return roomList.size();
-    }
-
-    public List<Room> getRoomList() {
-        return roomList;
-    }
-    public GraphDungeon getGraph() {
-        return graph;
-    }
+    public int getDungeonSize(){ return roomList.size(); }
+    public List<Room> getRoomList() { return roomList; }
+    public GraphDungeon getGraph() { return graph; }
 
     @Override
     public boolean equals(Object o) {

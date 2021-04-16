@@ -20,10 +20,12 @@ public class GameState {
     private State state;
     private Room currentRoom;
     private final Player player;
-    private final Dungeon dungeon;
+    private Dungeon dungeon;
     private GridMap gridMap;
     private Fighting fighting;
     private boolean help;
+    private int floor;
+    private MiniMap miniMap;
 
     public GameState(Player player, Dungeon dungeon) {
         this.dungeon = dungeon;
@@ -35,6 +37,7 @@ public class GameState {
         gridMap.update(player, true);
         isThereMonsters();
         this.help = true;
+        this.miniMap = new MiniMap(dungeon, this);
     }
 
     /**
@@ -113,7 +116,6 @@ public class GameState {
     }
 
 
-
     /**
      *
      */
@@ -146,6 +148,8 @@ public class GameState {
     public Room getCurrentRoom() { return currentRoom; }
     public State getState() { return state; }
     public Fighting getFighting() { return fighting; }
+    public int getFloor() { return floor; }
+    public MiniMap getMiniMap() { return miniMap; }
 
     /* SETTERS */
     public void setState(State newState) {this.state = newState; }
@@ -153,4 +157,7 @@ public class GameState {
     public void setGridMap(GridMap gridMap) { this.gridMap = gridMap; }
     public boolean getHelp(){ return help;}
     public void setHelp(boolean help){ this.help = help; }
+    public void setFloor(int floor) { this.floor = floor; }
+    public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
+    public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
 }
