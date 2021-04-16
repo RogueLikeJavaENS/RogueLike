@@ -30,7 +30,6 @@ public class RoomFactory {
         Room room = createRoom(current, nextList);
         ArrayList<Position> availablePositions = room.getAvailablePositions();
         Collections.shuffle(availablePositions);
-        System.out.println(roomType);
         switch (roomType) {
             case START:
                 // add some stuffs that make clear it's the start room.
