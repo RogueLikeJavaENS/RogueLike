@@ -1,20 +1,21 @@
 package monsterStrategy;
 
+import display.GridMap;
 import entity.living.Player;
 import entity.living.monster.Monster;
 
-public class EscapeStrategy implements Strategy{
+public class EscapeStrategy extends MoveAwayStrategy {
+    private final Condition condition;
 
-    public EscapeStrategy(boolean condition, Strategy nextStrategy){
-
+    public EscapeStrategy(Condition condition, Strategy nextStrategy){
+        super(nextStrategy);
+        this.condition = condition;
     }
 
-    @Override
-    public boolean act(Monster monster, Player player) {
-        boolean move = StrategyUtils.getDistance(monster,player) > 1;
-        if (move) {
-            StrategyUtils.updatePos(monster, StrategyUtils.goToPlayerDir(monster,player).oppositeDirection());
-        }
-        return move;
+    public boolean act(Monster monster, Player player, GridMap gridMap){
+        boolean isVerified = condition.isVerified(monster);
+        return isVerified && super.act(monster, player, gridMap);
     }
+
+
 }

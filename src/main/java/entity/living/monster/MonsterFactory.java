@@ -1,25 +1,33 @@
 package entity.living.monster;
 
-import monsterStrategy.ApproachStrategy;
-import monsterStrategy.AttackStrategy;
-import monsterStrategy.EscapeStrategy;
-import monsterStrategy.Strategy;
+import display.GridMap;
+import entity.living.LivingEntity;
+import entity.living.Player;
+import monsterStrategy.*;
+import utils.Direction;
 import utils.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class MonsterFactory {
-    private int level;
+
+    public final Condition isMidlife = (Monster monster) -> monster.getMonsterStats().getLifePointActual() <= monster.getMonsterStats().getLifePointTotal()/2;
+
+    private final Strategy goblinStrategy = new EscapeStrategy(isMidlife, new ApproachStrategy( new AttackStrategy(null)));
+    private final Strategy skeletonStrategy = new ApproachStrategy(new AttackStrategy(null));
 
 
-    public MonsterFactory(int level){
-        this.level = level;
-    }
-    public Monster getMonster(int monsterType, Position position, String name){
-        if (monsterType == 0){
+    public MonsterFactory(int level){ }
+    public Monster getMonster(MonsterType monsterType, Position position, String name, int level){
 
-            return new Skeleton( position, name, level);
+        if (monsterType == MonsterType.SKELETON){
+
+            return new Skeleton(position, name, level,skeletonStrategy);
         }
-        else if (monsterType == 1){
-            return new Goblin(position,name,level);
+        else if (monsterType == MonsterType.GOBLIN){
+            return new Goblin(position,name,level, goblinStrategy);
         }
 
         ///// in order to create a monster you have to write
@@ -28,5 +36,6 @@ public class MonsterFactory {
 
         return null;
     }
+
 
 }

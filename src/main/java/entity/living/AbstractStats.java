@@ -7,7 +7,7 @@ import utils.Check;
  * @author luca
  */
 
-public abstract class AbstractStats {
+public abstract class AbstractStats{
     public int getLifePointTotal() {
         return lifePointTotal;
     }
@@ -15,6 +15,7 @@ public abstract class AbstractStats {
     public int getLifePointActual() {
         return lifePointActual;
     }
+    public void setLifePointActual(int lifePointActual) { this.lifePointActual = lifePointActual; }
 
     public void upgradeLifePointTotal(int modifier){
         Check.checkPositivity(modifier);
@@ -79,6 +80,7 @@ public abstract class AbstractStats {
     }
 
     public int getInitiativeActual(){
+        System.out.println("Init : "+initiativeActual);
         return initiativeActual;
     }
 

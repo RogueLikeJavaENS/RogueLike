@@ -1,14 +1,19 @@
 package monsterStrategy;
 
+import display.GridMap;
 import entity.living.Player;
 import entity.living.monster.Monster;
 
-public class AttackStrategy implements Strategy{
+public class AttackStrategy extends DecoratorStrategy{
+
+    public AttackStrategy(Strategy strategy){
+        super(strategy);
+    }
 
     @Override
-    public boolean act(Monster monster, Player player) {
-        int damage = monster.getMonsterStats().getRawDamage();
-        player.getStats().setLifePoint(player.getStats().getLifePoint()-damage);
+    public boolean act(Monster monster, Player player, GridMap gridMap) {
+        int damage = monster.getMonsterStats().getDamageRaw();
+        player.getStats().setLifePointActual(player.getStats().getLifePointActual()-damage);
         return true;
     }
 }

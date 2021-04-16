@@ -1,46 +1,27 @@
 package entity.living.monster;
 
-import entity.living.MonsterStats;
-import entity.living.NPC;
-import entity.living.Player;
+import entity.living.*;
 import gameElement.GameState;
+import monsterStrategy.Strategy;
 import monsterStrategy.StrategyUtils;
 import utils.Direction;
 import utils.Position;
 
-public class AbstractMonster extends NPC implements Monster {
+import java.util.List;
 
-    public AbstractMonster(Position position, String name, int level) throws IllegalArgumentException {
-        super(position, name);
-        this.stats=new MonsterStats(10,10,1,1,1,1, 0,level, 10);
+public abstract class AbstractMonster extends NPC implements Monster {
+    private Strategy strategy;
+
+
+    public AbstractMonster(Position position, String name, int level, Strategy strategy, AbstractStats stats) throws IllegalArgumentException {
+        super(position, name, stats);
+        this.strategy = strategy;
     }
 
     @Override
-    public void doAction(GameState gameState) {
-        System.out.println("my turn ! " + getName());
+    public MonsterStats getMonsterStats() {
+        return (MonsterStats) stats;
     }
-
-
-
-    private boolean approach(Player player){
-        boolean move = StrategyUtils.getDistance(this, player) > 1;
-        if (move){
-            StrategyUtils.updatePos(this, StrategyUtils.goToPlayerDir(this, player));
-        }
-        return move;
-    }
-
-    private boolean escape(Player player){
-        boolean move = StrategyUtils.getDistance(this,player) > 1;
-        if (move) {
-            StrategyUtils.updatePos(this, StrategyUtils.goToPlayerDir(this,player).oppositeDirection());
-        }
-        return move;
-    }
-
-    private void attack(Player player){
-        int damage = getMonsterStats().getRawDamage();
-        player.getStats().setLifePoint(player.getStats().getLifePoint()-damage);
-    }
+    public Strategy getStrategy() { return strategy; }
 
 }

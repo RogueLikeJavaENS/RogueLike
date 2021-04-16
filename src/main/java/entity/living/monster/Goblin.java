@@ -1,24 +1,19 @@
 package entity.living.monster;
 
+import entity.living.MonsterStats;
 import gameElement.GameState;
-import monsterStrategy.ApproachStrategy;
-import monsterStrategy.AttackStrategy;
-import monsterStrategy.EscapeStrategy;
 import monsterStrategy.Strategy;
 import utils.Position;
+
 
 public class Goblin extends AbstractMonster implements Monster {
     private final static int basicHP = 4;
     private final static int basicMP = 2;
 
-    public Goblin(Position position, String name, int level){
-        super(position, name, level);
-
-
-
-
-    private final Strategy goblinStrategy =
-            new EscapeStrategy((this.getMonsterStats().getLifePoint() < this.getMonsterStats().getLifePoint()+5), new ApproachStrategy( new AttackStrategy()));
+    public Goblin(Position position, String name, int level, Strategy strategy) {
+        super(position, name, level,strategy,new MonsterStats(100,100,1,2,5,5,5,1,10));
+        getStats().setLifePointActual(49);
+    }
 
 
     @Override
@@ -28,6 +23,6 @@ public class Goblin extends AbstractMonster implements Monster {
 
     @Override
     public void doAction(GameState gameState) {
-        goblinStrategy.act(this,gameState.getPlayer());
+        getStrategy().doAct(this,gameState.getPlayer(),gameState.getGridMap());
     }
 }

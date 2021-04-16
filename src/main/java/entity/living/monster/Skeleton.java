@@ -1,21 +1,19 @@
 package entity.living.monster;
 
+import entity.living.MonsterStats;
 import gameElement.GameState;
-import monsterStrategy.ApproachStrategy;
-import monsterStrategy.AttackStrategy;
 import monsterStrategy.Strategy;
 import utils.Position;
+
 
 public class Skeleton extends AbstractMonster {
     private final static int basicHP = 5;
     private final static int basicMP = 1;
-    private static final Strategy skeletonStrategy =
-            new ApproachStrategy(
-                    new AttackStrategy()
-            );
 
-    public Skeleton(Position position, String name, int level) {
-        super(position, name, level);
+
+
+    public Skeleton(Position position, String name, int level, Strategy strategy) {
+        super(position, name, level, strategy,new MonsterStats(100,100,1,1,5,5,5,1,10));
     }
 
     @Override
@@ -25,6 +23,8 @@ public class Skeleton extends AbstractMonster {
 
     @Override
     public void doAction(GameState gameState) {
-        skeletonStrategy.act(this, gameState.getPlayer());
+        getStrategy().doAct(this, gameState.getPlayer(),gameState.getGridMap());
     }
+
+
 }

@@ -1,19 +1,22 @@
 package monsterStrategy;
 
+import display.GridMap;
 import entity.living.Player;
 import entity.living.monster.Monster;
 
-public class ApproachStrategy extends MoveStrategy {
+public class ApproachStrategy extends DecoratorStrategy {
 
-    public ApproachStrategy(Strategy strategy){
-      super(strategy);
+    public ApproachStrategy(Strategy nextStrategy){
+        super(nextStrategy);
     }
-    @Override
-    public boolean act(Monster monster, Player player) {
-        boolean move = StrategyUtils.getDistance(monster, player) > 1;
-        if (move){
-            StrategyUtils.updatePos(monster, StrategyUtils.goToPlayerDir(monster, player));
+
+    public boolean act(Monster monster, Player player, GridMap gridMap) {
+        boolean canMove = StrategyUtils.getDistance(monster, player) > 1;
+        System.out.println("Distance"+StrategyUtils.getDistance(monster,player));
+        if (canMove){
+            StrategyUtils.updatePos(monster, StrategyUtils.goToPlayerDir( monster, player,gridMap));
         }
-        return move;
+        return canMove;
     }
+
 }

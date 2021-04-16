@@ -1,11 +1,14 @@
 package entity.living;
+import utils.Direction;
 import utils.Position;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class NPC extends LivingEntity {
 
-    public NPC(Position position, String name) throws IllegalArgumentException {
-        super(position, name);
-        this.stats=new NPCStats(100, 100, 1, 1, 1, 1, 0, 1);
+    public NPC(Position position, String name, AbstractStats stats) throws IllegalArgumentException {
+        super(position, name, stats);
     }
 }
