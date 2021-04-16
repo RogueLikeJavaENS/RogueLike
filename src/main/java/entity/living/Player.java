@@ -1,19 +1,18 @@
 package entity.living;
 
 import spells.BasicAttack;
-import spells.FireAura;
-import spells.FireBall;
-import spells.Spell;
+import entity.object.potion.Potion;
+import spells.*;
 import utils.Direction;
 import utils.Position;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class Player extends LivingEntity {
     private final List<Spell> spellList;
     private Spell selectedSpell;
+    private List<Potion> potionBelt;
 
     public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
         super(position, name, new PlayerStats(pv, pm, 1, 3, 1, 1, 0, level));
@@ -22,6 +21,7 @@ public class Player extends LivingEntity {
         addSpell(new BasicAttack());
         addSpell(new FireBall()); //hard coded to test
         addSpell(new FireAura());
+        potionBelt = new ArrayList<>();
         selectedSpell = spellList.get(0); //Default selected attack is the BasicAttack
         ArrayList<String> sprites = new ArrayList<>();
         sprites.add("o-o");
@@ -54,5 +54,17 @@ public class Player extends LivingEntity {
 
     public void setSelectedSpell(Spell selectedSpell) {
         this.selectedSpell = selectedSpell;
+    }
+
+    public List<Potion> getPotionBelt() {
+        return potionBelt;
+    }
+
+    public void pickupPotion(Potion potion){
+        potionBelt.add(potion);
+    }
+
+    public void usePotion(Potion potion){
+        potionBelt.remove(potion);
     }
 }

@@ -6,6 +6,8 @@ import entity.living.monster.MonsterFactory;
 import entity.living.monster.MonsterType;
 import entity.object.Coins;
 import entity.object.Door;
+import entity.object.potion.Potion;
+import entity.object.potion.PotionFactory;
 import generation.GraphDungeon;
 import utils.Direction;
 import utils.Position;
@@ -47,10 +49,10 @@ public class Dungeon {
         this.maxRoomWidth = maxRoomWidth;
         // placeTestCoins();
         // placeTestMonster();
+        placeTestPotions();
         createAllDoor();
         setAllNextDoor();
         initGridMapList();
-
     }
 
     private void initGridMapList(){
@@ -66,8 +68,14 @@ public class Dungeon {
         }
     }
 
-
-
+    private void placeTestPotions(){
+        PotionFactory testFactory = new PotionFactory();
+        for (Room room : roomList){
+            room.addEntity(testFactory.getPotion(0, new Position(4, 3)));
+            room.addEntity(testFactory.getPotion(1, new Position(4, 5)));
+            room.addEntity(testFactory.getPotion(2, new Position(5, 4)));
+        }
+    }
 
     private void createAllDoor(){
         for (Room room : roomList) {
