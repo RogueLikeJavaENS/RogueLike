@@ -28,6 +28,7 @@ public class GameState {
     private GridMap gridMap;
     private Fighting fighting;
     private boolean help;
+    private Range range;
 
     public GameState(Player player, Dungeon dungeon) {
         this.dungeon = dungeon;
@@ -39,6 +40,13 @@ public class GameState {
         gridMap.update(player, true);
         isThereMonsters();
         this.help = true;
+    }
+
+    public void updateRange() {
+        Spell spell = player.getSelectedSpell();
+        spell.setRange(player.getPosition(), player.getDirection());
+        range = spell.getRange();
+        gridMap.updateRangeList(range);
     }
 
     /**
@@ -110,6 +118,7 @@ public class GameState {
                 initFight(monsters);
             }
             state = State.FIGHT;
+            updateRange();
         }
         else {
             state = State.NORMAL;

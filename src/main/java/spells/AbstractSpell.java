@@ -32,4 +32,16 @@ public abstract class AbstractSpell implements Spell {
     public int getManaCost() {
         return manaCost;
     }
+
+    public void setRange(Position entityPos, Direction direction) {
+        setBottomRightCorner(entityPos, direction);
+        setTopLeftCorner(entityPos, direction);
+    }
+    public void setTopLeftCorner(Position entityPos, Direction direction) {
+        range.setTopLeftCorner(entityPos);
+    }
+
+    public void setBottomRightCorner(Position entitiyPos, Direction direction) {
+        range.setBottomRightCorner(entitiyPos);
+    }
 }

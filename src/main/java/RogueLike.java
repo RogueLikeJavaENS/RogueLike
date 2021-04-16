@@ -70,6 +70,7 @@ public class RogueLike {
                     break;
 
                 case FIGHT:
+                    gs.updateRange();
                     doTurnOrder();
                     break;
 

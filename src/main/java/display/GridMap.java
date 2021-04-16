@@ -6,6 +6,10 @@ import entity.living.LivingEntity;
 import entity.living.Player;
 import entity.living.monster.Monster;
 import gameElement.Room;
+import spells.Range;
+import utils.Colors;
+import utils.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +23,14 @@ public class GridMap {
     private final Tile[][] tiles;
     private List<Entity> entities;
     private List<String> strByLine;
+    private List<Position> rangeList;
 
     public GridMap(Room room) {
         this.room = room;
         this.tiles = new Tile[room.getHeight()][room.getWidth()];
         fillRoomContent();
         fillEntityContent();
+        rangeList = new ArrayList<>();
     }
 
     private void fillRoomContent() {
@@ -42,9 +48,7 @@ public class GridMap {
         }
     }
 
-    private void fillEntityContent() {
-        entities = room.getEntities();
-    }
+    private void fillEntityContent() { entities = room.getEntities(); }
 
     public void update(List<Entity> entitiesToAdd, List<Entity> entitiesToRemove) {
         for(Entity entity : entitiesToAdd) {
@@ -78,30 +82,85 @@ public class GridMap {
      * Update the List of String used to print the GridMap
      *
      */
-    public void updateDisplayGridMap (){
+    public void updateDisplayGridMap () {
         List<String> strLine = new ArrayList<>();
-        for (int ord = 0; ord<room.getHeight(); ord++){
-            for (int i = 0; i <2; i++) {                    // made 2 times because the tile has a height of 2
+        for (int ord = 0; ord<room.getHeight(); ord++)
+        {
+            for (int i = 0; i <2; i++) // made 2 times because the tile has a height of 2
+            {
                 StringBuilder sb = new StringBuilder();     // create each line
                 int nbEmptyTile = 0;
-                for (int abs = 0; abs < room.getWidth(); abs++) {
+                for (int abs = 0; abs < room.getWidth(); abs++)
+                {
                     List<Entity> entitiesAt = getEntitiesAt(abs, ord);
-                    if (entitiesAt.size() != 0) { // print the first entity of the tile
-                        sb.append(entitiesAt.get(0));
-                    } else {                       // if no entity, print the tile
-                        sb.append(tiles[ord][abs]);
-                        if (tiles[ord][abs] instanceof EmptyTile){ // if the tile is empty increment nbEmptyTile
+                    if (entitiesAt.size() != 0)// print the first entity of the tile
+                    {
+                        if (isInRange(abs, ord) && !(entities.get(0) instanceof Player)) {
+                            sb.append(colorize(entitiesAt.get(0).toString(), Colors.SOFT_GREY.bgApply()));
+                        }
+                        else {
+                            sb.append(entitiesAt.get(0));
+                        }
+                    }
+                    else // if no entity, print the tile
+                    {
+                        if (isInRange(abs, ord)) {
+                            sb.append(colorize(tiles[ord][abs].toString(), Colors.SOFT_GREY.bgApply()));
+                        }
+                        else {
+                            sb.append(tiles[ord][abs]);
+                        }
+                        if (tiles[ord][abs] instanceof EmptyTile) // if the tile is empty increment nbEmptyTile
+                        {
                             nbEmptyTile++;
                         }
                     }
                 }
-                if (nbEmptyTile != room.getWidth()){        // if all the tile on the line are empty, don't add the line on the result
+                if (nbEmptyTile != room.getWidth()) // if all the tile on the line are empty, don't add the line on the result
+                {
                     strLine.add(sb.toString());
-
                 }
             }
         }
         strByLine = strLine;
+    }
+
+    public void updateRangeList(Range range) {
+        rangeList.clear();
+        for (int abs = range.getTopLeftCorner().getAbs();
+             abs <= range.getBottomRightCorner().getAbs();
+             abs++) {
+            for (int ord = range.getTopLeftCorner().getOrd();
+                 ord <= range.getBottomRightCorner().getOrd();
+                 ord++) {
+                if (isOnValidPosition(abs, ord)) {
+                    rangeList.add(new Position(abs, ord));
+                }
+
+            }
+        }
+    }
+
+    public boolean isOnValidPosition(int abs, int ord) {
+        if (abs < 0 || ord < 0) {
+            return false;
+        }
+        else if (abs >= tiles[0].length || ord >= tiles.length) {
+            return false;
+        }
+        else if (!getTileAt(abs, ord).isAccessible()) {
+            return false;
+        }
+        for (Entity entity : getEntitiesAt(abs, ord)) {
+            if (!(entity instanceof Monster) && (!entity.getIsAccessible())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isInRange(int abs, int ord) {
+        return rangeList.contains(new Position(abs, ord));
     }
 
     /**
