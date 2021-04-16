@@ -27,6 +27,7 @@ public class Player extends LivingEntity {
 
     public String toString(){
         String currentLine = getDisplay();
+
         setDisplay("@@@");
         return currentLine;
     }

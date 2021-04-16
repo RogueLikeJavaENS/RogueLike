@@ -4,6 +4,10 @@ import display.GridMap;
 import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.Player;
+import entity.living.monster.Monster;
+import spells.Range;
+import spells.Spell;
+import utils.Position;
 import utils.State;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,6 +134,19 @@ public class GameState {
         List<LivingEntity> fightList = new ArrayList<>(monsters);
         fightList.add(player);
         fighting = new Fighting(fightList);
+    }
+
+    public void useSpell() {
+        Spell spell = player.getSelectedSpell();
+        for (Position pos : gridMap.getRangeList()) {
+            List<Entity> entityList = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());
+            for (Entity currentEntity : entityList) {
+                if (pos.equals(currentEntity.getPosition()) && currentEntity instanceof Monster) {
+                    Monster monster = (Monster) currentEntity;
+                    monster.setHP(0); //c'est ici qu'il faut changer
+                }
+            }
+        }
     }
 
     /**

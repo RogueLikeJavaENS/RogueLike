@@ -3,10 +3,13 @@ package display;
 import display.tiles.EmptyTile;
 import entity.Entity;
 import entity.living.LivingEntity;
+import entity.living.Player;
 import entity.living.monster.Monster;
 import gameElement.Room;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
  * This class Contains the actual gameElement.Room. It contains a
@@ -96,7 +99,6 @@ public class GridMap {
                     strLine.add(sb.toString());
 
                 }
-
             }
         }
         strByLine = strLine;
@@ -149,5 +151,9 @@ public class GridMap {
             }
         }
         return monsters;
+    }
+
+    public List<Position> getRangeList() {
+        return rangeList;
     }
 }

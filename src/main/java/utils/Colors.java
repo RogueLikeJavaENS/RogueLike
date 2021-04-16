@@ -3,7 +3,18 @@ package utils;
 import com.diogonunes.jcolor.Attribute;
 
 public enum Colors {
-    BLACK(0), RED(1), GREEN(2), YELLOW(3), BLUE(4), MAGENTA(5), CYAN(6), GREY(8), WHITE(15), BROWN(94), DARK_GREY(238);
+    BLACK(0),
+    RED(1),
+    GREEN(2),
+    YELLOW(3),
+    BLUE(4),
+    MAGENTA(5),
+    CYAN(6),
+    GREY(8),
+    WHITE(15),
+    BROWN(94),
+    SOFT_GREY(237), //for the spell range
+    DARK_GREY(238); //for the walls
 
     private final int value;
 

@@ -209,82 +209,84 @@ public class RogueLike {
      */
     private void fightingStateInput() throws InterruptedException {
         // Process Player Input
-        while (!(turned || acted)) {
-            int a = retrieveKey(sp);
+        int a = retrieveKey(sp);
 
-            switch ((char) a) {
-                case 'A':
-                    System.out.println(player.getName() + " used " + player.getSelectedSpell().toString());
-                    hud.spellListString(); //remove the highlightning of the selected spell
-                    rendererUI.updateHUD(hud);
-                    acted = true;
-                    break;
-                case 'Z':
-                    turned = hasTurned(player, Direction.NORTH);
-                    player.setDirection(Direction.NORTH);
-                    acted = gs.movePlayer(0, -1);
-                    //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
-                    break;
-                case 'Q':
-                    turned = hasTurned(player, Direction.WEST);
-                    player.setDirection(Direction.WEST);
-                    acted = gs.movePlayer(-1, 0);
-                    break;
-                case 'S':
-                    turned = hasTurned(player, Direction.SOUTH);
-                    player.setDirection(Direction.SOUTH);
-                    acted = gs.movePlayer(0, 1);
-                    break;
-                case 'D':
-                    turned = hasTurned(player, Direction.EAST);
-                    player.setDirection(Direction.EAST);
-                    acted = gs.movePlayer(1, 0);
-                    break;
-                case 'M':
-                    miniMap.updateMap();
-                    gs.setState(State.MAP);
-                    modifiedMenu = true;
-                    break;
-                case 'I':
-                    gs.setState(State.INVENTORY);
-                    modifiedMenu = true;
-                    break;
-                case 'H':
-                    gs.setHelp(!gs.getHelp());
-                    modifiedMenu = true;
-                    break;
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                    int ASCII_CODE_FOR_ZERO = 48;
-                    int playerInput = a % ASCII_CODE_FOR_ZERO;
-                    if (playerInput <= player.getSpells().size()) {
-                        hud.spellSelectionString(playerInput);
-                    } else {
-                        hud.spellListString();
-                    }
+        switch ((char) a) {
+            case 'A':
+                gs.useSpell();
+                hud.spellListString(); //remove the highlightning of the selected spell
+                rendererUI.updateHUD(hud);
+                acted = true;
+                break;
+            case 'Z':
+                turned = hasTurned(player, Direction.NORTH);
+                player.setDirection(Direction.NORTH);
+                acted = gs.movePlayer(0, -1);
+                //gs.updateRange();
+                //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
+                break;
+            case 'Q':
+                turned = hasTurned(player, Direction.WEST);
+                player.setDirection(Direction.WEST);
+                acted = gs.movePlayer(-1, 0);
+                //gs.updateRange();
+                break;
+            case 'S':
+                turned = hasTurned(player, Direction.SOUTH);
+                player.setDirection(Direction.SOUTH);
+                acted = gs.movePlayer(0, 1);
+                //gs.updateRange();
+                break;
+            case 'D':
+                turned = hasTurned(player, Direction.EAST);
+                player.setDirection(Direction.EAST);
+                acted = gs.movePlayer(1, 0);
+                //gs.updateRange();
+                break;
+            case 'M':
+                miniMap.updateMap();
+                gs.setState(State.MAP);
+                modifiedMenu = true;
+                break;
+            case 'I':
+                gs.setState(State.INVENTORY);
+                modifiedMenu = true;
+                break;
+            case 'H':
+                gs.setHelp(!gs.getHelp());
+                modifiedMenu = true;
+                break;
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                int ASCII_CODE_FOR_ZERO = 48;
+                int playerInput = a % ASCII_CODE_FOR_ZERO;
+                if (playerInput <= player.getSpells().size()) {
+                    hud.spellSelectionString(playerInput);
                     updateHUDDisplay();
-                    break;
-                case '0':
-                    if (player.getSpells().size() == 10) { //0 is after 9 on the keyboard, so it stands for 10
-                        hud.spellSelectionString(10);
-                    } else {
-                        hud.spellListString();
-                    }
+                    gs.updateRange();
+                    turned = true;
+                }
+                break;
+            case '0':
+                if (player.getSpells().size() == 10) { //0 is after 9 on the keyboard, so it stands for 10
+                    hud.spellSelectionString(10);
                     updateHUDDisplay();
-                    break;
-                case '\u001B': // escape
-                    exitStateInput();
-                    break;
-                default:
-                    break;
-            }
+                    gs.updateRange();
+                    turned = true;
+                }
+                break;
+            case '\u001B': // escape
+                exitStateInput();
+                break;
+            default:
+                break;
         }
     }
 
@@ -377,13 +379,6 @@ public class RogueLike {
         rendererUI.updateHUD(hud);
         rendererUI.display();
     }
-
-    /*private void resetBools() {
-        acted = false;
-        turned = false;
-        modifiedMenu = false;
-        monsterPlayed = false;
-    }*/
 
     public static void main(String[] args) throws InterruptedException {
         new RogueLike();

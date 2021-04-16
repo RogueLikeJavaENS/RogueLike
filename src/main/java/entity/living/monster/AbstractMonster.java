@@ -14,4 +14,9 @@ public class AbstractMonster extends NPC implements Monster {
     public void doAction(GameState gameState) {
         System.out.println("my turn ! " + getName());
     }
+
+    @Override
+    public void setHP(int hp) {
+        super.setHP(hp);
+    }
 }

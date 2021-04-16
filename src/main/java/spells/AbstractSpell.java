@@ -1,18 +1,19 @@
 package spells;
 
+import utils.Position;
+import utils.Direction;
+
 public abstract class AbstractSpell implements Spell {
     String name;
     double damageMult;
-    int range;
+    Range range;
     int manaCost;
-    String ingameDisplay;
 
-    public AbstractSpell(String name, double damageMult, int range, int manaCost, String ingameDisplay) {
+    public AbstractSpell(String name, double damageMult, Range range, int manaCost) {
         this.name = name;
         this.damageMult = damageMult;
         this.range = range;
         this.manaCost = manaCost;
-        this.ingameDisplay = ingameDisplay;
     }
 
     @Override
@@ -24,12 +25,8 @@ public abstract class AbstractSpell implements Spell {
         return damageMult;
     }
 
-    public int getRange() {
+    public Range getRange() {
         return range;
-    }
-
-    public String getIngameDisplay() {
-        return ingameDisplay;
     }
 
     public int getManaCost() {
