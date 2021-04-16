@@ -7,19 +7,19 @@ import gameElement.GameState;
 import items.AbstractItem;
 import utils.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AbstractPotion extends ObjectEntity implements Potion {
-    protected String sprite;
     final int potionType;
 
     public AbstractPotion(Position position, String sprite, int potionType){
         super(position, true);
-        this.sprite=sprite;
         this.potionType = potionType;
-    }
-
-    @Override
-    public String toString() {
-        return sprite;
+        List<String> sprites = new ArrayList<>();
+        sprites.add(sprite);
+        sprites.add(sprite);
+        setSprites(sprites);
     }
 
     public void doAction(GameState gameState){

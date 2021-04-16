@@ -16,7 +16,7 @@ public class Elixir extends AbstractPotion{
 
     public void usePotion(GameState gameState){
         Player player = gameState.getPlayer();
-        player.getStats().recoverMp(5*player.getStats().getLevel());
+        player.getPlayerStats().recoverMp(5*player.getStats().getLevel());
         player.usePotion(this);
     }
 }

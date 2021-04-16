@@ -13,7 +13,7 @@ public class AttackStrategy extends DecoratorStrategy{
     @Override
     public boolean act(Monster monster, Player player, GridMap gridMap) {
         int damage = monster.getMonsterStats().getDamageRaw();
-        player.getStats().setLifePointActual(player.getStats().getLifePointActual()-damage);
+        player.getPlayerStats().sufferDamage(damage);
         return true;
     }
 }

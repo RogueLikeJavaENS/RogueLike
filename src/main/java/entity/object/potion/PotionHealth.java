@@ -15,7 +15,7 @@ public class PotionHealth extends AbstractPotion{
 
     public void usePotion(GameState gameState){
         Player player = gameState.getPlayer();
-        player.getStats().recoverHp(5*player.getStats().getLevel());
+        player.getPlayerStats().recoverHp(5*player.getStats().getLevel());
         player.usePotion(this);
     }
 }

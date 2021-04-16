@@ -82,30 +82,44 @@ public class GridMap {
      * Update the List of String used to print the GridMap
      *
      */
-    public void updateDisplayGridMap (){
+    public void updateDisplayGridMap () {
         List<String> strLine = new ArrayList<>();
-        for (int ord = 0; ord<room.getHeight(); ord++){
-            for (int i = 0; i <2; i++) {                    // made 2 times because the tile has a height of 2
+        for (int ord = 0; ord<room.getHeight(); ord++)
+        {
+            for (int i = 0; i <2; i++) // made 2 times because the tile has a height of 2
+            {
                 StringBuilder sb = new StringBuilder();     // create each line
                 int nbEmptyTile = 0;
-
-                for (int abs = 0; abs < room.getWidth(); abs++) {
+                for (int abs = 0; abs < room.getWidth(); abs++)
+                {
                     List<Entity> entitiesAt = getEntitiesAt(abs, ord);
-
-                    if (entitiesAt.size() != 0) { // print the first entity of the tile
-                        sb.append(entitiesAt.get(entitiesAt.size()-1).getSprites(i)); // The last one is always the one who moved in last.
-                    } else {                       // if no entity, print the tile
-                        sb.append(tiles[ord][abs]);
-                        if (tiles[ord][abs] instanceof EmptyTile){ // if the tile is empty increment nbEmptyTile
+                    if (entitiesAt.size() != 0)// print the first entity of the tile
+                    {
+                        if (isInRange(abs, ord) && !(entities.get(0) instanceof Player)) {
+                            sb.append(colorize(entitiesAt.get(0).getSprites(i), Colors.SOFT_GREY.bgApply()));
+                        }
+                        else {
+                            sb.append(entitiesAt.get(0).getSprites(i));
+                        }
+                    }
+                    else // if no entity, print the tile
+                    {
+                        if (isInRange(abs, ord)) {
+                            sb.append(colorize(tiles[ord][abs].toString(), Colors.SOFT_GREY.bgApply()));
+                        }
+                        else {
+                            sb.append(tiles[ord][abs]);
+                        }
+                        if (tiles[ord][abs] instanceof EmptyTile) // if the tile is empty increment nbEmptyTile
+                        {
                             nbEmptyTile++;
                         }
                     }
                 }
-                if (nbEmptyTile != room.getWidth()){        // if all the tile on the line are empty, don't add the line on the result
+                if (nbEmptyTile != room.getWidth()) // if all the tile on the line are empty, don't add the line on the result
+                {
                     strLine.add(sb.toString());
-
                 }
-
             }
         }
         strByLine = strLine;

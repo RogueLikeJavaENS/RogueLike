@@ -4,6 +4,7 @@ import display.tiles.Tile;
 import entity.living.monster.MonsterFactory;
 import entity.object.Coins;
 import entity.object.Stair;
+import entity.object.potion.PotionFactory;
 import gameElement.Room;
 import utils.Position;
 
@@ -219,7 +220,10 @@ public class RoomFactory {
     }
 
     private void fillPotions(Room room, ArrayList<Position> availablePositions, Seed seed) {
-
+        PotionFactory testFactory = new PotionFactory();
+        room.addEntity(testFactory.getPotion(0, new Position(4, 3)));
+        room.addEntity(testFactory.getPotion(1, new Position(4, 5)));
+        room.addEntity(testFactory.getPotion(2, new Position(5, 4)));
     }
 
     private void fillCoins(Room room, ArrayList<Position> availablePositions, Seed seed) {
