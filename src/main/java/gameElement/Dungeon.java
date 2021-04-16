@@ -5,6 +5,8 @@ import entity.Entity;
 import entity.living.monster.MonsterFactory;
 import entity.object.Coins;
 import entity.object.Door;
+import entity.object.potion.Potion;
+import entity.object.potion.PotionFactory;
 import utils.Direction;
 import utils.Position;
 
@@ -45,6 +47,7 @@ public class Dungeon {
         this.maxRoomHeight = maxRoomHeight;
         this.maxRoomWidth = maxRoomWidth;
         placeTestCoins();
+        placeTestPotions();
         placeTestMonster();
         createAllDoor();
         setAllNextDoor();
@@ -61,6 +64,15 @@ public class Dungeon {
     private void placeTestCoins(){
         for (Room room : roomList){
             room.addEntity(new Coins(new Position(3, 3)));
+        }
+    }
+
+    private void placeTestPotions(){
+        PotionFactory testFactory = new PotionFactory();
+        for (Room room : roomList){
+            room.addEntity(testFactory.getPotion(0, new Position(4, 3)));
+            room.addEntity(testFactory.getPotion(1, new Position(4, 5)));
+            room.addEntity(testFactory.getPotion(2, new Position(5, 4)));
         }
     }
 
@@ -193,9 +205,8 @@ public class Dungeon {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dungeon dungeon = (Dungeon) o;
-        if ((this.roomList.size() == dungeon.roomList.size()) &&
-                (roomList.equals(dungeon.roomList))) return true;
-        else return false;
+        return (this.roomList.size() == dungeon.roomList.size()) &&
+                (roomList.equals(dungeon.roomList));
     }
 
     @Override

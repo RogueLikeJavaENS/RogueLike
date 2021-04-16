@@ -2,6 +2,9 @@ import display.HUD;
 import display.RendererUI;
 import entity.living.LivingEntity;
 import entity.living.Player;
+import entity.object.potion.EmptyBottle;
+import entity.object.potion.Potion;
+import entity.object.potion.PotionHealth;
 import gameElement.Dungeon;
 import gameElement.Fighting;
 import gameElement.GameState;
@@ -133,6 +136,7 @@ public class RogueLike {
      */
     private void normalStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
+        Potion potionToDelete = new EmptyBottle(null);
         switch ((char) a) { // Process the pressed key bu the player.
             case 'Z':
                 turned = hadTurned(player, Direction.NORTH);
@@ -168,6 +172,36 @@ public class RogueLike {
             case 'H':
                 gs.setHelp(!gs.getHelp());
                 modifiedMenu = true;
+                break;
+            case 'V':
+                for (Potion potion:
+                        player.getPotionBelt()) {
+                    if (potion.getPotionType()==0){
+                        potionToDelete=potion;
+                        break;
+                    }
+                }
+                potionToDelete.usePotion(gs);
+                break;
+            case 'B':
+                for (Potion potion:
+                        player.getPotionBelt()) {
+                    if (potion.getPotionType()==1){
+                        potionToDelete=potion;
+                        break;
+                    }
+                }
+                potionToDelete.usePotion(gs);
+                break;
+            case 'N':
+                for (Potion potion:
+                        player.getPotionBelt()) {
+                    if (potion.getPotionType()==2){
+                        potionToDelete=potion;
+                        break;
+                    }
+                }
+                potionToDelete.usePotion(gs);
                 break;
             case '\u001B': // escape
                 exitStateInput();
@@ -211,6 +245,7 @@ public class RogueLike {
      */
     private void fightingStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
+        Potion potionToDelete = new EmptyBottle(null);
         // Process Player Input
         switch ((char) a) {
             case 'Z':
@@ -246,6 +281,36 @@ public class RogueLike {
             case 'H':
                 gs.setHelp(!gs.getHelp());
                 modifiedMenu = true;
+                break;
+            case 'V':
+                for (Potion potion:
+                        player.getPotionBelt()) {
+                    if (potion.getPotionType()==0){
+                        potionToDelete=potion;
+                        break;
+                    }
+                }
+                potionToDelete.usePotion(gs);
+                break;
+            case 'B':
+                for (Potion potion:
+                        player.getPotionBelt()) {
+                    if (potion.getPotionType()==1){
+                        potionToDelete=potion;
+                        break;
+                    }
+                }
+                potionToDelete.usePotion(gs);
+                break;
+            case 'N':
+                for (Potion potion:
+                        player.getPotionBelt()) {
+                    if (potion.getPotionType()==2){
+                        potionToDelete=potion;
+                        break;
+                    }
+                }
+                potionToDelete.usePotion(gs);
                 break;
             case '1':
             case '2':
