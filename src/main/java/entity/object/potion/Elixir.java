@@ -11,7 +11,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class Elixir extends AbstractPotion{
 
     public Elixir(Position position) {
-        super(position, colorize("( )", Colors.BLUE.textApply()), 1);
+        super(position, "( )", Colors.BLUE, 1);
     }
 
     public void usePotion(GameState gameState){

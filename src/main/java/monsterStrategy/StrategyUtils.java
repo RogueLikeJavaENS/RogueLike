@@ -47,45 +47,9 @@ public final class StrategyUtils {
 
     }
 
-    public static Direction goToPlayerDir(Monster monster, Player player, GridMap gridMap){
+    public static Direction moveAroundPlayer(boolean approach, Monster monster, Player player, GridMap gridMap){
         Position monsterPos = monster.getPosition();
         Position playerPos = player.getPosition();
-
-        Direction absDir;
-        Direction ordDir;
-
-        List<Direction> possibleDir = foundAccessibleDirection(monsterPos,gridMap);
-        Collections.shuffle(possibleDir);
-        List<Direction> resList = new ArrayList<>(possibleDir);
-        for(Direction dir : possibleDir) {
-            switch (dir) {
-                case NORTH:
-                case SOUTH:
-                    if (monsterPos.getOrd() > playerPos.getOrd()) {
-                        resList.remove(Direction.SOUTH);
-                    } else if (monsterPos.getOrd() < playerPos.getOrd()) {
-                        resList.remove(Direction.NORTH);
-                    }
-                    break;
-                case EAST:
-                case WEST:
-                    if (monsterPos.getAbs() > playerPos.getAbs()) {
-                        resList.remove(Direction.EAST);
-                    } else if (monsterPos.getAbs() < playerPos.getAbs()) {
-                        resList.remove(Direction.WEST);
-                    }
-                    break;
-            }
-        }
-        return resList.get(0);
-    }
-
-    public static Direction escapePlayerDir(Monster monster, Player player, GridMap gridMap){
-        Position monsterPos = monster.getPosition();
-        Position playerPos = player.getPosition();
-
-        Direction absDir;
-        Direction ordDir;
 
         List<Direction> possibleDir = foundAccessibleDirection(monsterPos,gridMap);
         Collections.shuffle(possibleDir);
@@ -96,17 +60,47 @@ public final class StrategyUtils {
                 case NORTH:
                 case SOUTH:
                     if (monsterPos.getOrd() > playerPos.getOrd()) {
-                        resList.remove(Direction.NORTH);
+                        if (approach) {
+                            resList.remove(Direction.SOUTH);
+                        }
+                        else {
+                            resList.remove(Direction.NORTH);
+                        }
                     } else if (monsterPos.getOrd() < playerPos.getOrd()) {
-                        resList.remove(Direction.SOUTH);
+                        if (approach){
+                            resList.remove(Direction.NORTH);
+                        }
+                        else {
+                            resList.remove(Direction.SOUTH);
+                        }
+                    } else {
+                        if (approach){
+                            resList.remove(Direction.SOUTH);
+                            resList.remove(Direction.NORTH);
+                        }
                     }
                     break;
                 case EAST:
                 case WEST:
                     if (monsterPos.getAbs() > playerPos.getAbs()) {
-                        resList.remove(Direction.WEST);
+                        if (approach) {
+                            resList.remove(Direction.EAST);
+                        }
+                        else {
+                            resList.remove(Direction.WEST);
+                        }
                     } else if (monsterPos.getAbs() < playerPos.getAbs()) {
-                        resList.remove(Direction.EAST);
+                        if (approach){
+                            resList.remove(Direction.WEST);
+                        }
+                        else {
+                            resList.remove(Direction.EAST);
+                        }
+                    } else {
+                        if (approach){
+                            resList.remove(Direction.WEST);
+                            resList.remove(Direction.EAST);
+                        }
                     }
                     break;
             }
@@ -114,8 +108,16 @@ public final class StrategyUtils {
         if (resList.size() == 0){
             resList.add(Direction.NONE);
         }
-        return resList.get(0);
+        Random gen = new Random();
+        return resList.get(gen.nextInt(resList.size()));
     }
+
+    public static Direction moveRandomly(Monster monster, GridMap gridMap){
+        Random gen = new Random();
+        List<Direction> accessibleDirection = foundAccessibleDirection(monster.getPosition(), gridMap);
+        return accessibleDirection.get(gen.nextInt(accessibleDirection.size()));
+    }
+
 
     private static int absDistance(Position pos1, Position pos2){
         return Math.abs(pos1.getAbs()-pos2.getAbs());

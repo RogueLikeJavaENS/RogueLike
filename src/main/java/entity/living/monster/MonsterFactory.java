@@ -1,5 +1,6 @@
 package entity.living.monster;
 
+import entity.living.Player;
 import monsterStrategy.*;
 import utils.Position;
 
@@ -7,16 +8,19 @@ import java.util.Random;
 
 
 public class MonsterFactory {
-    int floor;
+    private int floor;
+    private final static int AGRO = 5;
 
-    public final Condition isMidlife = (Monster monster) -> monster.getMonsterStats().getLifePointActual() <= monster.getMonsterStats().getLifePointTotal()/2;
+    public final Condition isMidlife = (Monster monster, Player player) -> monster.getMonsterStats().getLifePointActual() <= monster.getMonsterStats().getLifePointTotal()/2;
+    public final Condition alwaysTrue = (Monster monster, Player player) -> true;
+    public final Condition isFarFromPlayer = (Monster monster, Player player) -> StrategyUtils.getDistance(monster,player) > AGRO;
 
     public MonsterFactory(int floor){
         this.floor = floor;
     }
 
-    private final Strategy goblinStrategy = new EscapeStrategy(isMidlife, new ApproachStrategy( new AttackStrategy(null)));
-    private final Strategy skeletonStrategy = new ApproachStrategy(new AttackStrategy(null));
+    private final Strategy goblinStrategy = new IdleStrategy(isFarFromPlayer, new EscapeStrategy(isMidlife, new ApproachStrategy(alwaysTrue, new AttackStrategy(null))));
+    private final Strategy skeletonStrategy = new IdleStrategy(isFarFromPlayer, new ApproachStrategy(alwaysTrue, new AttackStrategy(null)));
 
     public Monster getMonster(int monsterType, Position position){
 

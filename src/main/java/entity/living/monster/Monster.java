@@ -12,4 +12,6 @@ public interface Monster extends Entity {
     MonsterStats getMonsterStats();
     Position getPosition();
     void setPosition(Position position);
+    void setAgroPlayer(boolean agroPlayer);
+    boolean isAgroPlayer();
 }

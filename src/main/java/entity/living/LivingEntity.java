@@ -2,6 +2,7 @@ package entity.living;
 
 import entity.AbstractEntity;
 import utils.Check;
+import utils.Colors;
 import utils.Direction;
 import utils.Position;
 
@@ -25,8 +26,8 @@ public class LivingEntity extends AbstractEntity {
 
     private String display;
 
-    public LivingEntity(Position position, String name, AbstractStats stats) throws IllegalArgumentException {
-        super(position, false); // false because a living entity is never accessible.
+    public LivingEntity(Position position, String name, Colors color, AbstractStats stats) throws IllegalArgumentException {
+        super(position, color,false); // false because a living entity is never accessible.
         this.name = name;
         //setDirection(Direction.SOUTH);
         this.stats = stats;

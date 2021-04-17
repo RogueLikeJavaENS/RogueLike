@@ -66,6 +66,7 @@ public class GameState {
         setGridMap(dungeon.getGridMap(room));   // take the gridmap that represent the new room
         gridMap.update(player, true);       // add the ^player to the new room
         changeRoomFight();                       // check if the Room contains monster
+        isOnEntity();
     }
 
     /**
