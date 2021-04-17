@@ -4,8 +4,8 @@ import display.GridMap;
 import display.Tile;
 import display.tiles.DoorTile;
 import entity.Entity;
-import entity.living.monster.Monster;
-import entity.living.Player;
+import entity.living.npc.monster.Monster;
+import entity.living.player.Player;
 import utils.Direction;
 import utils.Position;
 

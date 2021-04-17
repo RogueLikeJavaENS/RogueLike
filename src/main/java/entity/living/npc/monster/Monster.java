@@ -1,7 +1,6 @@
-package entity.living.monster;
+package entity.living.npc.monster;
 
 import entity.Entity;
-import entity.living.MonsterStats;
 import gameElement.GameState;
 import utils.Position;
 

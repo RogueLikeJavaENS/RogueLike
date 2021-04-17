@@ -2,11 +2,8 @@ package gameElement;
 
 import display.GridMap;
 import entity.Entity;
-import entity.living.monster.MonsterFactory;
-import entity.living.monster.MonsterType;
 import entity.object.Coins;
 import entity.object.Door;
-import entity.object.potion.Potion;
 import entity.object.potion.PotionFactory;
 import generation.GraphDungeon;
 import utils.Direction;

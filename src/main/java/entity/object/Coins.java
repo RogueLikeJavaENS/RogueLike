@@ -1,8 +1,7 @@
 package entity.object;
 
-import com.diogonunes.jcolor.Attribute;
 import display.GridMap;
-import entity.living.Player;
+import entity.living.player.Player;
 import gameElement.GameState;
 import utils.Colors;
 import utils.Position;

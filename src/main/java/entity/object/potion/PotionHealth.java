@@ -1,6 +1,6 @@
 package entity.object.potion;
 
-import entity.living.Player;
+import entity.living.player.Player;
 import gameElement.GameState;
 import utils.Colors;
 import utils.Position;

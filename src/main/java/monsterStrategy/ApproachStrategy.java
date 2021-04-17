@@ -6,6 +6,8 @@ import entity.living.monster.Monster;
 import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
+import entity.living.player.Player;
+import entity.living.npc.monster.Monster;
 
 public class ApproachStrategy extends DecoratorStrategy {
     private Condition condition;

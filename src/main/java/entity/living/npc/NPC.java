@@ -1,4 +1,6 @@
-package entity.living;
+package entity.living.npc;
+import entity.living.AbstractStats;
+import entity.living.LivingEntity;
 import utils.Colors;
 import utils.Position;
 

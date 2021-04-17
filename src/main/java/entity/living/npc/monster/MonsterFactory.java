@@ -1,6 +1,6 @@
-package entity.living.monster;
+package entity.living.npc.monster;
 
-import entity.living.Player;
+import entity.living.player.Player;
 import monsterStrategy.*;
 import utils.Position;
 

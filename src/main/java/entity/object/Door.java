@@ -1,6 +1,6 @@
 package entity.object;
 
-import entity.living.Player;
+import entity.living.player.Player;
 import gameElement.GameState;
 import gameElement.Room;
 import utils.Colors;

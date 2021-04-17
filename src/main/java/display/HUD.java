@@ -1,6 +1,6 @@
 package display;
 
-import entity.living.Player;
+import entity.living.player.Player;
 import spells.Spell;
 import utils.Colors;
 
@@ -40,19 +40,28 @@ public class HUD {
                 .append(": "); //"Name:    "
         sb.append("Lvl: ")
                 .append(player.getStats().getLevel())
-                .append("   "); //"Lvl: xx  "
+                .append("  "); //"Lvl: xx  "
+        sb.append("XP: ")
+                .append(player.getPlayerStats().getXp())
+                .append("/")
+                .append(player.getPlayerStats().getXpRequired())
+                .append("  ");
         sb.append(colorize("HP: ", Colors.RED.textApply()))
                 .append(colorize(String.valueOf(player.getStats().getLifePointActual()), Colors.RED.textApply()))
                 .append(colorize("/", Colors.RED.textApply()))
                 .append(colorize(String.valueOf(player.getStats().getLifePointTotal()), Colors.RED.textApply()))
-                .append("   "); //"HP: xx/yy "
+                .append("  "); //"HP: xx/yy "
         sb.append(colorize("MP: ", Colors.BLUE.textApply()))
                 .append(colorize(String.valueOf(player.getStats().getManaPointActual()), Colors.BLUE.textApply()))
                 .append(colorize("/", Colors.BLUE.textApply()))
                 .append(colorize(String.valueOf(player.getStats().getLifePointTotal()), Colors.BLUE.textApply())) //"MP: xx/yy"
-                .append("   ");
+                .append("  ");
         sb.append(colorize("BTC: ",Colors.YELLOW.textApply()))
                 .append(colorize(String.valueOf(player.getPlayerStats().getMoneyCount()), Colors.YELLOW.textApply())) //"BTC: xxx"
+                .append("\n");
+        sb.append("Health Potion : ").append(colorize(String.valueOf(player.getPotionHealthNumber()), Colors.RED.textApply()))
+                .append(" Elixir : ").append(colorize(String.valueOf(player.getElixirNumber()), Colors.BLUE.textApply()))
+                .append(" Xp Bottle : ").append(colorize(String.valueOf(player.getXpBottleNumber()), Colors.GREEN.textApply()))
                 .append("\n");
         sb.append("A : ")
                 .append(player.getSelectedSpell().toString())

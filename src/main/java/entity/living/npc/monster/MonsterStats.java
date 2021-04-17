@@ -1,5 +1,6 @@
-package entity.living;
+package entity.living.npc.monster;
 
+import entity.living.AbstractStats;
 import utils.Check;
 
 /**

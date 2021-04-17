@@ -1,9 +1,5 @@
 package utils;
 
-import entity.Entity;
-import entity.living.Player;
-import entity.living.monster.Monster;
-
 import java.util.Objects;
 
 /**
@@ -39,6 +35,20 @@ public class Position {
         setOrd(this.ord + ord);
     }
 
+    public Position getPosInFront(Direction dir) {
+        switch (dir) {
+            case NORTH:
+                return new Position(abs, ord-1);
+            case SOUTH:
+                return new Position(abs, ord+1);
+            case EAST:
+                return new Position(abs+1, ord);
+            case WEST:
+                return new Position(abs-1, ord);
+            default:
+                return new Position(0,0);
+        }
+    }
 
     /**
      * This private method permits to check if an argument (abscissa or ordinate) is valid (a positive int)

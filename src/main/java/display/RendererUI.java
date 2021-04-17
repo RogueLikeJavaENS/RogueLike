@@ -3,7 +3,6 @@ package display;
 import com.sun.jna.platform.win32.IPHlpAPI;
 import gameElement.GameState;
 import gameElement.MiniMap;
-import jdk.swing.interop.SwingInterOpUtils;
 import utils.Colors;
 import utils.State;
 import java.awt.*;
@@ -30,6 +29,7 @@ public class RendererUI {
             + "| Escape : Exit the game | H : Hide Controls  \n"
             + "| Z : Up | Q : Left | S : Down | D : Right \n"
             + "| I : Inventory | M : Minimap | Escape with the same button\n"
+            + "| V : Potion Health | B : Elixir | N : XpBottle"
             + "\n";
     private static final String miniHelp = "Controls:\nH : Show All Controls\n\n";
 
