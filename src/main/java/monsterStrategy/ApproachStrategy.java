@@ -3,6 +3,9 @@ package monsterStrategy;
 import display.GridMap;
 import entity.living.Player;
 import entity.living.monster.Monster;
+import utils.Colors;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class ApproachStrategy extends DecoratorStrategy {
     private Condition condition;
@@ -19,6 +22,7 @@ public class ApproachStrategy extends DecoratorStrategy {
                 monster.setAgroPlayer(true);
             }
             StrategyUtils.updatePos(monster, StrategyUtils.moveAroundPlayer(true, monster, player,gridMap));
+            this.updateStrategyDescription(String.format("%s want to come to %s",monster.getName(),player.getName()));
         }
         return canMove;
     }

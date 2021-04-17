@@ -14,10 +14,12 @@ import java.util.List;
 
 public abstract class AbstractPotion extends ObjectEntity implements Potion {
     final int potionType;
+    final String potionName;
 
-    public AbstractPotion(Position position, String sprite, Colors color, int potionType){
+    public AbstractPotion(Position position, String sprite, Colors color, int potionType, String name){
         super(position,color, true);
         this.potionType = potionType;
+        this.potionName = name;
         List<String> sprites = new ArrayList<>();
         sprites.add(sprite);
         sprites.add(sprite);
@@ -26,16 +28,20 @@ public abstract class AbstractPotion extends ObjectEntity implements Potion {
         colorSprites.add(colorize(sprites.get(1),color.textApply()));
         setBasicSprites(sprites);
         setSprites(colorSprites);
+
     }
 
     public void doAction(GameState gameState){
         Player player = gameState.getPlayer();
         GridMap gridMap = gameState.getGridMap();
         player.pickupPotion(this);
+        gameState.getDescriptor().updateDescriptor(String.format("%s picked up a %s",player.getName(),this.potionName));
         gridMap.update(this, false);
     }
 
     public int getPotionType() {
         return potionType;
     }
+
+    public String getPotionName() { return potionName; }
 }

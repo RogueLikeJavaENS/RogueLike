@@ -1,6 +1,7 @@
 package entity.living.monster;
 
 import entity.living.*;
+import gameElement.GameState;
 import monsterStrategy.Strategy;
 import utils.Position;
 import utils.Colors;
@@ -27,6 +28,7 @@ public abstract class AbstractMonster extends NPC implements Monster {
     }
     public Strategy getStrategy() { return strategy; }
     public boolean isAgroPlayer() { return agroPlayer; }
+    public String getName(){ return super.getName();}
 
     public void setAgroPlayer(boolean agroPlayer) {
         this.agroPlayer = agroPlayer;
@@ -42,5 +44,10 @@ public abstract class AbstractMonster extends NPC implements Monster {
             newSprite.add(colorize(downSprite,Colors.WHITE.textApply()));
         }
         this.setSprites(newSprite);
+    }
+
+    public void doAction(GameState gameState) {
+        getStrategy().doAct(this, gameState.getPlayer(), gameState.getGridMap());
+        gameState.getDescriptor().updateDescriptor(getStrategy().getStrategyDescription());
     }
 }

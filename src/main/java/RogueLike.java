@@ -70,7 +70,7 @@ public class RogueLike {
      */
     private void gameLoop() throws InterruptedException{
         while(gs.getState() != State.WIN && gs.getState() != State.LOSE && gs.getState() != State.END) {
-
+            gs.getDescriptor().clearDescriptor();
             acted = false;
             turned = false;
             modifiedMenu = false;

@@ -38,6 +38,7 @@ public class Coins extends ObjectEntity {
         Player player = gameState.getPlayer();
         GridMap gridMap = gameState.getGridMap();
         player.getStats().gainMoney(value);
+        gameState.getDescriptor().updateDescriptor(String.format("%s found a coin !",player.getName()));
         gridMap.update(this, false);
     }
 

@@ -31,8 +31,4 @@ public class Goblin extends AbstractMonster implements Monster {
         return "%%%";
     }
 
-    @Override
-    public void doAction(GameState gameState) {
-        getStrategy().doAct(this,gameState.getPlayer(),gameState.getGridMap());
-    }
 }

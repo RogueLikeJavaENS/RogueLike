@@ -28,8 +28,6 @@ public class Skeleton extends AbstractMonster {
         return "+++";
     }
 
-    @Override
-    public void doAction(GameState gameState) {
-        getStrategy().doAct(this, gameState.getPlayer(), gameState.getGridMap());
-    }
+
+
 }

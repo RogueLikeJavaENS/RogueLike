@@ -48,10 +48,21 @@ public class Position {
         else {return i;}
     }
     public void setOrd(int ord) throws IllegalArgumentException{
-        this.ord = posCheck(ord);
+        try {
+            this.ord = posCheck(ord);
+        }
+        catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
     }
     public void setAbs(int abs) throws IllegalArgumentException{
-        this.abs = posCheck(abs);
+        try {
+            this.abs = posCheck(abs);
+        }
+        catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
+
     }
 
     public boolean equals(int abs, int ord) {

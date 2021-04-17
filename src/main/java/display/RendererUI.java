@@ -6,11 +6,9 @@ import gameElement.MiniMap;
 import jdk.swing.interop.SwingInterOpUtils;
 import utils.Colors;
 import utils.State;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
@@ -118,11 +116,12 @@ public class RendererUI {
                 globalSB.append(midRenderer());
                 globalSB.append(hud.getSpellBar());
                 globalSB.append(gs.getFighting().toString());
+
                 break;
             default:
                 break;
         }
-
+        globalSB.append(gs.getDescriptor().toString());
         return globalSB.toString();
     }
 

@@ -14,4 +14,5 @@ public interface Monster extends Entity {
     void setPosition(Position position);
     void setAgroPlayer(boolean agroPlayer);
     boolean isAgroPlayer();
+    String getName();
 }

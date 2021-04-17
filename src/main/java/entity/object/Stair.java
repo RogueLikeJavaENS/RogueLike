@@ -31,6 +31,7 @@ public class Stair extends ObjectEntity{
         gameState.getPlayer().setPosition(initialPos);
         gameState.updateChangingRoom(dungeon.getRoom(0));
         gameState.setMiniMap(new MiniMap(dungeon, gameState));
+        gameState.getDescriptor().updateDescriptor(String.format("%s found a stair and is now on the floor %d", gameState.getPlayer().getName(), gameState.getFloor()));
 
     }
 }

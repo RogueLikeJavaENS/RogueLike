@@ -1,5 +1,6 @@
 package gameElement;
 
+import display.Descriptor;
 import display.GridMap;
 import entity.Entity;
 import entity.living.LivingEntity;
@@ -9,11 +10,12 @@ import entity.object.potion.Potion;
 import entity.object.potion.PotionFactory;
 import spells.Range;
 import spells.Spell;
+import utils.Colors;
 import utils.Position;
 import utils.State;
 import java.util.ArrayList;
 import java.util.List;
-
+import static com.diogonunes.jcolor.Ansi.colorize;
 /**
  * This class represents the State of the Game at any moment. Each action will pass by this class.
  * It determines rather or not if the action is permitted.
@@ -34,6 +36,7 @@ public class GameState {
     private MiniMap miniMap;
     private Range range;
     private final GameRule gameRule;
+    private Descriptor descriptor;
 
     public GameState(Player player, Dungeon dungeon) {
         this.dungeon = dungeon;
@@ -41,12 +44,13 @@ public class GameState {
         this.currentRoom = dungeon.getRoomList().get(0);
         this.gridMap = dungeon.getGridMap(currentRoom);
         this.gameRule = new GameRule();
+        this.help = true;
+        this.miniMap = new MiniMap(dungeon, this);
+        this.descriptor = new Descriptor();
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
         isThereMonsters();
-        this.help = true;
-        this.miniMap = new MiniMap(dungeon, this);
     }
 
     public void updateRange() {
@@ -157,6 +161,7 @@ public class GameState {
                 player.pickupPotion(potionFactory.getPotion(gameRule.getPotionType()));
             }
             fighting.removeMonster(monster);
+            this.getDescriptor().updateDescriptor(String.format("%s killed %s and pick up %d potion",player.getName(),monster,potionNumber));
             gridMap.update(monster, false);
         }
     }
@@ -187,14 +192,21 @@ public class GameState {
                 for (Entity currentEntity : entityList) {
                     if (pos.equals(currentEntity.getPosition()) && currentEntity instanceof Monster) {
                         Monster monster = (Monster) currentEntity;
-                        monster.getMonsterStats().sufferDamage((int)Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal()));
+                        int damages = (int)Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
+                        monster.getMonsterStats().sufferDamage(damages);
+                        descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
+                                player.getName(),
+                                spell,
+                                colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
+                                colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
+                                monster.getName()));
                         isMonsterAlive(monster);
                     }
                 }
             }
             return true;
         } else {
-            System.out.println("Not enough PM!");
+            descriptor.updateDescriptor("Not enough PM !");
             return false;
         }
     }
@@ -215,6 +227,7 @@ public class GameState {
     public Fighting getFighting() { return fighting; }
     public int getFloor() { return floor; }
     public MiniMap getMiniMap() { return miniMap; }
+    public Descriptor getDescriptor() { return descriptor; }
 
     /* SETTERS */
     public void setState(State newState) {this.state = newState; }
