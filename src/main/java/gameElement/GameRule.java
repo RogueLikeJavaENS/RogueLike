@@ -34,7 +34,7 @@ public class GameRule {
      * between 3 and 6 potions in Treasure Room.
      */
     private void setNumberOfPotionInTreasureRoom() {
-        for (int i = 3; i < 6; i++) {
+        for (int i = 3; i <= 6; i++) {
             for (int j = 0; j < 30; j++) {
                 numberOfPotionInTreasureRoom.add(i);
             }
