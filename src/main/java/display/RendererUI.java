@@ -3,10 +3,15 @@ package display;
 import com.sun.jna.platform.win32.IPHlpAPI;
 import gameElement.GameState;
 import gameElement.MiniMap;
+import jdk.swing.interop.SwingInterOpUtils;
+import utils.Colors;
 import utils.State;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
  * Use to print Elements in the terminal.
@@ -114,13 +119,7 @@ public class RendererUI {
                 globalSB.append(hud.getSpellBar());
                 globalSB.append(gs.getFighting().toString());
                 break;
-
-            case LOSE: // Lose Screen
-                globalSB.append("\n\n\n\n YOU LOSE ! \n\n\n\n");
-                break;
-
-            case WIN: // Victory Screen
-                globalSB.append("\n\n\n\n YOU WIN !!! Congratulation !\n\n\n\n");
+            default:
                 break;
         }
 
@@ -132,8 +131,9 @@ public class RendererUI {
      *
      */
     public void display(){
+        String string = toStringGame();
         clearConsole();
-        System.out.println(toStringGame());
+        System.out.println(string);
     }
 
     /**
@@ -194,6 +194,20 @@ public class RendererUI {
         }
     }
 
+
+    public void winEnd() {
+        System.out.println("\n\n\n\n\n\n");
+        System.out.println("#######################################################");
+        System.out.println("#                      YOU WIN !                      #");
+        System.out.println("#######################################################");
+    }
+
+    public void loseEnd() {
+        System.out.println("\n\n\n\n\n\n");
+        System.out.println("#######################################################");
+        System.out.println("#                      YOU LOSE !                     #");
+        System.out.println("#######################################################");
+    }
 
     /**
      * In order to have a better visibility, this function clear the console

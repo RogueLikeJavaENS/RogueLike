@@ -141,6 +141,10 @@ public class GridMap {
         }
     }
 
+    public void clearRangeList() {
+        rangeList.clear();
+    }
+
     public boolean isOnValidPosition(int abs, int ord) {
         if (abs < 0 || ord < 0) {
             return false;

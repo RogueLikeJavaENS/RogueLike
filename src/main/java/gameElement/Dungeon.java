@@ -49,7 +49,7 @@ public class Dungeon {
         this.maxRoomWidth = maxRoomWidth;
         // placeTestCoins();
         // placeTestMonster();
-        placeTestPotions();
+        //placeTestPotions();
         createAllDoor();
         setAllNextDoor();
         initGridMapList();
