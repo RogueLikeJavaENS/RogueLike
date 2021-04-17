@@ -10,7 +10,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class XpBottle extends AbstractPotion{
 
     public XpBottle(Position position) {
-        super(position, colorize("( )", Colors.GREEN.textApply()), 2);
+        super(position,"( )", Colors.GREEN, 2);
     }
 
     public void usePotion(GameState gameState){

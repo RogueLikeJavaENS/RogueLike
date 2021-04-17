@@ -10,7 +10,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class PotionHealth extends AbstractPotion{
 
     public PotionHealth(Position position) {
-        super(position, colorize("( )", Colors.RED.textApply()), 0);
+        super(position,"( )", Colors.RED, 0);
     }
 
     public void usePotion(GameState gameState){

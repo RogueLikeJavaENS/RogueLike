@@ -17,12 +17,12 @@ public class Door extends ObjectEntity {
     private Door next;
 
     public Door(Position position, Room nextRoom, Direction direction) {
-        super(position, true);
+        super(position,Colors.BROWN, true);
         this.direction = direction;
         this.nextRoom = nextRoom;
         ArrayList<String> sprites = new ArrayList<>();
-        sprites.add(colorize("[ ]", Colors.BROWN.textApply()));
-        sprites.add(colorize("[ ]", Colors.BROWN.textApply()));
+        sprites.add(colorize("[ ]",Colors.BROWN.textApply()));
+        sprites.add(colorize("[ ]",Colors.BROWN.textApply()));
         setSprites(sprites);
     }
 
