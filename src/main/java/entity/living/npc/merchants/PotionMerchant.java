@@ -39,8 +39,11 @@ public class PotionMerchant extends AbstractMerchant {
         PotionFactory potionFactory = new PotionFactory();
         if (player.getPlayerStats().getMoneyCount() >= 10) {
             player.getPlayerStats().spendMoney(10);
-            player.pickupPotion(potionFactory.getPotion(gameState.getGameRule().getPotionType()));
+            Potion potion = potionFactory.getPotion(gameState.getGameRule().getPotionType());
+            player.pickupPotion(potion);
+            gameState.getDescriptor().updateDescriptor(String.format("%s bought a %s for %d BTC",player.getName(),potion.getPotionName(),10));
         } else {
+            gameState.getDescriptor().updateDescriptor(String.format("%s had not enough money to buy potion", player.getName()));
             // not enough money.
         }
     }

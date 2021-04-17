@@ -15,7 +15,6 @@ import utils.Colors;
 import utils.Position;
 import utils.State;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import static com.diogonunes.jcolor.Ansi.colorize;
 /**
@@ -46,7 +45,7 @@ public class GameState {
         this.currentRoom = dungeon.getRoomList().get(0);
         this.gridMap = dungeon.getGridMap(currentRoom);
         this.gameRule = new GameRule();
-        this.help = true;
+        this.help = false;
         this.miniMap = new MiniMap(dungeon, this);
         this.descriptor = new Descriptor();
         player.setPosition(currentRoom.getCenter());
@@ -108,7 +107,7 @@ public class GameState {
     /**
      * Interact with chests... merchants... and others.
      */
-    public void interact() {
+    public boolean interact() {
         Position toInteractPos = player.getPosition().getPosInFront(player.getDirection());
         List<Entity> entities = gridMap.getEntitiesAt(toInteractPos.getAbs(), toInteractPos.getOrd());
         if (entities.size() != 0) {
@@ -117,8 +116,10 @@ public class GameState {
                     ((Merchant) entity).doInteraction(this);
                 }
             }
+            return true;
         } else {
             System.out.println("There is nothing to interact with !");
+            return false;
         }
     }
 
@@ -175,13 +176,26 @@ public class GameState {
         if (monster.getMonsterStats().getLifePointActual() == 0) {
             player.getPlayerStats().grantXP(monster.getMonsterStats().getXpWorth());
             int potionNumber = gameRule.getPotionNumber();
-
+            int nbXpBottle = 0;
+            int nbElixir = 0;
+            int nbHpPotion = 0;
             PotionFactory potionFactory = new PotionFactory();
             for (int i = 0; i < potionNumber; i++) {
-                player.pickupPotion(potionFactory.getPotion(gameRule.getPotionType()));
+                Potion potion = potionFactory.getPotion(gameRule.getPotionType());
+                player.pickupPotion(potion);
+                if (potion.getPotionType() == 0){
+                    nbHpPotion += 1;
+                }
+                else if (potion.getPotionType() == 1){
+                    nbElixir +=1;
+                }
+                else {
+                    nbXpBottle+=1;
+                }
             }
             fighting.removeMonster(monster);
-            this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up %d potion and gained %d xp",player.getName(),monster,potionNumber, monster.getMonsterStats().getXpWorth()));
+            this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up %d XP bottle, %d Elixir, %d Health Potion and gained %d xp",
+                    player.getName(), monster.getName(), nbXpBottle, nbElixir, nbHpPotion, monster.getMonsterStats().getXpWorth()));
             gridMap.update(monster, false);
         }
     }

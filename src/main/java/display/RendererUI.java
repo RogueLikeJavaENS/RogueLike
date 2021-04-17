@@ -1,14 +1,9 @@
 package display;
 
-import com.sun.jna.platform.win32.IPHlpAPI;
 import gameElement.GameState;
 import gameElement.MiniMap;
-import utils.Colors;
-import utils.State;
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
-import static com.diogonunes.jcolor.Ansi.colorize;
+
 
 /**
  * Use to print Elements in the terminal.
@@ -29,9 +24,11 @@ public class RendererUI {
             + "| Escape : Exit the game | H : Hide Controls  \n"
             + "| Z : Up | Q : Left | S : Down | D : Right \n"
             + "| I : Inventory | M : Minimap | Escape with the same button\n"
-            + "| V : Potion Health | B : Elixir | N : XpBottle"
+            + "| V : Potion Health | B : Elixir | N : XpBottle\n"
+            + "| E : Interact with merchant\n"
+            + "| CapsLock : Lock the player to change direction"
             + "\n";
-    private static final String miniHelp = "Controls:\nH : Show All Controls\n\n";
+    private static final String miniHelp = "H : Show All Controls\n\n";
 
 
     /**
