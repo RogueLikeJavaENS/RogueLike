@@ -15,7 +15,7 @@ public class XpBottle extends AbstractPotion{
 
     public void usePotion(GameState gameState){
         Player player = gameState.getPlayer();
-        player.getPlayerStats().grantXP(5*player.getStats().getLevel());
+        player.getPlayerStats().grantXP(20*player.getStats().getLevel());
         player.usePotion(this);
     }
 }
