@@ -161,7 +161,7 @@ public class GameState {
                 player.pickupPotion(potionFactory.getPotion(gameRule.getPotionType()));
             }
             fighting.removeMonster(monster);
-            this.getDescriptor().updateDescriptor(String.format("%s killed %s and pick up %d potion",player.getName(),monster,potionNumber));
+            this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up %d potion and gained %d xp",player.getName(),monster,potionNumber, monster.getMonsterStats().getXpWorth()));
             gridMap.update(monster, false);
         }
     }

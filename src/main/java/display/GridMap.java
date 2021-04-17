@@ -16,7 +16,9 @@ import java.util.List;
 import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
- * This class Contains the actual gameElement.Room. It contains a
+ * This class Contains the actual gameElement.Room. It contains the actual room, an array of the tile which compose the room, a list of all the entities one the room.
+ * It also contains a list of all the strings used to print it.
+ * Range list ?
  */
 public class GridMap {
     private final Room room;
@@ -25,6 +27,10 @@ public class GridMap {
     private List<String> strByLine;
     private List<Position> rangeList;
 
+    /**
+     * Constructor of Gridmap
+     * @param room
+     */
     public GridMap(Room room) {
         this.room = room;
         this.tiles = new Tile[room.getHeight()][room.getWidth()];
@@ -33,6 +39,9 @@ public class GridMap {
         rangeList = new ArrayList<>();
     }
 
+    /**
+     * Fill the array tiles with all the map of the room
+     */
     private void fillRoomContent() {
         int[][] contents = room.getContents();
         int width = room.getWidth();
@@ -48,6 +57,9 @@ public class GridMap {
         }
     }
 
+    /**
+     * Fill the list entities with the entities of the room
+     */
     private void fillEntityContent() { entities = room.getEntities(); }
 
     public void update(List<Entity> entitiesToAdd, List<Entity> entitiesToRemove) {
@@ -59,6 +71,12 @@ public class GridMap {
         }
     }
 
+    /**
+     * Update the list entities.
+     *
+     * @param entity
+     * @param add : true to add / false to remove the entity
+     */
     public void update(Entity entity, boolean add) {
         if(add) {
             addEntity(entity);
@@ -68,12 +86,20 @@ public class GridMap {
         }
     }
 
+    /**
+     * Add an entity on the list of entities
+     * @param entity
+     */
     private void addEntity(Entity entity) {
         if (!entities.contains(entity)) {
             entities.add(entity);
         }
     }
 
+    /**
+     * Remove entity of the list of entities
+     * @param entity
+     */
     private void removeEntity(Entity entity) {
         entities.remove(entity);
     }
