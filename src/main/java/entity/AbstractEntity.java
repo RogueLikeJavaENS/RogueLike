@@ -3,7 +3,8 @@ package entity;
 import gameElement.GameState;
 import utils.Colors;
 import utils.Position;
-
+import utils.Colors;
+import static com.diogonunes.jcolor.Ansi.colorize;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +23,17 @@ public abstract class AbstractEntity implements Entity {
     private Colors basicColor;
     private List<String> spritesToPrint;
 
-    public AbstractEntity(Position position, boolean isAccessible){
+    public AbstractEntity(Position position, Colors color, boolean isAccessible){
         this.position = position;
         this.isAccessible = isAccessible;
         List<String> sprites = new ArrayList<>();
         sprites.add("");
         sprites.add("");
         this.basicSprites = sprites;
-        this.spritesToPrint = sprites;
-        this.basicColor = Colors.WHITE;
+        this.basicColor = color;
+        this.spritesToPrint = new ArrayList<>();
+        this.spritesToPrint.add(colorize(basicSprites.get(0),basicColor.textApply()));
+        this.spritesToPrint.add(colorize(basicSprites.get(1),basicColor.textApply()));
     }
 
     @Override

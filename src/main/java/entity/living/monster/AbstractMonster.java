@@ -15,8 +15,8 @@ public abstract class AbstractMonster extends NPC implements Monster {
     private boolean agroPlayer;
 
 
-    public AbstractMonster(Position position, String name, Strategy strategy, AbstractStats stats) throws IllegalArgumentException {
-        super(position, name, stats);
+    public AbstractMonster(Position position, String name, Colors color, Strategy strategy, AbstractStats stats) throws IllegalArgumentException {
+        super(position, name, color, stats);
         this.strategy = strategy;
         this.agroPlayer = false;
     }

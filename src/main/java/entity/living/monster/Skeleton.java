@@ -15,12 +15,11 @@ public class Skeleton extends AbstractMonster {
 
 
     public Skeleton(Position position, String name, int level, Strategy strategy) {
-        super(position, name, strategy, new MonsterStats(100, 100, 1, 1, 5, 5, 5, level, 10));
+        super(position, name, Colors.WHITE, strategy, new MonsterStats(100, 100, 1, 1, 5, 5, 5, level, 10));
         ArrayList<String> sprites = new ArrayList<>();
         sprites.add("_#_");
         sprites.add("/ \\");
         setBasicSprites(sprites);
-        setBasicColor(Colors.WHITE);
         setSprites(sprites);
     }
 
