@@ -13,7 +13,7 @@ public class EscapeStrategy extends MoveAwayStrategy {
     }
 
     public boolean act(Monster monster, Player player, GridMap gridMap){
-        boolean isVerified = condition.isVerified(monster);
+        boolean isVerified = condition.isVerified(monster,player);
         return isVerified && super.act(monster, player, gridMap);
     }
 

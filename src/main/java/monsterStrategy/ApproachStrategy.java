@@ -15,7 +15,10 @@ public class ApproachStrategy extends DecoratorStrategy {
     public boolean act(Monster monster, Player player, GridMap gridMap) {
         boolean canMove = StrategyUtils.getDistance(monster, player) > 1;
         if (canMove){
-            StrategyUtils.updatePos(monster, StrategyUtils.goToPlayerDir( monster, player,gridMap));
+            if (!monster.isAgroPlayer()){
+                monster.setAgroPlayer(true);
+            }
+            StrategyUtils.updatePos(monster, StrategyUtils.moveAroundPlayer(true, monster, player,gridMap));
         }
         return canMove;
     }

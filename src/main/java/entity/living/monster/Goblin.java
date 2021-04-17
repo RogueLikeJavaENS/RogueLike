@@ -14,11 +14,16 @@ public class Goblin extends AbstractMonster implements Monster {
     private final static int basicMP = 2;
 
     public Goblin(Position position, String name, int level, Strategy strategy) {
-        super(position, name, level,strategy,new MonsterStats(100,100,1,2,5,5,5,1,10));
+        super(position, name,strategy,new MonsterStats(100,100,1,2,5,5,5,level,10));
         ArrayList<String> sprites = new ArrayList<>();
-        sprites.add(colorize("_o_", Colors.GREEN.textApply()));
-        sprites.add(colorize("| |", Colors.GREEN.textApply()));
-        setSprites(sprites);
+        sprites.add("_o_");
+        sprites.add("| |");
+        setBasicSprites(sprites);
+        setBasicColor(Colors.GREEN);
+        ArrayList<String> colorSprites = new ArrayList<>();
+        colorSprites.add(colorize(sprites.get(0),getBasicColor().textApply()));
+        colorSprites.add(colorize(sprites.get(1),getBasicColor().textApply()));
+        setSprites(colorSprites);
     }
 
 
