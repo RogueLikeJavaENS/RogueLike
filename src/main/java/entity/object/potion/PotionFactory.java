@@ -16,4 +16,8 @@ public class PotionFactory {
         }
         return new EmptyBottle(position);
     }
+
+    public Potion getPotion(int potionType) {
+        return getPotion(potionType, new Position(0,0));
+    }
 }

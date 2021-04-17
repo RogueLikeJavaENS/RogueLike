@@ -5,6 +5,8 @@ import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.Player;
 import entity.living.monster.Monster;
+import entity.object.potion.Potion;
+import entity.object.potion.PotionFactory;
 import spells.Range;
 import spells.Spell;
 import utils.Position;
@@ -31,12 +33,14 @@ public class GameState {
     private int floor;
     private MiniMap miniMap;
     private Range range;
+    private final GameRule gameRule;
 
     public GameState(Player player, Dungeon dungeon) {
         this.dungeon = dungeon;
         this.player = player;
         this.currentRoom = dungeon.getRoomList().get(0);
         this.gridMap = dungeon.getGridMap(currentRoom);
+        this.gameRule = new GameRule();
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
@@ -125,10 +129,37 @@ public class GameState {
         }
         else {
             state = State.NORMAL;
+            gridMap.clearRangeList();
         }
     }
 
+    /**
+     * Check if the player is alive after a moves or a monster attack.
+     */
+    public void isPlayerAlive() {
+        if (player.getPlayerStats().getLifePointActual() == 0) {
+            setState(State.LOSE);
+        }
+    }
 
+    /**
+     * Use to check if a monster is alive. If not, gives XP and potions to the player.
+     * @param monster the monster to check if he's alive.
+     */
+    public void isMonsterAlive(Monster monster) {
+        if (monster.getMonsterStats().getLifePointActual() == 0) {
+            player.getPlayerStats().grantXP(monster.getMonsterStats().getXpWorth());
+            int potionNumber = gameRule.getPotionNumber();
+
+            PotionFactory potionFactory = new PotionFactory();
+            for (int i = 0; i < potionNumber; i++) {
+                player.pickupPotion(potionFactory.getPotion(gameRule.getPotionType()));
+            }
+            fighting.removeMonster(monster);
+            gridMap.update(monster, false);
+        }
+    }
+    
     /**
      *
      */
@@ -154,6 +185,8 @@ public class GameState {
             for (Entity currentEntity : entityList) {
                 if (pos.equals(currentEntity.getPosition()) && currentEntity instanceof Monster) {
                     Monster monster = (Monster) currentEntity;
+                    monster.getMonsterStats().sufferDamage((int) (player.getPlayerStats().getDamageTotal()*spell.getDamageMult()));
+                    isMonsterAlive(monster);
                 }
             }
         }

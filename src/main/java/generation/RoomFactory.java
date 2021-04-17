@@ -5,30 +5,43 @@ import entity.living.monster.MonsterFactory;
 import entity.object.Coins;
 import entity.object.Stair;
 import entity.object.potion.PotionFactory;
+import gameElement.GameRule;
 import gameElement.Room;
 import utils.Position;
 
 import java.nio.file.attribute.AttributeView;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class RoomFactory {
     private final int width; // 15
     private final int height; // 11
     private final int space; // 2
     private final int floor;
+    private final static GameRule gameRule = new GameRule();
+    private final static Random GEN = new Random();
+    private final List<Position> forbiddenPosition; //
 
     public RoomFactory(int width, int height, int empty, int floor) {
         this.width = width;
         this.height = height;
         this.space = empty;
         this.floor = floor;
+        forbiddenPosition = new ArrayList<>(); // positions in front of a door is forbidden.
+        forbiddenPosition.add(new Position(width/2, 1)); // North
+        forbiddenPosition.add(new Position(width/2, height-2)); // South
+        forbiddenPosition.add(new Position(1, height/2)); // West
+        forbiddenPosition.add(new Position(width-2, height/2)); // East
     }
 
     public Room getRoom(Seed seed, RoomType roomType, int current, int[] nextList) {
         Room room = createRoom(current, nextList);
-        ArrayList<Position> availablePositions = room.getAvailablePositions();
+        List<Position> availablePositions = room.getAvailablePositions().stream()
+                .filter(pos -> !forbiddenPosition.contains(pos))
+                .collect(Collectors.toList());
         Collections.shuffle(availablePositions);
         switch (roomType) {
             case START:
@@ -46,10 +59,11 @@ public class RoomFactory {
                 fillMonsters(room, availablePositions, seed);
                 break;
             case REST:
-                // Merchant and chest...
-                fillPotions(room, availablePositions, seed);
+                // Merchants
+                break;
             case TREASURE:
-                fillCoins(room, availablePositions, seed);
+                fillCoins(room, availablePositions, seed, gameRule.getNumberOfGoldInTreasureRoom());
+                fillPotions(room, availablePositions, seed, gameRule.getNumberOfPotionInTreasureRoom());
         }
         // add some traps, walls, holes...
         return room;
@@ -204,9 +218,8 @@ public class RoomFactory {
         room.addEntity(new Stair(room.getCenter(), true));
     }
 
-    private void fillMonsters(Room room, ArrayList<Position> availablePositions, Seed seed) {
+    private void fillMonsters(Room room, List<Position> availablePositions, Seed seed) {
         MonsterFactory monsterFactory = new MonsterFactory(floor);
-        Random GEN = new Random();
         int monsterCount = GEN.nextInt(10) % 2 + 2;
         int type;
         for (int i = 0; i < monsterCount; i++) {
@@ -218,17 +231,18 @@ public class RoomFactory {
         }
     }
 
-    private void fillPotions(Room room, ArrayList<Position> availablePositions, Seed seed) {
-        PotionFactory testFactory = new PotionFactory();
-        room.addEntity(testFactory.getPotion(0, new Position(4, 3)));
-        room.addEntity(testFactory.getPotion(1, new Position(4, 5)));
-        room.addEntity(testFactory.getPotion(2, new Position(5, 4)));
+    private void fillPotions(Room room, List<Position> availablePositions, Seed seed, int numberOfPotion) {
+        PotionFactory potionFactory = new PotionFactory();
+        for (int i = 0; i < numberOfPotion; i++) {
+            if (availablePositions.size() != 0) {
+                room.addEntity(potionFactory.getPotion(gameRule.getPotionType(), availablePositions.remove(0)));
+            }
+        }
     }
 
-    private void fillCoins(Room room, ArrayList<Position> availablePositions, Seed seed) {
-        Random GEN = new Random();
-        for (int i = 0; i < availablePositions.size(); i++) {
-            if (GEN.nextInt(15) % 2 == 0) {
+    private void fillCoins(Room room, List<Position> availablePositions, Seed seed, int numberOfGold) {
+        for (int i = 0; i < numberOfGold; i++) {
+            if (availablePositions.size() != 0) {
                 room.addEntity(new Coins(availablePositions.remove(0)));
             }
         }

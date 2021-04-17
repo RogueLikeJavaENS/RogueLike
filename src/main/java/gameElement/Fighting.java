@@ -1,7 +1,9 @@
 package gameElement;
 
+import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.Player;
+import entity.living.monster.Monster;
 import utils.Colors;
 import utils.Position;
 import java.util.ArrayList;
@@ -62,6 +64,25 @@ public class Fighting {
                 } else return 1;
             } else return o1.getStats().getInitiativeActual() - o2.getStats().getInitiativeActual();
         });
+    }
+
+    public void removeMonster(Monster monster) {
+        turnOrder.remove(monster);
+        bufferEntity.remove(monster);
+//        for (LivingEntity entity : turnOrder) {
+//            if (entity instanceof Monster) {
+//                if (entity.equals(monster)) {
+//                    turnOrder.remove(entity);
+//                }
+//            }
+//        }
+//        for (LivingEntity entity : bufferEntity) {
+//            if (entity instanceof Monster) {
+//                if (entity.equals(monster)) {
+//                    turnOrder.remove(entity);
+//                }
+//            }
+//        }
     }
 
     @Override

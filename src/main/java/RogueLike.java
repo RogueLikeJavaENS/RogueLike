@@ -37,6 +37,7 @@ public class RogueLike {
      * Creates an instance of the game.
      */
     RogueLike() throws InterruptedException {
+
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
         Position initialPosition = dungeon.getRoom(0).getCenter();
@@ -47,7 +48,16 @@ public class RogueLike {
         rendererUI = new RendererUI(gs, hud);
         rendererUI.display();
 
-        gameLoop();
+        gameLoop(); // unitl state equals WIN or LOSE or END
+        rendererUI.clearConsole();
+        if (gs.getState() == State.WIN) {
+            rendererUI.winEnd();
+        }
+        else if (gs.getState() == State.LOSE) {
+            rendererUI.loseEnd();
+        } else { // State.END
+            // closed game.
+        }
         System.exit(0);
     }
 
@@ -58,7 +68,7 @@ public class RogueLike {
      * @throws InterruptedException
      */
     private void gameLoop() throws InterruptedException{
-        while(gs.getState() != State.END) {
+        while(gs.getState() != State.WIN && gs.getState() != State.LOSE && gs.getState() != State.END) {
 
             acted = false;
             turned = false;
@@ -124,6 +134,7 @@ public class RogueLike {
         if (acted || monsterPlayed) { // if a monster or the Player played, go to the next turn.
             fight.next();
         }
+        gs.isPlayerAlive();
     }
 
     /**
