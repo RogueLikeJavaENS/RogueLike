@@ -54,7 +54,11 @@ public class Position {
      * This private method permits to check if an argument (abscissa or ordinate) is valid (a positive int)
      */
     private int posCheck(int i){
-        if (i < 0){throw new IllegalArgumentException();}
+        if (i < 0){
+            Exception e = new IllegalArgumentException();
+            e.printStackTrace();
+            return 0;
+        }
         else {return i;}
     }
     public void setOrd(int ord) throws IllegalArgumentException{

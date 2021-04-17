@@ -40,9 +40,7 @@ public class RogueLike {
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
         Position initialPosition = dungeon.getRoom(0).getCenter();
-        player = new Player(initialPosition,1000, 100, "Hero", 1);
-        player.getPlayerStats().changeDamageRaw(100);
-        player.getPlayerStats().gainMoney(100);
+        player = new Player(initialPosition,100, 100, "Hero", 1);
         hud = new HUD(player);
         sp = new ScanPanel();
         gs = new GameState(player, dungeon);
