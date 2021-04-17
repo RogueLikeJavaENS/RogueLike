@@ -147,15 +147,22 @@ public class GameState {
         fighting = new Fighting(fightList);
     }
 
-    public void useSpell() {
+    public boolean useSpell() {
         Spell spell = player.getSelectedSpell();
-        for (Position pos : gridMap.getRangeList()) {
-            List<Entity> entityList = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());
-            for (Entity currentEntity : entityList) {
-                if (pos.equals(currentEntity.getPosition()) && currentEntity instanceof Monster) {
-                    Monster monster = (Monster) currentEntity;
+        if (player.getPlayerStats().consumeMp(spell.getManaCost())) {
+            for (Position pos : gridMap.getRangeList()) {
+                List<Entity> entityList = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());
+                for (Entity currentEntity : entityList) {
+                    if (pos.equals(currentEntity.getPosition()) && currentEntity instanceof Monster) {
+                        Monster monster = (Monster) currentEntity;
+                        monster.getMonsterStats().sufferDamage((int)Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal()));
+                    }
                 }
             }
+            return true;
+        } else {
+            System.out.println("Not enough PM!");
+            return false;
         }
     }
 

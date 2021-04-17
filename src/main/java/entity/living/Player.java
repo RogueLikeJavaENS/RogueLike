@@ -15,7 +15,7 @@ public class Player extends LivingEntity {
     private List<Potion> potionBelt;
 
     public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
-        super(position, name, new PlayerStats(pv, pm, 1, 3, 1, 1, 0, level));
+        super(position, name, new PlayerStats(pv, pm, 1, 3, 10, 1, 0, level));
 
         spellList = new ArrayList<>();
         addSpell(new BasicAttack());

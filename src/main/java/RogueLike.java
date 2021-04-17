@@ -27,6 +27,7 @@ public class RogueLike {
     private boolean turned;
     private boolean monsterPlayed;
     private boolean modifiedMenu;
+    private boolean positionLocked = false;
     private final Player player;
     private final HUD hud;
     private final ScanPanel sp;
@@ -138,24 +139,32 @@ public class RogueLike {
             case 'Z':
                 turned = hasTurned(player, Direction.NORTH);
                 player.setDirection(Direction.NORTH);
-                acted = gs.movePlayer(0, -1); //
+                if (!positionLocked) {
+                    acted = gs.movePlayer(0, -1);
+                }
                 // Tries to modify the player's position,
                 // if something is blocking then the player's turned is not consumed.
                 break;
             case 'Q':
                 turned = hasTurned(player, Direction.WEST);
                 player.setDirection(Direction.WEST);
-                acted = gs.movePlayer(-1, 0);
+                if (!positionLocked) {
+                    acted = gs.movePlayer(-1, 0);
+                }
                 break;
             case 'S':
                 turned = hasTurned(player, Direction.SOUTH);
                 player.setDirection(Direction.SOUTH);
-                acted = gs.movePlayer(0, 1);
+                if (!positionLocked) {
+                    acted = gs.movePlayer(0, 1);
+                }
                 break;
             case 'D':
                 turned = hasTurned(player, Direction.EAST);
                 player.setDirection(Direction.EAST);
-                acted = gs.movePlayer(1, 0);
+                if (!positionLocked) {
+                    acted = gs.movePlayer(1, 0);
+                }
                 break;
             case 'M':
                 gs.getMiniMap().updateMap();
@@ -175,6 +184,7 @@ public class RogueLike {
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==0){
                         potionToDelete=potion;
+                        acted = true;
                         break;
                     }
                 }
@@ -185,6 +195,7 @@ public class RogueLike {
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==1){
                         potionToDelete=potion;
+                        acted = true;
                         break;
                     }
                 }
@@ -195,10 +206,14 @@ public class RogueLike {
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==2){
                         potionToDelete=potion;
+                        acted = true;
                         break;
                     }
                 }
                 potionToDelete.usePotion(gs);
+                break;
+            case '\u0014':  //caps lock
+                positionLocked = !positionLocked;
                 break;
             case '\u001B': // escape
                 exitStateInput();
@@ -247,35 +262,42 @@ public class RogueLike {
 
         switch ((char) a) {
             case 'A':
-                gs.useSpell();
+                acted = gs.useSpell(); //true if the spell was casted, false if not enough pm
                 hud.spellListString(); //remove the highlightning of the selected spell
                 rendererUI.updateHUD(hud);
-                acted = true;
                 break;
             case 'Z':
                 turned = hasTurned(player, Direction.NORTH);
                 player.setDirection(Direction.NORTH);
-                acted = gs.movePlayer(0, -1);
-                //gs.updateRange();
+                if (!positionLocked) {
+                    acted = gs.movePlayer(0, -1);
+                }
+                gs.updateRange();
                 //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
                 break;
             case 'Q':
                 turned = hasTurned(player, Direction.WEST);
                 player.setDirection(Direction.WEST);
-                acted = gs.movePlayer(-1, 0);
-                //gs.updateRange();
+                if (!positionLocked) {
+                    acted = gs.movePlayer(-1, 0);
+                }
+                gs.updateRange();
                 break;
             case 'S':
                 turned = hasTurned(player, Direction.SOUTH);
                 player.setDirection(Direction.SOUTH);
-                acted = gs.movePlayer(0, 1);
-                //gs.updateRange();
+                if (!positionLocked) {
+                    acted = gs.movePlayer(0, 1);
+                }
+                gs.updateRange();
                 break;
             case 'D':
                 turned = hasTurned(player, Direction.EAST);
                 player.setDirection(Direction.EAST);
-                acted = gs.movePlayer(1, 0);
-                //gs.updateRange();
+                if (!positionLocked) {
+                    acted = gs.movePlayer(1, 0);
+                }
+                gs.updateRange();
                 break;
             case 'M':
                 gs.getMiniMap().updateMap();
@@ -295,6 +317,7 @@ public class RogueLike {
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==0){
                         potionToDelete=potion;
+                        acted = true;
                         break;
                     }
                 }
@@ -305,6 +328,7 @@ public class RogueLike {
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==1){
                         potionToDelete=potion;
+                        acted = true;
                         break;
                     }
                 }
@@ -315,6 +339,7 @@ public class RogueLike {
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==2){
                         potionToDelete=potion;
+                        acted = true;
                         break;
                     }
                 }
@@ -345,6 +370,9 @@ public class RogueLike {
                     gs.updateRange();
                     turned = true;
                 }
+                break;
+            case '\u0014':  //caps lock
+                positionLocked = !positionLocked;
                 break;
             case '\u001B': // escape
                 exitStateInput();
