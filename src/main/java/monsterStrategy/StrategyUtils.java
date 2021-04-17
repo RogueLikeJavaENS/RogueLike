@@ -77,6 +77,10 @@ public final class StrategyUtils {
                     break;
             }
         }
+        if (resList.size() == 0){
+            resList.add(Direction.NONE);
+        }
+
         return resList.get(0);
     }
 

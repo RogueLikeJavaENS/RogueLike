@@ -10,13 +10,14 @@ public class MonsterFactory {
     int floor;
 
     public final Condition isMidlife = (Monster monster) -> monster.getMonsterStats().getLifePointActual() <= monster.getMonsterStats().getLifePointTotal()/2;
+    public final Condition alwaysTrue = (Monster monster) -> true;
 
     public MonsterFactory(int floor){
         this.floor = floor;
     }
 
-    private final Strategy goblinStrategy = new EscapeStrategy(isMidlife, new ApproachStrategy( new AttackStrategy(null)));
-    private final Strategy skeletonStrategy = new ApproachStrategy(new AttackStrategy(null));
+    private final Strategy goblinStrategy = new EscapeStrategy(isMidlife, new ApproachStrategy(alwaysTrue, new AttackStrategy(null)));
+    private final Strategy skeletonStrategy = new ApproachStrategy(alwaysTrue, new AttackStrategy(null));
 
     public Monster getMonster(int monsterType, Position position){
 

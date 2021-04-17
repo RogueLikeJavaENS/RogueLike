@@ -11,9 +11,9 @@ public abstract class DecoratorStrategy implements Strategy{
         this.strategy = strategy;
     }
 
-    public  void doAct(Monster monster, Player player, GridMap gridMap){
+    public void doAct(Monster monster, Player player, GridMap gridMap){
         if (!act(monster,player,gridMap)){
-            strategy.act(monster, player ,gridMap);
+            strategy.doAct(monster, player ,gridMap);
         }
     }
 

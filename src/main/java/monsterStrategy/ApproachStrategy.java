@@ -5,9 +5,11 @@ import entity.living.Player;
 import entity.living.monster.Monster;
 
 public class ApproachStrategy extends DecoratorStrategy {
+    private Condition condition;
 
-    public ApproachStrategy(Strategy nextStrategy){
+    public ApproachStrategy(Condition condition, Strategy nextStrategy){
         super(nextStrategy);
+        this.condition = condition;
     }
 
     public boolean act(Monster monster, Player player, GridMap gridMap) {
