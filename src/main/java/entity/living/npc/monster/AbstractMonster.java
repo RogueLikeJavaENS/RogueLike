@@ -1,6 +1,7 @@
-package entity.living.monster;
+package entity.living.npc.monster;
 
 import entity.living.*;
+import entity.living.npc.NPC;
 import monsterStrategy.Strategy;
 import utils.Position;
 import utils.Colors;

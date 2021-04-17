@@ -1,9 +1,8 @@
 package gameElement;
 
-import entity.Entity;
 import entity.living.LivingEntity;
-import entity.living.Player;
-import entity.living.monster.Monster;
+import entity.living.player.Player;
+import entity.living.npc.monster.Monster;
 import utils.Colors;
 import utils.Position;
 import java.util.ArrayList;

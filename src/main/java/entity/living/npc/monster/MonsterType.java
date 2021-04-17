@@ -1,4 +1,4 @@
-package entity.living.monster;
+package entity.living.npc.monster;
 
 public enum MonsterType {
     GOBLIN, SKELETON

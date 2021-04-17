@@ -29,7 +29,7 @@ public class Seed {
     /**
      * Seed generation
      */
-    public Seed(){
+    public Seed() {
         Random GEN = new Random();
         for (int i = 0; i < 15; i++) {
             // Seed.add(Integer.toHexString(ThreadLocalRandom.current().nextInt(0, 15 + 1)));

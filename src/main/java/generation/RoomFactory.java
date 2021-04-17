@@ -1,7 +1,8 @@
 package generation;
 
 import display.tiles.Tile;
-import entity.living.monster.MonsterFactory;
+import entity.living.npc.merchants.PotionMerchant;
+import entity.living.npc.monster.MonsterFactory;
 import entity.object.Coins;
 import entity.object.Stair;
 import entity.object.potion.PotionFactory;
@@ -9,7 +10,6 @@ import gameElement.GameRule;
 import gameElement.Room;
 import utils.Position;
 
-import java.nio.file.attribute.AttributeView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +59,8 @@ public class RoomFactory {
                 fillMonsters(room, availablePositions, seed);
                 break;
             case REST:
-                // Merchants
+                fillCoins(room, availablePositions, seed, 5);
+                room.addEntity(new PotionMerchant(availablePositions.get(0))); // add a potion merchant
                 break;
             case TREASURE:
                 fillCoins(room, availablePositions, seed, gameRule.getNumberOfGoldInTreasureRoom());

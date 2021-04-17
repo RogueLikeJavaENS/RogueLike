@@ -1,6 +1,6 @@
 package display;
 
-import entity.living.Player;
+import entity.living.player.Player;
 import spells.Spell;
 import utils.Colors;
 

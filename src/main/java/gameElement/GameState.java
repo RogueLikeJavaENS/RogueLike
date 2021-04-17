@@ -3,8 +3,9 @@ package gameElement;
 import display.GridMap;
 import entity.Entity;
 import entity.living.LivingEntity;
-import entity.living.Player;
-import entity.living.monster.Monster;
+import entity.living.npc.merchants.Merchant;
+import entity.living.player.Player;
+import entity.living.npc.monster.Monster;
 import entity.object.potion.Potion;
 import entity.object.potion.PotionFactory;
 import spells.Range;
@@ -12,6 +13,7 @@ import spells.Spell;
 import utils.Position;
 import utils.State;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -98,6 +100,24 @@ public class GameState {
         }
         return acted;
     }
+
+    /**
+     * Interact with chests... merchants... and others.
+     */
+    public void interact() {
+        Position toInteractPos = player.getPosition().getPosInFront(player.getDirection());
+        List<Entity> entities = gridMap.getEntitiesAt(toInteractPos.getAbs(), toInteractPos.getOrd());
+        if (entities.size() != 0) {
+            for (Entity entity: entities) {
+                if (entity instanceof Merchant) {
+                    ((Merchant) entity).doInteraction(this);
+                }
+            }
+        } else {
+            System.out.println("There is nothing to interact with !");
+        }
+    }
+
 
     /**
      * Check if the player moved on Entity.
@@ -215,6 +235,7 @@ public class GameState {
     public Fighting getFighting() { return fighting; }
     public int getFloor() { return floor; }
     public MiniMap getMiniMap() { return miniMap; }
+    public GameRule getGameRule() { return gameRule; }
 
     /* SETTERS */
     public void setState(State newState) {this.state = newState; }

@@ -1,8 +1,8 @@
 package monsterStrategy;
 
 import display.GridMap;
-import entity.living.Player;
-import entity.living.monster.Monster;
+import entity.living.player.Player;
+import entity.living.npc.monster.Monster;
 
 public abstract class DecoratorStrategy implements Strategy{
     private final Strategy strategy;

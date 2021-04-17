@@ -1,10 +1,9 @@
 package entity.object.potion;
 
 import display.GridMap;
-import entity.living.Player;
+import entity.living.player.Player;
 import entity.object.ObjectEntity;
 import gameElement.GameState;
-import items.AbstractItem;
 import utils.Colors;
 import utils.Position;
 import static com.diogonunes.jcolor.Ansi.colorize;

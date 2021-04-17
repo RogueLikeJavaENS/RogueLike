@@ -1,15 +1,13 @@
 import display.HUD;
 import display.RendererUI;
 import entity.living.LivingEntity;
-import entity.living.Player;
+import entity.living.player.Player;
 import entity.object.potion.EmptyBottle;
 import entity.object.potion.Potion;
-import entity.object.potion.PotionHealth;
 import gameElement.Dungeon;
 import gameElement.Fighting;
 import gameElement.GameState;
 import generation.DungeonStructure;
-import gameElement.MiniMap;
 import generation.Seed;
 import utils.Direction;
 import utils.Position;
@@ -229,6 +227,10 @@ public class RogueLike {
             case '\u001B': // escape
                 exitStateInput();
                 break;
+            case 'E':
+                gs.interact();
+                acted = true;
+                break;
             default:
                 break;
         }
@@ -269,6 +271,7 @@ public class RogueLike {
     private void fightingStateInput() throws InterruptedException {
         Potion potionToDelete = new EmptyBottle(null);
         // Process Player Input
+        System.out.println("Hero's turn ...");
         int a = retrieveKey(sp);
 
         switch ((char) a) {
@@ -399,6 +402,7 @@ public class RogueLike {
      * @throws InterruptedException
      */
     private void monsterStateInput() throws InterruptedException {
+        System.out.println("Monsters turn, press any key ...");
         int a = retrieveKey(sp);
         monsterPlayed = true;
         if ((char) a == '\u001B') { // escape

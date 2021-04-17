@@ -1,4 +1,6 @@
-package entity.living;
+package entity.living.player;
+
+import entity.living.AbstractStats;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,7 +17,7 @@ import java.util.stream.Stream;
  * @author luca
  */
 
-public class PlayerStats extends AbstractStats{
+public class PlayerStats extends AbstractStats {
     private final int[] classFactor;
     private final Map<Integer, Integer> levelCap;
     private int xp;
