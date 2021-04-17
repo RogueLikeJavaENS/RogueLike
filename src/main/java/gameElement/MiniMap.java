@@ -15,8 +15,8 @@ import static com.diogonunes.jcolor.Ansi.colorize;
  */
 
 public class MiniMap {
-    private GameState gameState;
-    private List<List<Room>> structDungeon;
+    private final GameState gameState;
+    private final List<List<Room>> structDungeon;
     private List<List<Room>> structCutMap;
     private List<String> cutMap;
     private String map;
@@ -145,7 +145,7 @@ public class MiniMap {
                     sb2.append(buildRoom(room,i));
                 }
 
-                String line = "\t| "+sb2.toString();
+                String line = "\t| "+ sb2;
                 line+=" |\n";
                 listOfLine.add(line);
             }

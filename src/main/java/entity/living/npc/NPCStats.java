@@ -1,7 +1,6 @@
 package entity.living.npc;
 
 import entity.living.AbstractStats;
-import utils.Check;
 
 /**
  * class extending the AbstractStats class for managing Monster stats

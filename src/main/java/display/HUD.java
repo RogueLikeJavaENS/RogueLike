@@ -102,7 +102,7 @@ public class HUD {
             currentSpellString.setLength(0); //resets the StringBuilder
         }
 
-        spellBar = spellsString + "\n";
+        spellBar = spellsString + " |\n";
     }
 
     @Override

@@ -54,7 +54,7 @@ public class ScanPanel extends JFrame implements KeyListener{
     }
 
     public static void main(String[] args) {
-        ScanPanel t = new ScanPanel();
+        ScanPanel scanPanel = new ScanPanel();
     }
 }
 

@@ -37,7 +37,7 @@ public class GameState {
     private MiniMap miniMap;
     private Range range;
     private final GameRule gameRule;
-    private Descriptor descriptor;
+    private final Descriptor descriptor;
 
     public GameState(Player player, Dungeon dungeon) {
         this.dungeon = dungeon;
@@ -194,7 +194,7 @@ public class GameState {
                 }
             }
             fighting.removeMonster(monster);
-            this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up %d XP bottle, %d Elixir, %d Health Potion and gained %d xp",
+            this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up %d XP bottle(s), %d Elixir(s), %d Health Potion(s) and gained %d xp",
                     player.getName(), monster.getName(), nbXpBottle, nbElixir, nbHpPotion, monster.getMonsterStats().getXpWorth()));
             gridMap.update(monster, false);
         }

@@ -1,6 +1,5 @@
 package entity.object.potion;
 
-import items.AbstractItemFactory;
 import utils.Position;
 
 public class PotionFactory {

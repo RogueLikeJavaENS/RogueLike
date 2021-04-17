@@ -16,8 +16,8 @@ import java.util.*;
 public class Player extends LivingEntity {
     private final List<Spell> spellList;
     private Spell selectedSpell;
-    private List<Potion> potionBelt;
-    private int[] potionCount;
+    private final List<Potion> potionBelt;
+    private final int[] potionCount;
 
     public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
         super(position, name, Colors.WHITE, new PlayerStats(pv, pm, 1, 3, 15, 1, 0, level));
@@ -33,12 +33,6 @@ public class Player extends LivingEntity {
         sprites.add("/^\\");
         setSprites(sprites);
         setDirection(Direction.SOUTH);
-    }
-
-    public String toString(){
-        String currentLine = getDisplay();
-        setUpSprites("@@@");
-        return currentLine;
     }
 
     public void addSpell(Spell spell) {

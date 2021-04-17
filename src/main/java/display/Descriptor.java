@@ -1,7 +1,5 @@
 package display;
 
-import java.util.List;
-
 public class Descriptor {
     StringBuilder descriptor;
 

@@ -1,6 +1,5 @@
 package entity.living.npc.monster;
 
-import gameElement.GameState;
 import monsterStrategy.Strategy;
 import utils.Colors;
 import utils.Position;

@@ -2,7 +2,6 @@ package gameElement;
 
 import display.tiles.Tile;
 import entity.Entity;
-import entity.object.Door;
 import utils.Direction;
 import utils.Position;
 

@@ -1,16 +1,8 @@
 package entity.living.player;
 
 import entity.living.AbstractStats;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 /**
  * class adding to AbstractStats (by extending it) the stats necessary to a player.
@@ -45,23 +37,6 @@ public class PlayerStats extends AbstractStats {
         this.xp=0;
         this.levelCap=loadXpPerLevel();
     }
-
-    /**
-     * This method allow to read a .txt file used to store all xp cap for each level
-     * source : https://codereview.stackexchange.com/questions/208278/simple-text-based-rpg-leveling-system
-     * with some adjustment.
-     * @return Map of xp cap necessary to reach a level
-     */
-//    private Map<Integer, Integer> loadXpPerLevel() {
-//        Map<Integer, Integer> xpPerLevel = new LinkedHashMap<>();
-//        AtomicInteger capForLevel = new AtomicInteger(1);
-//        try (Stream<String> lines = Files.lines(Paths.get("xpPerLevel.txt"))) {
-//            lines.forEach(line -> xpPerLevel.put(capForLevel.getAndIncrement(), Integer.valueOf(line)));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return xpPerLevel;
-//    }
 
     private Map<Integer, Integer> loadXpPerLevel(){
         int baseXPneeded = 100;

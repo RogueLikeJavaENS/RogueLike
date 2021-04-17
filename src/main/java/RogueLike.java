@@ -54,9 +54,8 @@ public class RogueLike {
         }
         else if (gs.getState() == State.LOSE) {
             rendererUI.loseEnd();
-        } else { // State.END
-            // closed game.
         }
+
         System.exit(0);
     }
 
@@ -400,7 +399,7 @@ public class RogueLike {
      * @throws InterruptedException
      */
     private void monsterStateInput() throws InterruptedException {
-        System.out.println("Monsters turn, press any key ...");
+        System.out.println("Monsters' turn, press any key ...");
         int a = retrieveKey(sp);
         monsterPlayed = true;
         if ((char) a == '\u001B') { // escape

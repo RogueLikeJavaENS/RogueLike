@@ -22,8 +22,18 @@ public class FireAura extends AbstractSpell {
 
     @Override
     public void setTopLeftCorner(Position entityPos, Direction direction) {
+        int availableRange = 1;
+        int topLeftAbs = entityPos.getAbs()-availableRange;
+        int topLeftOrd = entityPos.getOrd()-availableRange;
+
+        if (entityPos.getAbs() < availableRange) {
+            topLeftAbs = entityPos.getAbs();
+        }
+        if (entityPos.getOrd() < availableRange) {
+            topLeftOrd = entityPos.getOrd();
+        }
         range.setTopLeftCorner(new Position(
-                entityPos.getAbs()-1, entityPos.getOrd()-1
+                topLeftAbs, topLeftOrd
         ));
     }
 

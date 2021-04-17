@@ -44,9 +44,6 @@ public class Dungeon {
         this.height = height;
         this.maxRoomHeight = maxRoomHeight;
         this.maxRoomWidth = maxRoomWidth;
-        // placeTestCoins();
-        // placeTestMonster();
-        //placeTestPotions();
         createAllDoor();
         setAllNextDoor();
         initGridMapList();

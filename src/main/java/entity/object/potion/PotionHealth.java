@@ -15,7 +15,7 @@ public class PotionHealth extends AbstractPotion{
 
     public void usePotion(GameState gameState){
         Player player = gameState.getPlayer();
-        Integer hpAmount = 5*player.getStats().getLevel();
+        int hpAmount = 5*player.getStats().getLevel();
         player.getPlayerStats().recoverHp(hpAmount);
         gameState.getDescriptor().updateDescriptor(String.format("%s used a Health Potion and gained %s HP",player.getName(),colorize(Integer.toString(hpAmount),Colors.RED.textApply())));
         player.usePotion(this);

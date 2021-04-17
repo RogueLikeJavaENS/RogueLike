@@ -3,7 +3,6 @@ package entity;
 import gameElement.GameState;
 import utils.Colors;
 import utils.Position;
-import utils.Colors;
 import static com.diogonunes.jcolor.Ansi.colorize;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 public abstract class AbstractEntity implements Entity {
 
     private Position position;
-    private boolean isAccessible;
+    private final boolean isAccessible;
     private List<String> basicSprites;
     private Colors basicColor;
     private List<String> spritesToPrint;

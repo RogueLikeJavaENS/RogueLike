@@ -19,7 +19,7 @@ public class RendererUI {
     GameState gs;
     private HUD hud;
 
-    private String[] gridAndMapArray;
+    private final String[] gridAndMapArray;
     private static final String help = "Controls :\n"
             + "| Escape : Exit the game | H : Hide Controls  \n"
             + "| Z : Up | Q : Left | S : Down | D : Right \n"
@@ -64,7 +64,7 @@ public class RendererUI {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < gridAndMapArray.length; i++){           // concatenate the string of gridMapAndArray which represente the gridMap and minimap
             sb.append(gridAndMapArray[i]);
-            if (i>27 && i%2 !=0 && (gridAndMapArray[i-1] != "")) {  // put a \n after the uneven line without print of the minimap, "" (the strings of minimap already have a \n)
+            if (i>27 && i%2 !=0 && (!gridAndMapArray[i - 1].equals(""))) {  // put a \n after the uneven line without print of the minimap, "" (the strings of minimap already have a \n)
                 sb.append("\n");
             }
         }

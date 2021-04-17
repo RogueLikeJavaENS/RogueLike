@@ -4,8 +4,6 @@ import gameElement.GameState;
 import utils.Colors;
 import utils.Position;
 
-import static com.diogonunes.jcolor.Ansi.colorize;
-
 public class EmptyBottle extends AbstractPotion{
 
     public EmptyBottle(Position position) {

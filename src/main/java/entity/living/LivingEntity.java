@@ -1,13 +1,9 @@
 package entity.living;
 
 import entity.AbstractEntity;
-import utils.Check;
 import utils.Colors;
 import utils.Direction;
 import utils.Position;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -24,12 +20,9 @@ public class LivingEntity extends AbstractEntity {
     protected AbstractStats stats;
     private Direction direction;
 
-    private String display;
-
     public LivingEntity(Position position, String name, Colors color, AbstractStats stats) throws IllegalArgumentException {
         super(position, color,false); // false because a living entity is never accessible.
         this.name = name;
-        //setDirection(Direction.SOUTH);
         this.stats = stats;
 
     }
@@ -46,10 +39,6 @@ public class LivingEntity extends AbstractEntity {
     @Override
     public Position getPosition() {
         return super.getPosition();
-    }
-
-    public String getDisplay() {
-        return display;
     }
 
     public Direction getDirection() {
@@ -69,7 +58,6 @@ public class LivingEntity extends AbstractEntity {
                 setUpSprites("< <");
                 break;
             case SOUTH:
-                //setDisplay("o o");
                 setUpSprites("v v");
                 break;
             case EAST:

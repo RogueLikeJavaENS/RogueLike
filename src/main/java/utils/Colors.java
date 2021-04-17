@@ -2,6 +2,9 @@ package utils;
 
 import com.diogonunes.jcolor.Attribute;
 
+/**
+ * Colors with their corresponding int according to the JColor documentation
+ */
 public enum Colors {
     BLACK(0),
     RED(1),
@@ -13,9 +16,9 @@ public enum Colors {
     GREY(8),
     WHITE(15),
     BROWN(94),
+    ORANGE(131), //for the monster agro
     SOFT_GREY(237), //for the spell range
-    DARK_GREY(238), //for the walls
-    ORANGE(131); //for the monster agro
+    DARK_GREY(238); //for the walls
 
     private final int value;
 
