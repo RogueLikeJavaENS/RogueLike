@@ -30,13 +30,8 @@ public class MiniMap {
     }
 
     /**
-     * Return the String which permit to print the minimap on the terminal
-     *
-     * @return string
+     * Update the Cut-minimap
      */
-
-
-
     public void updateCutMap(){
         Position posPlayerDungeon = gameState.getCurrentRoom().getPosition();
         int absMin;
@@ -113,11 +108,7 @@ public class MiniMap {
         for (int line=0; line<height; line++){
             int col = 0;
             while (col < width){
-                if (col == width){
-                    roomArray.remove(line);
-                    break;
-                }
-                else if (roomArray.get(line).get(col) != null){
+                if (roomArray.get(line).get(col) != null){
                     break;
                 }
                 col++;

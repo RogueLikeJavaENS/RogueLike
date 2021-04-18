@@ -74,12 +74,13 @@ public class GameState {
     }
 
     /**
-     * Checks if the player can access the tile at his position + x & y, and changes its position if so.
+     * Checks if the player can access the tile at his position + x and y, and changes its position if so.
      *
      * @param x Abscissa of the tile to check, using the player's position as a base.
      * @param y Ordinate of the tile to check, using the player's position as a base.
      *
      * @author Raphael
+     * @return a boolean if the has moved or not.
      */
     public boolean movePlayer(int x, int y) {
         boolean acted = false;                  // boolean used in RogueLike to see if the player consumed his action.
@@ -105,6 +106,7 @@ public class GameState {
 
     /**
      * Interact with chests... merchants... and others.
+     * @return boolean if the player has interacted or not.
      */
     public boolean interact() {
         Position toInteractPos = player.getPosition().getPosInFront(player.getDirection());
@@ -227,7 +229,7 @@ public class GameState {
      *
      * @return weither the spell has been successfully used or not.
      *
-     * @author Raphael & Antoine
+     * @author Raphael and Antoine
      */
     public boolean useSpell() {
         Spell spell = player.getSelectedSpell();

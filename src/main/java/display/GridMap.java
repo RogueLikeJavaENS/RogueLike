@@ -29,7 +29,7 @@ public class GridMap {
 
     /**
      * Constructor of Gridmap
-     * @param room
+     * @param room the room used to fill the gridmap.
      */
     public GridMap(Room room) {
         this.room = room;
@@ -75,8 +75,8 @@ public class GridMap {
     /**
      * Update the list entities.
      *
-     * @param entity
-     * @param add : true to add / false to remove the entity
+     * @param entity The entity to add or to remove.
+     * @param add true to add / false to remove the entity
      */
     public void update(Entity entity, boolean add) {
         if(add) {
@@ -89,7 +89,7 @@ public class GridMap {
 
     /**
      * Add an entity on the list of entities
-     * @param entity
+     * @param entity the Entity to add
      */
     private void addEntity(Entity entity) {
         if (!entities.contains(entity)) {
@@ -99,7 +99,7 @@ public class GridMap {
 
     /**
      * Remove entity of the list of entities
-     * @param entity
+     * @param entity the Entity to remove
      */
     private void removeEntity(Entity entity) {
         entities.remove(entity);

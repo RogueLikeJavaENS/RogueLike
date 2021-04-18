@@ -30,14 +30,6 @@ public class Dungeon {
     private final GraphDungeon graph;
     private List<GridMap> gridMapList; // list of gridMap, index by room number.
 
-    /**
-     * List of List of roomNumber.
-     * Index 0 -> North,
-     *       1 -> East,
-     *       2 -> South,
-     *       3 -> West.
-     */
-
     public Dungeon(List<Room> roomList, int width, int height, GraphDungeon graph, int maxRoomHeight, int maxRoomWidth, int floor) {
         this.roomList = roomList;
         this.graph = graph;
@@ -175,9 +167,8 @@ public class Dungeon {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dungeon dungeon = (Dungeon) o;
-        if ((this.roomList.size() == dungeon.roomList.size()) &&
-                (roomList.equals(dungeon.roomList))) return true;
-        else return false;
+        return (this.roomList.size() == dungeon.roomList.size()) &&
+                (roomList.equals(dungeon.roomList));
     }
 
     @Override

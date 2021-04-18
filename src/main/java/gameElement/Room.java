@@ -77,7 +77,7 @@ public class Room {
 
     /**
      * Get the near room list
-     * @return ArrayList<Integer>
+     * @return int[] of the nearRoom
      */
     public int[] getNearRoom() {
         return nearRoom;

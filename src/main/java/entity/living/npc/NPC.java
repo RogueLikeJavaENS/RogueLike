@@ -18,7 +18,7 @@ public class NPC extends LivingEntity {
      * @param name of the NPC
      * @param color of the NPC on the console
      * @param stats of the NPC
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException Position can't be negative.
      */
     public NPC(Position position, String name, Colors color, AbstractStats stats) throws IllegalArgumentException {
         super(position, name, color, stats);

@@ -17,7 +17,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
  *
  */
 public abstract class AbstractMonster extends NPC implements Monster {
-    private Strategy strategy;
+    private final Strategy strategy;
     private boolean agroPlayer;
 
     /**
@@ -28,7 +28,7 @@ public abstract class AbstractMonster extends NPC implements Monster {
      * @param color basic color of the monster
      * @param strategy strategy of the monster
      * @param stats stats of the monster
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException Position can't be negative
      */
     public AbstractMonster(Position position, String name, Colors color, Strategy strategy, AbstractStats stats) throws IllegalArgumentException {
         super(position, name, color, stats);

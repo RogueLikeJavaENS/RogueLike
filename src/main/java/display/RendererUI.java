@@ -90,9 +90,9 @@ public class RendererUI {
 
         switch (gs.getState()){
             case MAP: // Print the map of the dungeon
-                globalSB.append("\t\t###################################\n" +
-                                "\t\t#             MINIMAP             #\n" + gs.getDungeon().getFloor() +
-                                "\t\t###################################\n");
+                globalSB.append("\t\t###################################\n" + "\t\t#             MINIMAP             #\n")
+                        .append(gs.getDungeon().getFloor())
+                        .append("\t\t###################################\n");
                 globalSB.append(gs.getMiniMap().toStringMap());
                 break;
 
@@ -135,7 +135,8 @@ public class RendererUI {
     /**
      * Update all the element of the game
      *
-     * @param gs gameState
+     * @param gs gameState to update
+     * @param hud hud to update
      */
     public void updateAll(GameState gs, HUD hud){
         updateGrid(gs.getGridMap());
@@ -146,7 +147,7 @@ public class RendererUI {
     /**
      * Update the HUD
      *
-     * @param hud
+     * @param hud the hud to update.
      */
     public void updateHUD(HUD hud){
         this.hud = hud;

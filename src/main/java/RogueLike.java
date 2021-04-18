@@ -18,7 +18,7 @@ import utils.State;
 /**
  * This is the main class of the RogueLike Game.
  *
- * @author Antoine & Raphael
+ * @author Antoine and Raphael
  */
 
 public class RogueLike {
@@ -64,7 +64,7 @@ public class RogueLike {
      * Principal loop of the game.
      * While the state is not END, the loop continue.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException Something went wrong.
      */
     private void gameLoop() throws InterruptedException{
         while(gs.getState() != State.WIN && gs.getState() != State.LOSE && gs.getState() != State.END) {
@@ -119,7 +119,7 @@ public class RogueLike {
      * This methods represents the order in fight. it chooses if the player play or if a monster play.
      * If a monster play, it throws the action of it.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException Something went wrong.
      */
     private void doTurnOrder() throws InterruptedException {
         Fighting fight = gs.getFighting();
@@ -139,7 +139,7 @@ public class RogueLike {
     /**
      * Represents all of the actions that can be done by the player during a NORMAL state.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException Something went wrong.
      */
     private void normalStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
@@ -238,7 +238,7 @@ public class RogueLike {
     /**
      * Represents all of the actions that can be done by the player during a MAP state.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException Something went wrong.
      */
     private void minimapStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
@@ -265,7 +265,7 @@ public class RogueLike {
     /**
      * Represents all of the actions that can be done by the player during a FIGHT state.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException Something went wrong.
      */
     private void fightingStateInput() throws InterruptedException {
         Potion potionToDelete = new EmptyBottle(null);
@@ -401,7 +401,7 @@ public class RogueLike {
     /**
      * Represents all of the actions that can be done by the player during a FIGHT state during a monster turn.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException Something went wrong.
      */
     private void monsterStateInput() throws InterruptedException {
         System.out.println("Monsters' turn, press any key ...");
@@ -415,7 +415,7 @@ public class RogueLike {
     /**
      * Represents all of the actions that can be done by the player during an INVENTORY state.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException Something went wrong.
      */
     private void inventoryStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
@@ -441,7 +441,7 @@ public class RogueLike {
     /**
      * Ask the player confirmation of to exit the game.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException Something went wrong.
      */
     private void exitStateInput() throws InterruptedException {
         System.out.println(" \t############################################################\n" +
@@ -473,7 +473,7 @@ public class RogueLike {
      * Get the last key pressed by the player.
      * @param sp The ScanPanel used to Listen the keyboard.
      * @return int key.
-     * @throws InterruptedException
+     * @throws InterruptedException Something went wrong.
      */
     private int retrieveKey(ScanPanel sp) throws InterruptedException {
         int a = 0;

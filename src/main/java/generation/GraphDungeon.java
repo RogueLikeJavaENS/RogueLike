@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * This class generates randomly and procedurally a Hashmap containing the couple Int number of the Room
  * with the int[] containing its linked neighbor and its a relative position.
  *
- * @author Antoine && Luca
+ * @author Antoine and Luca
  */
 public class GraphDungeon {
     private final HashMap<Integer, int[]> graph;
@@ -179,7 +179,7 @@ public class GraphDungeon {
 
     /**
      * Take a random Direction of a Direction list.
-     * @param copyOfProbDirection
+     * @param copyOfProbDirection the copy of the probable directions.
      * @return return a direction using the probDirection list.
      */
     private Direction moreProbable(List<Direction> copyOfProbDirection) {
