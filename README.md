@@ -10,7 +10,7 @@
  - Gnome Bash
 
 ### On Mac
- - Why using mac ?
+ - Why use mac ?
 
 ## How to run
 - java -jar RogueLike-1.0-SNAPSHOT.jar
