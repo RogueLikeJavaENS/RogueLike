@@ -34,7 +34,7 @@
 `Spells` **A** Use the selected Spell, **1 2 3 4 5 6 7 8 9** Select the a sort
 
 ## Fight
-<img src="https://user-images.githubusercontent.com/57185748/115145041-05cbc400-a050-11eb-99d7-4e3600ae8415.png" width="50">
+<img src="https://user-images.githubusercontent.com/57185748/115145041-05cbc400-a050-11eb-99d7-4e3600ae8415.png" width="350">
 A **fight** start whenever the player is in a room fill with a monster. The fight is organized with a turn order.<br>
 When a monster is playing, you can skip the description by pressing any key.<br>
 During the player turn, he have 1 action.<br>
@@ -47,7 +47,7 @@ When a monster is killed, the hero gain **XP**, [BTC](#btc) and [Potions](#potio
 You can encounter Potion Merchant in the dungeon. You can buy for **10** [BTC](#btc) a random potion.
 
 ## Map
-![Map](https://user-images.githubusercontent.com/57185748/115144962-aa013b00-a04f-11eb-8e2e-3c7c51660b85.png)<br>
+<img src="https://user-images.githubusercontent.com/57185748/115144962-aa013b00-a04f-11eb-8e2e-3c7c51660b85.png" width="350">
 By openning the map, you can see all rooms of the current dungeon's floor.
 
 ## Inventory
@@ -55,20 +55,20 @@ The inventory isn't use in this version... please follow us to see the progress.
 
 ## Room Types
 ### Fighting Room
-![Fight Room](https://user-images.githubusercontent.com/57185748/115142625-1d508000-a043-11eb-95cd-cd7f7f5b3c67.png)<br>
+<img src="https://user-images.githubusercontent.com/57185748/115142625-1d508000-a043-11eb-95cd-cd7f7f5b3c67.png" width="350">
 In the fighting room, the player may encounters **Monsters**.
 The fight start and continue whenever there is **one** monster in the room.
   
 ### Merchant Room
-![Merchant Room](https://user-images.githubusercontent.com/57185748/115142959-c3e95080-a044-11eb-8a45-e42e66ac058a.png)<br>
+<img src="https://user-images.githubusercontent.com/57185748/115142959-c3e95080-a044-11eb-8a45-e42e66ac058a.png" width="350">
 The player can find **Merchant** Room, try to interact with him by pressing **E** !
   
 ### Treasure Room
-![Treasure Room](https://user-images.githubusercontent.com/57185748/115143030-2b9f9b80-a045-11eb-9864-5c005c88eb13.png)<br>
+<img src="https://user-images.githubusercontent.com/57185748/115143030-2b9f9b80-a045-11eb-9864-5c005c88eb13.png" width="350">
 In treasure room, you can find **BTC** and Potions
 
 ### End Room
-![Stair Room](https://user-images.githubusercontent.com/57185748/115143026-293d4180-a045-11eb-855d-1360b5a174b1.png)<br>
+<img src="https://user-images.githubusercontent.com/57185748/115143026-293d4180-a045-11eb-855d-1360b5a174b1.png" width="350">
 **Caution !** When You take a stair, you go up in the dungeon, but you _can't turn back..._
 The monsters up there are stronger, may you want to level up before to go upstairs.
 
