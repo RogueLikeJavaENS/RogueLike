@@ -14,8 +14,8 @@ public class PotionMerchant extends AbstractMerchant {
         super(position, "Jean-Charle", Colors.WHITE, new NPCStats(100,100,5, 1, 1 ,1 ,1 ,1));
         super.setShop(initShop());
         ArrayList<String> sprites = new ArrayList<>();
-        sprites.add(colorize ("~.~", Colors.YELLOW.textApply()));
-        sprites.add(colorize("|_|",Colors.YELLOW.textApply()));
+        sprites.add(colorize ("~.~", Colors.CYAN.textApply()));
+        sprites.add(colorize("|_|",Colors.MAGENTA.textApply()));
         setSprites(sprites);
     }
 
@@ -43,7 +43,7 @@ public class PotionMerchant extends AbstractMerchant {
             player.pickupPotion(potion);
             gameState.getDescriptor().updateDescriptor(String.format("%s bought a %s for %d BTC",player.getName(),potion.getPotionName(),10));
         } else {
-            gameState.getDescriptor().updateDescriptor(String.format("%s had not enough money to buy potion", player.getName()));
+            gameState.getDescriptor().updateDescriptor(String.format("%s has not enough money to buy potion !", player.getName()));
             // not enough money.
         }
     }

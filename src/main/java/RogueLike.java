@@ -40,14 +40,14 @@ public class RogueLike {
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
         Position initialPosition = dungeon.getRoom(0).getCenter();
-        player = new Player(initialPosition,100, 100, "Hero", 1);
+        player = new Player(initialPosition,1000, 100, "Hero", 1);
         hud = new HUD(player);
         sp = new ScanPanel();
         gs = new GameState(player, dungeon);
         rendererUI = new RendererUI(gs, hud);
         rendererUI.display();
 
-        gameLoop(); // unitl state equals WIN or LOSE or END
+        gameLoop(); // until state equals WIN or LOSE or END
         rendererUI.clearConsole();
         if (gs.getState() == State.WIN) {
             rendererUI.winEnd();

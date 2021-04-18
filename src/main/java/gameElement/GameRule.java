@@ -85,10 +85,10 @@ public class GameRule {
      * - 20% XP
      */
     private void setDropRatePotionType() {
-        for (int i = 0; i < 40; i++) { // Health
+        for (int i = 0; i < 45; i++) { // Health
             dropRatePotionType.add(0);
         }
-        for (int i = 0; i < 40; i++) { // Mana
+        for (int i = 0; i < 35; i++) { // Mana
             dropRatePotionType.add(1);
         }
         for (int i = 0; i < 20; i++) { // XP

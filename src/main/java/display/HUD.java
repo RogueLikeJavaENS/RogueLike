@@ -59,9 +59,9 @@ public class HUD {
         sb.append(colorize("BTC: ",Colors.YELLOW.textApply()))
                 .append(colorize(String.valueOf(player.getPlayerStats().getMoneyCount()), Colors.YELLOW.textApply())) //"BTC: xxx"
                 .append("\n");
-        sb.append("Health Potion : ").append(colorize(String.valueOf(player.getPotionHealthNumber()), Colors.RED.textApply()))
-                .append(" Elixir : ").append(colorize(String.valueOf(player.getElixirNumber()), Colors.BLUE.textApply()))
-                .append(" Xp Bottle : ").append(colorize(String.valueOf(player.getXpBottleNumber()), Colors.GREEN.textApply()))
+        sb.append("Health Potion: ").append(colorize(String.valueOf(player.getPotionHealthNumber()), Colors.RED.textApply()))
+                .append(" Elixir: ").append(colorize(String.valueOf(player.getElixirNumber()), Colors.BLUE.textApply()))
+                .append(" Xp Bottle: ").append(colorize(String.valueOf(player.getXpBottleNumber()), Colors.GREEN.textApply()))
                 .append("\n");
         sb.append("A : ")
                 .append(player.getSelectedSpell().toString())

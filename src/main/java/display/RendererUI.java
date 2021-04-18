@@ -27,7 +27,7 @@ public class RendererUI {
             + "| V : Potion Health | B : Elixir | N : XpBottle\n"
             + "| E : Interact with merchant\n"
             + "| CapsLock : Lock the player to change direction"
-            + "\n";
+            + "\n\n";
     private static final String miniHelp = "H : Show All Controls\n\n";
 
 
