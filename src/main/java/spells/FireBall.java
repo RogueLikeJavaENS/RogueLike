@@ -14,9 +14,9 @@ public class FireBall extends AbstractSpell {
 
     public FireBall() {
         super(colorize("Fire Ball", Colors.RED.textApply()),
-                1.2,
+                1.6,
                 new Range(),
-                5);
+                15);
     }
 
     @Override

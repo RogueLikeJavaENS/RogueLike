@@ -13,11 +13,18 @@ public class Elixir extends AbstractPotion{
         super(position, "( )", Colors.BLUE, 1, "Mana Potion");
     }
 
-    public void usePotion(GameState gameState){
+    public boolean usePotion(GameState gameState){
         Player player = gameState.getPlayer();
         int mpAmount = 10+(5*player.getStats().getLevel());
         player.getPlayerStats().recoverMp(mpAmount);
-        gameState.getDescriptor().updateDescriptor(String.format("%s used an Elixir of Mana and gained %s mana",player.getName(),colorize(Integer.toString(mpAmount),Colors.BLUE.textApply())));
-        player.usePotion(this);
+        if (player.getPlayerStats().getManaPointTotal()!=player.getPlayerStats().getManaPointActual()) {
+            gameState.getDescriptor().updateDescriptor(String.format("%s used an Elixir of Mana and gained %s mana", player.getName(), colorize(Integer.toString(mpAmount), Colors.BLUE.textApply())));
+            player.usePotion(this);
+            return true;
+        }
+        else {
+            gameState.getDescriptor().updateDescriptor(String.format("%s is already full of energy, he doesn't need to drink his potion", player.getName()));
+            return false;
+        }
     }
 }

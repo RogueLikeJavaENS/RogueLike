@@ -47,9 +47,9 @@ public abstract class AbstractStats{
         recoverMp(modifier);
     }
 
-    public Boolean consumeMp(int cost) {
+    public boolean consumeMp(int cost) {
         Check.checkPositivity(cost);
-        if ((getManaPointActual()-cost)>0){
+        if ((getManaPointActual()-cost)>=0){
             this.manaPointActual = getManaPointActual()-cost;
             return true;
         }

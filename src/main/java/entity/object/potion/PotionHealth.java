@@ -13,11 +13,18 @@ public class PotionHealth extends AbstractPotion{
         super(position,"( )", Colors.RED, 0, "Health Potion");
     }
 
-    public void usePotion(GameState gameState){
+    public boolean usePotion(GameState gameState){
         Player player = gameState.getPlayer();
         int hpAmount = 10+(5*player.getStats().getLevel());
         player.getPlayerStats().recoverHp(hpAmount);
-        gameState.getDescriptor().updateDescriptor(String.format("%s used a Health Potion and gained %s HP",player.getName(),colorize(Integer.toString(hpAmount),Colors.RED.textApply())));
-        player.usePotion(this);
+        if (player.getPlayerStats().getLifePointTotal()!=player.getPlayerStats().getLifePointActual()) {
+            gameState.getDescriptor().updateDescriptor(String.format("%s used a Health Potion and gained %s HP", player.getName(), colorize(Integer.toString(hpAmount), Colors.RED.textApply())));
+            player.usePotion(this);
+            return true;
+        }
+        else {
+            gameState.getDescriptor().updateDescriptor(String.format("%s is already fully healed, he doesn't need to drink his potion", player.getName()));
+            return false;
+        }
     }
 }
