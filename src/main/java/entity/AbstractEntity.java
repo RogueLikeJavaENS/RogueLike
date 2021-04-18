@@ -40,6 +40,11 @@ public abstract class AbstractEntity implements Entity {
         this.spritesToPrint.add(colorize(basicSprites.get(1),basicColor.textApply()));
     }
 
+    @Override
+    public void doAction(GameState gameState) {
+        // do nothing
+    }
+
     /**
      * Return the position of the entity
      * @return the position
