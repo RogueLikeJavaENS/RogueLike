@@ -61,7 +61,7 @@ public class Fighting {
                 } else if (o2 instanceof Player) {
                     return 1;
                 } else return 1;
-            } else return o1.getStats().getInitiativeActual() - o2.getStats().getInitiativeActual();
+            } else return o2.getStats().getInitiativeActual() - o1.getStats().getInitiativeActual();
         });
     }
 
@@ -85,7 +85,8 @@ public class Fighting {
             sb.append(" ".repeat(15 - entity.getName().length()));
             sb.append("HP: ").append(entity.getStats().getLifePointActual());
             sb.append(" ".repeat(6 - String.valueOf(entity.getStats().getLifePointActual()).length()));
-            sb.append("LVL: ").append(entity.getStats().getLevel()).append("\n");
+            sb.append("LVL: ").append(entity.getStats().getLevel());
+            sb.append(" Initiative: ").append(entity.getStats().getInitiativeActual()).append("\n");
         }
         sb.append("#----------------------------------------#\n");
         return sb.toString();
