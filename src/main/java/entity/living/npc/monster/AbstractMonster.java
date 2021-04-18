@@ -11,7 +11,11 @@ import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-
+/**
+ * This class describe
+ *
+ *
+ */
 public abstract class AbstractMonster extends NPC implements Monster {
     private Strategy strategy;
     private boolean agroPlayer;
@@ -41,8 +45,9 @@ public abstract class AbstractMonster extends NPC implements Monster {
             newSprite.add(colorize(downSprite,Colors.ORANGE.textApply()));
         }
         else {
-            newSprite.add(colorize(upSprite,Colors.WHITE.textApply()));
-            newSprite.add(colorize(downSprite,Colors.WHITE.textApply()));
+            Colors color = this.getBasicColor();
+            newSprite.add(colorize(upSprite,color.textApply()));
+            newSprite.add(colorize(downSprite,color.textApply()));
         }
         this.setSprites(newSprite);
     }

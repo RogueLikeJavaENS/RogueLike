@@ -25,10 +25,9 @@ public abstract class AbstractEntity implements Entity {
     public AbstractEntity(Position position, Colors color, boolean isAccessible){
         this.position = position;
         this.isAccessible = isAccessible;
-        List<String> sprites = new ArrayList<>();
-        sprites.add("");
-        sprites.add("");
-        this.basicSprites = sprites;
+        basicSprites = new ArrayList<>();
+        basicSprites.add("");
+        basicSprites.add("");
         this.basicColor = color;
         this.spritesToPrint = new ArrayList<>();
         this.spritesToPrint.add(colorize(basicSprites.get(0),basicColor.textApply()));
