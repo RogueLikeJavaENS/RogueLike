@@ -109,7 +109,6 @@ public class RogueLike {
                     rendererUI.updateAll(gs, hud);
                     rendererUI.display();
                 }
-                Thread.sleep(100);
                 sp.reset();
             }
         }
