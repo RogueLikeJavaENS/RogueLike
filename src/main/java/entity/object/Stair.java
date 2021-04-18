@@ -24,14 +24,13 @@ public class Stair extends ObjectEntity{
     @Override
     public void doAction(GameState gameState) {
         Seed seed = new Seed();
-        gameState.setFloor(gameState.getFloor()+1);
-        Dungeon dungeon = DungeonStructure.createDungeon(seed, gameState.getFloor());
+        Dungeon dungeon = DungeonStructure.createDungeon(seed, gameState.getDungeon().getFloor()+1);
         Position initialPos = dungeon.getRoom(0).getCenter();
         gameState.setDungeon(dungeon);
         gameState.getPlayer().setPosition(initialPos);
         gameState.updateChangingRoom(dungeon.getRoom(0));
         gameState.setMiniMap(new MiniMap(dungeon, gameState));
-        gameState.getDescriptor().updateDescriptor(String.format("%s found stairs and is now on the floor %d", gameState.getPlayer().getName(), gameState.getFloor()));
+        gameState.getDescriptor().updateDescriptor(String.format("%s found the stairs and is now on the floor %d", gameState.getPlayer().getName(), gameState.getDungeon().getFloor()));
 
     }
 }

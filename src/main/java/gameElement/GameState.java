@@ -33,7 +33,6 @@ public class GameState {
     private GridMap gridMap;
     private Fighting fighting;
     private boolean help;
-    private int floor;
     private MiniMap miniMap;
     private Range range;
     private final GameRule gameRule;
@@ -259,7 +258,6 @@ public class GameState {
     public Room getCurrentRoom() { return currentRoom; }
     public State getState() { return state; }
     public Fighting getFighting() { return fighting; }
-    public int getFloor() { return floor; }
     public MiniMap getMiniMap() { return miniMap; }
     public GameRule getGameRule() { return gameRule; }
     public Descriptor getDescriptor() { return descriptor; }
@@ -270,7 +268,6 @@ public class GameState {
     public void setGridMap(GridMap gridMap) { this.gridMap = gridMap; }
     public boolean getHelp(){ return help;}
     public void setHelp(boolean help){ this.help = help; }
-    public void setFloor(int floor) { this.floor = floor; }
     public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
     public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
 

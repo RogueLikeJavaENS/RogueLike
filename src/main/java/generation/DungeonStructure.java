@@ -30,7 +30,7 @@ public class DungeonStructure {
             Room room = rs.getRoom(seed, roomTypes.get(i), i, graph.get(i));
             roomList.add(room);
         }
-        return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1,ROOM_HEIGHT,ROOM_WIDTH);
+        return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1,ROOM_HEIGHT,ROOM_WIDTH, floor);
     }
 
     /**
