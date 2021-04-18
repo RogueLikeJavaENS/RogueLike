@@ -1,9 +1,27 @@
 # RogueLike
 
-## How to run
--use maven compiler:compile then maven exec:java
+## Recommended running environment 
+ - The game was tested in a grey or black environement.
+### On Windows
+ - PowerShell
+ - Widows Terminal
 
-## Membre du projets
+### On Linux
+ - Gnome Bash
+
+### On Mac
+ - Why using mac ?
+
+## How to run
+- java -jar RogueLike-1.0-SNAPSHOT.jar
+
+## Implemented Features
+- TODO
+-
+-
+-
+
+## Project Member
 `Nom`: Vidal-Mazuy Antoine 
 `Github`: Brotherta
 
