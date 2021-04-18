@@ -49,7 +49,7 @@ You can encounter Potion Merchant in the dungeon. You can buy for **10** [BTC](#
 
 ## Map
 <img src="https://user-images.githubusercontent.com/57185748/115144962-aa013b00-a04f-11eb-8e2e-3c7c51660b85.png" width="350"><br>
-By openning the map, you can see all rooms of the current dungeon's floor.
+By openning the map, you can see all rooms of the current floor of the dungeon.
 
 ## Inventory
 The inventory isn't used in this version... please follow us to see the progress.
