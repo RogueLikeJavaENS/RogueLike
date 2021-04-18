@@ -1,42 +1,27 @@
 # Tutorial of RogueLike
 
 ## Summary
-  <ol>
-    <li>[Controls].(#controls)</li>
-    <ul>
-      <li>[Fighting](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#fighting-inputs)</li>
-      <li>[Normal](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#normal-inputs)</li>
-      <li>[Map](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#map-inputs)</li>
-      <li>[Inventory](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#inventory-inputs)</li>
-    </ul>
-    <li>[Fight](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#fight)</li>
-    <li>[Merchant](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#merchant)</li>
-    <li>[Map](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#map)</li>
-    <li>[Room Types](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#room-types)</li>
-    <ul>
-      <li>[Fighting Room](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#fighting-room)</li>
-      <li>[Merchant Room](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#merchant-room)</li>
-      <li>[Treasure Room](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#treasure-room)</li>
-      <li>[End Room](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#end-room)</li>
-    </ul>
-    <li>[Game Elements]()</li>
-    <ul>
-      <li>[Monsters]()</li>
-      <ul>
-        <li>[Goblin]()</li>
-        <li>[Skeleton]()</li>
-      </ul>
-      <li>[BTC]()<li>
-      <li>[Doors]()</li>
-      <li>[Coins]()</li>
-      <li>[Potions]()</li>
-      <ul>
-        <li>[Health Potion]()</li>
-        <li>[Elixir]()</li>
-        <li>[Xp Bottle]()</li>
-      </ul
-    </ul
-  </ol>
+
+
+1. [Controls](#controls)
+  - [Fighting](#fighting-inputs)
+  - [Normal](#normal-inputs)
+  - [Map](#map-inputs)
+  - [Invetory](#inventory-inputs)
+2. [Fight](#fight)
+3. [Merchant](#merchant)
+4. [Map](#map)
+5. [Inventory](#Inventory)
+6. [Room Types](#room-types)
+  - [Fighting Room](#fighting-room)
+  - [Merchant Room](#merchant-room)
+  - [Treasure Room](#treasure-room)
+  - [End Room](#end-room)
+7. [Game Elements](#game-elements)
+  - [Monsters](#monsters)
+  - [BTC](#btc)
+  - [Potions](#potions)
+
 
 ## Controls
 ### Fighting inputs
@@ -46,7 +31,6 @@
 ### Map inputs
 
 ### Inventory inputs
-
 
 ## Fight
 
@@ -82,10 +66,6 @@ The monsters up there are stronger, may you want to level up before to go upstai
 ### Skeleton
 
 ## BTC
-
-## Doors
-
-## Coins
 
 ## Potions
 ### Health Potion
