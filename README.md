@@ -27,6 +27,24 @@
 - Level and Xp management
 - BTC
 
+## What's planned
+- Improving monsters' IA
+- Adding a class system
+- Implementing traps
+- Implementing a real and functionning inventory
+- Adding equipements
+- Improving the turn order handling system
+- Adding bosses / the mega merchant
+- Adding a menu for the merchant
+- Correcting the procedural generation, to exploit the Seed in a more efficient way (less randomization)
+
+## What's planned if we have enough time
+- Skill tree
+- Implementing differente sizes for basic potions
+- Adding new types of potion
+- Creating a rarity system for equipement (and possibly every item)
+- Add Easter Eggs (sshhh you didn't see that)
+
 ## Project Member
 `Nom`: Vidal-Mazuy Antoine 
 `Github`: Brotherta
