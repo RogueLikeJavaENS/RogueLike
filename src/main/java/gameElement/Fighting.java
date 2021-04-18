@@ -68,20 +68,6 @@ public class Fighting {
     public void removeMonster(Monster monster) {
         turnOrder.remove(monster);
         bufferEntity.remove(monster);
-//        for (LivingEntity entity : turnOrder) {
-//            if (entity instanceof Monster) {
-//                if (entity.equals(monster)) {
-//                    turnOrder.remove(entity);
-//                }
-//            }
-//        }
-//        for (LivingEntity entity : bufferEntity) {
-//            if (entity instanceof Monster) {
-//                if (entity.equals(monster)) {
-//                    turnOrder.remove(entity);
-//                }
-//            }
-//        }
     }
 
     @Override
@@ -93,11 +79,13 @@ public class Fighting {
             if (entity.equals(currentEntity)) {
                 sb.append(colorize(" -> ", Colors.RED.textApply()));
             } else {
-                sb.append("\t");
+                sb.append("    ");
             }
             sb.append(entity.getName());
             sb.append(" ".repeat(15 - entity.getName().length()));
-            sb.append("HP: ").append(entity.getStats().getLifePointActual()).append("\n");
+            sb.append("HP: ").append(entity.getStats().getLifePointActual());
+            sb.append(" ".repeat(6 - String.valueOf(entity.getStats().getLifePointActual()).length()));
+            sb.append("LVL: ").append(entity.getStats().getLevel()).append("\n");
         }
         sb.append("#----------------------------------------#\n");
         return sb.toString();

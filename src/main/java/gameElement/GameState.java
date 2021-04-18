@@ -273,4 +273,8 @@ public class GameState {
     public void setFloor(int floor) { this.floor = floor; }
     public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
     public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
+
+    public static void main(String[] args) {
+
+    }
 }
