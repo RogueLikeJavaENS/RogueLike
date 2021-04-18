@@ -2,7 +2,7 @@
 
 ## Summary
   <ol>
-    <li>[Controls](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#controls)</li>
+    <li>[Controls].(#controls)</li>
     <ul>
       <li>[Fighting](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#fighting-inputs)</li>
       <li>[Normal](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#normal-inputs)</li>
