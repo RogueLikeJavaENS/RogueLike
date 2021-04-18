@@ -221,6 +221,14 @@ public class GameState {
         fighting = new Fighting(fightList);
     }
 
+    /**
+     * Uses the player's selected spell and applies its effects to the area within its range.
+     * If the player doesn't have enough mana, the spell fails.
+     *
+     * @return weither the spell has been successfully used or not.
+     *
+     * @author Raphael & Antoine
+     */
     public boolean useSpell() {
         Spell spell = player.getSelectedSpell();
         if (player.getPlayerStats().consumeMp(spell.getManaCost())) {

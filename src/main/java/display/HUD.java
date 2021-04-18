@@ -79,7 +79,8 @@ public class HUD {
     /**
      * Creates the string containing the player's list of spells and highlights the one corresponding to the parameter, if it exists.
      *
-     * @param spellPosition position of the spell + 1 (because the list starts at 0 and the player can only start at 1, since 0 is technically 10)
+     * @param spellPosition position of the spell starting from 1 to 10 (0 on the keyboard).
+     *
      * @author Raphael
      */
     public void spellSelectionString(int spellPosition) {
