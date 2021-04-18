@@ -4,6 +4,7 @@ import entity.living.LivingEntity;
 import entity.living.player.Player;
 import entity.object.potion.EmptyBottle;
 import entity.object.potion.Potion;
+import entity.object.potion.PotionFactory;
 import gameElement.Dungeon;
 import gameElement.Fighting;
 import gameElement.GameState;
@@ -41,6 +42,13 @@ public class RogueLike {
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
         Position initialPosition = dungeon.getRoom(0).getCenter();
         player = new Player(initialPosition,100, 100, "Hero", 1);
+        PotionFactory test = new PotionFactory();
+        player.pickupPotion(test.getPotion(0));
+        player.pickupPotion(test.getPotion(0));
+        player.pickupPotion(test.getPotion(1));
+        player.pickupPotion(test.getPotion(1));
+        player.pickupPotion(test.getPotion(2));
+        player.pickupPotion(test.getPotion(2));
         hud = new HUD(player);
         sp = new ScanPanel();
         gs = new GameState(player, dungeon);
@@ -188,37 +196,37 @@ public class RogueLike {
                 modifiedMenu = true;
                 break;
             case 'V':
+                modifiedMenu = true;
                 for (Potion potion:
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==0){
                         potionToDelete=potion;
-                        acted = true;
                         break;
                     }
                 }
-                potionToDelete.usePotion(gs);
+                acted=potionToDelete.usePotion(gs);
                 break;
             case 'B':
+                modifiedMenu = true;
                 for (Potion potion:
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==1){
                         potionToDelete=potion;
-                        acted = true;
                         break;
                     }
                 }
-                potionToDelete.usePotion(gs);
+                acted=potionToDelete.usePotion(gs);
                 break;
             case 'N':
+                modifiedMenu = true;
                 for (Potion potion:
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==2){
                         potionToDelete=potion;
-                        acted = true;
                         break;
                     }
                 }
-                potionToDelete.usePotion(gs);
+                acted=potionToDelete.usePotion(gs);
                 break;
             case '\u0014':  //caps lock
                 positionLocked = !positionLocked;
@@ -325,37 +333,37 @@ public class RogueLike {
                 modifiedMenu = true;
                 break;
             case 'V':
+                modifiedMenu = true;
                 for (Potion potion:
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==0){
                         potionToDelete=potion;
-                        acted = true;
                         break;
                     }
                 }
-                potionToDelete.usePotion(gs);
+                acted=potionToDelete.usePotion(gs);
                 break;
             case 'B':
+                modifiedMenu = true;
                 for (Potion potion:
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==1){
                         potionToDelete=potion;
-                        acted = true;
                         break;
                     }
                 }
-                potionToDelete.usePotion(gs);
+                acted=potionToDelete.usePotion(gs);
                 break;
             case 'N':
+                modifiedMenu = true;
                 for (Potion potion:
                         player.getPotionBelt()) {
                     if (potion.getPotionType()==2){
                         potionToDelete=potion;
-                        acted = true;
                         break;
                     }
                 }
-                potionToDelete.usePotion(gs);
+                acted=potionToDelete.usePotion(gs);
                 break;
             case '1':
             case '2':

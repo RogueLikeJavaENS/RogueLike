@@ -13,11 +13,12 @@ public class XpBottle extends AbstractPotion{
         super(position,"( )", Colors.GREEN, 2, "XP Potion");
     }
 
-    public void usePotion(GameState gameState){
+    public boolean usePotion(GameState gameState){
         Player player = gameState.getPlayer();
         int xpAmount = 20+(5*player.getStats().getLevel());
         player.getPlayerStats().grantXP(xpAmount);
         gameState.getDescriptor().updateDescriptor(String.format("%s used a XP bottle and gained %s xp",player.getName(),colorize(Integer.toString(xpAmount),Colors.GREEN.textApply())));
         player.usePotion(this);
+        return true;
     }
 }
