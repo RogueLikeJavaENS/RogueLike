@@ -3,39 +3,39 @@
 ## Summary
   <ol>
     <li>Controls</li>
-    <ol>
+    <ul>
       <li>Fighting</li>
       <li>Normal</li>
       <li>Map</li>
       <li>Inventory</li>
-    </ol>
+    </ul>
     <li>Fight</li>
     <li>Merchant</li>
     <li>Treasure</li>
     <li>Room Types</li>
-    <ol>
+    <ul>
       <li>Fighting Room</li>
       <li>Merchant Room</li>
       <li>Treasure Room</li>
       <li>End Room</li>
-    </ol>
+    </ul>
     <li>Game Elements</li>
-    <ol>
+    <ul>
       <li>Monsters</li>
-      <ol>
+      <ul>
         <li>Goblin</li>
         <li>Skeleton</li>
-      </ol>
+      </ul>
       <li>BTC<li>
       <li>Doors</li>
       <li>Coins</li>
       <li>Potions</li>
-      <ol>
+      <ul>
         <li>Health Potion</li>
         <li>Elixir</li>
         <li>Xp Bottle</li>
-      </ol>
-    </ol>
+      </ul
+    </ul
   </ol>
 
 
