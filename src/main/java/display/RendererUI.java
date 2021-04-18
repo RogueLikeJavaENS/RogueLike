@@ -91,7 +91,7 @@ public class RendererUI {
         switch (gs.getState()){
             case MAP: // Print the map of the dungeon
                 globalSB.append("\t\t###################################\n" +
-                                "\t\t#             MINIMAP             #\n" +
+                                "\t\t#             MINIMAP             #\n" + gs.getDungeon().getFloor() +
                                 "\t\t###################################\n");
                 globalSB.append(gs.getMiniMap().toStringMap());
                 break;

@@ -26,6 +26,7 @@ public class Dungeon {
     private final List<Room> roomList;
     private final int width; // width -> max numbers of rooms in a column
     private final int height;  // height -> max numbers of rooms in a row
+    private final int floor;
     private final GraphDungeon graph;
     private List<GridMap> gridMapList; // list of gridMap, index by room number.
 
@@ -37,16 +38,18 @@ public class Dungeon {
      *       3 -> West.
      */
 
-    public Dungeon(List<Room> roomList, int width, int height, GraphDungeon graph, int maxRoomHeight, int maxRoomWidth) {
+    public Dungeon(List<Room> roomList, int width, int height, GraphDungeon graph, int maxRoomHeight, int maxRoomWidth, int floor) {
         this.roomList = roomList;
         this.graph = graph;
         this.width = width;
         this.height = height;
         this.maxRoomHeight = maxRoomHeight;
         this.maxRoomWidth = maxRoomWidth;
+        this.floor = floor;
         createAllDoor();
         setAllNextDoor();
         initGridMapList();
+
     }
 
     private void initGridMapList(){
@@ -154,6 +157,9 @@ public class Dungeon {
         return pos;
     }
 
+    public int getFloor() {
+        return floor;
+    }
     public int getHeight() { return height; }
     public int getWidth() { return width; }
     public Room getRoom(int roomNum) { return roomList.get(roomNum); }
