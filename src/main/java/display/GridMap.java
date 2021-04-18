@@ -39,6 +39,7 @@ public class GridMap {
         rangeList = new ArrayList<>();
     }
 
+
     /**
      * Fill the array tiles with all the map of the room
      */
