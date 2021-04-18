@@ -86,7 +86,7 @@ The monsters up there are stronger, may you want to level up before to go upstai
 
 ## Spells
 A spell consumes an amout of mana. It deals damage to all monsters within the range.<br>
-Each spells has diffents range area.
+Each spells has diffents range area.<br>
 `Basic Attack` 
 ![image](https://user-images.githubusercontent.com/57185748/115145221-c81b6b00-a050-11eb-8fed-479363e065e1.png)
 
