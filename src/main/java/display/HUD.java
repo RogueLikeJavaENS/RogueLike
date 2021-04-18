@@ -54,7 +54,7 @@ public class HUD {
         sb.append(colorize("MP: ", Colors.BLUE.textApply()))
                 .append(colorize(String.valueOf(player.getStats().getManaPointActual()), Colors.BLUE.textApply()))
                 .append(colorize("/", Colors.BLUE.textApply()))
-                .append(colorize(String.valueOf(player.getStats().getLifePointTotal()), Colors.BLUE.textApply())) //"MP: xx/yy"
+                .append(colorize(String.valueOf(player.getStats().getManaPointTotal()), Colors.BLUE.textApply())) //"MP: xx/yy"
                 .append("  ");
         sb.append(colorize("BTC: ",Colors.YELLOW.textApply()))
                 .append(colorize(String.valueOf(player.getPlayerStats().getMoneyCount()), Colors.YELLOW.textApply())) //"BTC: xxx"
