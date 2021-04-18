@@ -24,7 +24,8 @@
 - Basic systems of spells.
 - Basic merchants.
 - Range of spell.
-- Level and BTC
+- Level and Xp management
+- BTC
 
 ## Project Member
 `Nom`: Vidal-Mazuy Antoine 
