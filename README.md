@@ -4,22 +4,26 @@
  - The game was tested in a grey or black environement.
 ### On Windows
  - PowerShell
- - Widows Terminal
+ - Windows Terminal
 
 ### On Linux
  - Gnome Bash
 
 ### On Mac
- - Why use mac ?
+ - Mac Terminal
 
 ## How to run
-- java -jar RogueLike-1.0-SNAPSHOT.jar
+- java -jar RogueLike-v1.0-beta.jar
 
 ## Implemented Features
-- TODO
--
--
--
+- Dungeon procedurally generated.
+- Differents types of Room.
+- Move with direction of the player.
+- Monsters.
+- Basic systems of spells.
+- Basic merchants.
+- Range of spell.
+- Level and BTC
 
 ## Project Member
 `Nom`: Vidal-Mazuy Antoine 
