@@ -14,6 +14,7 @@
 
 ## How to run
 - java -jar RogueLike-v1.0-beta.jar
+- See the [tutorial sections](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md)<br>
 
 ## Implemented Features
 - Dungeon procedurally generated.
