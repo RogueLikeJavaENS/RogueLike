@@ -192,11 +192,12 @@ public class GameState {
                     nbXpBottle+=1;
                 }
             }
+            player.getPlayerStats().gainMoney(monster.getMonsterStats().getMoneyCount());
             fighting.removeMonster(monster);
             this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up "
                             +(colorize("%d", Colors.GREEN.textApply()))+" XP bottle(s), "
                             +(colorize("%d", Colors.BLUE.textApply()))+" Elixir(s), "
-                            + (colorize("%d", Colors.RED.textApply()))+" Health Potion(s) and gained %d xp !\n",
+                            +(colorize("%d", Colors.RED.textApply()))+" Health Potion(s) and gained %d xp !\n",
                     player.getName(), monster.getName(), nbXpBottle, nbElixir, nbHpPotion, monster.getMonsterStats().getXpWorth()));
             gridMap.update(monster, false);
         }
