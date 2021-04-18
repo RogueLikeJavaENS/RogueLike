@@ -30,6 +30,7 @@
 
 ### Fighting inputs
 `When a monster play` You can press **ANY** key to pass their turns.<br>
+`Pass your turn` When its your turn you may press W, to let the monster act.<br>
 `Movement` **Caps Lock.** Lock the player, you can turn without moving<br>
 `Spells` **A** Use the selected Spell, **1 2 3 4 5 6 7 8 9** Select a spell.<br>
 
