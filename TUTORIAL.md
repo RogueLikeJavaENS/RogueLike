@@ -2,42 +2,59 @@
 
 ## Summary
   <ol>
-    <li>Controls</li>
+    <li>[Controls](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#controls)</li>
     <ul>
-      <li>Fighting</li>
-      <li>Normal</li>
-      <li>Map</li>
-      <li>Inventory</li>
+      <li>[Fighting](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#fighting-inputs)</li>
+      <li>[Normal](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#normal-inputs)</li>
+      <li>[Map](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#map-inputs)</li>
+      <li>[Inventory](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#inventory-inputs)</li>
     </ul>
-    <li>Fight</li>
-    <li>Merchant</li>
-    <li>Treasure</li>
-    <li>Room Types</li>
+    <li>[Fight](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#fight)</li>
+    <li>[Merchant](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#merchant)</li>
+    <li>[Map](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#map)</li>
+    <li>[Room Types](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#room-types)</li>
     <ul>
-      <li>Fighting Room</li>
-      <li>Merchant Room</li>
-      <li>Treasure Room</li>
-      <li>End Room</li>
+      <li>[Fighting Room](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#fighting-room)</li>
+      <li>[Merchant Room](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#merchant-room)</li>
+      <li>[Treasure Room](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#treasure-room)</li>
+      <li>[End Room](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md#end-room)</li>
     </ul>
-    <li>Game Elements</li>
+    <li>[Game Elements]()</li>
     <ul>
-      <li>Monsters</li>
+      <li>[Monsters]()</li>
       <ul>
-        <li>Goblin</li>
-        <li>Skeleton</li>
+        <li>[Goblin]()</li>
+        <li>[Skeleton]()</li>
       </ul>
-      <li>BTC<li>
-      <li>Doors</li>
-      <li>Coins</li>
-      <li>Potions</li>
+      <li>[BTC]()<li>
+      <li>[Doors]()</li>
+      <li>[Coins]()</li>
+      <li>[Potions]()</li>
       <ul>
-        <li>Health Potion</li>
-        <li>Elixir</li>
-        <li>Xp Bottle</li>
+        <li>[Health Potion]()</li>
+        <li>[Elixir]()</li>
+        <li>[Xp Bottle]()</li>
       </ul
     </ul
   </ol>
 
+## Controls
+### Fighting inputs
+
+### Normal inputs
+
+### Map inputs
+
+### Inventory inputs
+
+
+## Fight
+
+## Merchant
+
+## Map
+
+## Inventory
 
 
 ## Room Types
@@ -59,3 +76,18 @@ In treasure room, you can find **BTC** and Potions
 **Caution !** When You take a stair, you go up in the dungeon, but you _can't turn back..._
 The monsters up there are stronger, may you want to level up before to go upstairs.
 
+# Game Elements
+## Monsters
+### Goblin
+### Skeleton
+
+## BTC
+
+## Doors
+
+## Coins
+
+## Potions
+### Health Potion
+### Elixir
+### XP Bottle
