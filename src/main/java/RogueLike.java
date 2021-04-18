@@ -274,6 +274,7 @@ public class RogueLike {
         switch ((char) a) {
             case 'A':
                 acted = gs.useSpell(); //true if the spell was casted, false if not enough pm
+                modifiedMenu = true;
                 hud.spellListString(); //remove the highlightning of the selected spell
                 rendererUI.updateHUD(hud);
                 break;

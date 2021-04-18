@@ -22,9 +22,9 @@ public class Player extends LivingEntity {
     public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
         super(position, name, Colors.WHITE, new PlayerStats(pv, pm, 1, 2, 15, 1, 0, level));
         spellList = new ArrayList<>();
-        addSpell(new BasicAttack());
-        addSpell(new FireBall()); //hard coded to test
+        addSpell(new BasicAttack()); //hard coded to test
         addSpell(new FireAura());
+        addSpell(new FireBall());
         potionBelt = new ArrayList<>();
         potionCount= new int[] {0, 0, 0};
         selectedSpell = spellList.get(0); //Default selected attack is the BasicAttack
