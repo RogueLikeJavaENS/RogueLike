@@ -28,6 +28,7 @@
 - BTC
 
 ## What's planned
+- Letting the player customize the game a bit more (let him choose his name...)
 - Improving monsters' IA
 - Adding a class system
 - Implementing traps
