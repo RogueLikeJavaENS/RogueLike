@@ -20,6 +20,6 @@ class StairTest {
         Stair test2 = new Stair(null, true);
         int temp = gs.getDungeon().getFloor();
         test2.doAction(gs);
-        assertTrue(temp==(gs.getDungeon().getFloor()-1));
+        assertEquals(temp, (gs.getDungeon().getFloor() - 1));
     }
 }

@@ -15,18 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ApproachStrategyTest {
 
     @Test
-    void doAct() {
-    }
-
-    @Test
-    void updateStrategyDescription() {
-    }
-
-    @Test
-    void getStrategyDescription() {
-    }
-
-    @Test
     void test() {
         Condition condition = (Monster monster, Player player) -> true;
         Strategy approach = new ApproachStrategy(condition,null);
@@ -39,7 +27,6 @@ class ApproachStrategyTest {
         Position playerPosition1 = new Position(2,2);
         Position playerPosition2 = new Position(4,4);
         Position playerPosition3 = new Position(7,8);
-        Strategy skeletonStrategy = new IdleStrategy(monsterFactory.isFarFromPlayer, new ApproachStrategy(monsterFactory.alwaysTrue, new AttackStrategy(null)));
         Monster monster = monsterFactory.getMonster(0,monsterPosition);
         Player player = new Player(playerPosition1,10,10,"Hero",1);
 
