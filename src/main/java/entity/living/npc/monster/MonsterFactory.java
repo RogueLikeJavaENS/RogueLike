@@ -64,6 +64,16 @@ public class MonsterFactory {
      */
     private int getLevel() {
         Random GEN = new Random();
-        return GEN.nextInt(floor+2) + 1;
+        if (floor==1){
+            return GEN.nextInt(3) + (3*floor)-1;
+        }
+        return GEN.nextInt(3) + (3*floor);
+    }
+
+    public static void main(String[] args) {
+        Random GEN = new Random();
+        for (int i = 0; i < 100; i++) {
+            System.out.printf("%d ", GEN.nextInt(3) + (3*1)-2);
+        };
     }
 }

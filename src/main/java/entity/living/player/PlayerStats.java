@@ -40,7 +40,7 @@ public class PlayerStats extends AbstractStats {
 
     private Map<Integer, Integer> loadXpPerLevel(){
         int baseXPneeded = 100;
-        int xpGivenByAMonster = 10;
+        int xpGivenByAMonster = 25;
         Map<Integer, Integer> xpPerLevel = new LinkedHashMap<>();
         for (int i = 1; i <= 100; i++) {
             xpPerLevel.put(i, baseXPneeded+(xpGivenByAMonster*i));
