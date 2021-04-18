@@ -42,13 +42,6 @@ public class RogueLike {
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
         Position initialPosition = dungeon.getRoom(0).getCenter();
         player = new Player(initialPosition,100, 100, "Hero", 1);
-        PotionFactory test = new PotionFactory();
-        player.pickupPotion(test.getPotion(0));
-        player.pickupPotion(test.getPotion(0));
-        player.pickupPotion(test.getPotion(1));
-        player.pickupPotion(test.getPotion(1));
-        player.pickupPotion(test.getPotion(2));
-        player.pickupPotion(test.getPotion(2));
         hud = new HUD(player);
         sp = new ScanPanel();
         gs = new GameState(player, dungeon);

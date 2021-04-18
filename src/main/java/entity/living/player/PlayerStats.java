@@ -36,6 +36,7 @@ public class PlayerStats extends AbstractStats {
         this.classFactor= new int[] {10,10,1,1,1};
         this.xp=0;
         this.levelCap=loadXpPerLevel();
+        checkCurrentXP();
     }
 
     private Map<Integer, Integer> loadXpPerLevel(){
