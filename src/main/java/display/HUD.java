@@ -41,10 +41,10 @@ public class HUD {
         sb.append("Lvl: ")
                 .append(player.getStats().getLevel())
                 .append("  "); //"Lvl: xx  "
-        sb.append("XP: ")
-                .append(player.getPlayerStats().getXp())
-                .append("/")
-                .append(player.getPlayerStats().getXpRequired())
+        sb.append(colorize("XP: ", Colors.GREEN.textApply()))
+                .append(colorize(String.valueOf(player.getPlayerStats().getXp()), Colors.GREEN.textApply()))
+                .append(colorize("/", Colors.GREEN.textApply()))
+                .append(colorize(String.valueOf(player.getPlayerStats().getXpRequired()), Colors.GREEN.textApply()))
                 .append("  ");
         sb.append(colorize("HP: ", Colors.RED.textApply()))
                 .append(colorize(String.valueOf(player.getStats().getLifePointActual()), Colors.RED.textApply()))
