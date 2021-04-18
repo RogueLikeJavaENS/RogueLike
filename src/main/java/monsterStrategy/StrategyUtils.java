@@ -138,25 +138,25 @@ public final class StrategyUtils {
         entityList = gridMap.getEntitiesAt(abs+1,ord);
         tile = gridMap.getTileAt(abs+1,ord);
         if (tile.isAccessible() && !(tile instanceof DoorTile) &&
-                (entityList.size() == 0 || entityList.get(entityList.size()-1).getIsAccessible())){
+                (entityList.size() == 0 || entityList.get(0).getIsAccessible())){
             accessibleDirection.add(Direction.EAST);
         }
         entityList = gridMap.getEntitiesAt(abs-1,ord);
         tile = gridMap.getTileAt(abs-1,ord);
         if (tile.isAccessible() && !(tile instanceof DoorTile) &&
-                (entityList.size() == 0 || entityList.get(entityList.size()-1).getIsAccessible())){
+                (entityList.size() == 0 || entityList.get(0).getIsAccessible())){
             accessibleDirection.add(Direction.WEST);
         }
         entityList = gridMap.getEntitiesAt(abs,ord+1);
         tile = gridMap.getTileAt(abs,ord+1);
         if (tile.isAccessible() && !(tile instanceof DoorTile) &&
-                (entityList.size() == 0 || entityList.get(entityList.size()-1).getIsAccessible())){
+                (entityList.size() == 0 || entityList.get(0).getIsAccessible())){
             accessibleDirection.add(Direction.SOUTH);
         }
         entityList = gridMap.getEntitiesAt(abs,ord-1);
         tile = gridMap.getTileAt(abs,ord-1);
         if (tile.isAccessible() && !(tile instanceof DoorTile) &&
-                (entityList.size() == 0 || entityList.get(entityList.size()-1).getIsAccessible())){
+                (entityList.size() == 0 || entityList.get(0).getIsAccessible())){
             accessibleDirection.add(Direction.NORTH);
         }
 
