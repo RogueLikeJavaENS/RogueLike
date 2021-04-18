@@ -312,6 +312,9 @@ public class RogueLike {
                 }
                 gs.updateRange();
                 break;
+            case 'W': // wait
+                acted = true;
+                break;
             case 'M':
                 gs.getMiniMap().updateMap();
                 gs.setState(State.MAP);
