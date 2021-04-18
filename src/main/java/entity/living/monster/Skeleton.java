@@ -10,12 +10,14 @@ import java.util.ArrayList;
 
 
 public class Skeleton extends AbstractMonster {
-    private final static int basicHP = 5;
-    private final static int basicMP = 1;
+    private final static int basicHP = 50;
+    private final static int basicMP = 10;
+    private final static int hpModifier = 5;
+    private final static int mpModifier = 1;
 
 
     public Skeleton(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.WHITE, strategy, new MonsterStats(100, 100, 1, 1, 5, 5, 5, level, 10));
+        super(position, name, Colors.WHITE, strategy, new MonsterStats(basicHP+(hpModifier*level),basicMP+(mpModifier*level),1,2,(4+level),(4+level),5,level,(5*level)));
         ArrayList<String> sprites = new ArrayList<>();
         sprites.add("_#_");
         sprites.add("/ \\");

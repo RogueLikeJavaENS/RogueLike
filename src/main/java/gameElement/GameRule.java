@@ -63,13 +63,13 @@ public class GameRule {
      * - 1% 4 potions
      */
     private void setDropRatePotion() {
-        for (int i = 0; i < 50; i++) { // 1 potion
+        for (int i = 0; i < 60; i++) { // 1 potion
             dropRatePotion.add(1);
         }
-        for (int i = 0; i < 20; i++) { // 0 potion
+        for (int i = 0; i < 5; i++) { // 0 potion
             dropRatePotion.add(0);
         }
-        for (int i = 0; i < 20; i++) { // 2 potions
+        for (int i = 0; i < 25; i++) { // 2 potions
             dropRatePotion.add(2);
         }
         for (int i = 0; i < 9; i++) { // 3 potions
