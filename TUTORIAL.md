@@ -34,7 +34,7 @@
 `Spells` **A** Use the selected Spell, **1 2 3 4 5 6 7 8 9** Select the a sort
 
 ## Fight
-![image](https://user-images.githubusercontent.com/57185748/115145041-05cbc400-a050-11eb-99d7-4e3600ae8415.png =50x )<br>
+<img src="https://user-images.githubusercontent.com/57185748/115145041-05cbc400-a050-11eb-99d7-4e3600ae8415.png" width="50%">
 A **fight** start whenever the player is in a room fill with a monster. The fight is organized with a turn order.<br>
 When a monster is playing, you can skip the description by pressing any key.<br>
 During the player turn, he have 1 action.<br>
