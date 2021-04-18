@@ -4,14 +4,12 @@
 
 
 1. [Controls](#controls)
-   - [Fighting](#fighting-inputs)
    - [Normal](#normal-inputs)
-   - [Map](#map-inputs)
-   - [Invetory](#inventory-inputs)
+   - [Fighting](#fighting-inputs)
 2. [Fight](#fight)
 3. [Merchant](#merchant)
 4. [Map](#map)
-5. [Inventory](#Inventory)
+5. [Inventory](#inventory)
 6. [Room Types](#room-types)
    - [Fighting Room](#fighting-room)
    - [Merchant Room](#merchant-room)
@@ -24,13 +22,14 @@
 
 
 ## Controls
-### Fighting inputs
-
 ### Normal inputs
+`Movements`: **Z**: Up, **Q**: Left, **S**: Down, **D**: Right.<br>
+`Interaction`: **E**: Interact with an entity (Merchants).<br>
+`Menu`: **I**: Open and close the inventory, **M**: Open and close the Map, **H**: Hide/show controls.<br>
+`Potion`: **V**: Use Healing Potion, **B**: Use Elixir, **N**: Use XP Bottle<br>
+`Quit`: **ESC**: Excape the game.
 
-### Map inputs
-
-### Inventory inputs
+### Fighting inputs
 
 ## Fight
 
