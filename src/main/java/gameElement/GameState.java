@@ -193,7 +193,10 @@ public class GameState {
                 }
             }
             fighting.removeMonster(monster);
-            this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up %d XP bottle(s), %d Elixir(s), %d Health Potion(s) and gained %d xp",
+            this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up "
+                            +(colorize("%d", Colors.GREEN.textApply()))+" XP bottle(s), "
+                            +(colorize("%d", Colors.BLUE.textApply()))+" Elixir(s), "
+                            + (colorize("%d", Colors.RED.textApply()))+" Health Potion(s) and gained %d xp !\n",
                     player.getName(), monster.getName(), nbXpBottle, nbElixir, nbHpPotion, monster.getMonsterStats().getXpWorth()));
             gridMap.update(monster, false);
         }
@@ -227,7 +230,7 @@ public class GameState {
                         Monster monster = (Monster) currentEntity;
                         int damages = (int)Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
                         monster.getMonsterStats().sufferDamage(damages);
-                        descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
+                        descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !\n",
                                 player.getName(),
                                 spell,
                                 colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
@@ -270,8 +273,4 @@ public class GameState {
     public void setHelp(boolean help){ this.help = help; }
     public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
     public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
-
-    public static void main(String[] args) {
-
-    }
 }
