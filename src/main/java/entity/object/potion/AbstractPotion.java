@@ -11,6 +11,11 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This abstract class handle mostly the sprite and the doAction of each potion.
+ *
+ * @author luca
+ */
 public abstract class AbstractPotion extends ObjectEntity implements Potion {
     final int potionType;
     final String potionName;

@@ -2,6 +2,12 @@ package entity.object.potion;
 
 import utils.Position;
 
+/**
+ * This Factory is used to generate any given potion type, for now go from 0 to 2.
+ *
+ * @author luca
+ */
+
 public class PotionFactory {
 
     public Potion getPotion(int potionType, Position position){

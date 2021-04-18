@@ -7,6 +7,13 @@ import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * This class manage the usePotion method of the Health Potion, returning a boolean, to allow us to check
+ * if the player turn need to be consumed.
+ *
+ * @author luca
+ */
+
 public class PotionHealth extends AbstractPotion{
 
     public PotionHealth(Position position) {
@@ -19,7 +26,7 @@ public class PotionHealth extends AbstractPotion{
         player.getPlayerStats().recoverHp(hpAmount);
         if (player.getPlayerStats().getLifePointTotal()!=player.getPlayerStats().getLifePointActual()) {
             gameState.getDescriptor().updateDescriptor(String.format("%s used a Health Potion and gained %s HP", player.getName(), colorize(Integer.toString(hpAmount), Colors.RED.textApply())));
-            player.usePotion(this);
+            player.consummePotion(this);
             return true;
         }
         else {

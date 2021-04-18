@@ -72,7 +72,7 @@ public class Player extends LivingEntity {
         }
     }
 
-    public void usePotion(Potion potion){
+    public void consummePotion(Potion potion){
         potionBelt.remove(potion);
         if (potion instanceof PotionHealth){
             potionCount[0]-=1;

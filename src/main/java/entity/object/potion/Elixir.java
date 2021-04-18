@@ -7,6 +7,13 @@ import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * This class manage the usePotion method of the elixir, returning a boolean, to allow us to check
+ * if the player turn need to be consumed.
+ *
+ * @author luca
+ */
+
 public class Elixir extends AbstractPotion{
 
     public Elixir(Position position) {
@@ -19,7 +26,7 @@ public class Elixir extends AbstractPotion{
         player.getPlayerStats().recoverMp(mpAmount);
         if (player.getPlayerStats().getManaPointTotal()!=player.getPlayerStats().getManaPointActual()) {
             gameState.getDescriptor().updateDescriptor(String.format("%s used an Elixir of Mana and gained %s mana", player.getName(), colorize(Integer.toString(mpAmount), Colors.BLUE.textApply())));
-            player.usePotion(this);
+            player.consummePotion(this);
             return true;
         }
         else {
