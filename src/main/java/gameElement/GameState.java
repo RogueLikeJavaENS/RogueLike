@@ -2,6 +2,8 @@ package gameElement;
 
 import display.Descriptor;
 import display.GridMap;
+import display.HUD;
+import display.RendererUI;
 import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.npc.merchants.Merchant;
@@ -37,8 +39,9 @@ public class GameState {
     private Range range;
     private final GameRule gameRule;
     private final Descriptor descriptor;
+    private final HUD hud;
 
-    public GameState(Player player, Dungeon dungeon) {
+    public GameState(Player player, Dungeon dungeon, HUD hud) {
         this.dungeon = dungeon;
         this.player = player;
         this.currentRoom = dungeon.getRoomList().get(0);
@@ -47,6 +50,7 @@ public class GameState {
         this.help = false;
         this.miniMap = new MiniMap(dungeon, this);
         this.descriptor = new Descriptor();
+        this.hud = hud;
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
@@ -220,6 +224,8 @@ public class GameState {
     private void initFight(List<LivingEntity> monsters) {
         List<LivingEntity> fightList = new ArrayList<>(monsters);
         fightList.add(player);
+        player.setSelectedSpell(player.getSpells().get(0));
+        hud.spellSelectionString(0);
         fighting = new Fighting(fightList);
     }
 
@@ -284,4 +290,10 @@ public class GameState {
     public void setHelp(boolean help){ this.help = help; }
     public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
     public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
+
+    public static void main(String[] args) {
+        int a = 2;
+        int b = a+2;
+        System.out.println(b%3);
+    }
 }
