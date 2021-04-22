@@ -2,12 +2,16 @@ package gameElement;
 
 import display.tiles.Tile;
 import entity.Entity;
+import generation.RoomType;
 import utils.Direction;
 import utils.Position;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class contains the content of all the elements of the game.
@@ -23,6 +27,7 @@ public class Room {
     private final int[] nearRoom;
     private final Position position;
     private final List<Entity> entities;
+    private final RoomType roomType;
 
     /**
      *
@@ -35,7 +40,7 @@ public class Room {
      *
      */
 
-    public Room(int roomNum, int[] nearRoom, int[][] contents,  Position position, int width, int height) {
+    public Room(int roomNum, int[] nearRoom, int[][] contents,  Position position, int width, int height, RoomType roomType) {
         this.roomNum = roomNum;
         this.nearRoom = nearRoom;
         this.contents = contents;
@@ -43,70 +48,23 @@ public class Room {
         this.height = height;
         this.position = position;
         this.entities = new ArrayList<>();
+        this.roomType = roomType;
     }
 
     public void addEntity(Entity entity) {
         entities.add(entity);
     }
 
-    public ArrayList<Position> getAvailablePositions() {
-        ArrayList<Position> positions = new ArrayList<>();
-        for (int ord = 0; ord < contents.length; ord++) {
-            for (int abs = 0; abs < contents[0].length; abs++) {
-                if (contents[ord][abs] == Tile.FLOOR.getId()) {
-                    positions.add(new Position(abs, ord));
-                }
-            }
-        }
-        return positions;
-    }
-
+    /* GETTERS */
     public Position getPosition(){ return position;}
-
-    public Position getCenter() {
-        return (new Position(width /2, height /2));
-    }
-
-    /**
-     *
-     * @return int The room number.
-     */
-    public int getRoomNum() {
-        return roomNum;
-    }
-
-    /**
-     * Get the near room list
-     * @return int[] of the nearRoom
-     */
-    public int[] getNearRoom() {
-        return nearRoom;
-    }
-
-    /**
-     *
-     * @return int[][] The table that contains all elements.
-     */
-    public int[][] getContents() {
-        return contents;
-    }
-
-    /**
-     *
-     * @return int Width of the gameElement.Room.
-     */
-    public int getWidth() {
-        return width;
-    }
-
-    /**
-     *
-     * @return int Height of the room.
-     */
-    public int getHeight() {
-        return height;
-    }
-
+    public Position getCenter() { return (new Position(width /2, height /2)); }
+    public int getRoomNum() { return roomNum; }
+    public int[] getNearRoom() { return nearRoom; }
+    public int[][] getContents() { return contents; }
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
+    public RoomType getRoomType() { return roomType; }
+    public List<Entity> getEntities() { return new ArrayList<>(entities); }
 
     /**
      * Returns the roomNum of the room at the given direction.
@@ -119,7 +77,39 @@ public class Room {
         return nearRoom[direction.getValue()];
     }
 
-    public List<Entity> getEntities() {
-        return new ArrayList<>(entities);
+    public List<Position> getAvailablePositions() {
+        List<Position> positions = new ArrayList<>();
+        for (int ord = 0; ord < contents.length; ord++) {
+            for (int abs = 0; abs < contents[0].length; abs++) {
+                if (contents[ord][abs] == Tile.FLOOR.getId() && getEntitiesAt(abs, ord).size() == 0) {
+                    positions.add(new Position(abs, ord));
+                }
+            }
+        }
+
+        positions = positions.stream()
+                .filter(pos -> !getForbiddenPositions().contains(pos))
+                .collect(Collectors.toList());
+        Collections.shuffle(positions);
+        return positions;
+    }
+
+    private List<Entity> getEntitiesAt(int abs, int ord) {
+        List<Entity> entitiesAt = new ArrayList<>();
+        for (Entity entity : entities) {
+            if (entity.getPosition().equals(abs, ord)) {
+                entitiesAt.add(entity);
+            }
+        }
+        return entitiesAt;
+    }
+
+    private List<Position> getForbiddenPositions() {
+        ArrayList<Position> forbiddenPosition = new ArrayList<>(); // positions in front of a door is forbidden.
+        forbiddenPosition.add(new Position(width/2, 1)); // North
+        forbiddenPosition.add(new Position(width/2, height-2)); // South
+        forbiddenPosition.add(new Position(1, height/2)); // West
+        forbiddenPosition.add(new Position(width-2, height/2)); // East
+        return forbiddenPosition;
     }
 }

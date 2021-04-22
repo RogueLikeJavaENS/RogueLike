@@ -10,24 +10,30 @@ import java.util.List;
 
 public class Chest extends ObjectEntity {
     private List<Item> items;
-    private int nbKey;
+    private final boolean hasKey;
+    private boolean opened;
 
-    public Chest(Position position) {
+    public Chest(Position position, boolean hasKey) {
         super(position, Colors.BROWN, false);
-        nbKey = 1;
         items = new ArrayList<>();
-        setSprites("");
+        this.hasKey = hasKey;
+        this.opened = false;
+        setSprites("   ", "[¤]", Colors.BROWN);
         // items = GameRule.getItemsInChest(int floor)
     }
 
     @Override
-    public void doAction(GameState gameState) {
-        super.doAction(gameState);
-    }
-
-    @Override
     public void doInteraction(GameState gameState) {
-        // give items here
-        System.out.println("+ items !");
+        if (!opened) {
+            opened = true;
+            // give items here
+            if (hasKey) {
+                System.out.println("add key !");
+            }
+            setSprites("/'\\", "[¤]", Colors.BROWN);
+            System.out.println("add + items !");
+        } else {
+            // already opened !
+        }
     }
 }

@@ -23,26 +23,18 @@ public class RoomFactory {
     private final int floor;
     private final static GameRule gameRule = new GameRule();
     private final static Random GEN = new Random();
-    private final List<Position> forbiddenPosition; //
+    private List<Position> currentAvailablePositions;
 
     public RoomFactory(int width, int height, int empty, int floor) {
         this.width = width;
         this.height = height;
         this.space = empty;
         this.floor = floor;
-        forbiddenPosition = new ArrayList<>(); // positions in front of a door is forbidden.
-        forbiddenPosition.add(new Position(width/2, 1)); // North
-        forbiddenPosition.add(new Position(width/2, height-2)); // South
-        forbiddenPosition.add(new Position(1, height/2)); // West
-        forbiddenPosition.add(new Position(width-2, height/2)); // East
     }
 
     public Room getRoom(Seed seed, RoomType roomType, int current, int[] nextList) {
-        Room room = createRoom(current, nextList);
-        List<Position> availablePositions = room.getAvailablePositions().stream()
-                .filter(pos -> !forbiddenPosition.contains(pos))
-                .collect(Collectors.toList());
-        Collections.shuffle(availablePositions);
+        Room room = createRoom(current, nextList, roomType);
+        this.currentAvailablePositions = room.getAvailablePositions();
         switch (roomType) {
             case START:
                 // add some stuffs that make clear it's the start room.
@@ -56,18 +48,56 @@ public class RoomFactory {
                 // nothing special for now.
                 break;
             case MONSTER:
-                fillMonsters(room, availablePositions, seed);
+                addMonsters(room);
                 break;
             case REST:
-                fillCoins(room, availablePositions, seed, 5);
-                room.addEntity(new PotionMerchant(availablePositions.get(0))); // add a potion merchant
+                addCoins(room, 5);
+                addMerchant(room);
                 break;
             case TREASURE:
-                fillCoins(room, availablePositions, seed, gameRule.getNumberOfGoldInTreasureRoom());
-                fillPotions(room, availablePositions, seed, gameRule.getNumberOfPotionInTreasureRoom());
+                addCoins(room, gameRule.getNumberOfGoldInTreasureRoom());
+                addPotions(room, gameRule.getNumberOfPotionInTreasureRoom());
         }
         // add some traps, walls, holes...
         return room;
+    }
+
+    private void addStairs(Room room) {
+        room.addEntity(new Stair(room.getCenter(), true));
+    }
+
+    private void addMonsters(Room room) {
+        MonsterFactory monsterFactory = new MonsterFactory(floor);
+        int monsterCount = GEN.nextInt(10) % 2 + 2;
+        int type;
+        for (int i = 0; i < monsterCount; i++) {
+            type = GEN.nextInt(2);
+            room.addEntity(monsterFactory.getMonster(type, currentAvailablePositions.remove(0)));
+        }
+        for (int i = 0; i < monsterCount; i++) {
+            room.addEntity(new Coins(currentAvailablePositions.remove(0)));
+        }
+    }
+
+    private void addPotions(Room room, int numberOfPotion) {
+        PotionFactory potionFactory = new PotionFactory();
+        for (int i = 0; i < numberOfPotion; i++) {
+            if (currentAvailablePositions.size() != 0) {
+                room.addEntity(potionFactory.getPotion(gameRule.getPotionType(), currentAvailablePositions.remove(0)));
+            }
+        }
+    }
+
+    private void addCoins(Room room, int numberOfGold) {
+        for (int i = 0; i < numberOfGold; i++) {
+            if (currentAvailablePositions.size() != 0) {
+                room.addEntity(new Coins(currentAvailablePositions.remove(0)));
+            }
+        }
+    }
+
+    private void addMerchant(Room room) {
+        room.addEntity(new PotionMerchant(currentAvailablePositions.remove(0)));
     }
 
     /**
@@ -76,7 +106,7 @@ public class RoomFactory {
      * @return Room with the correct wall and doors
      */
 
-    private Room createRoom(int current, int[] nextList) {
+    private Room createRoom(int current, int[] nextList, RoomType roomType) {
 
         Position roomPosition = new Position(nextList[5], nextList[4]); // using y x might need to reverse
         int[][] contents;
@@ -98,7 +128,7 @@ public class RoomFactory {
 
         int[] nextRoom = new int[4];
         System.arraycopy(nextList, 0, nextRoom, 0, 4);
-        return new Room(current, nextRoom, contents, roomPosition, width, height);
+        return new Room(current, nextRoom, contents, roomPosition, width, height, roomType);
     }
 
     /**
@@ -211,40 +241,6 @@ public class RoomFactory {
         for (int ord = ord1; ord <= ord2; ord++) {
             for (int abs = abs1; abs <= abs2; abs++) {
                 contents[ord][abs] = tile;
-            }
-        }
-    }
-
-    private void addStairs(Room room) {
-        room.addEntity(new Stair(room.getCenter(), true));
-    }
-
-    private void fillMonsters(Room room, List<Position> availablePositions, Seed seed) {
-        MonsterFactory monsterFactory = new MonsterFactory(floor);
-        int monsterCount = GEN.nextInt(10) % 2 + 2;
-        int type;
-        for (int i = 0; i < monsterCount; i++) {
-            type = GEN.nextInt(2);
-            room.addEntity(monsterFactory.getMonster(type, availablePositions.remove(0)));
-        }
-        for (int i = 0; i < monsterCount; i++) {
-            room.addEntity(new Coins(availablePositions.remove(0)));
-        }
-    }
-
-    private void fillPotions(Room room, List<Position> availablePositions, Seed seed, int numberOfPotion) {
-        PotionFactory potionFactory = new PotionFactory();
-        for (int i = 0; i < numberOfPotion; i++) {
-            if (availablePositions.size() != 0) {
-                room.addEntity(potionFactory.getPotion(gameRule.getPotionType(), availablePositions.remove(0)));
-            }
-        }
-    }
-
-    private void fillCoins(Room room, List<Position> availablePositions, Seed seed, int numberOfGold) {
-        for (int i = 0; i < numberOfGold; i++) {
-            if (availablePositions.size() != 0) {
-                room.addEntity(new Coins(availablePositions.remove(0)));
             }
         }
     }

@@ -117,9 +117,7 @@ public class GameState {
         List<Entity> entities = gridMap.getEntitiesAt(toInteractPos.getAbs(), toInteractPos.getOrd());
         if (entities.size() != 0) {
             for (Entity entity: entities) {
-                if (entity instanceof Merchant) {
-                    ((Merchant) entity).doInteraction(this);
-                }
+                entity.doInteraction(this);
             }
             return true;
         } else {

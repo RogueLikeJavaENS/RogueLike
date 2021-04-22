@@ -1,5 +1,6 @@
 package generation;
 
+import entity.object.Chest;
 import gameElement.Dungeon;
 import gameElement.Room;
 
@@ -29,6 +30,14 @@ public class DungeonStructure {
         for (int i = 0; i < graph.size(); i++) {
             Room room = rs.getRoom(seed, roomTypes.get(i), i, graph.get(i));
             roomList.add(room);
+        }
+
+        // add a key chest in rest rooms.
+        for (Room room : roomList) {
+            if (room.getRoomType() == RoomType.START) {
+                room.addEntity(new Chest(room.getAvailablePositions().remove(0), true));
+                break;
+            }
         }
         return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1,ROOM_HEIGHT,ROOM_WIDTH, floor);
     }

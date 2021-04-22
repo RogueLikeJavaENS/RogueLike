@@ -47,6 +47,11 @@ public abstract class AbstractEntity implements Entity {
         // do nothing
     }
 
+    @Override
+    public void doInteraction(GameState gameState) {
+        // do nothing
+    }
+
     /**
      * Return the position of the entity
      * @return the position
@@ -151,7 +156,4 @@ public abstract class AbstractEntity implements Entity {
      */
     public void setPosition(Position position) { this.position = position; }
 
-    public void doInteraction(GameState gameState) {
-        // nothing
-    }
 }
