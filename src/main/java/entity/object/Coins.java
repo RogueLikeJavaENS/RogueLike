@@ -26,10 +26,7 @@ public class Coins extends ObjectEntity {
     public Coins(Position position) {
         super(position,Colors.YELLOW, true);
         this.value = 1;
-        ArrayList<String> sprites = new ArrayList<>();
-        sprites.add(colorize(" O ", Colors.YELLOW.textApply()));
-        sprites.add("   ");
-        setSprites(sprites);
+        setSprites(" O ", "   ", Colors.YELLOW);
     }
 
     @Override

@@ -2,6 +2,9 @@ package display;
 
 import gameElement.GameState;
 import gameElement.MiniMap;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.List;
 
 
@@ -217,11 +220,18 @@ public class RendererUI {
             if (os.contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
-                Runtime.getRuntime().exec("clear");
+                String s;
+                Process p;
+                try {
+                    p = Runtime.getRuntime().exec("printf \\33c");
+                    BufferedReader br = new BufferedReader(
+                            new InputStreamReader(p.getInputStream()));
+                    while ((s = br.readLine()) != null)
+                        System.out.print(s);
+                    p.waitFor();
+                    p.destroy();
+                } catch (Exception ignored) {}
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) { }
     }
 }

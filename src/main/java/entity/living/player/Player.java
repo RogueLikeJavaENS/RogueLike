@@ -28,10 +28,7 @@ public class Player extends LivingEntity {
         potionBelt = new ArrayList<>();
         potionCount= new int[] {0, 0, 0};
         selectedSpell = spellList.get(0); //Default selected attack is the BasicAttack
-        ArrayList<String> sprites = new ArrayList<>();
-        sprites.add("o-o");
-        sprites.add("/^\\");
-        setSprites(sprites);
+        setSprites("o-o", "/^\\", Colors.WHITE);
         setDirection(Direction.SOUTH);
     }
 

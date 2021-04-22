@@ -24,15 +24,7 @@ public abstract class AbstractPotion extends ObjectEntity {
         super(position,color, true);
 
         this.potionName = name;
-        List<String> sprites = new ArrayList<>();
-        sprites.add(sprite);
-        sprites.add(sprite);
-        List<String> colorSprites = new ArrayList<>();
-        colorSprites.add(colorize(sprites.get(0),color.textApply()));
-        colorSprites.add(colorize(sprites.get(1),color.textApply()));
-        setBasicSprites(sprites);
-        setSprites(colorSprites);
-
+        setSprites(sprite, sprite, color);
     }
 
     public void doAction(GameState gameState){
