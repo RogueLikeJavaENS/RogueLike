@@ -16,6 +16,7 @@ public class Chest extends ObjectEntity {
         super(position, Colors.BROWN, false);
         nbKey = 1;
         items = new ArrayList<>();
+        setSprites("");
         // items = GameRule.getItemsInChest(int floor)
     }
 
