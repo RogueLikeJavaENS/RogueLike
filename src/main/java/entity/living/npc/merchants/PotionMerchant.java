@@ -1,12 +1,12 @@
 package entity.living.npc.merchants;
 import entity.living.npc.NPCStats;
 import entity.living.player.Player;
-import entity.object.potion.*;
+import items.Item;
+import items.potion.*;
 import gameElement.GameState;
 import utils.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import static com.diogonunes.jcolor.Ansi.colorize;
+
 
 public class PotionMerchant extends AbstractMerchant {
 
@@ -20,12 +20,12 @@ public class PotionMerchant extends AbstractMerchant {
      * Not use in the first version
      * @return a shop containing potions.
      */
-    private HashMap<Potion, Integer> initShop() {
-        HashMap<Potion, Integer> shop = new HashMap<>();
+    private HashMap<Item, Integer> initShop() {
+        HashMap<Item, Integer> shop = new HashMap<>();
         PotionFactory potionFactory = new PotionFactory();
-        shop.put(potionFactory.getPotion(0), 10);
-        shop.put(potionFactory.getPotion(1), 10);
-        shop.put(potionFactory.getPotion(2), 20);
+        shop.put((Item) potionFactory.getItemPotion(0), 10);
+        shop.put((Item) potionFactory.getItemPotion(1), 10);
+        shop.put((Item) potionFactory.getItemPotion(2), 20);
 
         return shop;
     }
@@ -36,7 +36,7 @@ public class PotionMerchant extends AbstractMerchant {
         PotionFactory potionFactory = new PotionFactory();
         if (player.getPlayerStats().getMoneyCount() >= 10) {
             player.getPlayerStats().spendMoney(10);
-            Potion potion = potionFactory.getPotion(gameState.getGameRule().getPotionType());
+            Potion potion = potionFactory.getItemPotion(gameState.getGameRule().getPotionType());
             player.pickupPotion(potion);
             gameState.getDescriptor().updateDescriptor(String.format("%s bought a %s for %d BTC",player.getName(),potion.getPotionName(),10));
         } else {

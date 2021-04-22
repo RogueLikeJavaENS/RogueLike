@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PotionHealthTest {
-
+/*
     @Test
     void usePotion() {
         Seed seed = new Seed();
@@ -20,5 +20,5 @@ class PotionHealthTest {
         PotionFactory usine = new PotionFactory();
         Potion test2 = usine.getPotion(0);
         assertFalse(test2.usePotion(gs));
-    }
+    }*/
 }

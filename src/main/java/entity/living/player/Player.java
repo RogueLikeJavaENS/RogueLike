@@ -4,7 +4,7 @@ import entity.living.LivingEntity;
 import entity.object.Elixir;
 import entity.object.PotionHealth;
 import spells.BasicAttack;
-import entity.object.potion.Potion;
+import items.potion.Potion;
 import spells.*;
 import utils.Colors;
 import utils.Direction;

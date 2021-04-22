@@ -7,8 +7,8 @@ import entity.living.LivingEntity;
 import entity.living.npc.merchants.Merchant;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
-import entity.object.potion.Potion;
-import entity.object.potion.PotionFactory;
+import items.potion.Potion;
+import items.potion.PotionFactory;
 import spells.Range;
 import spells.Spell;
 import utils.Colors;
@@ -182,7 +182,7 @@ public class GameState {
             int nbHpPotion = 0;
             PotionFactory potionFactory = new PotionFactory();
             for (int i = 0; i < potionNumber; i++) {
-                Potion potion = potionFactory.getPotion(gameRule.getPotionType());
+                Potion potion = potionFactory.getItemPotion(gameRule.getPotionType());
                 player.pickupPotion(potion);
                 if (potion.getPotionType() == 0){
                     nbHpPotion += 1;

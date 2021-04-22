@@ -2,23 +2,17 @@ package entity.object;
 
 import entity.living.player.Player;
 import gameElement.GameState;
+import items.potion.PotionType;
 import utils.Colors;
 import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-public class XpBottle extends AbstractPotion {
+public class XpBottle extends AbstractObjectPotion {
 
     public XpBottle(Position position) {
-        super(position,"( )", Colors.GREEN, 2, "XP Potion");
+        super(position,"( )", Colors.GREEN, "XP Potion", PotionType.XP);
     }
 
-    public boolean usePotion(GameState gameState){
-        Player player = gameState.getPlayer();
-        int xpAmount = 20+(5*player.getStats().getLevel());
-        player.getPlayerStats().grantXP(xpAmount);
-        gameState.getDescriptor().updateDescriptor(String.format("%s used a XP bottle and gained %s xp",player.getName(),colorize(Integer.toString(xpAmount),Colors.GREEN.textApply())));
-        player.consummePotion(this);
-        return true;
-    }
+
 }

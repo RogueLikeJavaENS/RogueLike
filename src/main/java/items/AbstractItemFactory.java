@@ -1,10 +1,12 @@
 package items;
 
-import entity.object.potion.PotionFactory;
+import items.potion.PotionFactory;
 import items.equipment.EquipmentFactory;
 import items.object.ObjectFactory;
 
 public abstract class AbstractItemFactory {
+
+    public AbstractItemFactory(){}
 
     public static AbstractItemFactory getItemFactory(ItemType itemType){
         if (itemType == ItemType.POTION){
@@ -18,5 +20,6 @@ public abstract class AbstractItemFactory {
         }
         return null;
     }
+
 
 }

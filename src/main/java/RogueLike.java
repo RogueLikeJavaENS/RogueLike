@@ -3,7 +3,7 @@ import display.RendererUI;
 import entity.living.LivingEntity;
 import entity.living.player.Player;
 import entity.object.EmptyBottle;
-import entity.object.potion.Potion;
+import items.potion.Potion;
 import gameElement.Dungeon;
 import gameElement.Fighting;
 import gameElement.GameState;
@@ -141,7 +141,7 @@ public class RogueLike {
      */
     private void normalStateInput() throws InterruptedException {
         int a = retrieveKey(sp);
-        Potion potionToDelete = new EmptyBottle(null);
+        Potion potionToDelete = (Potion) new EmptyBottle(null);
         switch ((char) a) { // Process the pressed key bu the player.
             case 'Z':
                 turned = hasTurned(player, Direction.NORTH);
@@ -266,7 +266,7 @@ public class RogueLike {
      * @throws InterruptedException Something went wrong.
      */
     private void fightingStateInput() throws InterruptedException {
-        Potion potionToDelete = new EmptyBottle(null);
+        Potion potionToDelete = (Potion) new EmptyBottle(null);
         // Process Player Input
         int a = retrieveKey(sp);
 

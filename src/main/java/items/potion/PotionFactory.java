@@ -8,15 +8,15 @@ import items.potion.potionType.XpBottle;
 
 public class PotionFactory extends AbstractItemFactory {
 
-    public Potion getItemPotion(PotionType potionType, String name){
+    public Potion getItemPotion(int potionType){
         switch (potionType){
-            case HEALTH:
+            case 0:
                 return new PotionHealth();
-            case ELIXIR:
+            case 1:
                 return new Elixir();
-            case XP:
+            case 2:
                 return new XpBottle();
-            case EMPTY:
+            case -1:
                 return new EmptyBottle();
         }
         return null;
