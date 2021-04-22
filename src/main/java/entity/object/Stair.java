@@ -15,10 +15,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class Stair extends ObjectEntity{
     public Stair(Position position, boolean isAccessible) {
         super(position,Colors.BROWN, isAccessible);
-        ArrayList<String> sprites = new ArrayList<>();
-        sprites.add(colorize("  _",Colors.BROWN.textApply()));
-        sprites.add(colorize("_=|",Colors.BROWN.textApply()));
-        setSprites(sprites);
+        setSprites("  _", "_=|", Colors.BROWN);
     }
 
     @Override

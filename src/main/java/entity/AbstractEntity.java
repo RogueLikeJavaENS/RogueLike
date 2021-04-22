@@ -4,6 +4,8 @@ import gameElement.GameState;
 import utils.Colors;
 import utils.Position;
 import static com.diogonunes.jcolor.Ansi.colorize;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,18 +89,50 @@ public abstract class AbstractEntity implements Entity {
     public void setBasicColor(Colors basicColor) { this.basicColor = basicColor; }
 
     /**
-     *Set the sprites to print
-     * @param sprites the new Sprites
+     * Set the sprites to print
+     * @param color1 color of the Up sprite
+     * @param color2 color of the Down Sprite
+     * @param sprite1 Up sprite
+     * @param sprite2 Down Sprite
      */
-    public void setSprites(List<String> sprites) {
+    public void setSprites(String sprite1, String sprite2, Colors color1, Colors color2) {
+        ArrayList<String> sprites = new ArrayList<>();
+        sprites.add(colorize(sprite1, color1.textApply()));
+        sprites.add(colorize(sprite2, color2.textApply()));
         this.spritesToPrint = sprites;
     }
 
     /**
-     *Set the basic sprites
-     * @param sprites the new basic sprites
+     * Set the sprites to print with a unique color
+     * @param sprite1 Up sprite
+     * @param sprite2 Down Sprite
+     * @param color Color of both up and down Sprite
      */
-    public void setBasicSprites(List<String> sprites){
+    public void setSprites(String sprite1, String sprite2, Colors color) {
+        setSprites(sprite1, sprite2, color, color);
+    }
+
+    /**
+     * Set the sprites to print already colored.
+     * @param sprite1 Up sprite
+     * @param sprite2 Down sprite
+     */
+    public void setSprites(String sprite1, String sprite2) {
+        ArrayList<String> sprites = new ArrayList<>();
+        sprites.add(sprite1);
+        sprites.add(sprite2);
+        this.spritesToPrint = sprites;
+    }
+
+    /**
+     * Set the basic sprites
+     * @param sprite1 Up sprite
+     * @param sprite2 Down sprite
+     */
+    public void setBasicSprites(String sprite1, String sprite2){
+        ArrayList<String> sprites = new ArrayList<>();
+        sprites.add(sprite1);
+        sprites.add(sprite2);
         this.basicSprites = sprites;
     }
 

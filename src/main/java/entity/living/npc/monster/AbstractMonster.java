@@ -73,17 +73,16 @@ public abstract class AbstractMonster extends NPC implements Monster {
         this.agroPlayer = agroPlayer;
         String upSprite = this.getBasicSprites(0);  // Create the sprite with the basic without color
         String downSprite = this.getBasicSprites(1);
-        List<String> newSprite = new ArrayList<>(2);
         if (agroPlayer){                               // If the monster is aggro, colorize the new sprite in ORANGE
-            newSprite.add(colorize(upSprite,Colors.ORANGE.textApply()));
-            newSprite.add(colorize(downSprite,Colors.ORANGE.textApply()));
+            upSprite = (colorize(upSprite,Colors.ORANGE.textApply()));
+            downSprite = (colorize(downSprite,Colors.ORANGE.textApply()));
         }
         else {                                          // If the monsters is not aggro, colorize the sprite in his basic color
             Colors color = this.getBasicColor();
-            newSprite.add(colorize(upSprite,color.textApply()));
-            newSprite.add(colorize(downSprite,color.textApply()));
+            upSprite = (colorize(upSprite,color.textApply()));
+            downSprite = (colorize(downSprite,color.textApply()));
         }
-        this.setSprites(newSprite);
+        this.setSprites(upSprite, downSprite, getBasicColor());
     }
 
     /**

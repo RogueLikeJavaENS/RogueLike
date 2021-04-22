@@ -20,10 +20,7 @@ public class Door extends ObjectEntity {
         super(position,Colors.BROWN, true);
         this.direction = direction;
         this.nextRoom = nextRoom;
-        ArrayList<String> sprites = new ArrayList<>();
-        sprites.add(colorize("[ ]",Colors.BROWN.textApply()));
-        sprites.add(colorize("[ ]",Colors.BROWN.textApply()));
-        setSprites(sprites);
+        setSprites("[ ]", "[ ]", Colors.BROWN);
     }
 
     public void setNext(Door next) {

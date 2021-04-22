@@ -26,11 +26,17 @@ public class Skeleton extends AbstractMonster {
      * @param strategy his strategy to apply
      */
     public Skeleton(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.WHITE, strategy, new MonsterStats(basicHP+(hpModifier*level),basicMP+(mpModifier*level),1,(1+level),(4+level),(4+level),level,level,(5*level)));
-        ArrayList<String> sprites = new ArrayList<>();
-        sprites.add("_#_");
-        sprites.add("/ \\");
-        setBasicSprites(sprites);
-        setSprites(sprites);
+        super(position, name, Colors.WHITE, strategy,
+                new MonsterStats(basicHP+(hpModifier*level),
+                        basicMP+(mpModifier*level),
+                        1,
+                        1+level,
+                        4+level,
+                        4+level,
+                        level,
+                        level,
+                        5*level));
+        setSprites("_#_", "/ \\", Colors.WHITE);
+        setBasicSprites("_#_", "/ \\");
     }
 }
