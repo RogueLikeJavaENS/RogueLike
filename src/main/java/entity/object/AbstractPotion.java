@@ -1,8 +1,9 @@
-package entity.object.potion;
+package entity.object;
 
 import display.GridMap;
 import entity.living.player.Player;
 import entity.object.ObjectEntity;
+import entity.object.potion.Potion;
 import gameElement.GameState;
 import utils.Colors;
 import utils.Position;
@@ -16,13 +17,12 @@ import java.util.List;
  *
  * @author luca
  */
-public abstract class AbstractPotion extends ObjectEntity implements Potion {
-    final int potionType;
+public abstract class AbstractPotion extends ObjectEntity {
     final String potionName;
 
     public AbstractPotion(Position position, String sprite, Colors color, int potionType, String name){
         super(position,color, true);
-        this.potionType = potionType;
+
         this.potionName = name;
         List<String> sprites = new ArrayList<>();
         sprites.add(sprite);

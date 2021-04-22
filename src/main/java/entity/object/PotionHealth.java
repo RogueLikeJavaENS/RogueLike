@@ -1,4 +1,4 @@
-package entity.object.potion;
+package entity.object;
 
 import entity.living.player.Player;
 import gameElement.GameState;
@@ -14,7 +14,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
  * @author luca
  */
 
-public class PotionHealth extends AbstractPotion{
+public class PotionHealth extends AbstractPotion {
 
     public PotionHealth(Position position) {
         super(position,"( )", Colors.RED, 0, "Health Potion");

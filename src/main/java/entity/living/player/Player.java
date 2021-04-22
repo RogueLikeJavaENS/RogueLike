@@ -1,8 +1,8 @@
 package entity.living.player;
 
 import entity.living.LivingEntity;
-import entity.object.potion.Elixir;
-import entity.object.potion.PotionHealth;
+import entity.object.Elixir;
+import entity.object.PotionHealth;
 import spells.BasicAttack;
 import entity.object.potion.Potion;
 import spells.*;

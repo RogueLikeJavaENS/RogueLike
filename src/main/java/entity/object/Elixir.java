@@ -1,4 +1,4 @@
-package entity.object.potion;
+package entity.object;
 
 import entity.living.player.Player;
 import gameElement.GameState;
@@ -14,7 +14,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
  * @author luca
  */
 
-public class Elixir extends AbstractPotion{
+public class Elixir extends AbstractPotion {
 
     public Elixir(Position position) {
         super(position, "( )", Colors.BLUE, 1, "Mana Potion");

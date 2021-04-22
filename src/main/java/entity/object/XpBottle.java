@@ -1,4 +1,4 @@
-package entity.object.potion;
+package entity.object;
 
 import entity.living.player.Player;
 import gameElement.GameState;
@@ -7,7 +7,7 @@ import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-public class XpBottle extends AbstractPotion{
+public class XpBottle extends AbstractPotion {
 
     public XpBottle(Position position) {
         super(position,"( )", Colors.GREEN, 2, "XP Potion");
