@@ -1,11 +1,8 @@
-package items.potion.potionType;
+package items.object.potionType;
 
 import entity.living.player.Player;
-import entity.object.ObjectPotion;
 import gameElement.GameState;
-import items.potion.AbstractPotion;
 import items.potion.Potion;
-import items.potion.PotionType;
 import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -13,7 +10,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class XpBottle extends AbstractPotion implements Potion {
 
     public XpBottle() {
-        super("Xp bottle", PotionType.XP);
+        super("Xp bottle", 2);
     }
 
     public boolean usePotion(GameState gameState){

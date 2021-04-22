@@ -2,10 +2,8 @@ import display.HUD;
 import display.RendererUI;
 import entity.living.LivingEntity;
 import entity.living.player.Player;
-import entity.object.EmptyBottle;
+import entity.object.objectPotion.EmptyBottleEnity;
 import items.potion.Potion;
-import entity.object.potion.EmptyBottle;
-import entity.object.potion.Potion;
 import gameElement.Dungeon;
 import gameElement.Fighting;
 import gameElement.GameState;
@@ -139,7 +137,7 @@ public class RogueLike {
         int keyCode = retrieveKey(sp);
         State state = gs.getState();
 
-        Potion potionToDelete = new EmptyBottle(null);
+        Potion potionToDelete = (Potion) new EmptyBottleEnity(null);
         switch (keyCode) { // Process the pressed key bu the player.
             case KeyEvent.VK_Z:
                 if (state == State.NORMAL || state == State.FIGHT) {

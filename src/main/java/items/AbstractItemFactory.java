@@ -1,6 +1,5 @@
 package items;
 
-import items.potion.PotionFactory;
 import items.equipment.EquipmentFactory;
 import items.object.ObjectFactory;
 

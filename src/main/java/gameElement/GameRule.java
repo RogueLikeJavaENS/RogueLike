@@ -1,5 +1,7 @@
 package gameElement;
 
+import items.object.ObjectType;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.Random;
  */
 public class GameRule {
     private final List<Integer> dropRatePotion;
-    private final List<Integer> dropRatePotionType;
+    private final List<ObjectType> dropRatePotionType;
     private final List<Integer> numberOfGoldInTreasureRoom;
     private final List<Integer> numberOfPotionInTreasureRoom;
     private final static Random GEN = new Random();
@@ -86,13 +88,13 @@ public class GameRule {
      */
     private void setDropRatePotionType() {
         for (int i = 0; i < 45; i++) { // Health
-            dropRatePotionType.add(0);
+            dropRatePotionType.add(ObjectType.HEALTH_POTION);
         }
         for (int i = 0; i < 35; i++) { // Mana
-            dropRatePotionType.add(1);
+            dropRatePotionType.add(ObjectType.ELIXIR);
         }
         for (int i = 0; i < 20; i++) { // XP
-            dropRatePotionType.add(2);
+            dropRatePotionType.add(ObjectType.XP_BOTTLE);
         }
         Collections.shuffle(dropRatePotionType);
     }
@@ -104,7 +106,7 @@ public class GameRule {
     public int getPotionNumber() {
         return dropRatePotion.get(GEN.nextInt(100));
     }
-    public int getPotionType() {
+    public ObjectType getPotionType() {
         return dropRatePotionType.get(GEN.nextInt(100));
     }
     public int getNumberOfGoldInTreasureRoom() {

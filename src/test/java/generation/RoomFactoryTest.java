@@ -4,7 +4,7 @@ import entity.Entity;
 import entity.living.npc.merchants.Merchant;
 import entity.living.npc.monster.Monster;
 import entity.object.Coins;
-import entity.object.potion.Potion;
+import items.potion.Potion;
 import gameElement.Room;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

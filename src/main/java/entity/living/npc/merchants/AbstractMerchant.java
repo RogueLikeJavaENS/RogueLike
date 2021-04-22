@@ -3,7 +3,6 @@ package entity.living.npc.merchants;
 import entity.living.AbstractStats;
 import entity.living.npc.NPC;
 import items.Item;
-import items.potion.Potion;
 import utils.Colors;
 import utils.Position;
 import java.util.HashMap;

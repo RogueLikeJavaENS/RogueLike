@@ -1,10 +1,9 @@
 package entity.living.player;
 
 import entity.living.LivingEntity;
-import entity.object.Elixir;
-import entity.object.PotionHealth;
+import entity.object.objectPotion.ElixirEntity;
+import entity.object.objectPotion.PotionHealthEntity;
 import spells.BasicAttack;
-import items.potion.Potion;
 import spells.*;
 import utils.Colors;
 import utils.Direction;
@@ -16,7 +15,7 @@ import java.util.*;
 public class Player extends LivingEntity {
     private final List<Spell> spellList;
     private Spell selectedSpell;
-    private final List<Potion> potionBelt;
+    private final List<Object> potionBelt;
     private final int[] potionCount;
 
     public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
@@ -52,16 +51,16 @@ public class Player extends LivingEntity {
         this.selectedSpell = selectedSpell;
     }
 
-    public List<Potion> getPotionBelt() {
+    public List<Object> getPotionBelt() {
         return potionBelt;
     }
 
-    public void pickupPotion(Potion potion){
+    public void pickupPotion(Object potion){
         potionBelt.add(potion);
-        if (potion instanceof PotionHealth){
+        if (potion instanceof PotionHealthEntity){
             potionCount[0]+=1;
         }
-        else if (potion instanceof Elixir){
+        else if (potion instanceof ElixirEntity){
             potionCount[1]+=1;
         }
         else {
@@ -69,12 +68,12 @@ public class Player extends LivingEntity {
         }
     }
 
-    public void consummePotion(Potion potion){
+    public void consummePotion(Object potion){
         potionBelt.remove(potion);
-        if (potion instanceof PotionHealth){
+        if (potion instanceof PotionHealthEntity){
             potionCount[0]-=1;
         }
-        else if (potion instanceof Elixir){
+        else if (potion instanceof ElixirEntity){
             potionCount[1]-=1;
         }
         else {

@@ -1,11 +1,12 @@
 package generation;
 
 import display.tiles.Tile;
+import entity.Entity;
 import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
 import entity.object.Coins;
 import entity.object.Stair;
-import entity.object.potion.PotionFactory;
+import entity.object.objectPotion.PotionEntityFactory;
 import gameElement.GameRule;
 import gameElement.Room;
 import utils.Position;
@@ -233,10 +234,10 @@ public class RoomFactory {
     }
 
     private void fillPotions(Room room, List<Position> availablePositions, Seed seed, int numberOfPotion) {
-        PotionFactory potionFactory = new PotionFactory();
+        PotionEntityFactory objectPotionFactory = new PotionEntityFactory();
         for (int i = 0; i < numberOfPotion; i++) {
             if (availablePositions.size() != 0) {
-                room.addEntity(potionFactory.getPotion(gameRule.getPotionType(), availablePositions.remove(0)));
+                room.addEntity((Entity) objectPotionFactory.getObjectPotion(gameRule.getPotionType(), availablePositions.remove(0)));
             }
         }
     }

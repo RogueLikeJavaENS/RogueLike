@@ -1,10 +1,8 @@
-package items.potion.potionType;
+package items.object.potionType;
 
 import entity.living.player.Player;
 import gameElement.GameState;
-import items.potion.AbstractPotion;
 import items.potion.Potion;
-import items.potion.PotionType;
 import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -12,7 +10,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class PotionHealth extends AbstractPotion implements Potion {
 
     public PotionHealth() {
-        super("Health Potion", PotionType.HEALTH);
+        super("Health Potion", 0);
     }
 
     public boolean usePotion(GameState gameState){

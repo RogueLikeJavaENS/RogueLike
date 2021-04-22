@@ -1,14 +1,12 @@
-package items.potion.potionType;
+package items.object.potionType;
 
 import gameElement.GameState;
-import items.potion.AbstractPotion;
 import items.potion.Potion;
-import items.potion.PotionType;
 
 public class EmptyBottle extends AbstractPotion implements Potion {
 
     public EmptyBottle() {
-        super("Empty Bottle", PotionType.EMPTY);
+        super("Empty Bottle", -1);
     }
 
     public boolean usePotion(GameState gameState){
