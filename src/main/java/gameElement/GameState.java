@@ -39,6 +39,7 @@ public class GameState {
     private Range range;
     private final GameRule gameRule;
     private final Descriptor descriptor;
+    private final HUD hud;
 
     public GameState(Player player, Dungeon dungeon, HUD hud) {
         this.dungeon = dungeon;
@@ -223,6 +224,8 @@ public class GameState {
     private void initFight(List<LivingEntity> monsters) {
         List<LivingEntity> fightList = new ArrayList<>(monsters);
         fightList.add(player);
+        player.setSelectedSpell(player.getSpells().get(0));
+        hud.spellSelectionString(0);
         fighting = new Fighting(fightList);
     }
 
