@@ -35,38 +35,36 @@ public class HUD {
      */
     public List<String> strByLine() {
         List<String> listStrHud = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        sb.append(player.getName())
-                .append(": "); //"Name:    "
-        sb.append("Lvl: ")
-                .append(player.getStats().getLevel())
-                .append("  "); //"Lvl: xx  "
-        sb.append(colorize("XP: ", Colors.GREEN.textApply()))
-                .append(colorize(String.valueOf(player.getPlayerStats().getXp()), Colors.GREEN.textApply()))
-                .append(colorize("/", Colors.GREEN.textApply()))
-                .append(colorize(String.valueOf(player.getPlayerStats().getXpRequired()), Colors.GREEN.textApply()))
-                .append("  ");
-        sb.append(colorize("HP: ", Colors.RED.textApply()))
-                .append(colorize(String.valueOf(player.getStats().getLifePointActual()), Colors.RED.textApply()))
-                .append(colorize("/", Colors.RED.textApply()))
-                .append(colorize(String.valueOf(player.getStats().getLifePointTotal()), Colors.RED.textApply()))
-                .append("  "); //"HP: xx/yy "
-        sb.append(colorize("MP: ", Colors.BLUE.textApply()))
-                .append(colorize(String.valueOf(player.getStats().getManaPointActual()), Colors.BLUE.textApply()))
-                .append(colorize("/", Colors.BLUE.textApply()))
-                .append(colorize(String.valueOf(player.getStats().getManaPointTotal()), Colors.BLUE.textApply())) //"MP: xx/yy"
-                .append("  ");
-        sb.append(colorize("BTC: ",Colors.YELLOW.textApply()))
-                .append(colorize(String.valueOf(player.getPlayerStats().getMoneyCount()), Colors.YELLOW.textApply())) //"BTC: xxx"
-                .append("\n");
-        sb.append("Health Potion: ").append(colorize(String.valueOf(player.getPotionHealthNumber()), Colors.RED.textApply()))
-                .append(" Elixir: ").append(colorize(String.valueOf(player.getElixirNumber()), Colors.BLUE.textApply()))
-                .append(" Xp Bottle: ").append(colorize(String.valueOf(player.getXpBottleNumber()), Colors.GREEN.textApply()))
-                .append("\n");
-        sb.append("A : ")
-                .append(player.getSelectedSpell().toString())
-                .append("\n");
-        String finalString = sb.toString();
+        String finalString = player.getName() +
+                ": " + //"Name:    "
+                "Lvl: " +
+                player.getStats().getLevel() +
+                "  " + //"Lvl: xx  "
+                colorize("XP: ", Colors.GREEN.textApply()) +
+                colorize(String.valueOf(player.getPlayerStats().getXp()), Colors.GREEN.textApply()) +
+                colorize("/", Colors.GREEN.textApply()) +
+                colorize(String.valueOf(player.getPlayerStats().getXpRequired()), Colors.GREEN.textApply()) +
+                "  " +
+                colorize("HP: ", Colors.RED.textApply()) +
+                colorize(String.valueOf(player.getStats().getLifePointActual()), Colors.RED.textApply()) +
+                colorize("/", Colors.RED.textApply()) +
+                colorize(String.valueOf(player.getStats().getLifePointTotal()), Colors.RED.textApply()) +
+                "  " + //"HP: xx/yy "
+                colorize("MP: ", Colors.BLUE.textApply()) +
+                colorize(String.valueOf(player.getStats().getManaPointActual()), Colors.BLUE.textApply()) +
+                colorize("/", Colors.BLUE.textApply()) +
+                colorize(String.valueOf(player.getStats().getManaPointTotal()), Colors.BLUE.textApply()) + //"MP: xx/yy"
+                "  " +
+                colorize("BTC: ", Colors.YELLOW.textApply()) +
+                colorize(String.valueOf(player.getPlayerStats().getMoneyCount()), Colors.YELLOW.textApply()) + //"BTC: xxx"
+                "\n" +
+                "Health Potion: " + colorize(String.valueOf(player.getPotionHealthNumber()), Colors.RED.textApply()) +
+                " Elixir: " + colorize(String.valueOf(player.getElixirNumber()), Colors.BLUE.textApply()) +
+                " Xp Bottle: " + colorize(String.valueOf(player.getXpBottleNumber()), Colors.GREEN.textApply()) +
+                "\n" +
+                "A : " +
+                player.getSelectedSpell().toString() +
+                "\n";
         listStrHud.add(finalString);
         return listStrHud; //"Name:    Lvl: 42    HP: 69/420    MP: 42/56" (example)
     }
@@ -87,22 +85,20 @@ public class HUD {
         StringBuilder spellsString = new StringBuilder();
         StringBuilder currentSpellString = new StringBuilder();
         List<Spell> playerSpells = player.getSpells();
-
+        Spell currentSpell;
         for (int i = 0; i < playerSpells.size(); i++) {
-            Spell currentSpell = playerSpells.get(i);
+            currentSpell = playerSpells.get(i);
             spellsString.append("| ");
             currentSpellString.append(i + 1).append(" : ")
                     .append(currentSpell.toString()); //Example : "| 1 : Fire Ball | 2 : Thanos' Snap | 3 : Tactical Nuke
-            if (i + 1 == spellPosition) { //if it's the spell we want to select
+            if (i == spellPosition) { //if it's the spell we want to select
                 spellsString.append(colorize(currentSpellString.toString(),Colors.BLACK.textApply(), Colors.WHITE.bgApply()));
-                player.setSelectedSpell(currentSpell);
             } else {
                 spellsString.append(currentSpellString);
             }
             spellsString.append(' ');
             currentSpellString.setLength(0); //resets the StringBuilder
         }
-
         spellBar = spellsString + " |\n";
     }
 
