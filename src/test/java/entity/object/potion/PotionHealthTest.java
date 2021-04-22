@@ -1,5 +1,6 @@
 package entity.object.potion;
 
+import display.HUD;
 import entity.living.player.Player;
 import gameElement.Dungeon;
 import gameElement.GameState;
@@ -16,7 +17,8 @@ class PotionHealthTest {
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
         Player test = new Player(null,100, 100, "test", 1);
-        GameState gs = new GameState(test, dungeon);
+        HUD hud = new HUD(test);
+        GameState gs = new GameState(test, dungeon, hud);
         PotionFactory usine = new PotionFactory();
         Potion test2 = usine.getPotion(0);
         assertFalse(test2.usePotion(gs));
