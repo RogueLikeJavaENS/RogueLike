@@ -13,10 +13,7 @@ public class PotionMerchant extends AbstractMerchant {
     public PotionMerchant(Position position) {
         super(position, "Jean-Charle", Colors.WHITE, new NPCStats(100,100,5, 1, 1 ,1 ,1 ,1));
         super.setShop(initShop());
-        ArrayList<String> sprites = new ArrayList<>();
-        sprites.add(colorize ("~.~", Colors.CYAN.textApply()));
-        sprites.add(colorize("|_|",Colors.MAGENTA.textApply()));
-        setSprites(sprites);
+        setSprites("~.~", "|_|", Colors.CYAN, Colors.MAGENTA);
     }
 
     /**

@@ -28,14 +28,17 @@ public class Goblin extends AbstractMonster implements Monster {
      */
     public Goblin(Position position, String name, int level, Strategy strategy) {
         //super(position, name, Colors.GREEN, strategy,new MonsterStats(100,100,1,2,5,5,5,level,10));
-        super(position, name, Colors.GREEN, strategy,new MonsterStats(basicHP+(hpModifier*level),basicMP+(mpModifier*level),1,(3+level),(3+level),(4+level),level,level,(5*level)));
-        ArrayList<String> sprites = new ArrayList<>();
-        sprites.add("_o_");
-        sprites.add("| |");
-        setBasicSprites(sprites);
-        ArrayList<String> colorSprites = new ArrayList<>();
-        colorSprites.add(colorize(sprites.get(0),getBasicColor().textApply()));
-        colorSprites.add(colorize(sprites.get(1),getBasicColor().textApply()));
-        setSprites(colorSprites);
+        super(position, name, Colors.GREEN, strategy,
+                new MonsterStats(basicHP+(hpModifier*level),
+                        basicMP+(mpModifier*level),
+                        1,
+                        (3+level),
+                        (3+level),
+                        (4+level),
+                        level,
+                        level,
+                        (5*level)));
+        setSprites("_o_", "| |", Colors.GREEN);
+        setBasicSprites("_o_", "| |");
     }
 }
