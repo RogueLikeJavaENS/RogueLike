@@ -117,4 +117,7 @@ public abstract class AbstractEntity implements Entity {
      */
     public void setPosition(Position position) { this.position = position; }
 
+    public void doInteraction(GameState gameState) {
+        // nothing
+    }
 }

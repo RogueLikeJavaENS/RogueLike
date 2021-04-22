@@ -232,6 +232,6 @@ public class RendererUI {
                     p.destroy();
                 } catch (Exception ignored) {}
             }
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {}
     }
 }

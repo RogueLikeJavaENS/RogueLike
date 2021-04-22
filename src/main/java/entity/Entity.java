@@ -18,4 +18,5 @@ public interface Entity {
     String getSprites(int i);
     Position getPosition();
     boolean getIsAccessible();
+    void doInteraction(GameState gameState);
 }
