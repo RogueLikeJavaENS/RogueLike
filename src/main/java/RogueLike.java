@@ -4,7 +4,6 @@ import entity.living.LivingEntity;
 import entity.living.player.Player;
 import entity.object.potion.EmptyBottle;
 import entity.object.potion.Potion;
-import entity.object.potion.PotionFactory;
 import gameElement.Dungeon;
 import gameElement.Fighting;
 import gameElement.GameState;
@@ -14,6 +13,8 @@ import utils.Direction;
 import utils.Position;
 import utils.ScanPanel;
 import utils.State;
+
+import java.awt.event.KeyEvent;
 
 /**
  * This is the main class of the RogueLike Game.
@@ -44,7 +45,7 @@ public class RogueLike {
         player = new Player(initialPosition,100, 100, "Hero", 1);
         hud = new HUD(player);
         sp = new ScanPanel();
-        gs = new GameState(player, dungeon);
+        gs = new GameState(player, dungeon, hud);
         rendererUI = new RendererUI(gs, hud);
         rendererUI.display();
 
@@ -74,27 +75,19 @@ public class RogueLike {
             modifiedMenu = false;
             monsterPlayed = false;
 
-            switch(gs.getState()) { // take input according to the GameState.
-                case NORMAL:    //default state
-                    normalStateInput();
-                    break;
-
-                case FIGHT:
-                    gs.updateRange();
-                    doTurnOrder();
-                    break;
-
-                case MAP:
-                    minimapStateInput();
-                    break;
-
-                case INVENTORY:
-                    inventoryStateInput();
-                    break;
+            if (gs.getState() == State.FIGHT) {
+                gs.updateRange();
+                doTurnOrder();
+            } else {
+                playerInput();
             }
+
             if (!gs.getState().equals(State.END)) {
                 if (!acted) { // The player didn't consume his action
                     if(turned) {
+                        if (gs.getState() == State.FIGHT) {
+                            gs.updateRange();
+                        }
                         rendererUI.updateGrid(gs.getGridMap());
                         rendererUI.display();
                     }
@@ -124,7 +117,7 @@ public class RogueLike {
         Fighting fight = gs.getFighting();
         LivingEntity entity = fight.getCurrentEntity();
         if (entity instanceof Player) {
-            fightingStateInput();
+            playerInput();
         } else {
             entity.doAction(gs);
             monsterStateInput();
@@ -136,261 +129,162 @@ public class RogueLike {
     }
 
     /**
-     * Represents all of the actions that can be done by the player during a NORMAL state.
+     * Get the player input and process it according to the game state.
      *
      * @throws InterruptedException Something went wrong.
      */
-    private void normalStateInput() throws InterruptedException {
-        int a = retrieveKey(sp);
+    private void playerInput() throws InterruptedException {
+        int keyCode = retrieveKey(sp);
+        State state = gs.getState();
+
         Potion potionToDelete = new EmptyBottle(null);
-        switch ((char) a) { // Process the pressed key bu the player.
-            case 'Z':
-                turned = hasTurned(player, Direction.NORTH);
-                player.setDirection(Direction.NORTH);
-                if (!positionLocked) {
-                    acted = gs.movePlayer(0, -1);
-                }
-                // Tries to modify the player's position,
-                // if something is blocking then the player's turned is not consumed.
-                break;
-            case 'Q':
-                turned = hasTurned(player, Direction.WEST);
-                player.setDirection(Direction.WEST);
-                if (!positionLocked) {
-                    acted = gs.movePlayer(-1, 0);
+        switch (keyCode) { // Process the pressed key bu the player.
+            case KeyEvent.VK_Z:
+                if (state == State.NORMAL || state == State.FIGHT) {
+                    turned = hasTurned(player, Direction.NORTH);
+                    player.setDirection(Direction.NORTH);
+                    if (!positionLocked) {
+                        acted = gs.movePlayer(0, -1);
+                    }
+                    // Tries to modify the player's position,
+                    // if something is blocking then the player's turned is not consumed.
                 }
                 break;
-            case 'S':
-                turned = hasTurned(player, Direction.SOUTH);
-                player.setDirection(Direction.SOUTH);
-                if (!positionLocked) {
-                    acted = gs.movePlayer(0, 1);
-                }
-                break;
-            case 'D':
-                turned = hasTurned(player, Direction.EAST);
-                player.setDirection(Direction.EAST);
-                if (!positionLocked) {
-                    acted = gs.movePlayer(1, 0);
-                }
-                break;
-            case 'M':
-                gs.getMiniMap().updateMap();
-                gs.setState(State.MAP);
-                modifiedMenu = true;
-                break;
-            case 'I':
-                gs.setState(State.INVENTORY);
-                modifiedMenu = true;
-                break;
-            case 'H':
-                gs.setHelp(!gs.getHelp());
-                modifiedMenu = true;
-                break;
-            case 'V':
-                modifiedMenu = true;
-                for (Potion potion:
-                        player.getPotionBelt()) {
-                    if (potion.getPotionType()==0){
-                        potionToDelete=potion;
-                        break;
+            case KeyEvent.VK_Q:
+                if (state == State.NORMAL || state == State.FIGHT) {
+                    turned = hasTurned(player, Direction.WEST);
+                    player.setDirection(Direction.WEST);
+                    if (!positionLocked) {
+                        acted = gs.movePlayer(-1, 0);
                     }
                 }
-                acted=potionToDelete.usePotion(gs);
                 break;
-            case 'B':
-                modifiedMenu = true;
-                for (Potion potion:
-                        player.getPotionBelt()) {
-                    if (potion.getPotionType()==1){
-                        potionToDelete=potion;
-                        break;
+            case KeyEvent.VK_S:
+                if (state == State.NORMAL || state == State.FIGHT) {
+                    turned = hasTurned(player, Direction.SOUTH);
+                    player.setDirection(Direction.SOUTH);
+                    if (!positionLocked) {
+                        acted = gs.movePlayer(0, 1);
                     }
                 }
-                acted=potionToDelete.usePotion(gs);
                 break;
-            case 'N':
-                modifiedMenu = true;
-                for (Potion potion:
-                        player.getPotionBelt()) {
-                    if (potion.getPotionType()==2){
-                        potionToDelete=potion;
-                        break;
+            case KeyEvent.VK_D:
+                if (state == State.NORMAL || state == State.FIGHT) {
+                    turned = hasTurned(player, Direction.EAST);
+                    player.setDirection(Direction.EAST);
+                    if (!positionLocked) {
+                        acted = gs.movePlayer(1, 0);
                     }
                 }
-                acted=potionToDelete.usePotion(gs);
                 break;
-            case '\u0014':  //caps lock
-                positionLocked = !positionLocked;
-                break;
-            case '\u001B': // escape
-                exitStateInput();
-                break;
-            case 'E':
-                acted = gs.interact();
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Represents all of the actions that can be done by the player during a MAP state.
-     *
-     * @throws InterruptedException Something went wrong.
-     */
-    private void minimapStateInput() throws InterruptedException {
-        int a = retrieveKey(sp);
-        switch((char) a) {
-            case 'M':
-                gs.isThereMonsters();
-                modifiedMenu = true;
-                break;
-            case 'I':
-                gs.setState(State.INVENTORY);
-                modifiedMenu = true;
-                break;
-            case 'H':
-                gs.setHelp(!gs.getHelp());
-                modifiedMenu = true;
-                break;
-            case '\u001B': // escape
-                exitStateInput();
-                break;
-
-        }
-    }
-
-    /**
-     * Represents all of the actions that can be done by the player during a FIGHT state.
-     *
-     * @throws InterruptedException Something went wrong.
-     */
-    private void fightingStateInput() throws InterruptedException {
-        Potion potionToDelete = new EmptyBottle(null);
-        // Process Player Input
-        int a = retrieveKey(sp);
-
-        switch ((char) a) {
-            case 'A':
-                acted = gs.useSpell(); //true if the spell was casted, false if not enough pm
-                modifiedMenu = true;
-                hud.spellListString(); //remove the highlightning of the selected spell
-                rendererUI.updateHUD(hud);
-                break;
-            case 'Z':
-                turned = hasTurned(player, Direction.NORTH);
-                player.setDirection(Direction.NORTH);
-                if (!positionLocked) {
-                    acted = gs.movePlayer(0, -1);
+            case KeyEvent.VK_W:
+                if (state == State.FIGHT) {
+                    acted = true;
                 }
-                gs.updateRange();
-                //Tries to change the player's position, if something is blocking then the player's turned is not consumed.
                 break;
-            case 'Q':
-                turned = hasTurned(player, Direction.WEST);
-                player.setDirection(Direction.WEST);
-                if (!positionLocked) {
-                    acted = gs.movePlayer(-1, 0);
+            case KeyEvent.VK_A:
+                if (state == State.FIGHT) {
+                    acted = gs.useSpell(); //true if the spell was casted, false if not enough pm
+                    modifiedMenu = true;
+                    hud.spellListString(); //remove the highlightning of the selected spell
+                    rendererUI.updateHUD(hud);
                 }
-                gs.updateRange();
                 break;
-            case 'S':
-                turned = hasTurned(player, Direction.SOUTH);
-                player.setDirection(Direction.SOUTH);
-                if (!positionLocked) {
-                    acted = gs.movePlayer(0, 1);
-                }
-                gs.updateRange();
-                break;
-            case 'D':
-                turned = hasTurned(player, Direction.EAST);
-                player.setDirection(Direction.EAST);
-                if (!positionLocked) {
-                    acted = gs.movePlayer(1, 0);
-                }
-                gs.updateRange();
-                break;
-            case 'W': // wait
-                acted = true;
-                break;
-            case 'M':
-                gs.getMiniMap().updateMap();
-                gs.setState(State.MAP);
-                modifiedMenu = true;
-                break;
-            case 'I':
-                gs.setState(State.INVENTORY);
-                modifiedMenu = true;
-                break;
-            case 'H':
-                gs.setHelp(!gs.getHelp());
-                modifiedMenu = true;
-                break;
-            case 'V':
-                modifiedMenu = true;
-                for (Potion potion:
-                        player.getPotionBelt()) {
-                    if (potion.getPotionType()==0){
-                        potionToDelete=potion;
-                        break;
-                    }
-                }
-                acted=potionToDelete.usePotion(gs);
-                break;
-            case 'B':
-                modifiedMenu = true;
-                for (Potion potion:
-                        player.getPotionBelt()) {
-                    if (potion.getPotionType()==1){
-                        potionToDelete=potion;
-                        break;
-                    }
-                }
-                acted=potionToDelete.usePotion(gs);
-                break;
-            case 'N':
-                modifiedMenu = true;
-                for (Potion potion:
-                        player.getPotionBelt()) {
-                    if (potion.getPotionType()==2){
-                        potionToDelete=potion;
-                        break;
-                    }
-                }
-                acted=potionToDelete.usePotion(gs);
-                break;
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-                int ASCII_CODE_FOR_ZERO = 48;
-                int playerInput = a % ASCII_CODE_FOR_ZERO;
-                if (playerInput <= player.getSpells().size()) {
-                    hud.spellSelectionString(playerInput);
-                    updateHUDDisplay();
+            case KeyEvent.VK_RIGHT:
+                if (state == State.FIGHT) {
+                    int indexSpell =  player.getSpells().indexOf(player.getSelectedSpell());
+                    int newIndexSpell = (indexSpell+1) % player.getSpells().size();
+                    player.setSelectedSpell(player.getSpells().get(newIndexSpell));
+                    hud.spellSelectionString(newIndexSpell);
                     gs.updateRange();
+                    rendererUI.updateHUD(hud);
                     turned = true;
                 }
                 break;
-            case '0':
-                if (player.getSpells().size() == 10) { //0 is after 9 on the keyboard, so it stands for 10
-                    hud.spellSelectionString(10);
-                    updateHUDDisplay();
+            case KeyEvent.VK_LEFT:
+                if (state == State.FIGHT) {
+                    int indexSpell = player.getSpells().indexOf(player.getSelectedSpell());
+                    int nbSpells = player.getSpells().size();
+                    int newIndexSpell = (indexSpell+nbSpells-1) % nbSpells;
+                    player.setSelectedSpell(player.getSpells().get(newIndexSpell));
+                    hud.spellSelectionString(newIndexSpell);
                     gs.updateRange();
+                    rendererUI.updateHUD(hud);
                     turned = true;
                 }
                 break;
-            case '\u0014':  //caps lock
-                positionLocked = !positionLocked;
+            case KeyEvent.VK_M:
+                if (state == State.MAP) {
+                    gs.isThereMonsters();
+                } else {
+                    gs.setState(State.MAP);
+                    gs.getMiniMap().updateMap();
+                }
+                modifiedMenu = true;
                 break;
-            case '\u001B': // escape
+            case KeyEvent.VK_I:
+                if (state == State.INVENTORY) {
+                    gs.isThereMonsters();
+                } else {
+                    gs.setState(State.INVENTORY);
+                }
+                modifiedMenu = true;
+                break;
+            case KeyEvent.VK_H:
+                gs.setHelp(!gs.getHelp());
+                modifiedMenu = true;
+                break;
+            case KeyEvent.VK_V:
+                if (state == State.NORMAL || state == State.FIGHT) {
+                    modifiedMenu = true;
+                    for (Potion potion:
+                            player.getPotionBelt()) {
+                        if (potion.getPotionType()==0){
+                            potionToDelete=potion;
+                            break;
+                        }
+                    }
+                    acted=potionToDelete.usePotion(gs);
+                }
+                break;
+            case KeyEvent.VK_B:
+                if (state == State.NORMAL || state == State.FIGHT) {
+                    modifiedMenu = true;
+                    for (Potion potion:
+                            player.getPotionBelt()) {
+                        if (potion.getPotionType()==1){
+                            potionToDelete=potion;
+                            break;
+                        }
+                    }
+                    acted=potionToDelete.usePotion(gs);
+                }
+                break;
+            case KeyEvent.VK_N:
+                if (state == State.NORMAL || state == State.FIGHT) {
+                    modifiedMenu = true;
+                    for (Potion potion:
+                            player.getPotionBelt()) {
+                        if (potion.getPotionType()==2){
+                            potionToDelete=potion;
+                            break;
+                        }
+                    }
+                    acted=potionToDelete.usePotion(gs);
+                }
+                break;
+            case KeyEvent.VK_CAPS_LOCK:
+                if (state == State.NORMAL || state == State.FIGHT) {
+                    positionLocked = !positionLocked;
+                }
+                break;
+            case KeyEvent.VK_ESCAPE: // escape
                 exitStateInput();
+                break;
+            case KeyEvent.VK_E:
+                if (state == State.NORMAL || state == State.FIGHT) {
+                    acted = gs.interact();
+                }
                 break;
             default:
                 break;
@@ -408,32 +302,6 @@ public class RogueLike {
         monsterPlayed = true;
         if ((char) a == '\u001B') { // escape
             exitStateInput();
-        }
-    }
-
-    /**
-     * Represents all of the actions that can be done by the player during an INVENTORY state.
-     *
-     * @throws InterruptedException Something went wrong.
-     */
-    private void inventoryStateInput() throws InterruptedException {
-        int a = retrieveKey(sp);
-        switch((char) a) {
-            case 'M':
-                gs.setState(State.MAP);
-                modifiedMenu = true;
-                break;
-            case 'I':
-                gs.isThereMonsters();
-                modifiedMenu = true;
-                break;
-            case 'H':
-                gs.setHelp(!gs.getHelp());
-                modifiedMenu = true;
-                break;
-            case '\u001B': // escape
-                exitStateInput();
-                break;
         }
     }
 
@@ -481,11 +349,6 @@ public class RogueLike {
             Thread.sleep(1);  // Without that, Java deletes the loop
         }
         return a;
-    }
-
-    private void updateHUDDisplay(){
-        rendererUI.updateHUD(hud);
-        rendererUI.display();
     }
 
     public static void main(String[] args) throws InterruptedException {
