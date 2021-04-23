@@ -1,14 +1,14 @@
 package entity.object;
 
 import gameElement.GameState;
-import items.Item;
+import stuff.item.Item;
 import utils.Colors;
 import utils.Position;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Chest extends ObjectEntity {
+
     private List<Item> items;
     private final boolean hasKey;
     private boolean opened;

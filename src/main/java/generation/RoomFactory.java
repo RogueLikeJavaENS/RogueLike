@@ -81,10 +81,10 @@ public class RoomFactory {
     }
 
     private void addPotions(Room room, int numberOfPotion) {
-        PotionFactory potionFactory = new PotionFactory();
+        PotionEntityFactory potionFactory = new PotionEntityFactory();
         for (int i = 0; i < numberOfPotion; i++) {
             if (currentAvailablePositions.size() != 0) {
-                room.addEntity(potionFactory.getPotion(gameRule.getPotionType(), currentAvailablePositions.remove(0)));
+                room.addEntity((Entity) potionFactory.getPotionEntity(gameRule.getPotionType(), currentAvailablePositions.remove(0)));
             }
         }
     }
