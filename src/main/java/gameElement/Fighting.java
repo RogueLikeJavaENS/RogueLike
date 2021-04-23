@@ -55,13 +55,13 @@ public class Fighting {
      */
     private void sortTurnOrder() {
         turnOrder.sort((o1, o2) -> {
-            if (o1.getStats().getInitiativeActual() == o2.getStats().getInitiativeActual()) {   // In case the player is o1 or o2, the player is placed in first.
+            if (o1.getStats().getInitiativeTotal() == o2.getStats().getInitiativeTotal()) {   // In case the player is o1 or o2, the player is placed in first.
                 if (o1 instanceof Player) {
                     return -1;
                 } else if (o2 instanceof Player) {
                     return 1;
                 } else return 1;
-            } else return o2.getStats().getInitiativeActual() - o1.getStats().getInitiativeActual();
+            } else return o2.getStats().getInitiativeTotal() - o1.getStats().getInitiativeTotal();
         });
     }
 

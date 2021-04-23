@@ -16,7 +16,7 @@ public class MonsterFactory {
 
     // Create Condition to use for a strategy
     // public final Condition nameCondition = (Monster monster, Player player) -> a condition which return a boolean
-    public final Condition isMidlife = (Monster monster, Player player) -> monster.getMonsterStats().getLifePointActual() <= monster.getMonsterStats().getLifePointTotal()/2;
+    public final Condition isMidlife = (Monster monster, Player player) -> monster.getMonsterStats().getLifePointActual() <= monster.getMonsterStats().getLifePointNatural()/2;
     public final Condition alwaysTrue = (Monster monster, Player player) -> true;
     public final Condition isFarFromPlayer = (Monster monster, Player player) -> StrategyUtils.getDistance(monster,player) > AGRO;
 

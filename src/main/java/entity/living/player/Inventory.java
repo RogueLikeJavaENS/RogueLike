@@ -1,6 +1,7 @@
-package stuff;
+package entity.living.player;
 
 import gameElement.GameState;
+import stuff.Stuff;
 import stuff.item.Item;
 import stuff.item.ItemType;
 
@@ -9,9 +10,11 @@ import java.util.List;
 
 public class Inventory {
     List<Stuff> inventory;
+    Stuff current;
 
     public Inventory() {
         inventory = new ArrayList<>();
+        current = null;
     }
 
     public void addItem(Stuff stuff) {
@@ -32,8 +35,16 @@ public class Inventory {
                 }
             }
         }
-        inventory.remove((Stuff) itemToDelete);
+        if (itemToDelete != null) {
+            inventory.remove((Stuff) itemToDelete);
+        }
         return used;
+    }
+
+    public void OpenInventory() {
+        if (!inventory.isEmpty()) {
+
+        }
     }
 
     @Override
@@ -42,6 +53,8 @@ public class Inventory {
                 "inventory=" + inventory +
                 '}';
     }
+
+
 
     public int getItemNumber(ItemType type) {
         int acc = 0;
