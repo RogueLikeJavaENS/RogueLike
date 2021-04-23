@@ -1,32 +1,25 @@
-package entity.object.potion;
+package stuff.item.potions;
 
 import entity.living.player.Player;
 import gameElement.GameState;
+import stuff.item.AbstractItem;
+import stuff.item.ItemType;
 import utils.Colors;
-import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-/**
- * This class manage the usePotion method of the Health Potion, returning a boolean, to allow us to check
- * if the player turn need to be consumed.
- *
- * @author luca
- */
+public class PotionHealth extends AbstractItem {
 
-public class PotionHealth extends AbstractPotion{
-
-    public PotionHealth(Position position) {
-        super(position,"( )", Colors.RED, 0, "Health Potion");
+    public PotionHealth() {
+        super("Health Potion", ItemType.HEALTH_POTION);
     }
 
-    public boolean usePotion(GameState gameState){
+    public boolean useItem(GameState gameState){
         Player player = gameState.getPlayer();
         int hpAmount = 10+(5*player.getStats().getLevel());
-        player.getPlayerStats().recoverHp(hpAmount);
         if (player.getPlayerStats().getLifePointTotal()!=player.getPlayerStats().getLifePointActual()) {
+            player.getPlayerStats().recoverHp(hpAmount);
             gameState.getDescriptor().updateDescriptor(String.format("%s used a Health Potion and gained %s HP", player.getName(), colorize(Integer.toString(hpAmount), Colors.RED.textApply())));
-            player.consummePotion(this);
             return true;
         }
         else {

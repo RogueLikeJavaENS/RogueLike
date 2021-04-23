@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class XpBottleTest {
-
+/*
     @Test
     void usePotion() {
         Seed seed = new Seed();
@@ -22,5 +22,5 @@ class XpBottleTest {
         PotionFactory usine = new PotionFactory();
         Potion test2 = usine.getPotion(2);
         assertTrue(test2.usePotion(gs)); //may need to change when we caped the use of Xp Bottle at level 100
-    }
+    }*/
 }

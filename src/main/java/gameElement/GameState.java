@@ -3,28 +3,24 @@ package gameElement;
 import display.Descriptor;
 import display.GridMap;
 import display.HUD;
-import display.RendererUI;
 import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.npc.merchants.Merchant;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
-import entity.object.potion.Potion;
-import entity.object.potion.PotionFactory;
-import spells.Range;
-import spells.Spell;
-import utils.Colors;
-import utils.Position;
-import utils.State;
+import spells.*;
+import stuff.Stuff;
+import stuff.item.Item;
+import stuff.item.ItemFactory;
+import stuff.item.ItemType;
+import utils.*;
 import java.util.ArrayList;
 import java.util.List;
 import static com.diogonunes.jcolor.Ansi.colorize;
+
 /**
  * This class represents the State of the Game at any moment. Each action will pass by this class.
  * It determines rather or not if the action is permitted.
-
- *
- * @author Antoine
  */
 
 public class GameState {
@@ -179,25 +175,19 @@ public class GameState {
         if (monster.getMonsterStats().getLifePointActual() == 0) {
             player.getPlayerStats().grantXP(monster.getMonsterStats().getXpWorth());
             int potionNumber = gameRule.getPotionNumber();
-            int nbXpBottle = 0;
-            int nbElixir = 0;
-            int nbHpPotion = 0;
-            PotionFactory potionFactory = new PotionFactory();
+            ItemFactory itemFactory = new ItemFactory();
             for (int i = 0; i < potionNumber; i++) {
-                Potion potion = potionFactory.getPotion(gameRule.getPotionType());
-                player.pickupPotion(potion);
-                if (potion.getPotionType() == 0){
-                    nbHpPotion += 1;
-                }
-                else if (potion.getPotionType() == 1){
-                    nbElixir +=1;
-                }
-                else {
-                    nbXpBottle+=1;
-                }
+                Item potion = itemFactory.getItem(gameRule.getPotionType());
+                player.getInventory().addItem((Stuff) potion);
+
             }
             player.getPlayerStats().gainMoney(monster.getMonsterStats().getMoneyCount());
             fighting.removeMonster(monster);
+
+            int nbXpBottle = player.getInventory().getItemNumber(ItemType.XP_BOTTLE);
+            int nbElixir = player.getInventory().getItemNumber(ItemType.ELIXIR);
+            int nbHpPotion = player.getInventory().getItemNumber(ItemType.HEALTH_POTION);
+
             this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up "
                             +(colorize("%d", Colors.GREEN.textApply()))+" XP bottle(s), "
                             +(colorize("%d", Colors.BLUE.textApply()))+" Elixir(s), "

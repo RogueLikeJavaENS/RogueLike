@@ -2,9 +2,7 @@ package gameElement;
 
 import display.GridMap;
 import entity.Entity;
-import entity.object.Coins;
 import entity.object.Door;
-import entity.object.potion.PotionFactory;
 import generation.GraphDungeon;
 import utils.Direction;
 import utils.Position;
@@ -48,21 +46,6 @@ public class Dungeon {
         this.gridMapList = new ArrayList<>();
         for (Room room : roomList) {
             gridMapList.add(new GridMap(room));
-        }
-    }
-
-    private void placeTestCoins(){
-        for (Room room : roomList){
-            room.addEntity(new Coins(new Position(3, 3)));
-        }
-    }
-
-    private void placeTestPotions(){
-        PotionFactory testFactory = new PotionFactory();
-        for (Room room : roomList){
-            room.addEntity(testFactory.getPotion(0, new Position(4, 3)));
-            room.addEntity(testFactory.getPotion(1, new Position(4, 5)));
-            room.addEntity(testFactory.getPotion(2, new Position(5, 4)));
         }
     }
 

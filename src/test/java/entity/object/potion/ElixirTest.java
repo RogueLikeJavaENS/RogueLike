@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ElixirTest {
-
+/*
     @Test
     void usePotion() {
         Seed seed = new Seed();
@@ -22,5 +22,5 @@ class ElixirTest {
         PotionFactory usine = new PotionFactory();
         Potion test2 = usine.getPotion(1);
         assertFalse(test2.usePotion(gs));
-    }
+    }*/
 }

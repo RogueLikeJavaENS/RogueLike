@@ -1,11 +1,12 @@
 package generation;
 
 import display.tiles.Tile;
+import entity.Entity;
 import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
 import entity.object.Coins;
 import entity.object.Stair;
-import entity.object.potion.PotionFactory;
+import entity.object.potions.PotionEntityFactory;
 import gameElement.GameRule;
 import gameElement.Room;
 import utils.Position;
@@ -244,5 +245,4 @@ public class RoomFactory {
             }
         }
     }
-
 }

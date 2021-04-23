@@ -1,11 +1,11 @@
 package entity.living.npc.merchants;
 
-import entity.object.potion.Potion;
+import stuff.Stuff;
 import gameElement.GameState;
 
 import java.util.HashMap;
 
 public interface Merchant {
-    HashMap<Potion,Integer> getShops();
+    HashMap<Stuff,Integer> getShops();
     void doInteraction(GameState gameState);
 }
