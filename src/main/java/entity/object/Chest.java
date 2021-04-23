@@ -30,7 +30,7 @@ public class Chest extends ObjectEntity {
             if (hasKey) {
                 System.out.println("add key !");
             }
-            setSprites("/'\\", "[¤]", Colors.BROWN);
+            setSprites("\\ /", "[¤]", Colors.BROWN);
             System.out.println("add + items !");
         } else {
             // already opened !

@@ -60,7 +60,7 @@ public class RendererUI {
 
 
     /**
-     * Return the string to print the gridmap and the minimap
+     * Return the string to print the gridMap and the minimap
      *
       * @return String
      */
