@@ -2,6 +2,7 @@ package gameElement;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import stuff.item.ItemType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,8 +28,8 @@ class GameRuleTest {
 
     @Test
     void getPotionType() {
-        int a = gameRule.getPotionType();
-        assertTrue(a==0 || a == 1 || a == 2 || a == 3);
+        ItemType itemType = gameRule.getPotionType();
+        //assertTrue(a==0 || a == 1 || a == 2 || a == 3);
     }
 
     @Test

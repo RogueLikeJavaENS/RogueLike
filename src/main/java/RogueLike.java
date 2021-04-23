@@ -2,17 +2,10 @@ import display.HUD;
 import display.RendererUI;
 import entity.living.LivingEntity;
 import entity.living.player.Player;
-import entity.object.objectPotion.EmptyBottleEnity;
-import items.potion.Potion;
-import gameElement.Dungeon;
-import gameElement.Fighting;
-import gameElement.GameState;
-import generation.DungeonStructure;
-import generation.Seed;
-import utils.Direction;
-import utils.Position;
-import utils.ScanPanel;
-import utils.State;
+import stuff.item.ItemType;
+import gameElement.*;
+import generation.*;
+import utils.*;
 
 import java.awt.event.KeyEvent;
 
@@ -137,7 +130,6 @@ public class RogueLike {
         int keyCode = retrieveKey(sp);
         State state = gs.getState();
 
-        Potion potionToDelete = (Potion) new EmptyBottleEnity(null);
         switch (keyCode) { // Process the pressed key bu the player.
             case KeyEvent.VK_Z:
                 if (state == State.NORMAL || state == State.FIGHT) {
@@ -237,40 +229,19 @@ public class RogueLike {
             case KeyEvent.VK_V:
                 if (state == State.NORMAL || state == State.FIGHT) {
                     modifiedMenu = true;
-                    for (Potion potion:
-                            player.getPotionBelt()) {
-                        if (potion.getPotionType()==0){
-                            potionToDelete=potion;
-                            break;
-                        }
-                    }
-                    acted=potionToDelete.usePotion(gs);
+                    acted = player.getInventory().useItem(ItemType.HEALTH_POTION, gs);
                 }
                 break;
             case KeyEvent.VK_B:
                 if (state == State.NORMAL || state == State.FIGHT) {
                     modifiedMenu = true;
-                    for (Potion potion:
-                            player.getPotionBelt()) {
-                        if (potion.getPotionType()==1){
-                            potionToDelete=potion;
-                            break;
-                        }
-                    }
-                    acted=potionToDelete.usePotion(gs);
+                    acted = player.getInventory().useItem(ItemType.ELIXIR, gs);
                 }
                 break;
             case KeyEvent.VK_N:
                 if (state == State.NORMAL || state == State.FIGHT) {
                     modifiedMenu = true;
-                    for (Potion potion:
-                            player.getPotionBelt()) {
-                        if (potion.getPotionType()==2){
-                            potionToDelete=potion;
-                            break;
-                        }
-                    }
-                    acted=potionToDelete.usePotion(gs);
+                    acted = player.getInventory().useItem(ItemType.XP_BOTTLE, gs);
                 }
                 break;
             case KeyEvent.VK_CAPS_LOCK:

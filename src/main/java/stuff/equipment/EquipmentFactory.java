@@ -1,8 +1,6 @@
-package items.equipment;
+package stuff.equipment;
 
-import items.AbstractItemFactory;
-
-public class EquipmentFactory extends AbstractItemFactory {
+public class EquipmentFactory {
 
     public Equipment getEquipment(EquipmentType equipmentType,String name){
         if (equipmentType == EquipmentType.SWORD){

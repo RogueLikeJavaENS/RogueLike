@@ -1,15 +1,11 @@
 package entity.living.npc.merchants;
 import entity.living.npc.NPCStats;
 import entity.living.player.Player;
-import items.AbstractItemFactory;
-import items.Item;
-import items.ItemType;
-import items.object.Object;
-import items.object.ObjectFactory;
-import items.potion.*;
+import stuff.Stuff;
+import stuff.item.Item;
+import stuff.item.ItemFactory;
 import gameElement.GameState;
 import utils.*;
-import java.util.HashMap;
 
 
 public class PotionMerchant extends AbstractMerchant {
@@ -23,12 +19,12 @@ public class PotionMerchant extends AbstractMerchant {
     @Override
     public void doInteraction(GameState gameState) {
         Player player = gameState.getPlayer();
-        ObjectFactory potionFactory = new ObjectFactory();
+        ItemFactory itemFactory = new ItemFactory();
         if (player.getPlayerStats().getMoneyCount() >= 10) {
             player.getPlayerStats().spendMoney(10);
-            Object potion = potionFactory.getObject(gameState.getGameRule().getPotionType());
-            player.pickupPotion(potion);
-            gameState.getDescriptor().updateDescriptor(String.format("%s bought a %s for %d BTC",player.getName(),potion.getName(),10));
+            Item potion = itemFactory.getItem(gameState.getGameRule().getPotionType());
+            player.getInventory().addItem((Stuff) potion);
+            gameState.getDescriptor().updateDescriptor(String.format("%s bought a %s for %d BTC",player.getName(),potion,10));
         } else {
             gameState.getDescriptor().updateDescriptor(String.format("%s has not enough money to buy potion !", player.getName()));
             // not enough money.

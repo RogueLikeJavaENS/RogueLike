@@ -1,5 +1,6 @@
-package entity.object.objectPotion;
+package entity.object.potions;
 
+import stuff.item.ItemType;
 import utils.Colors;
 import utils.Position;
 
@@ -15,8 +16,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class ElixirEntity extends AbstractPotionEntity {
 
     public ElixirEntity(Position position) {
-        super(position, "( )", Colors.BLUE,  "Mana Potion", 1);
+        super(position, "( )", Colors.BLUE,  "Mana Potion", ItemType.ELIXIR);
     }
-
 
 }

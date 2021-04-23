@@ -2,6 +2,7 @@ package display;
 
 import entity.living.player.Player;
 import spells.Spell;
+import stuff.item.ItemType;
 import utils.Colors;
 
 import java.util.ArrayList;
@@ -58,9 +59,9 @@ public class HUD {
                 colorize("BTC: ", Colors.YELLOW.textApply()) +
                 colorize(String.valueOf(player.getPlayerStats().getMoneyCount()), Colors.YELLOW.textApply()) + //"BTC: xxx"
                 "\n" +
-                "Health Potion: " + colorize(String.valueOf(player.getPotionHealthNumber()), Colors.RED.textApply()) +
-                " Elixir: " + colorize(String.valueOf(player.getElixirNumber()), Colors.BLUE.textApply()) +
-                " Xp Bottle: " + colorize(String.valueOf(player.getXpBottleNumber()), Colors.GREEN.textApply()) +
+                "Health Potion: " + colorize(String.valueOf(player.getInventory().getItemNumber(ItemType.HEALTH_POTION)), Colors.RED.textApply()) +
+                " Elixir: " + colorize(String.valueOf(player.getInventory().getItemNumber(ItemType.ELIXIR)), Colors.BLUE.textApply()) +
+                " Xp Bottle: " + colorize(String.valueOf(player.getInventory().getItemNumber(ItemType.XP_BOTTLE)), Colors.GREEN.textApply()) +
                 "\n" +
                 "A : " +
                 player.getSelectedSpell().toString() +

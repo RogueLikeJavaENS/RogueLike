@@ -1,7 +1,4 @@
-package items.equipment;
-
-import items.AbstractItem;
-import items.Item;
+package stuff.equipment;
 
 public class Sword extends AbstractEquipment implements Equipment {
 

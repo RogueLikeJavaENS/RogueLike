@@ -1,14 +1,14 @@
-package entity.object.objectPotion;
+package entity.object.potions;
 
-import items.object.ObjectType;
+import stuff.item.ItemType;
 import utils.Position;
 
 public class PotionEntityFactory {
 
     public PotionEntityFactory(){}
 
-    public ObjectPotion getObjectPotion(ObjectType potionType, Position position){
-        switch (potionType){
+    public PotionEntity getPotionEntity(ItemType itemType, Position position){
+        switch (itemType) {
             case HEALTH_POTION:
                 return new PotionHealthEntity(position);
             case ELIXIR:
@@ -18,7 +18,7 @@ public class PotionEntityFactory {
                 return new XpBottleEntity(position);
 
             case EMPTY_BOTTLE:
-                return new EmptyBottleEnity(position);
+                return new EmptyBottleEntity(position);
         }
         return null;
     }

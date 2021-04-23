@@ -1,25 +1,25 @@
-package items.object.potionType;
+package stuff.item.potions;
 
 import entity.living.player.Player;
 import gameElement.GameState;
-import items.potion.Potion;
+import stuff.item.AbstractItem;
+import stuff.item.ItemType;
 import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-public class PotionHealth extends AbstractPotion implements Potion {
+public class PotionHealth extends AbstractItem {
 
     public PotionHealth() {
-        super("Health Potion", 0);
+        super("Health Potion", ItemType.HEALTH_POTION);
     }
 
-    public boolean usePotion(GameState gameState){
+    public boolean useItem(GameState gameState){
         Player player = gameState.getPlayer();
         int hpAmount = 10+(5*player.getStats().getLevel());
-        player.getPlayerStats().recoverHp(hpAmount);
         if (player.getPlayerStats().getLifePointTotal()!=player.getPlayerStats().getLifePointActual()) {
+            player.getPlayerStats().recoverHp(hpAmount);
             gameState.getDescriptor().updateDescriptor(String.format("%s used a Health Potion and gained %s HP", player.getName(), colorize(Integer.toString(hpAmount), Colors.RED.textApply())));
-            player.consummePotion(this);
             return true;
         }
         else {

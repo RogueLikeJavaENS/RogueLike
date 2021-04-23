@@ -43,7 +43,7 @@
 - Skill tree
 - Implementing differente sizes for basic potions
 - Adding new types of potion
-- Creating a rarity system for equipement (and possibly every item)
+- Creating a rarity system for equipement (and possibly every stuff)
 - Add Easter Eggs (sshhh you didn't see that)
 
 ## Project Member

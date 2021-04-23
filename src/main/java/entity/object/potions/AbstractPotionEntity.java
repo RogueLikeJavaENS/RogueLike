@@ -1,9 +1,12 @@
-package entity.object.objectPotion;
+package entity.object.potions;
 
 import display.GridMap;
 import entity.living.player.Player;
 import entity.object.ObjectEntity;
 import gameElement.GameState;
+import stuff.Stuff;
+import stuff.item.ItemFactory;
+import stuff.item.ItemType;
 import utils.Colors;
 import utils.Position;
 
@@ -12,22 +15,22 @@ import utils.Position;
  *
  * @author luca
  */
-public abstract class AbstractPotionEntity extends ObjectEntity implements ObjectPotion {
+public abstract class AbstractPotionEntity extends ObjectEntity implements PotionEntity {
     private final String potionName;
-    private final int potionType;
+    private final ItemType itemType;
 
-    public AbstractPotionEntity(Position position, String sprite, Colors color, String potionName, int potionType) {
+    public AbstractPotionEntity(Position position, String sprite, Colors color, String potionName, ItemType itemType) {
         super(position, color, true);
         this.potionName = potionName;
-        this.potionType = potionType;
+        this.itemType = itemType;
         setSprites(sprite, sprite, color);
     }
 
     public void doAction(GameState gameState){
         Player player = gameState.getPlayer();
         GridMap gridMap = gameState.getGridMap();
-        PotionFactory potionFactory = new PotionFactory();
-        player.pickupPotion(potionFactory.getItemPotion(potionType.ordinal()));
+        ItemFactory itemFactory = new ItemFactory();
+        player.getInventory().addItem((Stuff) itemFactory.getItem(itemType));
         gameState.getDescriptor().updateDescriptor(String.format("%s picked up a %s",player.getName(),this.potionName));
         gridMap.update(this, false);
     }
