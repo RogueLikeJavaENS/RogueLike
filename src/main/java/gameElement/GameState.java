@@ -174,7 +174,7 @@ public class GameState {
     public void isMonsterAlive(Monster monster) {
         if (monster.getMonsterStats().getLifePointActual() == 0) {
             player.getPlayerStats().grantXP(monster.getMonsterStats().getXpWorth());
-            int potionNumber = gameRule.getPotionNumber();
+            int potionNumber = gameRule.getNumberOfPotionOnMonster();
             ItemFactory itemFactory = new ItemFactory();
             for (int i = 0; i < potionNumber; i++) {
                 Item potion = itemFactory.getItem(gameRule.getPotionType());

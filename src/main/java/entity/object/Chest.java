@@ -18,8 +18,12 @@ public class Chest extends ObjectEntity {
         items = new ArrayList<>();
         this.hasKey = hasKey;
         this.opened = false;
-        setSprites("   ", "[¤]", Colors.BROWN);
+        setSprites(" _ ", "[¤]", Colors.BROWN);
         // items = GameRule.getItemsInChest(int floor)
+    }
+
+    private void fillChest(){
+
     }
 
     @Override
@@ -30,7 +34,7 @@ public class Chest extends ObjectEntity {
             if (hasKey) {
                 System.out.println("add key !");
             }
-            setSprites("\\ /", "[¤]", Colors.BROWN);
+            setSprites("/  ", "[¤]", Colors.BROWN);
             System.out.println("add + items !");
         } else {
             // already opened !
