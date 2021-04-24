@@ -31,11 +31,12 @@ public class RogueLike {
      * Creates an instance of the game.
      */
     RogueLike() throws InterruptedException {
-
+        StartMenu start = new StartMenu();
+        String name = start.begin();
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
         Position initialPosition = dungeon.getRoom(0).getCenter();
-        player = new Player(initialPosition,100, 100, "Hero", 1);
+        player = new Player(initialPosition,100, 100, name, 1);
         hud = new HUD(player);
         sp = new ScanPanel();
         gs = new GameState(player, dungeon, hud);
