@@ -4,6 +4,7 @@ import stuff.item.AbstractItem;
 import stuff.item.ItemType;
 
 public class GoldKey extends AbstractItem {
+
     public GoldKey() {
         super("Golden Key", ItemType.GOLD_KEY);
     }

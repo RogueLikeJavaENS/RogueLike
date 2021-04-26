@@ -3,15 +3,11 @@ package entity.object;
 import entity.living.player.Player;
 import gameElement.GameRule;
 import gameElement.GameState;
-import stuff.equipment.Equipment;
 import stuff.equipment.EquipmentFactory;
 import stuff.item.Item;
 import stuff.item.ItemFactory;
-import stuff.item.keys.Key;
 import utils.Colors;
 import utils.Position;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Chest extends ObjectEntity {
 
