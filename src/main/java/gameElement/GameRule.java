@@ -79,6 +79,16 @@ public class GameRule {
         }
     }
 
+    /**
+     * Rarity of Equipment
+     * -
+     * -
+     * -
+     * -
+     */
+
+    //TODO get the rarity of an equipment
+
     ////////////  Chest  =   true : classic / false : golden
     /**
      * Between 1 and 3 potion in a classic chest
@@ -96,7 +106,7 @@ public class GameRule {
      * Between 0 and 5 gold in a classic chest
      * Between 30 and 50 gold in a golden chest
      */
-    public int  getNumberOfGoldInClassicChest(boolean isClassic){
+    public int  getNumberOfGoldInChest(boolean isClassic){
         if (isClassic){
             return GEN.nextInt(6);
         }
@@ -106,16 +116,13 @@ public class GameRule {
     }
     /**
      * Between 1 and 3 equipment in a classic chest
-     * Between 5 and 10 equipment in a golden chest
      */
-    public int getNumberOfEquipmentInClassicChest(boolean isClassic){
-        if (isClassic){
-            return GEN.nextInt(3)+1;
-        }
-        else {
-            return GEN.nextInt(6)+5;
-        }
+    public int getNumberOfEquipmentInChest(){
+        return GEN.nextInt(3)+1;
     }
+
+
+
     /**
      * 5% of luck to have a golden key
      */

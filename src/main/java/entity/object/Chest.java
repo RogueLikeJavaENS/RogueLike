@@ -1,7 +1,13 @@
 package entity.object;
 
+import entity.living.player.Player;
+import gameElement.GameRule;
 import gameElement.GameState;
+import stuff.equipment.Equipment;
+import stuff.equipment.EquipmentFactory;
 import stuff.item.Item;
+import stuff.item.ItemFactory;
+import stuff.item.keys.Key;
 import utils.Colors;
 import utils.Position;
 import java.util.ArrayList;
@@ -9,21 +15,41 @@ import java.util.List;
 
 public class Chest extends ObjectEntity {
 
-    private List<Item> items;
-    private final boolean hasKey;
+    private final boolean isClassic;
     private boolean opened;
 
-    public Chest(Position position, boolean hasKey) {
+    public Chest(Position position, boolean isClassic) {
         super(position, Colors.BROWN, false);
-        items = new ArrayList<>();
-        this.hasKey = hasKey;
+        this.isClassic = isClassic;
+        if (isClassic) {
+            setSprites(" _ ", "[¤]", Colors.BROWN);
+        }
+        else{
+            setSprites(" _ ", "[¤]", Colors.YELLOW);
+        }
         this.opened = false;
-        setSprites(" _ ", "[¤]", Colors.BROWN);
-        // items = GameRule.getItemsInChest(int floor)
     }
 
-    private void fillChest(){
+    private void fillChest(boolean isClassic, GameState gameState){
+        GameRule gr = new GameRule();
+        Player player = gameState.getPlayer();
+        int nbEquipment = gr.getNumberOfEquipmentInChest();
 
+        int nbPotion = gr.getNumberOfPotionInChest(isClassic);
+        ItemFactory itemFactory = new ItemFactory();
+        for (int i=0; i<nbPotion; i++){
+            Item itemToAdd = itemFactory.getItem(gr.getPotionType());
+            // Add on the player inventory
+        }
+        EquipmentFactory equipmentFactory = new EquipmentFactory();
+        for(int i=0; i<nbEquipment; i++){
+            //Equipment equipment = equipmentFactory.getEquipment()
+            // Add on the player inventory
+        }
+
+        //Gold
+        int nbGold = gr.getNumberOfGoldInChest(isClassic);
+        player.getPlayerStats().gainMoney(nbGold);
     }
 
     @Override
@@ -31,9 +57,6 @@ public class Chest extends ObjectEntity {
         if (!opened) {
             opened = true;
             // give items here
-            if (hasKey) {
-                System.out.println("add key !");
-            }
             setSprites("/  ", "[¤]", Colors.BROWN);
             System.out.println("add + items !");
         } else {
