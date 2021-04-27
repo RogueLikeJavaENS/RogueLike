@@ -1,14 +1,11 @@
 import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class StartMenu {
 
-    private String[] Title;
+    private final String[] Title;
 
     public StartMenu() {
         Title = new String[11];
@@ -28,12 +25,22 @@ public class StartMenu {
     public String[] getTitle() {
         return Title;
     }
+
     public String begin() {
         for (int i = 0; i < 11; i++) {
             System.out.println(Title[i]);
         }
-        System.out.println("So, whats you're name hero ?");
+        System.out.println("So, whats you're name hero ? (max 14 characters)");
+        return getName();
+    }
+
+    private String getName(){
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        String name = scanner.nextLine();
+        while (name.length()==0 || name.length()>14){
+            System.out.println("We're sadly limited by the technology of our times, enter a name \n that must between 1 and 14 characters long.");
+            name = scanner.nextLine();
+        }
+        return name;
     }
 }
