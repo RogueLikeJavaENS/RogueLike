@@ -1,5 +1,7 @@
 package gameElement;
 
+import stuff.equipment.EquipmentRarity;
+import stuff.equipment.EquipmentType;
 import stuff.item.ItemType;
 import java.util.Random;
 
@@ -80,14 +82,57 @@ public class GameRule {
     }
 
     /**
-     * Rarity of Equipment
-     * -
-     * -
-     * -
-     * -
+     * Equipment Type
+     * - WEAPON 34%
+     * - SHIELD 11%
+     * - ARMOR 11%
+     * - BOOT 11%
+     * - GLOVE 11%
+     * - HELMET 11%
+     * - PANT 11%
      */
+    public EquipmentType getEquipmentType(){
+        int nb = GEN.nextInt(100);
+        if (nb < 34){ return EquipmentType.WEAPON; }
+        else if (nb < 45) { return EquipmentType.SHIELD; }
+        else if (nb < 56) { return EquipmentType.ARMOR; }
+        else if (nb < 67) { return EquipmentType.BOOT; }
+        else if (nb < 78) { return EquipmentType.GLOVE; }
+        else if (nb < 89) { return EquipmentType.HELMET; }
+        else { return EquipmentType.PANT; }
+    }
 
-    //TODO get the rarity of an equipment
+
+    /**
+     * Get the rarity of Equipment
+     *
+     * Classic
+     * - E classic 39% / gold 0%
+     * - D classic 30% / gold 0%
+     * - C classic 20% / gold 3%
+     * - B classic 10% / gold 22%
+     * - A classic 1% / gold 25%
+     * - S classic 0% / gold 25%
+     * - L classic 0% / gold 25%
+     *
+     */
+    public EquipmentRarity getEquipmentRarity(boolean isClassic){
+        int nb = GEN.nextInt(100);
+        if (isClassic){
+            if (nb < 39){ return EquipmentRarity.E; }
+            else if (nb < 69) { return EquipmentRarity.D; }
+            else if (nb < 89) { return EquipmentRarity.C; }
+            else if (nb < 99) { return EquipmentRarity.B; }
+            else { return EquipmentRarity.A; }
+        }
+        else{
+            if (nb < 3){ return EquipmentRarity.C; }
+            else if (nb < 25) { return EquipmentRarity.B; }
+            else if (nb < 50) { return EquipmentRarity.A; }
+            else if (nb < 75) { return EquipmentRarity.S; }
+            else { return EquipmentRarity.L; }
+        }
+    }
 
     ////////////  Chest  =   true : classic / false : golden
     /**

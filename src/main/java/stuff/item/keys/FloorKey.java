@@ -6,6 +6,6 @@ import stuff.item.ItemType;
 public class FloorKey extends AbstractItem {
 
     public FloorKey() {
-        super("Floor Key", ItemType.KEY);
+        super("Floor Key", ItemType.FLOORKEY);
     }
 }

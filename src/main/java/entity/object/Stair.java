@@ -6,6 +6,7 @@ import gameElement.GameState;
 import gameElement.MiniMap;
 import generation.DungeonStructure;
 import generation.Seed;
+import stuff.item.ItemType;
 import stuff.item.keys.FloorKey;
 import utils.Colors;
 import utils.Position;
@@ -32,8 +33,9 @@ public class Stair extends ObjectEntity{
         }
         else {
             Player player = gameState.getPlayer();
-            if (/*verifier la presence de la FloorKey*/){
-                /*Enlever la FloorKey de l'inventaire du joueur*/
+            if (player.getInventory().containsItem(ItemType.FLOORKEY)){
+                player.getInventory().useItem(ItemType.FLOORKEY,gameState);
+                open = true;
                 gameState.getDescriptor().updateDescriptor("The stair are open, you can go to the next floor whenever you want\n");
             }
             else{
@@ -51,6 +53,5 @@ public class Stair extends ObjectEntity{
         gameState.updateChangingRoom(dungeon.getRoom(0));
         gameState.setMiniMap(new MiniMap(dungeon, gameState));
         gameState.getDescriptor().updateDescriptor(String.format("%s found the stairs and is now on the floor %d", gameState.getPlayer().getName(), gameState.getDungeon().getFloor()));
-
     }
 }

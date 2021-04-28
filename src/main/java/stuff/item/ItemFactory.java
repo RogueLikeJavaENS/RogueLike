@@ -18,7 +18,7 @@ public class ItemFactory {
                 return new EmptyBottle();
             case XP_BOTTLE:
                 return new XpBottle();
-            case KEY:
+            case FLOORKEY:
                 return new FloorKey();
             case GOLD_KEY:
                 return new GoldKey();

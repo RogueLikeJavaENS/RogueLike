@@ -211,6 +211,18 @@ public class Inventory {
         }
     }
 
+    public boolean containsItem(ItemType type){
+        for (Stuff stuff : inventory){
+            if (stuff.isUsable()){
+                Item item = (Item) stuff;
+                if (item.getType() == type){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private static int containsStuff(Stuff stuff, List<CoupleStuff> coupleStuffList) {
         for (int i = 0; i < coupleStuffList.size(); i++) {
             if (coupleStuffList.get(i).getStuff().equals(stuff)) {

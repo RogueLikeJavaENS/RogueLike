@@ -6,4 +6,5 @@ public interface Stuff {
     String getName();
     boolean isEquipable();
     boolean isUsable();
+
 }

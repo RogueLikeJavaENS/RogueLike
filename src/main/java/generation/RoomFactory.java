@@ -40,6 +40,8 @@ public class RoomFactory {
             case START:
                 // add some stuffs that make clear it's the start room.
                 break;
+            case BOSS:
+
             case END:
                 addStairs(room);
                 // add a boss,

@@ -10,6 +10,7 @@ import stuff.item.ItemFactory;
 import stuff.item.ItemType;
 import gameElement.*;
 import generation.*;
+import stuff.item.keys.FloorKey;
 import stuff.item.potions.Elixir;
 import stuff.item.potions.PotionHealth;
 import utils.*;
@@ -49,7 +50,7 @@ public class RogueLike {
         player.getInventory().addItem(new Elixir());
         player.getInventory().addItem(new Elixir());
 
-
+        player.getInventory().addItem(new FloorKey());
         player.getInventory().addItem(new Helmet(2, EquipmentRarity.E, EquipmentType.HELMET));
         player.getInventory().addItem(new Armor(2, EquipmentRarity.E, EquipmentType.ARMOR));
         hud = new HUD(player);
