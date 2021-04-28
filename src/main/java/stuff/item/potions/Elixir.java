@@ -17,7 +17,7 @@ public class Elixir extends AbstractItem {
     public boolean useItem(GameState gameState) {
         Player player = gameState.getPlayer();
         int mpAmount = 10+(5*player.getStats().getLevel());
-        if (player.getPlayerStats().getManaPointTotal()!=player.getPlayerStats().getManaPointActual()) {
+        if (player.getPlayerStats().getManaPointNatural()!=player.getPlayerStats().getManaPointActual()) {
             player.getPlayerStats().recoverMp(mpAmount);
             gameState.getDescriptor().updateDescriptor(String.format("%s used an Elixir of Mana and gained %s mana", player.getName(), colorize(Integer.toString(mpAmount), Colors.BLUE.textApply())));
             return true;

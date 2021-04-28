@@ -74,10 +74,10 @@ public class PlayerStats extends AbstractStats {
     }
 
     private void levelUp(){
-        upgradeLifePointTotal(classFactor[0]);
-        upgradeManaPointTotal(classFactor[1]);
+        upgradeLifePointNatural(classFactor[0]);
+        upgradeManaPointNatural(classFactor[1]);
         upInitiativeNatural(classFactor[2]);
-        changeDamageRaw(classFactor[3]);
+        changeDamageNatural(classFactor[3]);
         changeArmorNatural(classFactor[4]);
         setLevel(getLevel()+1);
     }

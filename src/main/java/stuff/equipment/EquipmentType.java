@@ -1,5 +1,5 @@
 package stuff.equipment;
 
 public enum EquipmentType {
-    SWORD;
+    WEAPON, SHIELD, ARMOR, BOOT, GLOVE, HELMET, PANT
 }

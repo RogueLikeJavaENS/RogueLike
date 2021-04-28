@@ -130,4 +130,19 @@ public class GameRule {
         return (GEN.nextInt(100) < 5);
     }
 
+    public int getBonusDamage(int level) {
+        return level;
+    }
+    public int getBonusMana(int level) {
+        return level;
+    }
+    public int getBonusInitiative(int level) {
+        return level;
+    }
+    public int getBonusLife(int level) {
+        return level;
+    }
+    public int getBonusArmor(int level) {
+        return level;
+    }
 }
