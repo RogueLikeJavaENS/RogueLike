@@ -158,6 +158,17 @@ public class GameState {
         }
     }
 
+    public boolean isThereMonstersInventory() {
+        boolean acted = false;
+        List<LivingEntity> monsters = getGridMap().getMonsters();
+        if (!monsters.isEmpty()) {
+            state = State.FIGHT;
+            updateRange();
+            acted = true;
+        }
+        return acted;
+    }
+
     /**
      * Check if the player is alive after a moves or a monster attack.
      */
@@ -178,7 +189,7 @@ public class GameState {
             ItemFactory itemFactory = new ItemFactory();
             for (int i = 0; i < potionNumber; i++) {
                 Item potion = itemFactory.getItem(gameRule.getPotionType());
-                player.getInventory().addItem((Stuff) potion);
+                player.getInventory().addItem(potion);
 
             }
             player.getPlayerStats().gainMoney(monster.getMonsterStats().getMoneyCount());

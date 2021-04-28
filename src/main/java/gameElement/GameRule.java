@@ -113,4 +113,19 @@ public class GameRule {
         return numberOfGoldInTreasureRoom.get(GEN.nextInt(numberOfGoldInTreasureRoom.size()));
     }
 
+    public int getBonusDamage(int level) {
+        return level;
+    }
+    public int getBonusMana(int level) {
+        return level;
+    }
+    public int getBonusInitiative(int level) {
+        return level;
+    }
+    public int getBonusLife(int level) {
+        return level;
+    }
+    public int getBonusArmor(int level) {
+        return level;
+    }
 }

@@ -105,6 +105,7 @@ public class RendererUI {
                 globalSB.append("\t\t###################################\n" +
                                 "\t\t#            INVENTORY            #\n" +
                                 "\t\t###################################\n");
+                globalSB.append(gs.getPlayer().getInventory().toString());
                 break;
 
             case NORMAL: // Print the HUD, the room and the minimap
