@@ -18,7 +18,8 @@ import java.util.List;
 
 public abstract class AbstractEntity implements Entity {
     private Position position;
-    private boolean isAccessible;
+    private boolean isPlayerAccessible;
+    private boolean isNPCAccessible;
     private List<String> basicSprites; // sprite without color
     private Colors basicColor; // color of the Entity if it's not in a specific state
     private List<String> spritesToPrint; // the sprite to print on the console
@@ -28,11 +29,12 @@ public abstract class AbstractEntity implements Entity {
      *
      * @param position of the abstractEntity
      * @param color of the abstractEntity
-     * @param isAccessible true if another entity could be on the same tile else false
+     * @param isPlayerAccessible true if another entity could be on the same tile else false
      */
-    public AbstractEntity(Position position, Colors color, boolean isAccessible){
+    public AbstractEntity(Position position, Colors color, boolean isPlayerAccessible, boolean isNPCAccessible){
         this.position = position;
-        this.isAccessible = isAccessible;
+        this.isPlayerAccessible = isPlayerAccessible;
+        this.isNPCAccessible = isNPCAccessible;
         basicSprites = new ArrayList<>();
         basicSprites.add("");
         basicSprites.add("");
@@ -64,19 +66,27 @@ public abstract class AbstractEntity implements Entity {
      * @return true or false
      */
     @Override
-    public boolean getIsAccessible() { return isAccessible; }
+    public boolean getIsPlayerAccessible() { return isPlayerAccessible; }
 
     /**
      * Set the boolean which describe the accessibility of the entity
-     * @param isAccessible true or false
+     * @param isPlayerAccessible true or false
      */
-    public void setIsAccessible(boolean isAccessible){
-        this.isAccessible = isAccessible;
+    public void setIsPlayerAccessible(boolean isPlayerAccessible){
+        this.isPlayerAccessible = isPlayerAccessible;
     }
     /**
      *Return the basic color of the entity
      * @return a color
      */
+
+    public boolean getIsNPCAccessible(){
+        return isNPCAccessible;
+    }
+    public void setIsNPCAccessible(boolean isNPCAccessible){
+        this.isNPCAccessible = isNPCAccessible;
+    }
+
     public Colors getBasicColor() { return basicColor; }
 
     /**

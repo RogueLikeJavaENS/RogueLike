@@ -21,7 +21,7 @@ public class LivingEntity extends AbstractEntity {
     private Direction direction;
 
     public LivingEntity(Position position, String name, Colors color, AbstractStats stats) throws IllegalArgumentException {
-        super(position, color,false); // false because a living entity is never accessible.
+        super(position, color,false,false); // false because a living entity is never accessible.
         this.name = name;
         this.stats = stats;
 
@@ -40,6 +40,7 @@ public class LivingEntity extends AbstractEntity {
     public Position getPosition() {
         return super.getPosition();
     }
+
 
     public Direction getDirection() {
         return direction;

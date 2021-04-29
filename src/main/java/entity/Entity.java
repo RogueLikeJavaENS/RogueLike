@@ -18,6 +18,7 @@ public interface Entity {
 
     String getSprites(int i);
     Position getPosition();
-    boolean getIsAccessible();
+    boolean getIsNPCAccessible();
+    boolean getIsPlayerAccessible();
 
 }

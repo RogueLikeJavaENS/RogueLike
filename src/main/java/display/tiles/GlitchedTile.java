@@ -10,6 +10,6 @@ import display.AbstractTile;
 public class GlitchedTile extends AbstractTile {
 
     public GlitchedTile() {
-        super(" □ ", false);
+        super(" □ ", false,false);
     }
 }

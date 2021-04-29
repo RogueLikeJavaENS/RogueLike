@@ -36,6 +36,7 @@ public class RoomFactory {
         switch (roomType) {
             case START:
                 addChest(room,true);    // Basic equipment to start a new adventure
+
                 // add some stuffs that make clear it's the start room.
                 break;
             case BOSS:

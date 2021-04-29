@@ -4,6 +4,6 @@ import display.AbstractTile;
 
 public class EmptyTile extends AbstractTile {
     public EmptyTile() {
-        super("   ", false);
+        super("   ", false,false);
     }
 }

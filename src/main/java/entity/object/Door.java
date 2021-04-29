@@ -27,7 +27,7 @@ public class Door extends ObjectEntity {
      * @param isOpen boolean
      */
     public Door(Position position, Room nextRoom, Direction direction,boolean isOpen) {
-        super(position,Colors.BROWN, true);
+        super(position,Colors.BROWN, isOpen);
         this.direction = direction;
         this.nextRoom = nextRoom;
         this.isOpen = isOpen;
@@ -36,7 +36,7 @@ public class Door extends ObjectEntity {
         }
         else {
             setSprites("[X]", "[X]", Colors.BROWN);
-            setIsAccessible(false);
+            setIsPlayerAccessible(false);
         }
     }
 
@@ -52,7 +52,7 @@ public class Door extends ObjectEntity {
      */
     private void openDoor(){
         this.isOpen = true;
-        this.setIsAccessible(true);
+        this.setIsPlayerAccessible(true);
         setSprites("[ ]", "[ ]", Colors.BROWN);
 
     }
@@ -70,7 +70,7 @@ public class Door extends ObjectEntity {
      */
     private void closeDoor(){
         this.isOpen = false;
-        this.setIsAccessible(false);
+        this.setIsPlayerAccessible(false);
         setSprites("[X]", "[X]", Colors.BROWN);
     }
 

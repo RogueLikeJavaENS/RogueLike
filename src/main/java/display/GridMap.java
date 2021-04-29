@@ -179,11 +179,11 @@ public class GridMap {
         else if (abs >= tiles[0].length || ord >= tiles.length) {
             return false;
         }
-        else if (!getTileAt(abs, ord).isAccessible()) {
+        else if (!getTileAt(abs, ord).isPlayerAccessible()) {
             return false;
         }
         for (Entity entity : getEntitiesAt(abs, ord)) {
-            if (!(entity instanceof Monster) && (!entity.getIsAccessible())) {
+            if (!(entity instanceof Monster) && (!entity.getIsPlayerAccessible())) {
                 return false;
             }
         }

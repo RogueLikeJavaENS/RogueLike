@@ -3,6 +3,7 @@ package gameElement;
 import display.Descriptor;
 import display.GridMap;
 import display.HUD;
+import display.Tile;
 import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.npc.merchants.Merchant;
@@ -86,18 +87,19 @@ public class GameState {
         boolean acted = false;                  // boolean used in RogueLike to see if the player consumed his action.
         int abs = player.getPosition().getAbs();
         int ord = player.getPosition().getOrd();
-
-        if (gridMap.getTileAt(abs + x, ord + y).isAccessible()) {  // check if the wanted direction is accessible.
+        Tile tile = gridMap.getTileAt(abs + x, ord + y);
+        if (tile.isPlayerAccessible()) {  // check if the wanted direction is accessible.
             boolean accessibilityEntity = true;
             List<Entity> entitiesAt = gridMap.getEntitiesAt(abs + x, ord + y);
             for (Entity entity : entitiesAt){   // check if there are no Entity that prevent the player to move on.
-                if (!entity.getIsAccessible()){
+                if (!entity.getIsPlayerAccessible()){
                     accessibilityEntity = false;
                     break;
                 }
             }
             if (accessibilityEntity){
                 player.getPosition().updatePos(x, y);
+                tile.doAction(this);
                 acted = true;
             }
         }

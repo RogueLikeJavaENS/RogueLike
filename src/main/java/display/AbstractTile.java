@@ -1,12 +1,15 @@
 package display;
 
+import gameElement.GameState;
+
 public abstract class AbstractTile implements Tile {
     private final String sprite;
-    private boolean isAccessible;
-
-    public AbstractTile(String sprite, boolean isAccessible) {
+    private boolean isPlayerAccessible;
+    private boolean isNPCAccessible;
+    public AbstractTile(String sprite, boolean isPlayerAccessible, boolean isNPCAccessible) {
         this.sprite = sprite;
-        this.isAccessible = isAccessible;
+        this.isPlayerAccessible = isPlayerAccessible;
+        this.isNPCAccessible = isNPCAccessible;
     }
 
     public String toString() {
@@ -14,11 +17,25 @@ public abstract class AbstractTile implements Tile {
     }
 
     @Override
-    public boolean isAccessible() {
-        return isAccessible;
+    public boolean isPlayerAccessible() {
+        return isPlayerAccessible;
     }
 
-    public void setAccessible(boolean accessible) {
-        isAccessible = accessible;
+    @Override
+    public void setPlayerAccessible(boolean isPlayerAccessible) {
+        this.isPlayerAccessible = isPlayerAccessible;
     }
+
+    @Override
+    public boolean isNPCAccessible() { return isNPCAccessible; }
+
+    @Override
+    public void setNPCAccessible(boolean NPCAccessible) { isNPCAccessible = NPCAccessible; }
+
+    @Override
+    public void doAction(GameState gameState){
+        // Do nothing
+    }
+
+
 }

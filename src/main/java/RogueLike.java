@@ -49,7 +49,6 @@ public class RogueLike {
         player.getInventory().addItem(new PotionHealth());
         player.getInventory().addItem(new Elixir());
         player.getInventory().addItem(new Elixir());
-
         player.getInventory().addItem(new FloorKey());
         player.getInventory().addItem(new Helmet(2, EquipmentRarity.E, EquipmentType.HELMET));
         player.getInventory().addItem(new Armor(2, EquipmentRarity.E, EquipmentType.ARMOR));
