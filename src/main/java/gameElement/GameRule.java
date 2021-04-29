@@ -13,6 +13,21 @@ import java.util.Random;
 public class GameRule {
     private final static Random GEN = new Random();
 
+    /////////////// Floor //////////////
+
+    public int getNumberOfClassicChestOnFloor(){
+        return GEN.nextInt(3)+1;
+    }
+
+    public boolean presenceOfGoldChestOnFloor(){
+        int nb = GEN.nextInt(100);
+        if (nb == 0){
+            return true;
+        }
+        return false;
+    }
+
+    //////////// Treasure Room //////////
     /**
      * between 3 and 6 potions in Treasure Room.
      */
@@ -34,6 +49,7 @@ public class GameRule {
     }
 
 
+    ////////// Monster Loot //////////
     /**
      * Monster
      * - 50% 1 potion
@@ -62,6 +78,7 @@ public class GameRule {
     }
 
 
+    ///////////// Type of stuff //////////////
     /**
      * Type of Potion
      * - 40% health
@@ -166,14 +183,16 @@ public class GameRule {
         return GEN.nextInt(3)+1;
     }
 
-
-
     /**
      * 5% of luck to have a golden key
      */
     public boolean presenceOfGoldenKeyInClassicChest(){
         return (GEN.nextInt(100) < 5);
     }
+
+
+
+    ///////////// Bonus of equipment //////////////
 
     public int getBonusDamage(int level) {
         return level;

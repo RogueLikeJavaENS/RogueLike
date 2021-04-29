@@ -4,18 +4,16 @@ import display.tiles.Tile;
 import entity.Entity;
 import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
+import entity.object.Chest;
 import entity.object.Coins;
+import entity.object.Door;
 import entity.object.Stair;
 import entity.object.potions.PotionEntityFactory;
 import gameElement.GameRule;
 import gameElement.Room;
 import utils.Position;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class RoomFactory {
     private final int width; // 15
@@ -41,11 +39,12 @@ public class RoomFactory {
                 // add some stuffs that make clear it's the start room.
                 break;
             case BOSS:
-
+                break;
             case END:
                 addStairs(room);
-                // add a boss,
-                // add a stairs to go deeper in the dungeon.
+                // close the door
+
+
                 break;
             case NORMAL:
                 // nothing special for now.
@@ -60,6 +59,9 @@ public class RoomFactory {
             case TREASURE:
                 addCoins(room, gameRule.getNumberOfGoldInTreasureRoom());
                 addPotions(room, gameRule.getNumberOfPotionInTreasureRoom());
+                addGoldenChest(room);
+                break;
+
         }
         // add some traps, walls, holes...
         return room;
@@ -96,6 +98,12 @@ public class RoomFactory {
             if (currentAvailablePositions.size() != 0) {
                 room.addEntity(new Coins(currentAvailablePositions.remove(0)));
             }
+        }
+    }
+
+    private void addGoldenChest(Room room){
+        if (currentAvailablePositions.size() != 0){
+            room.addEntity(new Chest(currentAvailablePositions.get(0),false));
         }
     }
 

@@ -43,7 +43,7 @@ public class RogueLike {
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
         Position initialPosition = dungeon.getRoom(0).getCenter();
-        player = new Player(initialPosition,100, 100, "Hero", 1);
+        player = new Player(initialPosition,1000, 100, "Hero", 1);
         player.getInventory().addItem(new PotionHealth());
         player.getInventory().addItem(new PotionHealth());
         player.getInventory().addItem(new PotionHealth());
@@ -53,6 +53,8 @@ public class RogueLike {
         player.getInventory().addItem(new FloorKey());
         player.getInventory().addItem(new Helmet(2, EquipmentRarity.E, EquipmentType.HELMET));
         player.getInventory().addItem(new Armor(2, EquipmentRarity.E, EquipmentType.ARMOR));
+
+
         hud = new HUD(player);
         sp = new ScanPanel();
         gs = new GameState(player, dungeon, hud);

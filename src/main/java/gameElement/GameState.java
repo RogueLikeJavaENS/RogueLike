@@ -40,7 +40,7 @@ public class GameState {
     public GameState(Player player, Dungeon dungeon, HUD hud) {
         this.dungeon = dungeon;
         this.player = player;
-        this.currentRoom = dungeon.getRoomList().get(0);
+        this.currentRoom = dungeon.getRoomList().get(0); //dungeon.getRoomList().size()-2
         this.gridMap = dungeon.getGridMap(currentRoom);
         this.gameRule = new GameRule();
         this.help = false;

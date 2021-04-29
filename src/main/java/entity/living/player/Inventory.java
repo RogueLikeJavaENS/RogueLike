@@ -231,4 +231,15 @@ public class Inventory {
         }
         return -1;
     }
+
+    public void removeItem(ItemType type){
+        for(Stuff stuff : inventory){
+            if (stuff.isUsable()){
+                Item item = (Item) stuff;
+                if (item.getType() == type){
+                    inventory.remove(item);
+                }
+            }
+        }
+    }
 }

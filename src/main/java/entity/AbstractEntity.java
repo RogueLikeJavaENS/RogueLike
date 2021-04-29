@@ -18,7 +18,7 @@ import java.util.List;
 
 public abstract class AbstractEntity implements Entity {
     private Position position;
-    private final boolean isAccessible;
+    private boolean isAccessible;
     private List<String> basicSprites; // sprite without color
     private Colors basicColor; // color of the Entity if it's not in a specific state
     private List<String> spritesToPrint; // the sprite to print on the console
@@ -66,6 +66,13 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public boolean getIsAccessible() { return isAccessible; }
 
+    /**
+     * Set the boolean which describe the accessibility of the entity
+     * @param isAccessible true or false
+     */
+    public void setIsAccessible(boolean isAccessible){
+        this.isAccessible = isAccessible;
+    }
     /**
      *Return the basic color of the entity
      * @return a color

@@ -16,32 +16,17 @@ import java.util.ArrayList;
 import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class Stair extends ObjectEntity{
-    private boolean open;
 
     public Stair(Position position, boolean isAccessible) {
         super(position,Colors.BROWN, isAccessible);
-        open = false;
         setSprites("  _", "_=|", Colors.BROWN);
     }
 
 
 
     @Override
-    public void doInteraction(GameState gameState){
-        if (open){
-            takeStair(gameState);
-        }
-        else {
-            Player player = gameState.getPlayer();
-            if (player.getInventory().containsItem(ItemType.FLOORKEY)){
-                player.getInventory().useItem(ItemType.FLOORKEY,gameState);
-                open = true;
-                gameState.getDescriptor().updateDescriptor("The stair are open, you can go to the next floor whenever you want\n");
-            }
-            else{
-                gameState.getDescriptor().updateDescriptor("You don't have the key, you can't go upward.");
-            }
-        }
+    public void doAction(GameState gameState){
+        takeStair(gameState);
     }
 
     public void takeStair(GameState gameState) {
@@ -52,6 +37,7 @@ public class Stair extends ObjectEntity{
         gameState.getPlayer().setPosition(initialPos);
         gameState.updateChangingRoom(dungeon.getRoom(0));
         gameState.setMiniMap(new MiniMap(dungeon, gameState));
+        gameState.getPlayer().getInventory().removeItem(ItemType.FLOORKEY);
         gameState.getDescriptor().updateDescriptor(String.format("%s found the stairs and is now on the floor %d", gameState.getPlayer().getName(), gameState.getDungeon().getFloor()));
     }
 }

@@ -2,6 +2,7 @@ package gameElement;
 
 import display.tiles.Tile;
 import entity.Entity;
+import entity.object.Door;
 import generation.RoomType;
 import utils.Direction;
 import utils.Position;
@@ -111,5 +112,15 @@ public class Room {
         forbiddenPosition.add(new Position(1, height/2)); // West
         forbiddenPosition.add(new Position(width-2, height/2)); // East
         return forbiddenPosition;
+    }
+
+    public List<Door> getDoors(){
+        List<Door> doors = new ArrayList<>();
+        for (Entity entity : entities){
+            if (entity instanceof Door){
+                doors.add((Door) entity);
+            }
+        }
+        return doors;
     }
 }
