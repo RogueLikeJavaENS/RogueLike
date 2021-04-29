@@ -32,7 +32,7 @@ public class Chest extends ObjectEntity {
      * @param isClassic true if the chest is classic false if the chest is golden
      */
     public Chest(Position position, boolean isClassic) {
-        super(position, Colors.WHITE, false);
+        super(position, Colors.WHITE, false,false);
         this.isClassic = isClassic;
         if (isClassic) {
             setSprites(" _ ", "[¤]", Colors.BROWN);

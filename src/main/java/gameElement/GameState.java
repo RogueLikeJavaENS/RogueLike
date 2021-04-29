@@ -6,11 +6,9 @@ import display.HUD;
 import display.Tile;
 import entity.Entity;
 import entity.living.LivingEntity;
-import entity.living.npc.merchants.Merchant;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
 import spells.*;
-import stuff.Stuff;
 import stuff.item.Item;
 import stuff.item.ItemFactory;
 import stuff.item.ItemType;
@@ -99,7 +97,6 @@ public class GameState {
             }
             if (accessibilityEntity){
                 player.getPosition().updatePos(x, y);
-                tile.doAction(this);
                 acted = true;
             }
         }

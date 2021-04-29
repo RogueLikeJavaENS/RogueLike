@@ -4,12 +4,11 @@ import display.tiles.Tile;
 import entity.Entity;
 import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
-import entity.object.Chest;
-import entity.object.Coins;
-import entity.object.Stair;
+import entity.object.*;
 import entity.object.potions.PotionEntityFactory;
 import gameElement.GameRule;
 import gameElement.Room;
+import utils.Colors;
 import utils.Position;
 import java.util.List;
 import java.util.Random;
@@ -36,7 +35,8 @@ public class RoomFactory {
         switch (roomType) {
             case START:
                 addChest(room,true);    // Basic equipment to start a new adventure
-
+                room.addEntity(new Spike(new Position(5,5)));
+                room.addEntity(new Hole(new Position(7,7)));
                 // add some stuffs that make clear it's the start room.
                 break;
             case BOSS:
@@ -70,7 +70,7 @@ public class RoomFactory {
     }
 
     private void addStairs(Room room) {
-        room.addEntity(new Stair(room.getCenter(), true));
+        room.addEntity(new Stair(room.getCenter()));
     }
 
     private void addMonsters(Room room) {
@@ -118,6 +118,23 @@ public class RoomFactory {
     private void addMerchant(Room room) {
         room.addEntity(new PotionMerchant(currentAvailablePositions.remove(0)));
     }
+
+    private void addHole(Room room){
+        int nbHole = gameRule.numberOfHole();
+        for (int i = 0; i<nbHole; i++){
+            int sizeOfHole = gameRule.sizeOfHole();
+
+        }
+    }
+
+    private void addSpike(Room room){
+        int nbSpike = gameRule.numberOfSpike();
+        for (int i = 0; i<nbSpike; i++){
+            int sizeOfSpike = gameRule.sizeOfSpike();
+        }
+    }
+
+
 
     /**
      * @param current The current number of the room

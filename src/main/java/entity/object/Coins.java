@@ -24,7 +24,7 @@ public class Coins extends ObjectEntity {
     private final int value;
 
     public Coins(Position position) {
-        super(position,Colors.YELLOW, true);
+        super(position,Colors.YELLOW, true,true);
         this.value = 1;
         setSprites(" O ", "   ", Colors.YELLOW);
     }

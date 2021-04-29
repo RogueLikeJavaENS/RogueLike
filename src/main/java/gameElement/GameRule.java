@@ -13,6 +13,40 @@ import java.util.Random;
 public class GameRule {
     private final static Random GEN = new Random();
 
+    /////////// Hole and Spike /////////
+
+    /**
+     * 0 to 3 hole in a room
+     */
+    public int numberOfHole(){
+        return GEN.nextInt(4);
+    }
+
+    /**
+     * 1 to 3 tiles of hole
+     */
+    public int sizeOfHole(){
+        return GEN.nextInt(3)+1;
+    }
+
+
+
+    /**
+     * 0 to 2 path of spike in a room
+     */
+    public int numberOfSpike(){
+        return GEN.nextInt(3);
+    }
+
+    /**
+     * 1 to 7 tiles of spike
+     */
+    public int sizeOfSpike(){
+        return GEN.nextInt(7)+1;
+    }
+
+
+
     /////////////// Monster Room //////////////
 
     /**

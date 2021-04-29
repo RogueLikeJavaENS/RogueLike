@@ -19,7 +19,7 @@ class StairTest {
         Player test = new Player(null,100, 100, "test", 100);
         HUD hud = new HUD(test);
         GameState gs = new GameState(test, dungeon, hud);
-        Stair test2 = new Stair(null, true);
+        Stair test2 = new Stair(null);
         int temp = gs.getDungeon().getFloor();
         test2.doAction(gs);
         assertEquals(temp, (gs.getDungeon().getFloor() - 1));

@@ -20,7 +20,7 @@ public abstract class AbstractPotionEntity extends ObjectEntity implements Potio
     private final ItemType itemType;
 
     public AbstractPotionEntity(Position position, String sprite, Colors color, String potionName, ItemType itemType) {
-        super(position, color, true);
+        super(position, color, true,true);
         this.potionName = potionName;
         this.itemType = itemType;
         setSprites(sprite, sprite, color);

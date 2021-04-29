@@ -26,8 +26,8 @@ public class Door extends ObjectEntity {
      * @param direction which direction is the door
      * @param isOpen boolean
      */
-    public Door(Position position, Room nextRoom, Direction direction,boolean isOpen) {
-        super(position,Colors.BROWN, isOpen);
+    public Door(Position position, Room nextRoom, Direction direction, boolean isOpen) {
+        super(position,Colors.BROWN, isOpen, false);
         this.direction = direction;
         this.nextRoom = nextRoom;
         this.isOpen = isOpen;
