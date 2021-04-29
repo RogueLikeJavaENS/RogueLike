@@ -1,24 +1,35 @@
 package display;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Descriptor {
-    StringBuilder descriptor;
+    private List<String> buffer;
+    private final static int LINE = 5;
 
     public Descriptor(){
-        this.descriptor = new StringBuilder();
+        this.buffer = new ArrayList<>();
     }
-
-    public StringBuilder getDescriptor() { return descriptor; }
-    public void setDescriptor(StringBuilder descriptor) { this.descriptor = descriptor; }
 
     public void updateDescriptor(String str){
-        descriptor.append(str).append("\n");
-    }
-    public void clearDescriptor(){
-        descriptor = new StringBuilder();
+        buffer.add(str);
+        if (buffer.size() > LINE) {
+            buffer.remove(0);
+        }
     }
 
     @Override
     public String toString() {
-        return descriptor.toString();
+        StringBuilder sb = new StringBuilder();
+
+        if (!buffer.isEmpty()) {
+            sb.append(" ").append("-".repeat(70)).append("\n");
+            for (String s : buffer) {
+                sb.append(" ").append(s).append("\n");
+            }
+            sb.append(" ").append("-".repeat(70)).append("\n");
+        }
+
+        return sb.toString();
     }
 }

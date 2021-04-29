@@ -9,6 +9,7 @@ import stuff.item.ItemFactory;
 import stuff.item.ItemType;
 import utils.Colors;
 import utils.Position;
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
  * This abstract class handle mostly the sprite and the doAction of each potion.
@@ -31,7 +32,7 @@ public abstract class AbstractPotionEntity extends ObjectEntity implements Potio
         GridMap gridMap = gameState.getGridMap();
         ItemFactory itemFactory = new ItemFactory();
         player.getInventory().addItem((Stuff) itemFactory.getItem(itemType));
-        gameState.getDescriptor().updateDescriptor(String.format("%s picked up a %s",player.getName(),this.potionName));
+        gameState.getDescriptor().updateDescriptor(String.format("%s picked up a %s !",player.getName(),(colorize(this.potionName, this.getBasicColor().textApply()))));
         gridMap.update(this, false);
     }
 

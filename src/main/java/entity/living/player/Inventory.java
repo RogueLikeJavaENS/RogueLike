@@ -4,11 +4,8 @@ import com.diogonunes.jcolor.Attribute;
 import gameElement.GameState;
 import stuff.Stuff;
 import stuff.equipment.Equipment;
-import stuff.equipment.EquipmentFactory;
 import stuff.equipment.EquipmentRarity;
-import stuff.equipment.EquipmentType;
 import stuff.item.Item;
-import stuff.item.ItemFactory;
 import stuff.item.ItemType;
 import utils.Colors;
 import utils.CoupleStuff;
@@ -29,7 +26,6 @@ public class Inventory {
     private List<CoupleStuff> sortedItem;
     private int indexOfSelectedStuff;
 
-    // Comparator.comparing(Stuff::getName)
     public Inventory() {
         inventory = new ArrayList<>();
         equiped = new ArrayList<>();
@@ -53,13 +49,10 @@ public class Inventory {
                 int index = containsStuff(selectedStuff, sortedItem);
                 Item item = (Item) selectedStuff;
                 used = useItem(item.getType(), gameState);
-                System.out.printf("Player used %s ! used : %b\n", item.getName(), used);
                 if (used) {
                     boolean delete = sortedItem.get(index).removeStuff();
                     if (delete) {
-                        System.out.printf("Sorted item remove : %s count : %d\n", sortedItem.get(index).getStuff().getName(), sortedItem.get(index).getCount());
                         sortedItem.remove(index);
-                        //System.out.printf("Sorted item remove : %s count : %d\n", sortedItem.get(index).getStuff().getName(), sortedItem.get(index).getCount());
                     }
                 }
             }

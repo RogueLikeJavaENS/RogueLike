@@ -115,7 +115,7 @@ public class GameState {
             }
             return true;
         } else {
-            System.out.println("There is nothing to interact with !");
+            descriptor.updateDescriptor("There is nothing to interact with !");
             return false;
         }
     }
@@ -200,7 +200,7 @@ public class GameState {
             this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up "
                             +(colorize("%d", Colors.GREEN.textApply()))+" XP bottle(s), "
                             +(colorize("%d", Colors.BLUE.textApply()))+" Elixir(s), "
-                            +(colorize("%d", Colors.RED.textApply()))+" Health Potion(s) and gained %d xp !\n",
+                            +(colorize("%d", Colors.RED.textApply()))+" Health Potion(s) and gained %d xp !",
                     player.getName(), monster.getName(), nbXpBottle, nbElixir, nbHpPotion, monster.getMonsterStats().getXpWorth()));
             gridMap.update(monster, false);
         }
@@ -244,7 +244,7 @@ public class GameState {
                         Monster monster = (Monster) currentEntity;
                         int damages = (int)Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
                         monster.getMonsterStats().sufferDamage(damages);
-                        descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !\n",
+                        descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
                                 player.getName(),
                                 spell,
                                 colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
