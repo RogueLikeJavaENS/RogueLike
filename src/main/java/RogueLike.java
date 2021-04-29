@@ -4,8 +4,7 @@ import entity.living.LivingEntity;
 import entity.living.player.Player;
 import stuff.equipment.EquipmentRarity;
 import stuff.equipment.EquipmentType;
-import stuff.equipment.equipments.Armor;
-import stuff.equipment.equipments.Helmet;
+import stuff.equipment.equipments.*;
 import stuff.item.ItemFactory;
 import stuff.item.ItemType;
 import gameElement.*;
@@ -50,8 +49,14 @@ public class RogueLike {
         player.getInventory().addItem(new Elixir());
 
 
-        player.getInventory().addItem(new Helmet(2, EquipmentRarity.E, EquipmentType.HELMET));
-        player.getInventory().addItem(new Armor(2, EquipmentRarity.E, EquipmentType.ARMOR));
+        player.getInventory().addItem(new Helmet(3, EquipmentRarity.E, EquipmentType.HELMET));
+        player.getInventory().addItem(new Helmet(2, EquipmentRarity.D, EquipmentType.HELMET));
+        player.getInventory().addItem(new Helmet(2, EquipmentRarity.C, EquipmentType.HELMET));
+        player.getInventory().addItem(new Helmet(2, EquipmentRarity.B, EquipmentType.HELMET));
+        player.getInventory().addItem(new Helmet(2, EquipmentRarity.A, EquipmentType.HELMET));
+        player.getInventory().addItem(new Helmet(2, EquipmentRarity.S, EquipmentType.HELMET));
+        player.getInventory().addItem(new Helmet(2, EquipmentRarity.L, EquipmentType.HELMET));
+
         hud = new HUD(player);
         sp = new ScanPanel();
         gs = new GameState(player, dungeon, hud);
@@ -243,11 +248,13 @@ public class RogueLike {
                 break;
             case KeyEvent.VK_ENTER:
                 if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().useSelectedStuff();
                     modifiedMenu = true;
-                    acted = gs.isThereMonstersInventory();
-                    if (acted) {
-                        gs.getFighting().next();
+                    boolean used = gs.getPlayer().getInventory().useSelectedStuff(gs);
+                    if (used) {
+                        acted = gs.isThereMonstersInventory();
+                        if (acted) {
+                            gs.getFighting().next();
+                        }
                     }
                 }
                 break;
@@ -265,7 +272,7 @@ public class RogueLike {
                     gs.getPlayer().getInventory().closeInventory();
                     gs.isThereMonsters();
                 } else {
-                    gs.getPlayer().getInventory().openInventory();
+                    gs.getPlayer().getInventory().openInventory(true);
                     gs.setState(State.INVENTORY);
                 }
                 modifiedMenu = true;

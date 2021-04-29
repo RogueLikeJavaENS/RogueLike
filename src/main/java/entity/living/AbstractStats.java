@@ -36,8 +36,10 @@ public abstract class AbstractStats{
     public AbstractStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int moneyCount, int level) {
         this.lifePointNatural = lifePoint;
         this.lifePointActual = lifePoint;
+        this.lifePointTotal = lifePoint;
         this.manaPointNatural = manaPoint;
         this.manaPointActual = manaPoint;
+        this.manaPointTotal = manaPoint;
         this.rangeNatural = range;
         this.rangeTotal = range;
         this.initiativeNatural = initiative;

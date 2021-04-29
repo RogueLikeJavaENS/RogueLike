@@ -101,11 +101,7 @@ public class RendererUI {
                 break;
 
             case INVENTORY: // Print the inventory of the dungeon plus the HUD
-                globalSB.append(hud.toString());
-                globalSB.append("\t\t###################################\n" +
-                                "\t\t#            INVENTORY            #\n" +
-                                "\t\t###################################\n");
-                globalSB.append(gs.getPlayer().getInventory().toString());
+                globalSB.append(gs.getPlayer().getInventory().toStringInventory(gs));
                 break;
 
             case NORMAL: // Print the HUD, the room and the minimap
