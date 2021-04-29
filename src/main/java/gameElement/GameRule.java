@@ -13,19 +13,19 @@ import java.util.Random;
 public class GameRule {
     private final static Random GEN = new Random();
 
-    /////////////// Floor //////////////
+    /////////////// Monster Room //////////////
 
-    public int getNumberOfClassicChestOnFloor(){
-        return GEN.nextInt(3)+1;
-    }
-
-    public boolean presenceOfGoldChestOnFloor(){
+    /**
+     * 30% of chance to have a chest in a monster room
+     */
+    public boolean presenceOfClassicChestOnMonsterRoom(){
         int nb = GEN.nextInt(100);
-        if (nb == 0){
+        if (nb <20){
             return true;
         }
         return false;
     }
+
 
     //////////// Treasure Room //////////
     /**

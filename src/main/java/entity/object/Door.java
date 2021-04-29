@@ -8,17 +8,24 @@ import stuff.item.keys.FloorKey;
 import utils.Colors;
 import utils.Direction;
 import utils.Position;
-
-import java.util.ArrayList;
-
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * This class describe a Door
+ */
 public class Door extends ObjectEntity {
     private final Room nextRoom;
     private final Direction direction;
     private Door next;
     private boolean isOpen;
 
+    /**
+     * Create a new Door
+     * @param position on the room
+     * @param nextRoom room to go when we take the door
+     * @param direction which direction is the door
+     * @param isOpen boolean
+     */
     public Door(Position position, Room nextRoom, Direction direction,boolean isOpen) {
         super(position,Colors.BROWN, true);
         this.direction = direction;
@@ -33,31 +40,54 @@ public class Door extends ObjectEntity {
         }
     }
 
+    /**
+     * Set the associate door
+     */
     public void setNext(Door next) {
         this.next = next;
     }
 
+    /**
+     * Open the door
+     */
     private void openDoor(){
         this.isOpen = true;
         this.setIsAccessible(true);
         setSprites("[ ]", "[ ]", Colors.BROWN);
 
     }
+
+    /**
+     * Open the door and his associate door
+     */
     public void openRelyDoor(){
         openDoor();
         this.next.openDoor();
     }
+
+    /**
+     * Close the door
+     */
     private void closeDoor(){
         this.isOpen = false;
         this.setIsAccessible(false);
         setSprites("[X]", "[X]", Colors.BROWN);
     }
+
+    /**
+     * Close the door and his associate door
+     */
     public void closeRelyDoor(){
         closeDoor();
         this.next.closeDoor();
     }
 
 
+    /**
+     * Do the action of a door
+     * Take the door and go to the next room if it's open, else do nothing
+     * @param gameState gameState of the game
+     */
     @Override
     public void doAction(GameState gameState) {
         if (isOpen) {
@@ -82,6 +112,11 @@ public class Door extends ObjectEntity {
         }
     }
 
+    /**
+     * Make the interaction with the door
+     * If the door is close and the player have a FloorKey it open the door else do nothing
+     * @param gameState gameState of the game
+     */
     @Override
     public void doInteraction(GameState gameState) {
         if (isOpen) {
@@ -98,6 +133,7 @@ public class Door extends ObjectEntity {
             }
         }
     }
+
 
     @Override
     public String toString() {

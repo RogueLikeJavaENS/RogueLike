@@ -6,7 +6,6 @@ import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
 import entity.object.Chest;
 import entity.object.Coins;
-import entity.object.Door;
 import entity.object.Stair;
 import entity.object.potions.PotionEntityFactory;
 import gameElement.GameRule;
@@ -36,30 +35,32 @@ public class RoomFactory {
         this.currentAvailablePositions = room.getAvailablePositions();
         switch (roomType) {
             case START:
+                addChest(room,true);    // Basic equipment to start a new adventure
                 // add some stuffs that make clear it's the start room.
                 break;
             case BOSS:
                 break;
             case END:
-                addStairs(room);
-                // close the door
-
-
+                addStairs(room);    // Go to the next floor
                 break;
             case NORMAL:
                 // nothing special for now.
                 break;
             case MONSTER:
                 addMonsters(room);
+                if (gameRule.presenceOfClassicChestOnMonsterRoom()){
+                    addChest(room,true);
+                }
                 break;
             case REST:
                 addCoins(room, 5);
                 addMerchant(room);
                 break;
             case TREASURE:
+                addChest(room,false);
                 addCoins(room, gameRule.getNumberOfGoldInTreasureRoom());
                 addPotions(room, gameRule.getNumberOfPotionInTreasureRoom());
-                addGoldenChest(room);
+
                 break;
 
         }
@@ -101,9 +102,15 @@ public class RoomFactory {
         }
     }
 
-    private void addGoldenChest(Room room){
+    private void addChest(Room room, boolean isClassic){
         if (currentAvailablePositions.size() != 0){
-            room.addEntity(new Chest(currentAvailablePositions.get(0),false));
+            if (isClassic){
+                room.addEntity(new Chest(currentAvailablePositions.get(0),true));
+            }
+            else{
+                room.addEntity(new Chest(currentAvailablePositions.get(0),false));
+            }
+
         }
     }
 
