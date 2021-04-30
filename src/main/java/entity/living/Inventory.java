@@ -191,6 +191,8 @@ public class Inventory {
                 onEquipments = false;
                 if (!sortedItem.isEmpty()) {
                     selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
+                } else if (!sortedEquipment.isEmpty()) {
+                    selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();
                 }
             } else {
                 if (onEquipments) {
@@ -211,58 +213,16 @@ public class Inventory {
                     }
                 }
             }
-//            if (!sortedEquipment.isEmpty()) {
-//                selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();
-//                onEquipments = true;
-//            }
-//            if (!sortedItem.isEmpty()) {
-//                selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
-//                onEquipments = false;
-//                }
-//            } else {
-//                if (onEquipments) {
-//                    if (sortedEquipment.isEmpty()) {
-//                        indexOfSelectedStuff = 0;
-//                        onEquipments = false;
-//                        selectedStuff = sortedItem.get(0).getStuff();
-//                    }
-//                    else if (indexOfSelectedStuff == sortedEquipment.size()) {
-//                        indexOfSelectedStuff--;
-//                        selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();
-//                    }
-//                } else {
-//                    if (sortedItem.isEmpty()) {
-//                        indexOfSelectedStuff = 0;
-//                        onEquipments = true;
-//                        selectedStuff = sortedEquipment.get(0).getStuff();
-//                    }
-//                    else if (indexOfSelectedStuff == sortedItem.size()) {
-//                        indexOfSelectedStuff--;
-//                        selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
-//                    }
-//                }
-//            }
         }
     }
 
     public void closeInventory() {
         openInventory = false;
+        selectedStuff = null;
     }
 
     public void switchCategory() {
-        if (onEquipments) {
-            if (!sortedItem.isEmpty()) {
-                selectedStuff = sortedItem.get(0).getStuff();
-                onEquipments = false;
-                indexOfSelectedStuff = 0;
-            }
-        } else {
-            if (!sortedEquipment.isEmpty()) {
-                selectedStuff = sortedEquipment.get(0).getStuff();
-                onEquipments = true;
-                indexOfSelectedStuff = 0;
-            }
-        }
+        onEquipments = !onEquipments;
     }
 
     public void nextSelectedStuff() {
@@ -380,31 +340,28 @@ public class Inventory {
                 .append("                                     |\n");
         sb.append("|---------------------------------------------------------------------------------------------|\n");
 
-        if (openInventory) { // If the inventory is not empty
-            List<CoupleStuff> listTodisplay;
-            if (onEquipments) {
-                listTodisplay = sortedEquipment;
-            } else {
-                listTodisplay = sortedItem;
-            }
-            int i = 0;
-            for (CoupleStuff coupleStuff : listTodisplay) {
-                if ((indexOfSelectedStuff < MAX_HEIGHT && i < MAX_HEIGHT)
-                        || (indexOfSelectedStuff >= MAX_HEIGHT && ( i <= indexOfSelectedStuff && i > indexOfSelectedStuff-MAX_HEIGHT))) {
-                    if (i != 0 ) {
-                        sb.append(separationItems);
-                    }
-                    sb.append(stuffLineToString(coupleStuff));
-                }
-                i++;
-            }
-            while (i < MAX_HEIGHT) {
-                sb.append(separationItems);
-                sb.append("|                      |    |   |     |     |                                                 |\n");
-                i++;
-            }
+        List<CoupleStuff> listTodisplay;
+        if (onEquipments) {
+            listTodisplay = sortedEquipment;
         } else {
-            sb.append("Empty Inventory.");
+            listTodisplay = sortedItem;
+        }
+        int i = 0;
+
+        for (CoupleStuff coupleStuff : listTodisplay) {
+            if ((indexOfSelectedStuff < MAX_HEIGHT && i < MAX_HEIGHT)
+                    || (indexOfSelectedStuff >= MAX_HEIGHT && ( i <= indexOfSelectedStuff && i > indexOfSelectedStuff-MAX_HEIGHT))) {
+                if (i != 0 ) {
+                    sb.append(separationItems);
+                }
+                sb.append(stuffLineToString(coupleStuff));
+            }
+            i++;
+        }
+        while (i < MAX_HEIGHT) {
+            sb.append(separationItems);
+            sb.append("|                      |    |   |     |     |                                                 |\n");
+            i++;
         }
         sb.append(" --------------------------------------------------------------------------------------------- \n");
         return sb.toString();
@@ -418,7 +375,7 @@ public class Inventory {
         int lvl_size = 4;
         int btc_size = 4;
         int des_size = 48;
-        if (onEquipments) {
+        if (onEquipments && !sortedEquipment.isEmpty()) {
             Equipment selectedEquipment = (Equipment) selectedStuff;
             Equipment equipment = (Equipment) coupleStuff.getStuff();
             if (equipment.equals(selectedEquipment)) {
@@ -494,12 +451,26 @@ public class Inventory {
         Player player = gameState.getPlayer();
         PlayerStats stats = player.getPlayerStats();
 
-        int atk = bonusEquipment(false,false, true, false, false, stats);
-        int def = bonusEquipment(false,false, false, true, false, stats);
-        int ini = bonusEquipment(false,false, false, false, true, stats);
-        int mp = bonusEquipment(false,true, false, false, false, stats);
-        int hp = bonusEquipment(true,false, false, false, false, stats);
-        int xp, name, btc, lvl, rge;
+        int xp, name, btc, lvl, rge, atk, def, ini, mp, hp;
+        if (onEquipments) {
+            atk = bonusEquipment(false,false, true, false, false, stats);
+            def = bonusEquipment(false,false, false, true, false, stats);
+            ini = bonusEquipment(false,false, false, false, true, stats);
+            mp = bonusEquipment(false,true, false, false, false, stats);
+            hp = bonusEquipment(true,false, false, false, false, stats);
+        } else {
+            xp = Integer.MAX_VALUE;
+            name = Integer.MAX_VALUE;
+            btc = Integer.MAX_VALUE;
+            lvl = Integer.MAX_VALUE;
+            rge = Integer.MAX_VALUE;
+            atk = Integer.MAX_VALUE;
+            def = Integer.MAX_VALUE;
+            ini = Integer.MAX_VALUE;
+            mp = Integer.MAX_VALUE;
+            hp = Integer.MAX_VALUE;
+        }
+
 
         String HP_Bonus = colorBonus(hp);
         String MP_Bonus = colorBonus(mp);
@@ -558,6 +529,9 @@ public class Inventory {
 
     private int bonusEquipment(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean ini, PlayerStats stats) {
         String res = "";
+        if (selectedStuff == null) {
+            return Integer.MAX_VALUE;
+        }
         if (selectedStuff.isEquipable()) {
             Equipment equipment = (Equipment) selectedStuff;
             int natural = 0;
@@ -619,14 +593,12 @@ public class Inventory {
                     }
                 }
             }
-        } else {
-            return 123456789;
         }
-        return 123456789;
+        return Integer.MAX_VALUE;
     }
 
     private String colorBonus(int bonus) {
-        if (bonus == 123456789) {
+        if (bonus == Integer.MAX_VALUE) {
             return "";
         } else if (bonus == 0) {
             return colorize(" (+0) ", Colors.GREY.textApply());
@@ -637,7 +609,7 @@ public class Inventory {
     }
 
     private int bonusLength(int bonus) {
-        if (bonus == 123456789) {
+        if (bonus == Integer.MAX_VALUE) {
             return 0;
         } else if (bonus == 0) {
             return 6;

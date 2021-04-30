@@ -28,9 +28,9 @@ public class MerchantInventory extends Inventory {
         merchantInventory.add(new Glove(4, EquipmentRarity.E, EquipmentType.HELMET));
         merchantInventory.add(new Helmet(3, EquipmentRarity.L, EquipmentType.HELMET));
         merchantInventory.add(new Helmet(2, EquipmentRarity.E, EquipmentType.HELMET));
-        merchantInventory.add(new PotionHealth());
-        merchantInventory.add(new Elixir());
-        merchantInventory.add(new XpBottle());
+//        merchantInventory.add(new PotionHealth());
+//        merchantInventory.add(new Elixir());
+//        merchantInventory.add(new XpBottle());
     }
 
     public boolean openSellingShop(GameState gameState) {
