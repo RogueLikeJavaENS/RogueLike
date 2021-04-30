@@ -4,6 +4,7 @@ import display.GridMap;
 import entity.Entity;
 import entity.object.Door;
 import generation.GraphDungeon;
+import generation.RoomType;
 import utils.Direction;
 import utils.Position;
 
@@ -38,9 +39,16 @@ public class Dungeon {
         this.floor = floor;
         createAllDoor();
         setAllNextDoor();
+        closeDoorOfEndRoom();
         initGridMapList();
 
     }
+
+    private void closeDoorOfEndRoom(){
+        List<Door> doorList = roomList.get(roomList.size()-2).getDoors();
+        for (Door door : doorList){
+            door.closeRelyDoor();
+        }    }
 
     private void initGridMapList(){
         this.gridMapList = new ArrayList<>();
@@ -54,7 +62,7 @@ public class Dungeon {
             int[] nearRoom = room.getNearRoom();
             for (int j = 0; j < nearRoom.length; j++) {
                 if (nearRoom[j] != -1) {
-                    Door door = new Door(getDoorPosition(j, room), getRoom(nearRoom[j]), Direction.intToDirection(j));
+                    Door door = new Door(getDoorPosition(j, room), getRoom(nearRoom[j]), Direction.intToDirection(j),true);
                     room.addEntity(door);
                 }
             }
@@ -77,6 +85,7 @@ public class Dungeon {
             }
         }
     }
+
 
     private Door getDoorAt(Position position, Room room){
         List<Entity> entityList = room.getEntities();

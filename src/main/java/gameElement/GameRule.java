@@ -1,10 +1,8 @@
 package gameElement;
 
+import stuff.equipment.EquipmentRarity;
+import stuff.equipment.EquipmentType;
 import stuff.item.ItemType;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 
@@ -13,103 +11,236 @@ import java.util.Random;
  * Percentage of drop, monster encounter. etc...
  */
 public class GameRule {
-    private final List<Integer> dropRatePotion;
-    private final List<ItemType> dropRatePotionType;
-    private final List<Integer> numberOfGoldInTreasureRoom;
-    private final List<Integer> numberOfPotionInTreasureRoom;
     private final static Random GEN = new Random();
 
+    /////////// Hole and Spike /////////
 
-    public GameRule() {
-        this.dropRatePotion = new ArrayList<>();
-        this.dropRatePotionType = new ArrayList<>();
-        this.numberOfGoldInTreasureRoom = new ArrayList<>();
-        this.numberOfPotionInTreasureRoom = new ArrayList<>();
-
-        setDropRatePotion();
-        setDropRatePotionType();
-        setNumberOfGoldInTreasureRoom();
-        setNumberOfPotionInTreasureRoom();
+    /**
+     * 0 to 3 hole in a room
+     */
+    public int numberOfHole(){
+        return GEN.nextInt(4);
     }
 
     /**
+     * 1 to 3 tiles of hole
+     */
+    public int sizeOfHole(){
+        return GEN.nextInt(3)+1;
+    }
+
+
+
+    /**
+     * 0 to 2 path of spike in a room
+     */
+    public int numberOfSpike(){
+        return GEN.nextInt(3);
+    }
+
+    /**
+     * 1 to 7 tiles of spike
+     */
+    public int sizeOfSpike(){
+        return GEN.nextInt(7)+1;
+    }
+
+
+
+    /////////////// Monster Room //////////////
+
+    /**
+     * 30% of chance to have a chest in a monster room
+     */
+    public boolean presenceOfClassicChestOnMonsterRoom(){
+        int nb = GEN.nextInt(100);
+        if (nb <20){
+            return true;
+        }
+        return false;
+    }
+
+
+    //////////// Treasure Room //////////
+    /**
      * between 3 and 6 potions in Treasure Room.
      */
-    private void setNumberOfPotionInTreasureRoom() {
-        for (int i = 3; i <= 6; i++) {
-            for (int j = 0; j < 30; j++) {
-                numberOfPotionInTreasureRoom.add(i);
-            }
-        }
-        numberOfPotionInTreasureRoom.add(5);
-        Collections.shuffle(numberOfPotionInTreasureRoom);
+    public int getNumberOfPotionInTreasureRoom(){
+        return GEN.nextInt(4)+3;
     }
 
     /**
      * between 8 and 15 gold by room, 1% chance of 50 golds.
      */
-    private void setNumberOfGoldInTreasureRoom() {
-        for (int i = 8; i <= 15; i++) {
-            for (int j = 0; j < 12; j++) {
-                numberOfGoldInTreasureRoom.add(i);
-            }
+    public int getNumberOfGoldInTreasureRoom(){
+        int nb = GEN.nextInt(100);
+        if (nb == 0){
+            return 50;
         }
-        numberOfGoldInTreasureRoom.add(100);
-        Collections.shuffle(numberOfGoldInTreasureRoom);
+        else {
+        return GEN.nextInt(8)+8;
+        }
     }
+
+
+    ////////// Monster Loot //////////
     /**
-     * - 60% 1 potion
-     * - 25% 2 potions
-     * - 5% nothing
+     * Monster
+     * - 50% 1 potion
+     * - 20% 2 potions
+     * - 20% nothing
      * - 9% 3 potions
      * - 1% 4 potions
      */
-    private void setDropRatePotion() {
-        for (int i = 0; i < 60; i++) { // 1 potion
-            dropRatePotion.add(1);
+    public int getNumberOfPotionOnMonster(){
+        int nb = GEN.nextInt(100);
+        if (nb < 50){
+            return 1;
         }
-        for (int i = 0; i < 5; i++) { // 0 potion
-            dropRatePotion.add(0);
+        else if (nb < 70){
+            return 2;
         }
-        for (int i = 0; i < 25; i++) { // 2 potions
-            dropRatePotion.add(2);
+        else if (nb < 90){
+            return 0;
         }
-        for (int i = 0; i < 9; i++) { // 3 potions
-            dropRatePotion.add(3);
+        else if (nb < 99){
+            return 3;
         }
-        dropRatePotion.add(4); // 4 potions
-        Collections.shuffle(dropRatePotion);
+        else{
+            return 4;
+        }
+    }
+
+
+    ///////////// Type of stuff //////////////
+    /**
+     * Type of Potion
+     * - 40% health
+     * - 40% mana
+     * - 20% XP
+     */
+    public ItemType getPotionType(){
+        int nb = GEN.nextInt(100);
+        if (nb < 40){
+            return ItemType.HEALTH_POTION;
+        }
+        else if(nb < 80){
+            return ItemType.ELIXIR;
+        }
+        else{
+            return ItemType.XP_BOTTLE;
+        }
     }
 
     /**
-     * - 45% health
-     * - 35% mana
-     * - 20% XP
+     * Equipment Type
+     * - WEAPON 34%
+     * - SHIELD 11%
+     * - ARMOR 11%
+     * - BOOT 11%
+     * - GLOVE 11%
+     * - HELMET 11%
+     * - PANT 11%
      */
-    private void setDropRatePotionType() {
-        for (int i = 0; i < 45; i++) { // Health
-            dropRatePotionType.add(ItemType.HEALTH_POTION);
-        }
-        for (int i = 0; i < 35; i++) { // Mana
-            dropRatePotionType.add(ItemType.ELIXIR);
-        }
-        for (int i = 0; i < 20; i++) { // XP
-            dropRatePotionType.add(ItemType.XP_BOTTLE);
-        }
-        Collections.shuffle(dropRatePotionType);
+    public EquipmentType getEquipmentType(){
+        int nb = GEN.nextInt(100);
+        if (nb < 34){ return EquipmentType.WEAPON; }
+        else if (nb < 45) { return EquipmentType.SHIELD; }
+        else if (nb < 56) { return EquipmentType.ARMOR; }
+        else if (nb < 67) { return EquipmentType.BOOT; }
+        else if (nb < 78) { return EquipmentType.GLOVE; }
+        else if (nb < 89) { return EquipmentType.HELMET; }
+        else { return EquipmentType.PANT; }
     }
 
-    public int getNumberOfPotionInTreasureRoom() {
-        return numberOfPotionInTreasureRoom.get(GEN.nextInt(100));
-    }
-    public int getPotionNumber() {
-        return dropRatePotion.get(GEN.nextInt(100));
-    }
-    public ItemType getPotionType() {
-        return dropRatePotionType.get(GEN.nextInt(100));
-    }
-    public int getNumberOfGoldInTreasureRoom() {
-        return numberOfGoldInTreasureRoom.get(GEN.nextInt(numberOfGoldInTreasureRoom.size()));
+
+    /**
+     * Get the rarity of Equipment
+     *
+     * Classic
+     * - E classic 39% / gold 0%
+     * - D classic 30% / gold 0%
+     * - C classic 20% / gold 3%
+     * - B classic 10% / gold 22%
+     * - A classic 1% / gold 25%
+     * - S classic 0% / gold 25%
+     * - L classic 0% / gold 25%
+     *
+     */
+    public EquipmentRarity getEquipmentRarity(boolean isClassic){
+        int nb = GEN.nextInt(100);
+        if (isClassic){
+            if (nb < 39){ return EquipmentRarity.E; }
+            else if (nb < 69) { return EquipmentRarity.D; }
+            else if (nb < 89) { return EquipmentRarity.C; }
+            else if (nb < 99) { return EquipmentRarity.B; }
+            else { return EquipmentRarity.A; }
+        }
+        else{
+            if (nb < 3){ return EquipmentRarity.C; }
+            else if (nb < 25) { return EquipmentRarity.B; }
+            else if (nb < 50) { return EquipmentRarity.A; }
+            else if (nb < 75) { return EquipmentRarity.S; }
+            else { return EquipmentRarity.L; }
+        }
     }
 
+    ////////////  Chest  =   true : classic / false : golden
+    /**
+     * Between 1 and 3 potion in a classic chest
+     * Between 10 and 15 potion in a golden chest
+     */
+    public int getNumberOfPotionInChest(boolean isClassic) {
+        if (isClassic) {
+            return GEN.nextInt(3) + 1;
+        }
+        else {
+            return GEN.nextInt(6)+10;
+        }
+    }
+    /**
+     * Between 0 and 5 gold in a classic chest
+     * Between 30 and 50 gold in a golden chest
+     */
+    public int  getNumberOfGoldInChest(boolean isClassic){
+        if (isClassic){
+            return GEN.nextInt(6);
+        }
+        else {
+            return GEN.nextInt(21)+30;
+        }
+    }
+    /**
+     * Between 1 and 3 equipment in a classic chest
+     */
+    public int getNumberOfEquipmentInChest(){
+        return GEN.nextInt(3)+1;
+    }
+
+    /**
+     * 5% of luck to have a golden key
+     */
+    public boolean presenceOfGoldenKeyInClassicChest(){
+        return (GEN.nextInt(100) < 5);
+    }
+
+
+
+    ///////////// Bonus of equipment //////////////
+
+    public int getBonusDamage(int level) {
+        return level;
+    }
+    public int getBonusMana(int level) {
+        return level;
+    }
+    public int getBonusInitiative(int level) {
+        return level;
+    }
+    public int getBonusLife(int level) {
+        return level;
+    }
+    public int getBonusArmor(int level) {
+        return level;
+    }
 }

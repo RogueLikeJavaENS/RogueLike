@@ -1,7 +1,7 @@
 package stuff.item;
 
 import stuff.item.keys.GoldKey;
-import stuff.item.keys.Key;
+import stuff.item.keys.FloorKey;
 import stuff.item.potions.*;
 
 public class ItemFactory {
@@ -18,8 +18,8 @@ public class ItemFactory {
                 return new EmptyBottle();
             case XP_BOTTLE:
                 return new XpBottle();
-            case KEY:
-                return new Key();
+            case FLOORKEY:
+                return new FloorKey();
             case GOLD_KEY:
                 return new GoldKey();
             default:

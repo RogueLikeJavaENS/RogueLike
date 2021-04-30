@@ -60,7 +60,7 @@ public class GraphDungeon {
         int combatType = 0, normalType = 0, restType = 0, tresType = 0;
         int allRooms = graph.size();
 
-        allRooms -= 2; // start + end
+        allRooms -= 3; // start + end + boss
 
         if (allRooms %2 != 0) {
             allRooms -= 1;
@@ -95,6 +95,7 @@ public class GraphDungeon {
         Collections.shuffle(roomsType);
         roomsType.add(0, RoomType.START);
         roomsType.add(RoomType.END);
+        roomsType.add(RoomType.BOSS);
     }
 
     private void attributeType(RoomType type, int amount) {
@@ -105,7 +106,7 @@ public class GraphDungeon {
 
     private void attributePath() {
         createSourceVertice();
-        int compteur = quantity-1;
+        int compteur = quantity-2; // source + boss
         ArrayList<Integer> sizeList = new ArrayList<>();
         if (compteur%2 == 0) {
             sizeList.add(compteur/2);
@@ -117,6 +118,41 @@ public class GraphDungeon {
         for (int size : sizeList) {
             drawPath(size, 0);
             compteur -= size;
+        }
+        createBossRoom(quantity-1);
+    }
+
+    private void createBossRoom(int roomId){
+        int[] doors;
+        for( int i = quantity-3; i>1; i--){
+            doors = graph.get(i);
+            for (int j = 0; j < 4; j++) {
+                Direction direction = Direction.intToDirection(j);
+                Position position = new Position(doors[5],doors[4]);
+                if (doors[j] == -1 && isAvailablePosition(position,direction) ){
+                    graph.get(i)[j] = roomId;
+                    Position newPos = position.getPosInFront(direction);
+                    int[] newDoors = DungeonStructure.initNextlist();
+                    newDoors[direction.oppositeDirection().getValue()] = i;
+                    newDoors[4] = newPos.getOrd();
+                    newDoors[5] = newPos.getAbs();
+                    graph.put(roomId,newDoors);
+                    return;
+                }
+            }
+        }
+    }
+
+
+    private boolean isAvailablePosition(Position position,Direction direction){
+        if ((position.getAbs() == 0 && direction == Direction.WEST)
+        || (position.getAbs() == MAX_BOUND && direction == Direction.EAST)
+        || (position.getOrd() == 0 && direction == Direction.NORTH)
+        || (position.getOrd() == MAX_BOUND && direction == Direction.SOUTH)){
+            return false;
+        }
+        else{
+            return true;
         }
     }
 
@@ -242,7 +278,8 @@ public class GraphDungeon {
         int quantite = test.getQuantity();
         HashMap<Integer, int[]> graphtest = test.getGraph();
         for (int i = 0; i < graphtest.size(); i++) {
-            System.out.println(Arrays.toString(graphtest.get(i)) + " " + i);
+            System.out.print(Arrays.toString(graphtest.get(i)) + " " + i);
+            System.out.println(" "+test.getRoomsType().get(i));
         }
     }
 }

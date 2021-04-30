@@ -3,7 +3,6 @@ package entity.living.player;
 import entity.living.LivingEntity;
 import spells.BasicAttack;
 import spells.*;
-import stuff.Inventory;
 import utils.Colors;
 import utils.Direction;
 import utils.Position;

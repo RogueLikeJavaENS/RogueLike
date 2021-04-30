@@ -3,12 +3,16 @@ package gameElement;
 import display.Descriptor;
 import display.GridMap;
 import display.HUD;
+import display.Tile;
 import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
 import entity.object.Grave;
 import spells.*;
+import stuff.item.Item;
+import stuff.item.ItemFactory;
+import stuff.item.ItemType;
 import utils.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +41,7 @@ public class GameState {
     public GameState(Player player, Dungeon dungeon, HUD hud) {
         this.dungeon = dungeon;
         this.player = player;
-        this.currentRoom = dungeon.getRoomList().get(0);
+        this.currentRoom = dungeon.getRoomList().get(0); //dungeon.getRoomList().size()-2
         this.gridMap = dungeon.getGridMap(currentRoom);
         this.gameRule = new GameRule();
         this.help = false;
@@ -84,12 +88,12 @@ public class GameState {
         boolean acted = false;                  // boolean used in RogueLike to see if the player consumed his action.
         int abs = player.getPosition().getAbs();
         int ord = player.getPosition().getOrd();
-
-        if (gridMap.getTileAt(abs + x, ord + y).isAccessible()) {  // check if the wanted direction is accessible.
+        Tile tile = gridMap.getTileAt(abs + x, ord + y);
+        if (tile.isPlayerAccessible()) {  // check if the wanted direction is accessible.
             boolean accessibilityEntity = true;
             List<Entity> entitiesAt = gridMap.getEntitiesAt(abs + x, ord + y);
             for (Entity entity : entitiesAt){   // check if there are no Entity that prevent the player to move on.
-                if (!entity.getIsAccessible()){
+                if (!entity.getIsPlayerAccessible()){
                     accessibilityEntity = false;
                     break;
                 }
@@ -154,6 +158,17 @@ public class GameState {
             state = State.NORMAL;
             gridMap.clearRangeList();
         }
+    }
+
+    public boolean isThereMonstersInventory() {
+        boolean acted = false;
+        List<LivingEntity> monsters = getGridMap().getMonsters();
+        if (!monsters.isEmpty()) {
+            state = State.FIGHT;
+            updateRange();
+            acted = true;
+        }
+        return acted;
     }
 
     /**

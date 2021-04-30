@@ -5,6 +5,6 @@ public enum ItemType {
     ELIXIR,
     XP_BOTTLE,
     EMPTY_BOTTLE,
-    KEY,
+    FLOORKEY,
     GOLD_KEY
 }

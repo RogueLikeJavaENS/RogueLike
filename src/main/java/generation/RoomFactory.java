@@ -4,18 +4,13 @@ import display.tiles.Tile;
 import entity.Entity;
 import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
-import entity.object.Coins;
-import entity.object.Stair;
+import entity.object.*;
 import entity.object.potions.PotionEntityFactory;
 import gameElement.GameRule;
 import gameElement.Room;
 import utils.Position;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class RoomFactory {
     private final int width; // 15
@@ -38,33 +33,43 @@ public class RoomFactory {
         this.currentAvailablePositions = room.getAvailablePositions();
         switch (roomType) {
             case START:
+                addHole(room);
+                addSpike(room);
+                addChest(room,true);    // Basic equipment to start a new adventure
                 // add some stuffs that make clear it's the start room.
                 break;
+            case BOSS:
+                break;
             case END:
-                addStairs(room);
-                // add a boss,
-                // add a stairs to go deeper in the dungeon.
+                addStairs(room);    // Go to the next floor
                 break;
             case NORMAL:
                 // nothing special for now.
                 break;
             case MONSTER:
                 addMonsters(room);
+                if (gameRule.presenceOfClassicChestOnMonsterRoom()){
+                    addChest(room,true);
+                }
                 break;
             case REST:
                 addCoins(room, 5);
                 addMerchant(room);
                 break;
             case TREASURE:
+                addChest(room,false);
                 addCoins(room, gameRule.getNumberOfGoldInTreasureRoom());
                 addPotions(room, gameRule.getNumberOfPotionInTreasureRoom());
+
+                break;
+
         }
         // add some traps, walls, holes...
         return room;
     }
 
     private void addStairs(Room room) {
-        room.addEntity(new Stair(room.getCenter(), true));
+        room.addEntity(new Stair(room.getCenter()));
     }
 
     private void addMonsters(Room room) {
@@ -97,9 +102,43 @@ public class RoomFactory {
         }
     }
 
+    private void addChest(Room room, boolean isClassic){
+        if (currentAvailablePositions.size() != 0){
+            if (isClassic){
+                room.addEntity(new Chest(currentAvailablePositions.get(0),true));
+            }
+            else{
+                room.addEntity(new Chest(currentAvailablePositions.get(0),false));
+            }
+
+        }
+    }
+
     private void addMerchant(Room room) {
         room.addEntity(new PotionMerchant(currentAvailablePositions.remove(0)));
     }
+
+    private void addHole(Room room){
+        int nbHole = gameRule.numberOfHole();
+        for (int i = 0; i<nbHole; i++){
+            int sizeOfHole = gameRule.sizeOfHole();
+            for (int j = 0; j<sizeOfHole; j++){
+                room.addEntity(new Hole(room.getAvailablePositions().get(0)));
+            }
+        }
+    }
+
+    private void addSpike(Room room){
+        int nbSpike = gameRule.numberOfSpike();
+        for (int i = 0; i<nbSpike; i++){
+            int sizeOfSpike = gameRule.sizeOfSpike();
+            for (int j = 0; j<sizeOfSpike; j++){
+                room.addEntity(new Spike(room.getAvailablePositions().get(0)));
+            }
+        }
+    }
+
+
 
     /**
      * @param current The current number of the room

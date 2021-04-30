@@ -1,6 +1,8 @@
 package stuff;
 
-public abstract class AbstractStuff implements Stuff { ;
+import java.util.Objects;
+
+public abstract class AbstractStuff implements Stuff {
     String name;
     String description;
     boolean isUsable;
@@ -12,6 +14,9 @@ public abstract class AbstractStuff implements Stuff { ;
         this.name = name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
     @Override
     public boolean isEquipable() {
         return isEquipable;
@@ -23,12 +28,25 @@ public abstract class AbstractStuff implements Stuff { ;
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return name;
     }
 
     @Override
     public String getDescription() {
         return "Coucou ceci est un stuff";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractStuff that = (AbstractStuff) o;
+        return isUsable == that.isUsable && isEquipable == that.isEquipable && Objects.equals(name, that.name) && Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, isUsable, isEquipable);
     }
 }

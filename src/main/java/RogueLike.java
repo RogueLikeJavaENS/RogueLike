@@ -4,10 +4,18 @@ import entity.living.LivingEntity;
 import entity.living.player.Player;
 import entity.object.potions.PotionEntityFactory;
 import stuff.item.ItemFactory;
+import stuff.equipment.EquipmentRarity;
+import stuff.equipment.EquipmentType;
+import stuff.equipment.equipments.Armor;
+import stuff.equipment.equipments.Helmet;
+import stuff.item.ItemFactory;
 import stuff.item.ItemType;
 import gameElement.*;
 import generation.*;
 import stuff.item.potions.Elixir;
+import stuff.item.keys.FloorKey;
+import stuff.item.potions.Elixir;
+import stuff.item.potions.PotionHealth;
 import utils.*;
 
 import java.awt.event.KeyEvent;
@@ -201,6 +209,10 @@ public class RogueLike {
                     rendererUI.updateHUD(hud);
                     turned = true;
                 }
+                if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().switchCategory();
+                    modifiedMenu = true;
+                }
                 break;
             case KeyEvent.VK_LEFT:
                 if (state == State.FIGHT) {
@@ -212,6 +224,32 @@ public class RogueLike {
                     gs.updateRange();
                     rendererUI.updateHUD(hud);
                     turned = true;
+                }
+                if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().switchCategory();
+                    modifiedMenu = true;
+                }
+                break;
+            case KeyEvent.VK_UP:
+                if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().previousSelectedStuff();
+                    modifiedMenu = true;
+                }
+                break;
+            case KeyEvent.VK_DOWN:
+                if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().nextSelectedStuff();
+                    modifiedMenu = true;
+                }
+                break;
+            case KeyEvent.VK_ENTER:
+                if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().useSelectedStuff();
+                    modifiedMenu = true;
+                    acted = gs.isThereMonstersInventory();
+                    if (acted) {
+                        gs.getFighting().next();
+                    }
                 }
                 break;
             case KeyEvent.VK_M:
@@ -225,8 +263,10 @@ public class RogueLike {
                 break;
             case KeyEvent.VK_I:
                 if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().closeInventory();
                     gs.isThereMonsters();
                 } else {
+                    gs.getPlayer().getInventory().openInventory();
                     gs.setState(State.INVENTORY);
                 }
                 modifiedMenu = true;

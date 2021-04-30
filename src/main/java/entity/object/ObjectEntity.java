@@ -6,8 +6,8 @@ import utils.Position;
 
 public class ObjectEntity extends AbstractEntity {
     
-    public ObjectEntity(Position position,Colors color, boolean isAccessible) {
-        super(position, color, isAccessible);
+    public ObjectEntity(Position position,Colors color, boolean isPlayerAccessible, boolean isNPCAccessible) {
+        super(position, color, isPlayerAccessible,isNPCAccessible);
     }
 
     @Override

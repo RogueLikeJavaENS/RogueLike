@@ -32,13 +32,6 @@ public class DungeonStructure {
             roomList.add(room);
         }
 
-        // add a key chest in rest rooms.
-        for (Room room : roomList) {
-            if (room.getRoomType() == RoomType.START) {
-                room.addEntity(new Chest(room.getAvailablePositions().remove(0), true));
-                break;
-            }
-        }
         return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1,ROOM_HEIGHT,ROOM_WIDTH, floor);
     }
 

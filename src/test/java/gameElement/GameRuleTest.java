@@ -20,11 +20,6 @@ class GameRuleTest {
         assertTrue(a<=6);
     }
 
-    @Test
-    void getPotionNumber() {
-        int a = gameRule.getPotionNumber();
-        assertTrue(a<=4);
-    }
 
     @Test
     void getPotionType() {
