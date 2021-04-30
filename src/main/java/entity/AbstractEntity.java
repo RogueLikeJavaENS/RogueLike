@@ -168,6 +168,15 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
+     *Set only the bottom sprites of the sprites to print
+     * @param s the new String (3 char max)
+     */
+    public void setBottomSprites(String s) {
+        spritesToPrint.remove(1);
+        spritesToPrint.add(1, s);
+    }
+
+    /**
      * Set the position of the entity
      * @param position new Position
      */

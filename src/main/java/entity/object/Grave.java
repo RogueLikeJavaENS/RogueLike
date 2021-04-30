@@ -15,11 +15,11 @@ public class Grave extends ObjectEntity {
     private final int droppedMoney;
 
     public Grave(Monster monster, GameRule gameRule) {
-        super(monster.getPosition(), Colors.LIGHT_GREY, false);
+        super(monster.getPosition(), Colors.LIGHT_GREY, false, false);
         setSprites("/+\\", "|_|", Colors.LIGHT_GREY);
         droppedItems = new Inventory();
         //plus tard quand les monstres auront des items dans un inventaire ça sera modifié en conséquent
-        int potionNumber = gameRule.getPotionNumber();
+        int potionNumber = gameRule.getNumberOfPotionOnMonster();
         ItemFactory itemFactory = new ItemFactory();
         for (int i = 0; i < potionNumber; i++) {
             Item potion = itemFactory.getItem(gameRule.getPotionType());
@@ -29,7 +29,7 @@ public class Grave extends ObjectEntity {
     }
 
     public void doInteraction(GameState gameState) {
-        StringBuilder dropDescriptor = new StringBuilder("That monster had:\n");
+        StringBuilder dropDescriptor = new StringBuilder("That monster had: ");
         //the if statement is only here for the "and" after the listing of the items
         if (droppedItems.getInventory().size() > 0) {
             //Items the monster carried and dropped are given to the player
@@ -39,11 +39,11 @@ public class Grave extends ObjectEntity {
                         .append(item.toString())
                         .append('\n');
             }
-            dropDescriptor.append("and");
+            dropDescriptor.append(" and ");
         }
         //then the money from the monster
         gameState.getPlayer().getPlayerStats().gainMoney(droppedMoney);
-        dropDescriptor.append(String.format("%s coins!\n", droppedMoney));
+        dropDescriptor.append(String.format("%s coins!", droppedMoney));
 
         gameState.getDescriptor().updateDescriptor(dropDescriptor.toString());
         //remove the entity from the grid (and the whole game with the garbage collector)
