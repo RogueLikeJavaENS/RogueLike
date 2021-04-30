@@ -1,6 +1,8 @@
 import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
+
+import java.util.Locale;
 import java.util.Scanner;
 
 public class StartMenu {
@@ -26,15 +28,14 @@ public class StartMenu {
         return Title;
     }
 
-    public String begin() {
+    public void begin() {
         for (int i = 0; i < 11; i++) {
             System.out.println(Title[i]);
         }
-        System.out.println("So, whats you're name hero ? (max 14 characters)");
-        return getName();
     }
 
-    private String getName(){
+    public String getName(){
+        System.out.println("So, whats you're name hero ? (max 14 characters)");
         Scanner scanner = new Scanner(System.in);
         String name = scanner.nextLine();
         while (name.length()==0 || name.length()>14){
@@ -42,5 +43,30 @@ public class StartMenu {
             name = scanner.nextLine();
         }
         return name;
+    }
+
+    public Classe getClasse(){
+        System.out.println("what do you want to be Hero ?\n An elvish ranger roaming the dungeon ? (1.Ranger)\n A mighty warrior brawling your way to the upper floor ? (2.Warrior)\n A mysterious Mage, exploring the arcane of this dark dungeon ? (3.Mage)\n Decide Hero, your fate awaits you. ");
+        Scanner scanner = new Scanner(System.in);
+        Classe pick = null;
+        while (pick==null) {
+            switch (scanner.nextLine().toLowerCase(Locale.ROOT)) {
+                case ("ranger"):
+                    case ("1"):
+                        pick=Classe.RANGER;
+                        break;
+                case ("warrior"):
+                    case ("2"):
+                        pick=Classe.WARRIOR;
+                        break;
+                case ("mage"):
+                    case ("3"):
+                        pick=Classe.MAGE;
+                        break;
+                default:
+                    System.out.println("this is not a valid class, please try again hero");
+            }
+        }
+        return pick;
     }
 }

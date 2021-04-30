@@ -2,9 +2,12 @@ import display.HUD;
 import display.RendererUI;
 import entity.living.LivingEntity;
 import entity.living.player.Player;
+import entity.object.potions.PotionEntityFactory;
+import stuff.item.ItemFactory;
 import stuff.item.ItemType;
 import gameElement.*;
 import generation.*;
+import stuff.item.potions.Elixir;
 import utils.*;
 
 import java.awt.event.KeyEvent;
@@ -32,7 +35,10 @@ public class RogueLike {
      */
     RogueLike() throws InterruptedException {
         StartMenu start = new StartMenu();
-        String name = start.begin();
+        start.begin();
+        String name = start.getName();
+        Classe classe = start.getClasse();
+        System.out.println(classe);
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
         Position initialPosition = dungeon.getRoom(0).getCenter();
