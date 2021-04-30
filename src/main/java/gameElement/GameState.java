@@ -5,14 +5,10 @@ import display.GridMap;
 import display.HUD;
 import entity.Entity;
 import entity.living.LivingEntity;
-import entity.living.npc.merchants.Merchant;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
+import entity.object.Grave;
 import spells.*;
-import stuff.Stuff;
-import stuff.item.Item;
-import stuff.item.ItemFactory;
-import stuff.item.ItemType;
 import utils.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +32,7 @@ public class GameState {
     private final GameRule gameRule;
     private final Descriptor descriptor;
     private final HUD hud;
+    private int currentFightExp;
 
     public GameState(Player player, Dungeon dungeon, HUD hud) {
         this.dungeon = dungeon;
@@ -50,6 +47,7 @@ public class GameState {
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
+        currentFightExp = 0;
         isThereMonsters();
     }
 
@@ -173,27 +171,18 @@ public class GameState {
      */
     public void isMonsterAlive(Monster monster) {
         if (monster.getMonsterStats().getLifePointActual() == 0) {
-            player.getPlayerStats().grantXP(monster.getMonsterStats().getXpWorth());
-            int potionNumber = gameRule.getPotionNumber();
-            ItemFactory itemFactory = new ItemFactory();
-            for (int i = 0; i < potionNumber; i++) {
-                Item potion = itemFactory.getItem(gameRule.getPotionType());
-                player.getInventory().addItem((Stuff) potion);
-
-            }
-            player.getPlayerStats().gainMoney(monster.getMonsterStats().getMoneyCount());
+            currentFightExp += monster.getMonsterStats().getXpWorth();
             fighting.removeMonster(monster);
-
-            int nbXpBottle = player.getInventory().getItemNumber(ItemType.XP_BOTTLE);
-            int nbElixir = player.getInventory().getItemNumber(ItemType.ELIXIR);
-            int nbHpPotion = player.getInventory().getItemNumber(ItemType.HEALTH_POTION);
-
-            this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up "
-                            +(colorize("%d", Colors.GREEN.textApply()))+" XP bottle(s), "
-                            +(colorize("%d", Colors.BLUE.textApply()))+" Elixir(s), "
-                            +(colorize("%d", Colors.RED.textApply()))+" Health Potion(s) and gained %d xp !\n",
-                    player.getName(), monster.getName(), nbXpBottle, nbElixir, nbHpPotion, monster.getMonsterStats().getXpWorth()));
             gridMap.update(monster, false);
+            //isThereMonster est appelée à chaque déplacement (bug?) donc je dois faire le check à la mort des monstres
+            if (gridMap.getMonsters().size() == 0) {
+                player.getPlayerStats().grantXP(currentFightExp);
+                descriptor.updateDescriptor(String.format("You took down all the monsters and earned %d exp points!", currentFightExp));
+                currentFightExp = 0;
+            }
+
+            Grave grave = new Grave(monster, gameRule);
+            gridMap.update(grave, true);
         }
     }
 

@@ -58,9 +58,9 @@ public class GameRule {
         Collections.shuffle(numberOfGoldInTreasureRoom);
     }
     /**
-     * - 50% 1 potion
-     * - 20% 2 potions
-     * - 20% nothing
+     * - 60% 1 potion
+     * - 25% 2 potions
+     * - 5% nothing
      * - 9% 3 potions
      * - 1% 4 potions
      */
@@ -82,8 +82,8 @@ public class GameRule {
     }
 
     /**
-     * - 40% health
-     * - 40% mana
+     * - 45% health
+     * - 35% mana
      * - 20% XP
      */
     private void setDropRatePotionType() {
@@ -98,7 +98,6 @@ public class GameRule {
         }
         Collections.shuffle(dropRatePotionType);
     }
-
 
     public int getNumberOfPotionInTreasureRoom() {
         return numberOfPotionInTreasureRoom.get(GEN.nextInt(100));

@@ -123,7 +123,7 @@ public class GridMap {
                     if (entitiesAt.size() != 0)// print the first entity of the tile
                     {
                         if (isInRange(abs, ord) && !(entities.get(0) instanceof Player)) {
-                            sb.append(colorize(entitiesAt.get(0).getSprites(i), Colors.SOFT_GREY.bgApply()));
+                            sb.append(colorize(entitiesAt.get(0).getSprites(i), Colors.DEEP_GREY.bgApply()));
                         }
                         else {
                             sb.append(entitiesAt.get(0).getSprites(i));
@@ -132,7 +132,7 @@ public class GridMap {
                     else // if no entity, print the tile
                     {
                         if (isInRange(abs, ord)) {
-                            sb.append(colorize(tiles[ord][abs].toString(), Colors.SOFT_GREY.bgApply()));
+                            sb.append(colorize(tiles[ord][abs].toString(), Colors.DEEP_GREY.bgApply()));
                         }
                         else {
                             sb.append(tiles[ord][abs]);

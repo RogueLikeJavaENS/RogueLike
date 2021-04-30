@@ -55,4 +55,8 @@ public class Inventory {
         }
         return acc;
     }
+
+    public List<Stuff> getInventory() {
+        return inventory;
+    }
 }

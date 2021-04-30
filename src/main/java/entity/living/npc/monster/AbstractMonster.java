@@ -4,10 +4,9 @@ import entity.living.*;
 import gameElement.GameState;
 import entity.living.npc.NPC;
 import monsterStrategy.Strategy;
+import stuff.Inventory;
 import utils.Position;
 import utils.Colors;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
@@ -37,31 +36,10 @@ public abstract class AbstractMonster extends NPC implements Monster {
     }
 
     /**
-     * Return the Stats of the monster
-     * @return the stats
-     */
-    @Override
-    public MonsterStats getMonsterStats() {
-        return (MonsterStats) stats;
-    }
-
-    /**
-     * Return the Strategy of the monster
-     * @return the strategy
-     */
-    public Strategy getStrategy() { return strategy; }
-
-    /**
      * Return if the monster is aggro to the player
      * @return true if the monster is aggro, false if not
      */
     public boolean isAgroPlayer() { return agroPlayer; }
-
-    /**
-     * Return the name of the monster
-     * @return name
-     */
-    public String getName(){ return super.getName();}
 
 
     /**
@@ -94,4 +72,26 @@ public abstract class AbstractMonster extends NPC implements Monster {
         getStrategy().doAct(this, gameState.getPlayer(), gameState.getGridMap());
         gameState.getDescriptor().updateDescriptor(getStrategy().getStrategyDescription());
     }
+
+    /**
+     * Return the Stats of the monster
+     * @return the stats
+     */
+    @Override
+    public MonsterStats getMonsterStats() {
+        return (MonsterStats) stats;
+    }
+
+    /**
+     * Return the Strategy of the monster
+     * @return the strategy
+     */
+    public Strategy getStrategy() { return strategy; }
+
+    /**
+     * Return the name of the monster
+     * @return name
+     */
+    public String getName(){ return super.getName();}
+
 }
