@@ -1,4 +1,5 @@
 package entity.living.npc.merchants;
+
 import entity.living.npc.NPCStats;
 import entity.living.player.Player;
 import stuff.Stuff;
@@ -11,7 +12,7 @@ import utils.*;
 public class PotionMerchant extends AbstractMerchant {
 
     public PotionMerchant(Position position) {
-        super(position, "Jean-Charle", Colors.WHITE, new NPCStats(100,100,5, 1, 1 ,1 ,1 ,1));
+        super(position, "Jean-Charles", Colors.WHITE, new NPCStats(100,100,5, 1, 1 ,1 ,1 ,1));
         setSprites("~.~", "|_|", Colors.CYAN, Colors.MAGENTA);
     }
 

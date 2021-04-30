@@ -12,6 +12,8 @@ import utils.*;
 
 import java.awt.event.KeyEvent;
 
+import static com.diogonunes.jcolor.Ansi.colorize;
+
 /**
  * This is the main class of the RogueLike Game.
  *
@@ -254,6 +256,12 @@ public class RogueLike {
             case KeyEvent.VK_CAPS_LOCK:
                 if (state == State.NORMAL || state == State.FIGHT) {
                     positionLocked = !positionLocked;
+                    if (positionLocked) {
+                        player.setBottomSprites(colorize(player.getSprites(1), Colors.DEEP_GREY.bgApply()));
+                    } else {
+                        player.setBottomSprites("/^\\");
+                    }
+                    turned = true;
                 }
                 break;
             case KeyEvent.VK_ESCAPE: // escape
