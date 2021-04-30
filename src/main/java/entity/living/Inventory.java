@@ -222,7 +222,23 @@ public class Inventory {
     }
 
     public void switchCategory() {
-        onEquipments = !onEquipments;
+        if (onEquipments) {
+            onEquipments = false;
+            if (sortedItem.isEmpty()) {
+                selectedStuff = null;
+            } else {
+                indexOfSelectedStuff = 0;
+                selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
+            }
+        } else {
+            onEquipments = true;
+            if (sortedEquipment.isEmpty()) {
+                selectedStuff = null;
+            } else {
+                indexOfSelectedStuff = 0;
+                selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();
+            }
+        }
     }
 
     public void nextSelectedStuff() {
@@ -266,9 +282,9 @@ public class Inventory {
 
     public String toStringInventory(GameState gameState) {
         StringBuilder sb = new StringBuilder();
-        String head = "################################ | ->, <- : Switch categories.\n" +
-                "#           INVENTORY          # | ^, v : Switch selected stuffs. \n" +
-                "################################ | ENTER : Use/Equip | ESC, I : RESUME\n";
+        String head = "################################ | Q, D : Switch categories.\n" +
+                "#           INVENTORY          # | Z, S : Switch selected stuffs. \n" +
+                "################################ | E : Use/Equip/Unequip | ESC : Quit\n";
         String stats = toStringStats(gameState);
         String inventoryList = toStringInventoryList();
         sb.append(head).append(stats).append(inventoryList);
@@ -375,6 +391,9 @@ public class Inventory {
         int lvl_size = 4;
         int btc_size = 4;
         int des_size = 48;
+        System.out.println("OnEquipment : ");
+        System.out.println(onEquipments);
+        System.out.println(selectedStuff);
         if (onEquipments && !sortedEquipment.isEmpty()) {
             Equipment selectedEquipment = (Equipment) selectedStuff;
             Equipment equipment = (Equipment) coupleStuff.getStuff();
@@ -459,11 +478,6 @@ public class Inventory {
             mp = bonusEquipment(false,true, false, false, false, stats);
             hp = bonusEquipment(true,false, false, false, false, stats);
         } else {
-            xp = Integer.MAX_VALUE;
-            name = Integer.MAX_VALUE;
-            btc = Integer.MAX_VALUE;
-            lvl = Integer.MAX_VALUE;
-            rge = Integer.MAX_VALUE;
             atk = Integer.MAX_VALUE;
             def = Integer.MAX_VALUE;
             ini = Integer.MAX_VALUE;
@@ -621,5 +635,28 @@ public class Inventory {
 
     public List<Stuff> getInventory() {
         return inventory;
+    }
+
+    public void removeItem(ItemType type){
+        for(Stuff stuff : inventory){
+            if (stuff.isUsable()){
+                Item item = (Item) stuff;
+                if (item.getType() == type){
+                    inventory.remove(item);
+                }
+            }
+        }
+    }
+
+    public boolean containsItem(ItemType type){
+        for (Stuff stuff : inventory){
+            if (stuff.isUsable()){
+                Item item = (Item) stuff;
+                if (item.getType() == type){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

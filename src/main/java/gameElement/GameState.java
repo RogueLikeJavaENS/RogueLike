@@ -6,6 +6,7 @@ import display.HUD;
 import display.Tile;
 import entity.Entity;
 import entity.living.LivingEntity;
+import entity.living.npc.merchants.Merchant;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
 import entity.object.Grave;

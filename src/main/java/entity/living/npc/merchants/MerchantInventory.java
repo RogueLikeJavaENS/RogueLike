@@ -91,14 +91,14 @@ public class MerchantInventory extends Inventory {
         StringBuilder sb = new StringBuilder();
         String headSelling =
                 colorize(String.format("Hello %s ! There might be something you want to buy...\n", gameState.getPlayer().getName()) +
-                        "################################ | ->, <- : Switch categories.\n" +
-                        "#    MERCHANT SHOP INVENTORY   # | ^, v : Switch selected stuffs. \n" +
-                        "################################ | ENTER : Buy | ESC, I : RESUME\n", Attribute.BOLD(), Colors.MAGENTA.textApply());
+                        "################################ | Q, D : Switch categories.\n" +
+                        "#    MERCHANT SHOP INVENTORY   # | Z, S : Switch selected stuffs. \n" +
+                        "################################ | E : Buy | ESC : Quit shop\n", Attribute.BOLD(), Colors.MAGENTA.textApply());
         String headBuying =
                 colorize(String.format("Hello %s ! Show me your stuffs you want to sell...\n", gameState.getPlayer().getName()) +
-                        "################################ | ->, <- : Switch categories.\n" +
-                        "#       PLAYER INVENTORY       # | ^, v : Switch selected stuffs. \n" +
-                        "################################ | ENTER : Sell | ESC, I : RESUME\n", Attribute.BOLD(), Colors.CYAN.textApply());
+                        "################################ | Q, D : Switch categories.\n" +
+                        "#       PLAYER INVENTORY       # | Z, S : Switch selected stuffs. \n" +
+                        "################################ | E : Sell | ESC : Quit shop\n", Attribute.BOLD(), Colors.CYAN.textApply());
         String stats = toStringStats(gameState);
         String inventoryList = toStringInventoryList();
         if (selling) {
