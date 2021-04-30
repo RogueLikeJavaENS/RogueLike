@@ -70,7 +70,9 @@ public abstract class AbstractMonster extends NPC implements Monster {
      */
     public void doAction(GameState gameState) {
         getStrategy().doAct(this, gameState.getPlayer(), gameState.getGridMap());
-        gameState.getDescriptor().updateDescriptor(getStrategy().getStrategyDescription());
+        if (getStrategy().getStrategyDescription() != null) {
+            gameState.getDescriptor().updateDescriptor(getStrategy().getStrategyDescription());
+        }
     }
 
     /**

@@ -1,7 +1,10 @@
+import com.diogonunes.jcolor.Attribute;
 import display.HUD;
 import display.RendererUI;
 import entity.living.LivingEntity;
+import entity.living.npc.merchants.PotionMerchant;
 import entity.living.player.Player;
+import gameElement.menu.Menu;
 import entity.object.potions.PotionEntityFactory;
 import stuff.item.ItemFactory;
 import stuff.equipment.EquipmentRarity;
@@ -17,7 +20,7 @@ import stuff.item.keys.FloorKey;
 import stuff.item.potions.Elixir;
 import stuff.item.potions.PotionHealth;
 import utils.*;
-
+import static com.diogonunes.jcolor.Ansi.colorize;
 import java.awt.event.KeyEvent;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -67,7 +70,6 @@ public class RogueLike {
         else if (gs.getState() == State.LOSE) {
             rendererUI.loseEnd();
         }
-
         System.exit(0);
     }
 
@@ -79,7 +81,6 @@ public class RogueLike {
      */
     private void gameLoop() throws InterruptedException{
         while(gs.getState() != State.WIN && gs.getState() != State.LOSE && gs.getState() != State.END) {
-            gs.getDescriptor().clearDescriptor();
             acted = false;
             turned = false;
             modifiedMenu = false;
@@ -155,8 +156,15 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(0, -1);
                     }
-                    // Tries to modify the player's position,
-                    // if something is blocking then the player's turned is not consumed.
+                } else if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().previousSelectedStuff();
+                    modifiedMenu = true;
+                } else if (state == State.SHOP) {
+                    gs.merchant.getMerchantInventory().previousSelectedStuff();
+                    modifiedMenu = true;
+                } else if (state == State.SHOP_MENU || state == State.PAUSE_MENU) {
+                    gs.getMenu().nextSelection();
+                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_Q:
@@ -166,6 +174,13 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(-1, 0);
                     }
+                } else if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().switchCategory();
+                    modifiedMenu = true;
+                }
+                else if (state == State.SHOP) {
+                    gs.merchant.getMerchantInventory().switchCategory();
+                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_S:
@@ -175,6 +190,15 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(0, 1);
                     }
+                } else if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().nextSelectedStuff();
+                    modifiedMenu = true;
+                } else if (state == State.SHOP) {
+                    gs.merchant.getMerchantInventory().nextSelectedStuff();
+                    modifiedMenu = true;
+                } else if (state == State.SHOP_MENU || state == State.PAUSE_MENU) {
+                    gs.getMenu().previousSelection();
+                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_D:
@@ -184,6 +208,12 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(1, 0);
                     }
+                } else if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().switchCategory();
+                    modifiedMenu = true;
+                } else if (state == State.SHOP) {
+                    gs.merchant.getMerchantInventory().switchCategory();
+                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_W:
@@ -209,10 +239,6 @@ public class RogueLike {
                     rendererUI.updateHUD(hud);
                     turned = true;
                 }
-                if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().switchCategory();
-                    modifiedMenu = true;
-                }
                 break;
             case KeyEvent.VK_LEFT:
                 if (state == State.FIGHT) {
@@ -225,51 +251,20 @@ public class RogueLike {
                     rendererUI.updateHUD(hud);
                     turned = true;
                 }
-                if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().switchCategory();
-                    modifiedMenu = true;
-                }
-                break;
-            case KeyEvent.VK_UP:
-                if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().previousSelectedStuff();
-                    modifiedMenu = true;
-                }
-                break;
-            case KeyEvent.VK_DOWN:
-                if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().nextSelectedStuff();
-                    modifiedMenu = true;
-                }
-                break;
-            case KeyEvent.VK_ENTER:
-                if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().useSelectedStuff();
-                    modifiedMenu = true;
-                    acted = gs.isThereMonstersInventory();
-                    if (acted) {
-                        gs.getFighting().next();
-                    }
-                }
                 break;
             case KeyEvent.VK_M:
-                if (state == State.MAP) {
-                    gs.isThereMonsters();
-                } else {
+                if (state != State.MAP) {
                     gs.setState(State.MAP);
                     gs.getMiniMap().updateMap();
                 }
                 modifiedMenu = true;
                 break;
             case KeyEvent.VK_I:
-                if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().closeInventory();
-                    gs.isThereMonsters();
-                } else {
-                    gs.getPlayer().getInventory().openInventory();
+                if (state != State.INVENTORY) {
+                    gs.getPlayer().getInventory().openInventory(true);
                     gs.setState(State.INVENTORY);
+                    modifiedMenu = true;
                 }
-                modifiedMenu = true;
                 break;
             case KeyEvent.VK_H:
                 gs.setHelp(!gs.getHelp());
@@ -305,15 +300,46 @@ public class RogueLike {
                 }
                 break;
             case KeyEvent.VK_ESCAPE: // escape
-                exitStateInput();
+                if (state == State.INVENTORY) {
+                    gs.getPlayer().getInventory().closeInventory();
+                    gs.setState(State.NORMAL);
+                    gs.isThereMonstersInventory();
+                } else if (state == State.SHOP) {
+                    gs.merchant.getMerchantInventory().closeInventory();
+                    gs.setState(State.NORMAL);
+                    gs.isThereMonsters();
+                } else if (state == State.SHOP_MENU || state == State.PAUSE_MENU) {
+                    gs.setState(State.NORMAL);
+                    gs.isThereMonstersInventory();
+                } else {
+                    gs.setMenu(new Menu(state));
+                    gs.setState(State.PAUSE_MENU);
+                }
+                modifiedMenu = true;
+                //exitStateInput();
                 break;
             case KeyEvent.VK_E:
                 if (state == State.NORMAL || state == State.FIGHT) {
                     acted = gs.interact();
+                } else if (state == State.INVENTORY) {
+                    modifiedMenu = true;
+                    boolean used = gs.getPlayer().getInventory().useSelectedStuff(gs);
+                    if (used) {
+                        acted = gs.isThereMonstersInventory();
+                        if (acted) {
+                            gs.getFighting().next();
+                        }
+                    }
+                } else if (state == State.SHOP) {
+                    gs.merchant.getMerchantInventory().useSelectedStuff(gs);
+                    modifiedMenu = true;
+                } else if (state == State.SHOP_MENU || state == State.PAUSE_MENU) {
+                    gs.getMenu().selectAction(gs);
+                    modifiedMenu = true;
                 }
                 break;
-            default:
-                break;
+                default:
+                    break;
         }
     }
 
@@ -323,34 +349,11 @@ public class RogueLike {
      * @throws InterruptedException Something went wrong.
      */
     private void monsterStateInput() throws InterruptedException {
-        System.out.println("Monsters' turn, press any key ...");
+        System.out.println(colorize("Monsters' turn, press any key ...", Attribute.ITALIC(), Colors.RED.textApply()));
         int a = retrieveKey(sp);
         monsterPlayed = true;
-        if ((char) a == '\u001B') { // escape
-            exitStateInput();
-        }
     }
 
-    /**
-     * Ask the player confirmation of to exit the game.
-     *
-     * @throws InterruptedException Something went wrong.
-     */
-    private void exitStateInput() throws InterruptedException {
-        System.out.println(" \t############################################################\n" +
-                            "\t#  Do you want to exit the game ? Everything will be lost. #\n" +
-                            "\t############################################################\n\n" +
-                            "Type (y) to confirm, others to abandon and return to the game : \n");
-        int a = retrieveKey(sp);
-        if ((char) a == 'Y') {
-            rendererUI.clearConsole();
-            gs.exitGame();
-        }
-        acted = false;
-        turned = false;
-        modifiedMenu = true;
-        monsterPlayed = false;
-    }
 
     /**
      * Check if the player had turned. Use to refresh the GridMap to print the new direction.

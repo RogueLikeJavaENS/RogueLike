@@ -9,6 +9,7 @@ import entity.living.LivingEntity;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
 import entity.object.Grave;
+import gameElement.menu.Menu;
 import spells.*;
 import stuff.item.Item;
 import stuff.item.ItemFactory;
@@ -37,6 +38,8 @@ public class GameState {
     private final Descriptor descriptor;
     private final HUD hud;
     private int currentFightExp;
+    public Merchant merchant;
+    private Menu menu;
 
     public GameState(Player player, Dungeon dungeon, HUD hud) {
         this.dungeon = dungeon;
@@ -48,11 +51,17 @@ public class GameState {
         this.miniMap = new MiniMap(dungeon, this);
         this.descriptor = new Descriptor();
         this.hud = hud;
+
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
+        menu = new Menu(state);
         currentFightExp = 0;
         isThereMonsters();
+    }
+
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
     }
 
     public void updateRange() {
@@ -119,7 +128,7 @@ public class GameState {
             }
             return true;
         } else {
-            System.out.println("There is nothing to interact with !");
+            descriptor.updateDescriptor("There is nothing to interact with !");
             return false;
         }
     }
@@ -146,17 +155,19 @@ public class GameState {
      * set the state NORMAL with no Monsters or FIGHT with monsters.
      */
     public void isThereMonsters() {
-        List<LivingEntity> monsters = getGridMap().getMonsters();
-        if (monsters.size() > 0) {  // if there is no monsters in the current map
-            if (state == State.NORMAL) {    // if the state was at Normal, the fight is initialized.
-                initFight(monsters);
+        if (state != State.SHOP && state != State.PAUSE_MENU && state != State.SHOP_MENU) {
+            List<LivingEntity> monsters = getGridMap().getMonsters();
+            if (monsters.size() > 0) {  // if there is no monsters in the current map
+                if (state == State.NORMAL) {    // if the state was at Normal, the fight is initialized.
+                    initFight(monsters);
+                }
+                state = State.FIGHT;
+                updateRange();
             }
-            state = State.FIGHT;
-            updateRange();
-        }
-        else {
-            state = State.NORMAL;
-            gridMap.clearRangeList();
+            else {
+                state = State.NORMAL;
+                gridMap.clearRangeList();
+            }
         }
     }
 
@@ -239,7 +250,7 @@ public class GameState {
                         Monster monster = (Monster) currentEntity;
                         int damages = (int)Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
                         monster.getMonsterStats().sufferDamage(damages);
-                        descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !\n",
+                        descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
                                 player.getName(),
                                 spell,
                                 colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
@@ -273,6 +284,7 @@ public class GameState {
     public MiniMap getMiniMap() { return miniMap; }
     public GameRule getGameRule() { return gameRule; }
     public Descriptor getDescriptor() { return descriptor; }
+    public Menu getMenu() { return menu; }
 
     /* SETTERS */
     public void setState(State newState) {this.state = newState; }
@@ -282,6 +294,7 @@ public class GameState {
     public void setHelp(boolean help){ this.help = help; }
     public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
     public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
+    public void setMenu(Menu menu) { this.menu = menu; }
 
     public static void main(String[] args) {
         int a = 2;

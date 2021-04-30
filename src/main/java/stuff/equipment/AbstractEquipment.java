@@ -2,6 +2,8 @@ package stuff.equipment;
 
 import stuff.AbstractStuff;
 
+import java.util.Objects;
+
 public abstract class AbstractEquipment extends AbstractStuff implements Equipment {
 
     private int bonusLife;
@@ -43,6 +45,20 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
 
     protected void setRarityName() {
         super.setName("test");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AbstractEquipment that = (AbstractEquipment) o;
+        return bonusLife == that.bonusLife && bonusMana == that.bonusMana && bonusInitiative == that.bonusInitiative && bonusDamage == that.bonusDamage && bonusArmor == that.bonusArmor && level == that.level && isEquiped == that.isEquiped && type == that.type && rarity == that.rarity;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), bonusLife, bonusMana, bonusInitiative, bonusDamage, bonusArmor, level, type, rarity, isEquiped);
     }
 
     /* GETTERS */

@@ -6,5 +6,7 @@ public interface Stuff {
     String getName();
     boolean isEquipable();
     boolean isUsable();
+    int getSellingPrice();
+    int getBuyingPrice();
 
 }

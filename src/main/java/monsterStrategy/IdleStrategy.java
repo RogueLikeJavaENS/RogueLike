@@ -19,7 +19,6 @@ public class IdleStrategy extends DecoratorStrategy {
                 monster.setAgroPlayer(false);
             }
             StrategyUtils.updatePos(monster,StrategyUtils.moveRandomly(monster, gridMap));
-            this.updateStrategyDescription(String.format("%s did not see %s",monster.getName(),player.getName()));
         }
         return canMove;
     }
