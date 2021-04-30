@@ -82,7 +82,6 @@ public class RendererUI {
      */
     public String toStringGame(){
         StringBuilder globalSB = new StringBuilder();
-
         // Controls always print
         if (gs.getHelp()){
             globalSB.append(help);
@@ -115,6 +114,16 @@ public class RendererUI {
                 globalSB.append(hud.getSpellBar());
                 globalSB.append(gs.getFighting().toString());
 
+                break;
+            case SHOP:
+                globalSB.append(gs.merchant.getMerchantInventory().toStringInventory(gs));
+                break;
+            case SHOP_MENU:
+                globalSB.append(gs.getMenu().displayMenu());
+                break;
+            case PAUSE_MENU:
+                globalSB.append(gs.getMenu().displayMenu());
+                gs.getDescriptor().flushDescriptor();
                 break;
             default:
                 break;

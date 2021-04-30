@@ -1,5 +1,6 @@
 package entity.living.player;
 
+import entity.living.Inventory;
 import entity.living.LivingEntity;
 import spells.BasicAttack;
 import spells.*;

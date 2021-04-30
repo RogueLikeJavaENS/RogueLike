@@ -5,8 +5,10 @@ import display.GridMap;
 import display.HUD;
 import entity.Entity;
 import entity.living.LivingEntity;
+import entity.living.npc.merchants.Merchant;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
+import gameElement.menu.Menu;
 import spells.*;
 import stuff.item.Item;
 import stuff.item.ItemFactory;
@@ -34,6 +36,8 @@ public class GameState {
     private final GameRule gameRule;
     private final Descriptor descriptor;
     private final HUD hud;
+    public Merchant merchant;
+    private Menu menu;
 
     public GameState(Player player, Dungeon dungeon, HUD hud) {
         this.dungeon = dungeon;
@@ -45,10 +49,16 @@ public class GameState {
         this.miniMap = new MiniMap(dungeon, this);
         this.descriptor = new Descriptor();
         this.hud = hud;
+
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
+        menu = new Menu(state);
         isThereMonsters();
+    }
+
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
     }
 
     public void updateRange() {
@@ -112,6 +122,7 @@ public class GameState {
         if (entities.size() != 0) {
             for (Entity entity: entities) {
                 entity.doInteraction(this);
+                System.out.printf("GameState interact() State = %s\n", state);
             }
             return true;
         } else {
@@ -142,17 +153,19 @@ public class GameState {
      * set the state NORMAL with no Monsters or FIGHT with monsters.
      */
     public void isThereMonsters() {
-        List<LivingEntity> monsters = getGridMap().getMonsters();
-        if (monsters.size() > 0) {  // if there is no monsters in the current map
-            if (state == State.NORMAL) {    // if the state was at Normal, the fight is initialized.
-                initFight(monsters);
+        if (state != State.SHOP && state != State.PAUSE_MENU && state != State.SHOP_MENU) {
+            List<LivingEntity> monsters = getGridMap().getMonsters();
+            if (monsters.size() > 0) {  // if there is no monsters in the current map
+                if (state == State.NORMAL) {    // if the state was at Normal, the fight is initialized.
+                    initFight(monsters);
+                }
+                state = State.FIGHT;
+                updateRange();
             }
-            state = State.FIGHT;
-            updateRange();
-        }
-        else {
-            state = State.NORMAL;
-            gridMap.clearRangeList();
+            else {
+                state = State.NORMAL;
+                gridMap.clearRangeList();
+            }
         }
     }
 
@@ -278,6 +291,7 @@ public class GameState {
     public MiniMap getMiniMap() { return miniMap; }
     public GameRule getGameRule() { return gameRule; }
     public Descriptor getDescriptor() { return descriptor; }
+    public Menu getMenu() { return menu; }
 
     /* SETTERS */
     public void setState(State newState) {this.state = newState; }
@@ -287,6 +301,7 @@ public class GameState {
     public void setHelp(boolean help){ this.help = help; }
     public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
     public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
+    public void setMenu(Menu menu) { this.menu = menu; }
 
     public static void main(String[] args) {
         int a = 2;

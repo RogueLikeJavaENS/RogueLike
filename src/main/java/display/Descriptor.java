@@ -11,6 +11,10 @@ public class Descriptor {
         this.buffer = new ArrayList<>();
     }
 
+    public void flushDescriptor() {
+        buffer.clear();
+    }
+
     public void updateDescriptor(String str){
         buffer.add(str);
         if (buffer.size() > LINE) {
