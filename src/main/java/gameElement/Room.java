@@ -6,10 +6,7 @@ import entity.object.Door;
 import generation.RoomType;
 import utils.Direction;
 import utils.Position;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -105,7 +102,7 @@ public class Room {
         return entitiesAt;
     }
 
-    private List<Position> getForbiddenPositions() {
+    public List<Position> getForbiddenPositions() {
         ArrayList<Position> forbiddenPosition = new ArrayList<>(); // positions in front of a door is forbidden.
         forbiddenPosition.add(new Position(width/2, 1)); // North
         forbiddenPosition.add(new Position(width/2, height-2)); // South

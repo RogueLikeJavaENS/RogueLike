@@ -8,7 +8,11 @@ import entity.object.*;
 import entity.object.potions.PotionEntityFactory;
 import gameElement.GameRule;
 import gameElement.Room;
+import utils.Direction;
 import utils.Position;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -33,8 +37,6 @@ public class RoomFactory {
         this.currentAvailablePositions = room.getAvailablePositions();
         switch (roomType) {
             case START:
-                addHole(room);
-                addSpike(room);
                 addChest(room,true);    // Basic equipment to start a new adventure
                 // add some stuffs that make clear it's the start room.
                 break;
@@ -117,27 +119,6 @@ public class RoomFactory {
     private void addMerchant(Room room) {
         room.addEntity(new PotionMerchant(currentAvailablePositions.remove(0)));
     }
-
-    private void addHole(Room room){
-        int nbHole = gameRule.numberOfHole();
-        for (int i = 0; i<nbHole; i++){
-            int sizeOfHole = gameRule.sizeOfHole();
-            for (int j = 0; j<sizeOfHole; j++){
-                room.addEntity(new Hole(room.getAvailablePositions().get(0)));
-            }
-        }
-    }
-
-    private void addSpike(Room room){
-        int nbSpike = gameRule.numberOfSpike();
-        for (int i = 0; i<nbSpike; i++){
-            int sizeOfSpike = gameRule.sizeOfSpike();
-            for (int j = 0; j<sizeOfSpike; j++){
-                room.addEntity(new Spike(room.getAvailablePositions().get(0)));
-            }
-        }
-    }
-
 
 
     /**
