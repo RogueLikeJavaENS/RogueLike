@@ -19,7 +19,6 @@ public class ApproachStrategy extends DecoratorStrategy {
                 monster.setAgroPlayer(true);
             }
             StrategyUtils.updatePos(monster, StrategyUtils.moveAroundPlayer(true, monster, player,gridMap));
-            this.updateStrategyDescription(String.format("%s wants to come to %s",monster.getName(),player.getName()));
         }
         return canMove;
     }

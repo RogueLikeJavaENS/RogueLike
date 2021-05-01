@@ -7,11 +7,13 @@ public abstract class AbstractStuff implements Stuff {
     String description;
     boolean isUsable;
     boolean isEquipable;
+    int price;
 
     public AbstractStuff(String name, boolean isUsable, boolean isEquipable){
         this.isUsable = isUsable;
         this.isEquipable = isEquipable;
         this.name = name;
+        price = 5;
     }
 
     public void setName(String name) {
@@ -48,5 +50,13 @@ public abstract class AbstractStuff implements Stuff {
     @Override
     public int hashCode() {
         return Objects.hash(name, description, isUsable, isEquipable);
+    }
+
+    public int getSellingPrice() {
+        return price;
+    }
+
+    public int getBuyingPrice() {
+        return (int) (price*0.60);
     }
 }

@@ -4,9 +4,6 @@ import monsterStrategy.Strategy;
 import utils.Colors;
 import utils.Position;
 
-import java.util.ArrayList;
-import static com.diogonunes.jcolor.Ansi.colorize;
-
 /**
  * This class describe the monster Goblin
  * He has some basic statistic
@@ -27,7 +24,6 @@ public class Goblin extends AbstractMonster implements Monster {
      * @param strategy his strategy to apply
      */
     public Goblin(Position position, String name, int level, Strategy strategy) {
-        //super(position, name, Colors.GREEN, strategy,new MonsterStats(100,100,1,2,5,5,5,level,10));
         super(position, name, Colors.GREEN, strategy,
                 new MonsterStats(basicHP+(hpModifier*level),
                         basicMP+(mpModifier*level),

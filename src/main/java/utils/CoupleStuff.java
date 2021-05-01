@@ -20,7 +20,7 @@ public class CoupleStuff {
 
     public boolean removeStuff() {
         count --;
-        return count > 0;
+        return !(count > 0);
     }
 
     @Override

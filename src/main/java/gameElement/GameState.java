@@ -6,8 +6,11 @@ import display.HUD;
 import display.Tile;
 import entity.Entity;
 import entity.living.LivingEntity;
+import entity.living.npc.merchants.Merchant;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
+import entity.object.Grave;
+import gameElement.menu.Menu;
 import spells.*;
 import stuff.item.Item;
 import stuff.item.ItemFactory;
@@ -35,6 +38,9 @@ public class GameState {
     private final GameRule gameRule;
     private final Descriptor descriptor;
     private final HUD hud;
+    private int currentFightExp;
+    public Merchant merchant;
+    private Menu menu;
 
     public GameState(Player player, Dungeon dungeon, HUD hud) {
         this.dungeon = dungeon;
@@ -46,10 +52,17 @@ public class GameState {
         this.miniMap = new MiniMap(dungeon, this);
         this.descriptor = new Descriptor();
         this.hud = hud;
+
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
+        menu = new Menu(state);
+        currentFightExp = 0;
         isThereMonsters();
+    }
+
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
     }
 
     public void updateRange() {
@@ -116,7 +129,7 @@ public class GameState {
             }
             return true;
         } else {
-            System.out.println("There is nothing to interact with !");
+            descriptor.updateDescriptor("There is nothing to interact with !");
             return false;
         }
     }
@@ -143,17 +156,19 @@ public class GameState {
      * set the state NORMAL with no Monsters or FIGHT with monsters.
      */
     public void isThereMonsters() {
-        List<LivingEntity> monsters = getGridMap().getMonsters();
-        if (monsters.size() > 0) {  // if there is no monsters in the current map
-            if (state == State.NORMAL) {    // if the state was at Normal, the fight is initialized.
-                initFight(monsters);
+        if (state != State.SHOP && state != State.PAUSE_MENU && state != State.SHOP_MENU) {
+            List<LivingEntity> monsters = getGridMap().getMonsters();
+            if (monsters.size() > 0) {  // if there is no monsters in the current map
+                if (state == State.NORMAL) {    // if the state was at Normal, the fight is initialized.
+                    initFight(monsters);
+                }
+                state = State.FIGHT;
+                updateRange();
             }
-            state = State.FIGHT;
-            updateRange();
-        }
-        else {
-            state = State.NORMAL;
-            gridMap.clearRangeList();
+            else {
+                state = State.NORMAL;
+                gridMap.clearRangeList();
+            }
         }
     }
 
@@ -183,27 +198,18 @@ public class GameState {
      */
     public void isMonsterAlive(Monster monster) {
         if (monster.getMonsterStats().getLifePointActual() == 0) {
-            player.getPlayerStats().grantXP(monster.getMonsterStats().getXpWorth());
-            int potionNumber = gameRule.getNumberOfPotionOnMonster();
-            ItemFactory itemFactory = new ItemFactory();
-            for (int i = 0; i < potionNumber; i++) {
-                Item potion = itemFactory.getItem(gameRule.getPotionType());
-                player.getInventory().addItem(potion);
-
-            }
-            player.getPlayerStats().gainMoney(monster.getMonsterStats().getMoneyCount());
+            currentFightExp += monster.getMonsterStats().getXpWorth();
             fighting.removeMonster(monster);
-
-            int nbXpBottle = player.getInventory().getItemNumber(ItemType.XP_BOTTLE);
-            int nbElixir = player.getInventory().getItemNumber(ItemType.ELIXIR);
-            int nbHpPotion = player.getInventory().getItemNumber(ItemType.HEALTH_POTION);
-
-            this.getDescriptor().updateDescriptor(String.format("%s killed %s, picked up "
-                            +(colorize("%d", Colors.GREEN.textApply()))+" XP bottle(s), "
-                            +(colorize("%d", Colors.BLUE.textApply()))+" Elixir(s), "
-                            +(colorize("%d", Colors.RED.textApply()))+" Health Potion(s) and gained %d xp !\n",
-                    player.getName(), monster.getName(), nbXpBottle, nbElixir, nbHpPotion, monster.getMonsterStats().getXpWorth()));
             gridMap.update(monster, false);
+            //isThereMonster est appelée à chaque déplacement (bug?) donc je dois faire le check à la mort des monstres
+            if (gridMap.getMonsters().size() == 0) {
+                player.getPlayerStats().grantXP(currentFightExp);
+                descriptor.updateDescriptor(String.format("You took down all the monsters and earned %d exp points!", currentFightExp));
+                currentFightExp = 0;
+            }
+
+            Grave grave = new Grave(monster, gameRule);
+            gridMap.update(grave, true);
         }
     }
 
@@ -245,7 +251,7 @@ public class GameState {
                         Monster monster = (Monster) currentEntity;
                         int damages = (int)Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
                         monster.getMonsterStats().sufferDamage(damages);
-                        descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !\n",
+                        descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
                                 player.getName(),
                                 spell,
                                 colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
@@ -279,6 +285,7 @@ public class GameState {
     public MiniMap getMiniMap() { return miniMap; }
     public GameRule getGameRule() { return gameRule; }
     public Descriptor getDescriptor() { return descriptor; }
+    public Menu getMenu() { return menu; }
 
     /* SETTERS */
     public void setState(State newState) {this.state = newState; }
@@ -288,6 +295,7 @@ public class GameState {
     public void setHelp(boolean help){ this.help = help; }
     public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
     public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
+    public void setMenu(Menu menu) { this.menu = menu; }
 
     public static void main(String[] args) {
         int a = 2;

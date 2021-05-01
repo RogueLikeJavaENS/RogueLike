@@ -9,7 +9,6 @@ public abstract class DecoratorStrategy implements Strategy{
     private String strategyDescription;
 
     public DecoratorStrategy(Strategy nextStrategy) {
-        this.strategyDescription ="";
         this.nextStrategy = nextStrategy;
     }
 

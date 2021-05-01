@@ -4,8 +4,6 @@ import monsterStrategy.Strategy;
 import utils.Colors;
 import utils.Position;
 
-import java.util.ArrayList;
-
 /**
  * This class describe the monster Skeleton
  * He has some basic statistic

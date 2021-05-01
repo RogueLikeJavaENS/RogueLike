@@ -17,8 +17,9 @@ public enum Colors {
     WHITE(15),
     BROWN(94),
     ORANGE(131), //for the monster agro
-    SOFT_GREY(237), //for the spell range
+    DEEP_GREY(237), //for the spell range
     DARK_GREY(238), //for the walls
+    LIGHT_GREY(244), //for the graves
     SOFT_DARK(234);
 
     private final int value;
