@@ -27,15 +27,26 @@ class ApproachStrategyTest {
         Position playerPosition1 = new Position(2,2);
         Position playerPosition2 = new Position(4,4);
         Position playerPosition3 = new Position(7,8);
+        Position playerPosition4 = new Position(1,3);
         Monster monster = monsterFactory.getMonster(0,monsterPosition);
         Player player = new Player(playerPosition1,10,10,"Hero",1);
 
+        System.out.println("test 1\nMonster = (" + monster.getPosition().getAbs() + ", " + monster.getPosition().getOrd() + ")");
+        System.out.println("Player = (" + player.getPosition().getAbs() + ", " + player.getPosition().getOrd() + ")\n");
         assertFalse(approach.act(monster,player,gridMap));
         player.setPosition(playerPosition2);
+        System.out.println("test 2\nMonster = (" + monster.getPosition().getAbs() + ", " + monster.getPosition().getOrd() + ")");
+        System.out.println("Player = (" + player.getPosition().getAbs() + ", " + player.getPosition().getOrd() + ")\n");
         assertTrue(approach.act(monster,player,gridMap));
         player.setPosition(playerPosition3);
+        System.out.println("test 3\nMonster = (" + monster.getPosition().getAbs() + ", " + monster.getPosition().getOrd() + ")");
+        System.out.println("Player = (" + player.getPosition().getAbs() + ", " + player.getPosition().getOrd() + ")\n");
         assertTrue(approach.act(monster,player,gridMap));
-
+        player.setPosition(playerPosition4);
+        monster.setPosition(new Position(5, 5));
+        System.out.println("Test 4\nMonster = (" + monster.getPosition().getAbs() + ", " + monster.getPosition().getOrd() + ")");
+        System.out.println("Player = (" + player.getPosition().getAbs() + ", " + player.getPosition().getOrd() + ")\n");
+        assertTrue(approach.act(monster,player,gridMap));
     }
 
 

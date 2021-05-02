@@ -10,15 +10,14 @@ public class MoveAwayStrategy extends DecoratorStrategy{
    }
 
     public boolean act(Monster monster, Player player, GridMap gridMap) {
-        boolean canMove = StrategyUtils.getDistance(monster,player) > 1;
+        boolean canMove = StrategyUtils.getDistance(monster,player) >= 1;
         if (canMove) {
             if (monster.isAgroPlayer()){
                 monster.setAgroPlayer(false);
             }
-            StrategyUtils.updatePos(monster, StrategyUtils.moveAroundPlayer(false, monster, player, gridMap));
+            StrategyUtils.moveAwayFromPlayer(monster, player, gridMap);
             this.updateStrategyDescription(String.format("%s is afraid and running away from %s",monster.getName(), player.getName()));
         }
         return canMove;
     }
-
 }

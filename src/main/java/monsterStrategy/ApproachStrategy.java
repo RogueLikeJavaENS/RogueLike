@@ -13,12 +13,13 @@ public class ApproachStrategy extends DecoratorStrategy {
     }
 
     public boolean act(Monster monster, Player player, GridMap gridMap) {
-        boolean canMove = StrategyUtils.getDistance(monster, player) > 1;
+        boolean canMove = StrategyUtils.getDistance(monster, player) > monster.getMonsterStats().getRangeTotal();
         if (canMove){
             if (!monster.isAgroPlayer()){
                 monster.setAgroPlayer(true);
             }
-            StrategyUtils.updatePos(monster, StrategyUtils.moveAroundPlayer(true, monster, player,gridMap));
+            StrategyUtils.aStarAlgorithm(monster, player,gridMap);
+            this.updateStrategyDescription(String.format("%s approaches %s",monster.getName(),player.getName()));
         }
         return canMove;
     }
