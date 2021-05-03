@@ -1,9 +1,6 @@
 package gameElement;
 
-import display.Descriptor;
-import display.GridMap;
-import display.HUD;
-import display.Tile;
+import display.*;
 import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.npc.merchants.Merchant;
@@ -28,7 +25,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class GameState {
     private State state;
     private Room currentRoom;
-    private final Player player;
+    private Player player;
     private Dungeon dungeon;
     private GridMap gridMap;
     private Fighting fighting;
@@ -37,7 +34,7 @@ public class GameState {
     private Range range;
     private final GameRule gameRule;
     private final Descriptor descriptor;
-    private final HUD hud;
+    private HUD hud;
     private int currentFightExp;
     public Merchant merchant;
     private Menu menu;
@@ -56,7 +53,6 @@ public class GameState {
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
-        menu = new Menu(state);
         currentFightExp = 0;
         isThereMonsters();
     }
@@ -286,6 +282,9 @@ public class GameState {
     public GameRule getGameRule() { return gameRule; }
     public Descriptor getDescriptor() { return descriptor; }
     public Menu getMenu() { return menu; }
+    public HUD getHud() {
+        return hud;
+    }
 
     /* SETTERS */
     public void setState(State newState) {this.state = newState; }
@@ -296,6 +295,13 @@ public class GameState {
     public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
     public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
     public void setMenu(Menu menu) { this.menu = menu; }
+    public void setHud(HUD hud) { this.hud = hud; }
+    public void setPlayer(Player player) {
+        gridMap.update(getPlayer(), false);
+        this.player = player;
+        gridMap.update(getPlayer(), true);
+        setHud(new HUD(player));
+    }
 
     public static void main(String[] args) {
         int a = 2;
