@@ -23,7 +23,7 @@ public class Grave extends ObjectEntity {
         ItemFactory itemFactory = new ItemFactory();
         for (int i = 0; i < potionNumber; i++) {
             Item potion = itemFactory.getItem(gameRule.getPotionType());
-            droppedItems.addItem((Stuff) potion);
+            droppedItems.addItem(potion);
         }
         droppedMoney = monster.getMonsterStats().getMoneyCount();
     }
@@ -36,7 +36,7 @@ public class Grave extends ObjectEntity {
             for (Stuff item : droppedItems.getInventory()) {
                 gameState.getPlayer().getInventory().addItem(item);
                 dropDescriptor.append('-')
-                        .append(item.toString())
+                        .append(item.getName())
                         .append('\n');
             }
             dropDescriptor.append(" and ");

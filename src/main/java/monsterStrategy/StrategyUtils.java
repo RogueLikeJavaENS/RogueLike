@@ -6,6 +6,7 @@ import display.tiles.DoorTile;
 import entity.Entity;
 import entity.living.npc.monster.Monster;
 import entity.living.player.Player;
+import utils.Check;
 import utils.Direction;
 import utils.Position;
 
@@ -20,17 +21,51 @@ public final class StrategyUtils {
     public static double getDistance(Monster monster, Player player){
         Position monsterPos = monster.getPosition();
         Position playerPos = player.getPosition();
-        int dx = monsterPos.getAbs() - playerPos.getAbs();
-        int dy = monsterPos.getOrd() - playerPos.getOrd();
+        return getDistance(monsterPos, playerPos);
+    }
+
+    public static double getDistance(Position firstPos, Position secondPos){
+        int dx = firstPos.getAbs() - secondPos.getAbs();
+        int dy = firstPos.getOrd() - secondPos.getOrd();
         return Math.hypot(dx,dy);
     }
 
-    public static void updatePos(Monster monster, Direction direction) {
+    public static void moveAwayFromPlayer(Monster monster, Player player, GridMap gridMap){
         Position monsterPos = monster.getPosition();
+        Position playerPos = player.getPosition();
+
+        List<Direction> possibleDir = foundAccessibleDirection(monsterPos,gridMap);
+        Collections.shuffle(possibleDir);
+        List<Direction> resList = new ArrayList<>(possibleDir);
+
+        for(Direction dir : possibleDir) {
+            switch (dir) {
+                case NORTH:
+                case SOUTH:
+                    if (monsterPos.getOrd() > playerPos.getOrd()) {
+                        resList.remove(Direction.NORTH);
+                    } else if (monsterPos.getOrd() < playerPos.getOrd()) {
+                        resList.remove(Direction.SOUTH);
+                    }
+                    break;
+                case EAST:
+                case WEST:
+                    if (monsterPos.getAbs() > playerPos.getAbs()) {
+                        resList.remove(Direction.WEST);
+                    } else if (monsterPos.getAbs() < playerPos.getAbs()) {
+                        resList.remove(Direction.EAST);
+                    }
+                    break;
+            }
+        }
+        if (resList.size() == 0){
+            resList.add(Direction.NONE);
+        }
+        Random gen = new Random();
+        Direction direction = resList.get(gen.nextInt(resList.size()));
         switch (direction){
             case EAST:
                 monsterPos.updatePos(1,0);
-
                 break;
             case WEST:
                 monsterPos.updatePos(-1,0);
@@ -44,78 +79,100 @@ public final class StrategyUtils {
             default:
                 break;
         }
-
+        monster.setPosition(monsterPos);
     }
 
-    public static Direction moveAroundPlayer(boolean approach, Monster monster, Player player, GridMap gridMap){
+    public static void aStarAlgorithm(Monster monster, Player player, GridMap gridMap) {
         Position monsterPos = monster.getPosition();
         Position playerPos = player.getPosition();
 
-        List<Direction> possibleDir = foundAccessibleDirection(monsterPos,gridMap);
-        Collections.shuffle(possibleDir);
-        List<Direction> resList = new ArrayList<>(possibleDir);
+        List<Node> openNodes = new ArrayList<>(); //liste des nodes qui sont candidates en tant que Node du chemin
+        List<Node> closedNodes = new ArrayList<>(); //liste des nodes qu'on a déjà vérifié
+        //List<Node> path = new ArrayList<>(); //liste des nodes qui constituent le chemin
+        openNodes.add(new Node(monsterPos, playerPos)); //on ajoute la Node actuelle pour démarrer
 
-        for(Direction dir : possibleDir) {
-            switch (dir) {
-                case NORTH:
-                case SOUTH:
-                    if (monsterPos.getOrd() > playerPos.getOrd()) {
-                        if (approach) {
-                            resList.remove(Direction.SOUTH);
+        //tant qu'on a des Node à vérifier (donc un potentiel chemin)
+        while (openNodes.size() > 0) {
+            Node currentNode = getMostRelevantNode(openNodes); //on récupère celle qui semble être le meilleur choix
+            openNodes.remove(currentNode);
+            closedNodes.add(currentNode);
+
+            //s'il s'agît d'une Node à moins de 1 de distance avec le joueur, c'est là qu'on doit aller
+            if (getDistance(currentNode.getNodePos(), playerPos) <= 1) {
+                //on remonte le chemin en passant par les parents
+                while (!currentNode.getParentNode().getNodePos().equals(monsterPos)) {
+                    //path.add(currentNode);
+                    currentNode = currentNode.getParentNode();
+                }
+                monster.setPosition(currentNode.getNodePos()); //et on donne au monstre la position de la première node du chemin
+                break;
+            }
+
+            //on récupère les directions possibles depuis la Node courante, donc les non-accessibles ne seront pas un problème
+            List<Direction> possibleDir = foundAccessibleDirection(currentNode.getNodePos(), gridMap);
+
+            Position newNodePos; //je vais peut-être devoir le mettre dans le for ça
+            for (Direction direction : possibleDir) {
+                switch (direction) {
+                    case NORTH:
+                        try {
+                            newNodePos = new Position(currentNode.getNodePos().getAbs(), Check.checkPositivity(currentNode.getNodePos().getOrd()-1));
+                        } catch (IllegalArgumentException illegalArgumentException) { //si on sort de la map
+                            newNodePos = currentNode.getNodePos();
                         }
-                        else {
-                            resList.remove(Direction.NORTH);
+                        break;
+                    case WEST:
+                        try {
+                            newNodePos = new Position(Check.checkPositivity(currentNode.getNodePos().getAbs()-1), currentNode.getNodePos().getOrd());
+                        } catch (IllegalArgumentException illegalArgumentException) { //si on sort de la map
+                            newNodePos = currentNode.getNodePos();
                         }
-                    } else if (monsterPos.getOrd() < playerPos.getOrd()) {
-                        if (approach){
-                            resList.remove(Direction.NORTH);
-                        }
-                        else {
-                            resList.remove(Direction.SOUTH);
-                        }
-                    } else {
-                        if (approach){
-                            resList.remove(Direction.SOUTH);
-                            resList.remove(Direction.NORTH);
-                        }
-                    }
-                    break;
-                case EAST:
-                case WEST:
-                    if (monsterPos.getAbs() > playerPos.getAbs()) {
-                        if (approach) {
-                            resList.remove(Direction.EAST);
-                        }
-                        else {
-                            resList.remove(Direction.WEST);
-                        }
-                    } else if (monsterPos.getAbs() < playerPos.getAbs()) {
-                        if (approach){
-                            resList.remove(Direction.WEST);
-                        }
-                        else {
-                            resList.remove(Direction.EAST);
-                        }
-                    } else {
-                        if (approach){
-                            resList.remove(Direction.WEST);
-                            resList.remove(Direction.EAST);
-                        }
-                    }
-                    break;
+                        break;
+                    case SOUTH:
+                        newNodePos = new Position(currentNode.getNodePos().getAbs(), currentNode.getNodePos().getOrd()+1);
+                        break;
+                    case EAST:
+                        newNodePos = new Position(currentNode.getNodePos().getAbs()+1, currentNode.getNodePos().getOrd());
+                        break;
+                    default:
+                        newNodePos = currentNode.getNodePos();
+                }
+                Node nextNode = new Node(newNodePos, playerPos, monsterPos, currentNode);
+                if (containsNodeHere(closedNodes, newNodePos) != -1) {
+                    continue;
+                }
+                int indexIfExists = containsNodeHere(openNodes, newNodePos);
+                if (indexIfExists != -1) {
+                    openNodes.get(indexIfExists).setParentNode(currentNode);
+                } else {
+                    openNodes.add(nextNode);
+                }
             }
         }
-        if (resList.size() == 0){
-            resList.add(Direction.NONE);
-        }
-        Random gen = new Random();
-        return resList.get(gen.nextInt(resList.size()));
     }
 
-    public static Direction moveRandomly(Monster monster, GridMap gridMap){
+    public static void moveRandomly(Monster monster, GridMap gridMap){
+        Position monsterPos = monster.getPosition();
         Random gen = new Random();
-        List<Direction> accessibleDirection = foundAccessibleDirection(monster.getPosition(), gridMap);
-        return accessibleDirection.get(gen.nextInt(accessibleDirection.size()));
+        List<Direction> accessibleDirection = foundAccessibleDirection(monsterPos, gridMap);
+        Direction direction = accessibleDirection.get(gen.nextInt(accessibleDirection.size()));
+        switch (direction){
+            case EAST:
+                monsterPos.updatePos(1,0);
+                break;
+            case WEST:
+                monsterPos.updatePos(-1,0);
+                break;
+            case NORTH:
+                monsterPos.updatePos(0,-1);
+                break;
+            case SOUTH:
+                monsterPos.updatePos(0,1);
+                break;
+            default:
+                break;
+        }
+        monster.setPosition(monsterPos);
     }
 
 
@@ -161,5 +218,33 @@ public final class StrategyUtils {
         }
 
         return accessibleDirection;
+    }
+
+    private static Node getMostRelevantNode(List<Node> list) {
+        Node bestNode = list.get(0);
+        for (Node currentNode : list) {
+            if (currentNode.getRelevance() < bestNode.getRelevance()) {
+                bestNode = currentNode;
+            }
+        }
+        return bestNode;
+    }
+
+    /**
+     * Checks if the given list contains a node with the same position as the given one
+     * @param nodeList list of Nodes to check
+     * @param position position we're looking at
+     * @return the index of the Node in the list if there's one, -1 otherwise
+     *
+     * @author Raphael
+     */
+    private static int containsNodeHere(List<Node> nodeList, Position position) {
+        for (int i = 0; i < nodeList.size(); i++) {
+            Node currentNode = nodeList.get(i);
+            if (position.equals(currentNode.getNodePos())) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

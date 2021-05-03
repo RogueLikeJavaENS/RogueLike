@@ -40,6 +40,12 @@ public class Position {
         setOrd(this.ord + ord);
     }
 
+    //Je l'avais mise là parce que j'en avais besoin mais en fait non, mais je la laisse au cas où
+    public void updatePos(Position position) {
+        setAbs(position.getAbs());
+        setOrd(position.getOrd());
+    }
+
     public Position getPosInFront(Direction dir) {
         switch (dir) {
             case NORTH:
