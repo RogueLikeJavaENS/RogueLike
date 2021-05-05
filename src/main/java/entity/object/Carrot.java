@@ -24,4 +24,10 @@ public class Carrot extends ObjectEntity {
         gameState.getDescriptor().updateDescriptor(String.format("%s walked on the Rabbit's carrot and lost %d HP.",player.getName(),damage));
         gameState.getGridMap().update(this, false);
     }
+
+    @Override
+    public void doInteraction(GameState gameState) {
+        gameState.getGridMap().update(this, false);
+        gameState.getDescriptor().updateDescriptor("You cleaned up the carrot.");
+    }
 }
