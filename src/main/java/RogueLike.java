@@ -8,11 +8,10 @@ import gameElement.menu.Menu;
 import stuff.item.ItemType;
 import gameElement.*;
 import generation.*;
+import stuff.item.potions.XpBottle;
 import utils.*;
 import static com.diogonunes.jcolor.Ansi.colorize;
 import java.awt.event.KeyEvent;
-
-import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
  * This is the main class of the RogueLike Game.
@@ -46,6 +45,8 @@ public class RogueLike {
         gs.setMenu(new Menu (gs.getState()));
         rendererUI = new RendererUI(gs);
         rendererUI.display();
+
+        RoomFactory.addMerchant(gs, dungeon); // TODO change that
         gameLoop(); // until state equals WIN or LOSE or END
         rendererUI.clearConsole();
         if (gs.getState() == State.WIN) {
@@ -141,11 +142,9 @@ public class RogueLike {
                         acted = gs.movePlayer(0, -1);
                     }
                 } else if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().previousSelectedStuff();
-                    modifiedMenu = true;
+                    modifiedMenu = gs.getPlayer().getInventory().previousSelectedStuff();
                 } else if (state == State.SHOP) {
-                    gs.merchant.getMerchantInventory().previousSelectedStuff();
-                    modifiedMenu = true;
+                    modifiedMenu = gs.merchant.getMerchantInventory().previousSelectedStuff();
                 } else if (state == State.SHOP_MENU || state == State.PAUSE_MENU || state == State.ClASS_SELECTION_MENU || state == State.START_MENU) {
                     gs.getMenu().nextSelection();
                     modifiedMenu = true;
@@ -175,11 +174,9 @@ public class RogueLike {
                         acted = gs.movePlayer(0, 1);
                     }
                 } else if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().nextSelectedStuff();
-                    modifiedMenu = true;
+                    modifiedMenu = gs.getPlayer().getInventory().nextSelectedStuff();
                 } else if (state == State.SHOP) {
-                    gs.merchant.getMerchantInventory().nextSelectedStuff();
-                    modifiedMenu = true;
+                    modifiedMenu = gs.merchant.getMerchantInventory().nextSelectedStuff();
                 } else if (state == State.SHOP_MENU || state == State.PAUSE_MENU || state == State.ClASS_SELECTION_MENU || state == State.START_MENU) {
                     gs.getMenu().previousSelection();
                     modifiedMenu = true;
@@ -242,7 +239,7 @@ public class RogueLike {
                 break;
             case KeyEvent.VK_I:
                 if (state != State.INVENTORY) {
-                    gs.getPlayer().getInventory().openInventory(true);
+                    gs.getPlayer().getInventory().openInventory(player.getPlayerStats().getLevel());
                     gs.setState(State.INVENTORY);
                     modifiedMenu = true;
                 }
@@ -285,6 +282,9 @@ public class RogueLike {
                     gs.getPlayer().getInventory().closeInventory();
                     gs.setState(State.NORMAL);
                     gs.isThereMonstersInventory();
+                } else if (state == State.MAP) {
+                    gs.setState(State.NORMAL);
+                    gs.isThereMonsters();
                 } else if (state == State.SHOP) {
                     gs.merchant.getMerchantInventory().closeInventory();
                     gs.setState(State.NORMAL);

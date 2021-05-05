@@ -6,9 +6,22 @@ import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
 import entity.object.*;
 import entity.object.potions.PotionEntityFactory;
+import gameElement.Dungeon;
 import gameElement.GameRule;
+import gameElement.GameState;
 import gameElement.Room;
+import stuff.Stuff;
+import stuff.equipment.EquipmentFactory;
+import stuff.equipment.EquipmentRarity;
+import stuff.equipment.EquipmentType;
+import stuff.item.ItemFactory;
+import stuff.item.keys.GoldKey;
+import stuff.item.potions.Elixir;
+import stuff.item.potions.PotionHealth;
+import stuff.item.potions.XpBottle;
 import utils.Position;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -54,7 +67,7 @@ public class RoomFactory {
                 break;
             case REST:
                 addCoins(room, 5);
-                addMerchant(room);
+                //addMerchant(room);
                 break;
             case TREASURE:
                 addChest(room,false);
@@ -114,9 +127,51 @@ public class RoomFactory {
         }
     }
 
-    private void addMerchant(Room room) {
-        room.addEntity(new PotionMerchant(currentAvailablePositions.remove(0)));
+    public static void addMerchant(GameState gameState, Dungeon dungeon) {
+        for (Room room : dungeon.getRoomList()) {
+            if (room.getRoomType() == RoomType.REST) {
+                List<Position> availablePositions = room.getAvailablePositions();
+                PotionMerchant potionMerchant = new PotionMerchant(availablePositions.remove(0));
+                ItemFactory itemFactory = new ItemFactory();
+                EquipmentFactory equipmentFactory = new EquipmentFactory(gameState);
+                GameRule gm = new GameRule();
+                List<Stuff> merchantInventory = new ArrayList<>();
+
+                for (int i = 0; i < gm.getNumberOfEquipMerchantShop(); i++) {
+                    int level = 1;
+                    EquipmentRarity equipmentRarity = gm.getRarityEquipmentInMerchantShop();
+                    EquipmentType equipmentType = gm.getEquipmentTypeInMerchantShop();
+                    merchantInventory.add(equipmentFactory.getEquipment(level, equipmentType, equipmentRarity));
+                }
+
+                for (int i = 0; i < 5; i++) {
+                    merchantInventory.add(new PotionHealth());
+                    merchantInventory.add(new Elixir());
+                    if (i < 2) {
+                        merchantInventory.add(new XpBottle());
+                    }
+                }
+                merchantInventory.add(new GoldKey());
+
+                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.ARMOR, EquipmentRarity.E));
+                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.HELMET, EquipmentRarity.E));
+                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.BOOT, EquipmentRarity.E));
+                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.PANT, EquipmentRarity.E));
+                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.GLOVE, EquipmentRarity.E));
+                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.SHIELD, EquipmentRarity.E));
+                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.WEAPON, EquipmentRarity.E));
+
+                potionMerchant.getMerchantInventory().setMerchantInventory(merchantInventory);
+                Position position =  availablePositions.remove(0);
+                System.out.println("Adding Merchant in room " + room.getRoomNum()+ " "+position);
+                room.addEntity(new PotionMerchant(position));
+                dungeon.getGridMap(room).update(potionMerchant, true);
+            }
+        }
     }
+//    private void addMerchant(Room room) {
+//        room.addEntity(new PotionMerchant(currentAvailablePositions.remove(0)));
+//    }
 
     private void addHole(Room room){
         int nbHole = gameRule.numberOfHole();

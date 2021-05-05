@@ -12,6 +12,7 @@ public class PotionHealth extends AbstractItem {
 
     public PotionHealth() {
         super("Health Potion", ItemType.HEALTH_POTION);
+        setDescription("Heals the player.");
     }
 
     public boolean useItem(GameState gameState){

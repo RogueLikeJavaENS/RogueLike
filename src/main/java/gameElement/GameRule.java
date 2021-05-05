@@ -1,5 +1,6 @@
 package gameElement;
 
+import stuff.equipment.Equipment;
 import stuff.equipment.EquipmentRarity;
 import stuff.equipment.EquipmentType;
 import stuff.item.ItemType;
@@ -54,10 +55,7 @@ public class GameRule {
      */
     public boolean presenceOfClassicChestOnMonsterRoom(){
         int nb = GEN.nextInt(100);
-        if (nb <20){
-            return true;
-        }
-        return false;
+        return nb < 20;
     }
 
 
@@ -224,7 +222,59 @@ public class GameRule {
         return (GEN.nextInt(100) < 5);
     }
 
+    public int getEquipmentPrice(int level, EquipmentRarity rarity) {
+        return level * (rarity.ordinal()*2+2) * 5;
+    }
 
+    public int getPotionPrice(int level, ItemType type) {
+        switch (type) {
+            case HEALTH_POTION:
+            case ELIXIR:
+                return Math.max(10 ,(int) Math.floor(Math.log(level*level*2) *10));
+            case XP_BOTTLE:
+                return Math.max(15, (int) Math.floor(Math.log(level*level*2) *15));
+            case GOLD_KEY:
+                return (int) Math.floor(Math.log(level*level*2) *300);
+            default:
+                return (int) Math.floor(Math.log(level*level*2) *999);
+        }
+    }
+
+    /**
+     *  Between 2 and 5 Equipments in Merchant Shop
+     * @return number of Equipments.
+     */
+    public int getNumberOfEquipMerchantShop() {
+        return GEN.nextInt(4)+2;
+    }
+
+    public EquipmentType getEquipmentTypeInMerchantShop() {
+        int type = GEN.nextInt(7);
+        return EquipmentType.values()[type];
+    }
+
+    /**
+     *  D 40%
+     *  C 24%
+     *  B 16%
+     *  A 12%
+     *  S 6%
+     *  L 2%
+     */
+    public EquipmentRarity getRarityEquipmentInMerchantShop() {
+        int nb = GEN.nextInt(100);
+        if (nb < 40) {
+            return EquipmentRarity.D;
+        } else if (nb<64) {
+            return EquipmentRarity.C;
+        } else if (nb < 80) {
+            return EquipmentRarity.B;
+        } else if (nb < 92) {
+            return EquipmentRarity.A;
+        } else if (nb < 98) {
+            return EquipmentRarity.S;
+        } else return EquipmentRarity.L;
+    }
 
     ///////////// Bonus of equipment //////////////
 
@@ -242,5 +292,9 @@ public class GameRule {
     }
     public int getBonusArmor(int level) {
         return level;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new GameRule().getEquipmentPrice(1, EquipmentRarity.L));
     }
 }

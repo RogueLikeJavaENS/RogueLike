@@ -3,6 +3,8 @@ package utils;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.*;
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -33,7 +35,7 @@ public class ScanPanel extends JFrame implements KeyListener{
         setFocusTraversalKeysEnabled(true);
 
         setVisible(true);
-        setSize(260,100);
+        setSize(340,100);
         setLocationRelativeTo(null);
         setResizable(false);
         JLabel text = new JLabel("KEEP FOCUSING THIS WINDOW TO PLAY", JLabel.CENTER);
@@ -53,8 +55,7 @@ public class ScanPanel extends JFrame implements KeyListener{
         pressed = 0;
     }
 
-    public static void main(String[] args) {
-        ScanPanel scanPanel = new ScanPanel();
+    public static void main(String[] args) throws IOException, InterruptedException {
     }
 }
 

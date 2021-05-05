@@ -7,5 +7,6 @@ public class FloorKey extends AbstractItem {
 
     public FloorKey() {
         super("Floor Key", ItemType.FLOORKEY);
+        setDescription("Opens the stair's room.");
     }
 }

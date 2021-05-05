@@ -3,6 +3,7 @@ package entity.living;
 import com.diogonunes.jcolor.Attribute;
 import entity.living.player.Player;
 import entity.living.player.PlayerStats;
+import gameElement.GameRule;
 import gameElement.GameState;
 import stuff.Stuff;
 import stuff.equipment.*;
@@ -18,7 +19,6 @@ public class Inventory {
     protected Stuff selectedStuff;
 
     protected boolean onEquipments;
-    protected boolean openInventory;
 
     protected boolean selling;
 
@@ -31,7 +31,6 @@ public class Inventory {
         equiped = new ArrayList<>();
         sortedItem = new ArrayList<>();
         sortedEquipment = new ArrayList<>();
-        openInventory = false;
         selling = false;
     }
 
@@ -66,7 +65,7 @@ public class Inventory {
 
     public boolean useSelectedStuff(GameState gameState) {
         boolean used = false;
-        if (openInventory) {
+        if (indexOfSelectedStuff != -1) {
             if (onEquipments) {
                 int index = containsStuff(selectedStuff, sortedEquipment);
                 Equipment equipment = (Equipment) selectedStuff;
@@ -82,7 +81,7 @@ public class Inventory {
                     }
                 }
             }
-            openInventory(false);
+            placeSelectedStuff(false);
         }
         return used;
     }
@@ -107,6 +106,9 @@ public class Inventory {
     }
 
     public boolean useEquipment(Equipment equipment, GameState gameState) {
+        if (indexOfSelectedStuff == -1) {
+            return false;
+        }
         if (equipment.isEquiped()) {
             equipment.unequip();
             equiped.remove(equipment);
@@ -159,66 +161,84 @@ public class Inventory {
         }
     }
 
-    public void openInventory(boolean first) {
-        openInventory = false;
-        if (!inventory.isEmpty()) {
-            openInventory = true;
-            if (first) {
-                sortedItem.clear();
-                sortedEquipment.clear();
-                for (Stuff stuff : inventory) {
-                    if (stuff.isUsable()) {
-                        int index = containsStuff(stuff, sortedItem);
-                        if (index != -1) {
-                            sortedItem.get(index).addStuff();
-                        } else {
-                            sortedItem.add(new CoupleStuff(stuff));
-                        }
-                    }
-                    else {
-                        int index = containsStuff(stuff, sortedEquipment);
-                        if (index != -1) {
-                            sortedEquipment.get(index).addStuff();
-                        } else {
-                            sortedEquipment.add(new CoupleStuff(stuff));
-                        }
-                    }
-                }
-            }
-
+    protected void placeSelectedStuff(boolean first) {
+        if (sortedEquipment.isEmpty() && sortedItem.isEmpty()) {
+            selectedStuff = null;
+            indexOfSelectedStuff = -1;
+        }
+        else {
             if (first) {
                 indexOfSelectedStuff = 0;
                 onEquipments = false;
-                if (!sortedItem.isEmpty()) {
+                if (sortedItem.isEmpty()) {
+                    selectedStuff = null;
+                    indexOfSelectedStuff = -1;
+                } else {
                     selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
-                } else if (!sortedEquipment.isEmpty()) {
-                    selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();
                 }
-            } else {
+            }
+            else {
                 if (onEquipments) {
                     if (sortedEquipment.isEmpty()) {
-                        indexOfSelectedStuff = 0;
-                        selectedStuff = null;
-                    } else if (indexOfSelectedStuff == sortedEquipment.size()) {
-                        indexOfSelectedStuff--;
+                        selectedStuff=null;
+                        indexOfSelectedStuff = -1;
+                    }
+                    else {
+                        if (indexOfSelectedStuff == sortedEquipment.size()) {
+                            indexOfSelectedStuff--;
+                        }
                         selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();
                     }
-                } else {
-                    if (sortedEquipment.isEmpty()) {
-                        indexOfSelectedStuff = 0;
-                        selectedStuff = null;
-                    } else if (indexOfSelectedStuff == sortedEquipment.size()) {
-                        indexOfSelectedStuff--;
-                        selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();
+                }
+                else {
+                    if (sortedItem.isEmpty()) {
+                        selectedStuff=null;
+                        indexOfSelectedStuff = -1;
+                    }
+                    else {
+                        if (indexOfSelectedStuff == sortedItem.size()) {
+                            indexOfSelectedStuff--;
+                        }
+                        selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
                     }
                 }
             }
         }
     }
 
+    public void openInventory(int level) {
+        GameRule gameRule = new GameRule();
+        indexOfSelectedStuff = -1;
+        if (!inventory.isEmpty()) {
+            sortedItem.clear();
+            sortedEquipment.clear();
+            for (Stuff stuff : inventory) {
+                if (stuff.isUsable()) {
+                    int index = containsStuff(stuff, sortedItem);
+                    if (index != -1) {
+                        sortedItem.get(index).addStuff();
+                    } else {
+                        Item item = (Item) stuff;
+                        stuff.setPrice(gameRule.getPotionPrice(level, item.getType()));
+                        sortedItem.add(new CoupleStuff(stuff));
+                    }
+                }
+                else {
+                    int index = containsStuff(stuff, sortedEquipment);
+                    if (index != -1) {
+                        sortedEquipment.get(index).addStuff();
+                    } else {
+                        sortedEquipment.add(new CoupleStuff(stuff));
+                    }
+                }
+            }
+            placeSelectedStuff(true);
+        }
+    }
+
     public void closeInventory() {
-        openInventory = false;
         selectedStuff = null;
+        indexOfSelectedStuff = -1;
     }
 
     public void switchCategory() {
@@ -241,8 +261,9 @@ public class Inventory {
         }
     }
 
-    public void nextSelectedStuff() {
-        if (openInventory) {
+    public boolean nextSelectedStuff() {
+        int previous = indexOfSelectedStuff;
+        if (indexOfSelectedStuff != -1) {
             List<CoupleStuff> list;
             if (onEquipments) {
                 list = sortedEquipment;
@@ -252,10 +273,12 @@ public class Inventory {
             indexOfSelectedStuff = (indexOfSelectedStuff +1) % list.size();
             selectedStuff = list.get(indexOfSelectedStuff).getStuff();
         }
+        return indexOfSelectedStuff != previous;
     }
 
-    public void previousSelectedStuff() {
-        if (openInventory) {
+    public boolean previousSelectedStuff() {
+        int previous = indexOfSelectedStuff;
+        if (indexOfSelectedStuff != -1) {
             List<CoupleStuff> list;
             if (onEquipments) {
                 list = sortedEquipment;
@@ -265,6 +288,7 @@ public class Inventory {
             indexOfSelectedStuff = (indexOfSelectedStuff+list.size() - 1) % list.size();
             selectedStuff = list.get(indexOfSelectedStuff).getStuff();
         }
+        return indexOfSelectedStuff != previous;
     }
 
     public int getItemNumber(ItemType type) {
@@ -343,7 +367,7 @@ public class Inventory {
             colorize("---", Colors.GREY.textApply())+"|"+
             colorize("-----", Colors.GREY.textApply())+"|"+
             colorize("-----", Colors.GREY.textApply())+"|"+
-            colorize("-------------------------------------------------", Colors.GREY.textApply())+"|\n";
+            colorize("------------------------------------------------------------------", Colors.GREY.textApply())+"|\n";
 
         sb.append("|------------------------------|--------------------------------------|\n");
         if (onEquipments) {
@@ -351,10 +375,10 @@ public class Inventory {
         } else {
             sb.append("|############## ").append(colorize("-> ITEMS", Colors.CYAN.textApply())).append("    ########    EQUIPMENTS    ################\n");
         }
-        sb.append("|_____________________________________________________________________|_______________________\n" + "|    ")
+        sb.append("|_____________________________________________________________________|_________________________________\n" + "|    ")
                 .append(colorize("Stuffs            | NB | R | LVL | BTC | Description", Attribute.BOLD()))
-                .append("                                     |\n");
-        sb.append("|---------------------------------------------------------------------------------------------|\n");
+                .append("                                               |\n");
+        sb.append("|--------------------------------------------------------------------------------------------------------------\n");
 
         List<CoupleStuff> listTodisplay;
         if (onEquipments) {
@@ -376,10 +400,10 @@ public class Inventory {
         }
         while (i < MAX_HEIGHT) {
             sb.append(separationItems);
-            sb.append("|                      |    |   |     |     |                                                 |\n");
+            sb.append("|                      |    |   |     |     |                                                                  |\n");
             i++;
         }
-        sb.append(" --------------------------------------------------------------------------------------------- \n");
+        sb.append(" -------------------------------------------------------------------------------------------------------------- \n");
         return sb.toString();
     }
 
@@ -390,10 +414,7 @@ public class Inventory {
         int nb_size = 3;
         int lvl_size = 4;
         int btc_size = 4;
-        int des_size = 48;
-        System.out.println("OnEquipment : ");
-        System.out.println(onEquipments);
-        System.out.println(selectedStuff);
+        int des_size = 65;
         if (onEquipments && !sortedEquipment.isEmpty()) {
             Equipment selectedEquipment = (Equipment) selectedStuff;
             Equipment equipment = (Equipment) coupleStuff.getStuff();
@@ -419,7 +440,6 @@ public class Inventory {
             /* LVL */
             int lvl = equipment.getLevel();
             sb.append(" ").append(lvl).append(" ".repeat(lvl_size-String.valueOf(lvl).length())).append("|");
-
             /* BTC */
             int btc;
             if (selling) {
@@ -430,7 +450,11 @@ public class Inventory {
             sb.append(" ").append(colorize(String.valueOf(btc), Colors.YELLOW.textApply())).append(" ".repeat(btc_size-String.valueOf(btc).length())).append("|");
 
             /* DESCRIPTION */
-            sb.append(" ").append(equipment.getDescription()).append(" ".repeat(des_size-equipment.getDescription().length())).append("|\n");
+            String description = equipment.getDescription();
+            description = description.replace(
+                            equipment.getRarity().getRarity(),
+                            colorize(equipment.getRarity().getRarity(), Attribute.BOLD(), EquipmentRarity.getColor(equipment.getRarity()).textApply()));
+            sb.append(" ").append(description).append(" ".repeat(des_size-equipment.getDescription().length())).append("|\n");
 
         } else {
             Item selectedItem = (Item) selectedStuff;

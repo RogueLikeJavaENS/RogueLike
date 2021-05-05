@@ -13,30 +13,34 @@ public abstract class AbstractStuff implements Stuff {
         this.isUsable = isUsable;
         this.isEquipable = isEquipable;
         this.name = name;
+        this.description = "";
         price = 5;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-    @Override
+    public void setDescription(String description) { this.description = description; }
+    public void setPrice(int price) { this.price = price; }
+
     public boolean isEquipable() {
         return isEquipable;
     }
-
-    @Override
     public boolean isUsable() {
         return isUsable;
     }
 
-    @Override
     public String getName() {
         return name;
     }
-
-    @Override
     public String getDescription() {
-        return "Coucou ceci est un stuff";
+        return description;
+    }
+    public int getSellingPrice() {
+        return price;
+    }
+    public int getBuyingPrice() {
+        return (int) (price*0.60);
     }
 
     @Override
@@ -50,13 +54,5 @@ public abstract class AbstractStuff implements Stuff {
     @Override
     public int hashCode() {
         return Objects.hash(name, description, isUsable, isEquipable);
-    }
-
-    public int getSellingPrice() {
-        return price;
-    }
-
-    public int getBuyingPrice() {
-        return (int) (price*0.60);
     }
 }

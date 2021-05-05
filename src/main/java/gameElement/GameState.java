@@ -8,10 +8,8 @@ import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
 import entity.object.Grave;
 import gameElement.menu.Menu;
+import generation.RoomFactory;
 import spells.*;
-import stuff.item.Item;
-import stuff.item.ItemFactory;
-import stuff.item.ItemType;
 import utils.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +47,6 @@ public class GameState {
         this.miniMap = new MiniMap(dungeon, this);
         this.descriptor = new Descriptor();
         this.hud = hud;
-
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);

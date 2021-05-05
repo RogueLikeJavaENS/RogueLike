@@ -60,7 +60,8 @@ public class Chest extends ObjectEntity {
         int nbXPBottle = 0;
         ItemFactory itemFactory = new ItemFactory();
         for (int i=0; i<nbPotion; i++){
-            Item itemToAdd = itemFactory.getItem(gr.getPotionType());
+            System.out.println("in CHEST : " + gr.getPotionType());
+            Item itemToAdd = itemFactory.getItem(gr.getPotionType(), player.getPlayerStats().getLevel());
             if (itemToAdd.getType() == ItemType.ELIXIR){
                 nbElixir++;
             }
@@ -78,7 +79,7 @@ public class Chest extends ObjectEntity {
 
         /// Fill the equipment
         int nbEquipment = gr.getNumberOfEquipmentInChest();
-        EquipmentFactory equipmentFactory = new EquipmentFactory();
+        EquipmentFactory equipmentFactory = new EquipmentFactory(gameState);
         for(int i=0; i<nbEquipment; i++){
             EquipmentType equipmentType = gr.getEquipmentType();
             EquipmentRarity equipmentRarity = gr.getEquipmentRarity(isClassic);
@@ -96,7 +97,7 @@ public class Chest extends ObjectEntity {
         if (isClassic){
             if(gr.presenceOfGoldenKeyInClassicChest()){
                 player.getInventory().addItem(new GoldKey());
-                gameState.getDescriptor().updateDescriptor(String.format("You found a GoldKey in the chest !"));
+                gameState.getDescriptor().updateDescriptor("You found a GoldKey in the chest !");
             }
         }
     }
@@ -121,12 +122,12 @@ public class Chest extends ObjectEntity {
                     fillChest(false,gameState);
                 }
                 else{
-                    gameState.getDescriptor().updateDescriptor(String.format("You don't have the gold key, you can't open this golden chest."));
+                    gameState.getDescriptor().updateDescriptor("You don't have the gold key, you can't open this golden chest.");
                 }
             }
         }
         else {
-            gameState.getDescriptor().updateDescriptor(String.format("The chest is already open, there is nothing inside."));
+            gameState.getDescriptor().updateDescriptor("The chest is already open, there is nothing inside.");
         }
     }
 }
