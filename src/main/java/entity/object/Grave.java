@@ -1,12 +1,15 @@
 package entity.object;
 
 import entity.living.npc.monster.Monster;
+import entity.living.npc.monster.boss.Boss;
 import gameElement.GameRule;
 import gameElement.GameState;
 import stuff.Inventory;
 import stuff.Stuff;
+import stuff.equipment.EquipmentFactory;
 import stuff.item.Item;
 import stuff.item.ItemFactory;
+import stuff.item.ItemType;
 import utils.Colors;
 import utils.State;
 
@@ -14,16 +17,26 @@ public class Grave extends ObjectEntity {
     private final Inventory droppedItems;
     private final int droppedMoney;
 
-    public Grave(Monster monster, GameRule gameRule) {
+    public Grave(Monster monster, GameRule gameRule, GameState gameState) {
         super(monster.getPosition(), Colors.LIGHT_GREY, false, false);
         setSprites("/+\\", "|_|", Colors.LIGHT_GREY);
         droppedItems = new Inventory();
         //plus tard quand les monstres auront des items dans un inventaire ça sera modifié en conséquent
-        int potionNumber = gameRule.getNumberOfPotionOnMonster();
+        int level = gameState.getPlayer().getPlayerStats().getLevel();
         ItemFactory itemFactory = new ItemFactory();
-        for (int i = 0; i < potionNumber; i++) {
-            Item potion = itemFactory.getItem(gameRule.getPotionType(), monster.getMonsterStats().getLevel());
-            droppedItems.addItem(potion);
+        EquipmentFactory equipmentFactory = new EquipmentFactory(gameState);
+        for (int i = 0; i < gameRule.getNumberOfPotionsOnCorpse(); i++) {
+            droppedItems.addItem(itemFactory.getItem(gameRule.getPotionType(), level));
+        }
+        if (monster instanceof Boss) {
+            for (int i = 0; i < gameRule.getNumberOfEquipmentsOnBossCorpse(); i++) {
+                droppedItems.addItem(equipmentFactory.getEquipment(level, gameRule.getEquipmentTypeInMerchantShop(), gameRule.getRarityOnBossCorpse()));
+            }
+            droppedItems.addItem(itemFactory.getItem(ItemType.FLOORKEY, level));
+        } else {
+            for (int i = 0; i < gameRule.getNumberOfEquipmentsOnCorpse(); i++) {
+                droppedItems.addItem(equipmentFactory.getEquipment(level, gameRule.getEquipmentTypeInMerchantShop(), gameRule.getEquipmentRarity(true)));
+            }
         }
         droppedMoney = monster.getMonsterStats().getMoneyCount();
     }
@@ -36,7 +49,7 @@ public class Grave extends ObjectEntity {
             for (Stuff item : droppedItems.getInventory()) {
                 gameState.getPlayer().getInventory().addItem(item);
                 dropDescriptor.append('-')
-                        .append(item.toString())
+                        .append(item.getName())
                         .append('\n');
             }
             dropDescriptor.append(" and ");

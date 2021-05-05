@@ -210,7 +210,7 @@ public class GameState {
                 currentFightExp = 0;
             }
 
-            Grave grave = new Grave(monster, gameRule);
+            Grave grave = new Grave(monster, gameRule, this);
             gridMap.update(grave, true);
         }
     }

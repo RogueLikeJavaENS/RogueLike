@@ -276,6 +276,32 @@ public class GameRule {
         } else return EquipmentRarity.L;
     }
 
+    /*
+    * L 15 %
+    * S 35 %
+    * A 50 %
+    */
+    public EquipmentRarity getRarityOnBossCorpse() {
+        int nb = GEN.nextInt(100);
+        if (nb < 50) {
+            return EquipmentRarity.A;
+        } else if (nb<85) {
+            return EquipmentRarity.S;
+        } else return EquipmentRarity.L;
+    }
+
+    public int getNumberOfPotionsOnCorpse() {
+        return GEN.nextInt(2)+2;
+    }
+
+    public int getNumberOfEquipmentsOnCorpse() {
+        return GEN.nextInt(3);
+    }
+
+    public int getNumberOfEquipmentsOnBossCorpse() {
+        return GEN.nextInt(2)+1;
+    }
+
     ///////////// Bonus of equipment //////////////
 
     public int getBonusDamage(int level) {

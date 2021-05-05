@@ -40,6 +40,8 @@ public class KillerRabbit extends AbstractBoss {
         bufferPath.add(Direction.EAST);
         bufferPath.add(Direction.SOUTH);
         bufferPath.add(Direction.WEST);
+        setSprites(colorize("   ", Attribute.BOLD(),Colors.PINK.textApply()),
+                colorize(" \\ ", Attribute.BOLD(),Colors.PINK.textApply()));
 
         BossPart partUpRight = new BossPart(
                 this,

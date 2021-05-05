@@ -67,7 +67,14 @@ public class RoomFactory {
                currentAvailablePositions.remove(room.getCenter());
                 addHoleAndSpike(room);
                 addChest(room,true);
+
                 // Basic equipment to start a new adventure
+//                addHole(room);
+//                addSpike(room);
+//                addChest(room,true);    // Basic equipment to start a new adventure
+                // add some stuffs that make clear it's the start room.
+                break;
+            case BOSS:
                 BossFactory bossFactory = new BossFactory(floor);
                 Boss rabbitBoss = bossFactory.getBoss(Bosses.KILLER_RABBIT, room.getCenter());
                 List<BossPart> bossParts = rabbitBoss.getBossPartList();
@@ -76,12 +83,6 @@ public class RoomFactory {
                 room.addEntity(bossParts.get(2));
                 room.addEntity(bossParts.get(3));
                 room.addEntity(rabbitBoss);
-//                addHole(room);
-//                addSpike(room);
-//                addChest(room,true);    // Basic equipment to start a new adventure
-                // add some stuffs that make clear it's the start room.
-                break;
-            case BOSS:
                 break;
             case END:
                 addStairs(room);    // Go to the next floor
@@ -230,7 +231,6 @@ public class RoomFactory {
 
                 potionMerchant.getMerchantInventory().setMerchantInventory(merchantInventory);
                 Position position =  availablePositions.remove(0);
-                System.out.println("Adding Merchant in room " + room.getRoomNum()+ " "+position);
                 room.addEntity(new PotionMerchant(position));
                 dungeon.getGridMap(room).update(potionMerchant, true);
             }
