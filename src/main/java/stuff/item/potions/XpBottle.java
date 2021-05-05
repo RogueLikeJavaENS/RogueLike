@@ -12,6 +12,7 @@ public class XpBottle extends AbstractItem {
 
     public XpBottle() {
         super("Xp bottle", ItemType.XP_BOTTLE);
+        setDescription("Grants Experiences points to the player.");
     }
 
     public boolean useItem(GameState gameState){

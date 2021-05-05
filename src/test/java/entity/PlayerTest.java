@@ -2,6 +2,7 @@ package entity;
 
 import entity.living.player.Player;
 import org.junit.jupiter.api.Test;
+import utils.Classe;
 import utils.Position;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +11,7 @@ class PlayerTest {
 
     @Test
     void testStats() {
-        Player player = new Player(new Position(0,2),100,100,"hey",1);
+        Player player = new Player(new Position(0,2),100,100,"hey",1, Classe.MAGE);
         player.getPlayerStats().gainMoney(100);
         assertEquals(100, player.getPlayerStats().getMoneyCount());
 

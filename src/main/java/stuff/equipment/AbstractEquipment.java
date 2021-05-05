@@ -11,7 +11,7 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
     private int bonusInitiative;
     private int bonusDamage;
     private int bonusArmor;
-    private final int level;
+    private int level;
 
     private final EquipmentType type;
     private final EquipmentRarity rarity;
@@ -45,6 +45,10 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
 
     protected void setRarityName() {
         super.setName("test");
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     @Override

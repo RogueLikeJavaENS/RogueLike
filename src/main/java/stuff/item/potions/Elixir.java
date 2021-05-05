@@ -12,6 +12,7 @@ public class Elixir extends AbstractItem {
 
     public Elixir(){
         super("Elixir", ItemType.ELIXIR);
+        setDescription("Recovers Mana points to the player.");
     }
 
     public boolean useItem(GameState gameState) {

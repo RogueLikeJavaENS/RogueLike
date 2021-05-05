@@ -59,6 +59,7 @@ public abstract class AbstractStats{
     public void upgradeLifePointNatural(int modifier){
         Check.checkPositivity(modifier);
         this.lifePointNatural = getLifePointNatural()+modifier;
+        changeLifePointTotal(modifier);
         recoverHp(modifier);
     }
 
@@ -79,6 +80,7 @@ public abstract class AbstractStats{
     public void upgradeManaPointNatural(int modifier) {
         Check.checkPositivity(modifier);
         this.manaPointNatural = getManaPointNatural()+modifier;
+        changeManaPointTotal(modifier);
         recoverMp(modifier);
     }
 

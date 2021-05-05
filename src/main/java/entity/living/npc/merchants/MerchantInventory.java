@@ -3,12 +3,15 @@ package entity.living.npc.merchants;
 import com.diogonunes.jcolor.Attribute;
 import entity.living.Inventory;
 import entity.living.player.PlayerStats;
+import gameElement.GameRule;
 import gameElement.GameState;
 import stuff.Stuff;
+import stuff.equipment.Equipment;
+import stuff.equipment.EquipmentFactory;
 import stuff.equipment.EquipmentRarity;
 import stuff.equipment.EquipmentType;
-import stuff.equipment.equipments.Glove;
-import stuff.equipment.equipments.Helmet;
+import stuff.equipment.equipments.*;
+import stuff.item.Item;
 import stuff.item.potions.Elixir;
 import stuff.item.potions.PotionHealth;
 import stuff.item.potions.XpBottle;
@@ -24,13 +27,11 @@ public class MerchantInventory extends Inventory {
     public MerchantInventory() {
         super();
         merchantInventory = new ArrayList<>();
-        merchantInventory.add(new Helmet(5, EquipmentRarity.E, EquipmentType.HELMET));
-        merchantInventory.add(new Glove(4, EquipmentRarity.E, EquipmentType.HELMET));
-        merchantInventory.add(new Helmet(3, EquipmentRarity.L, EquipmentType.HELMET));
-        merchantInventory.add(new Helmet(2, EquipmentRarity.E, EquipmentType.HELMET));
-//        merchantInventory.add(new PotionHealth());
-//        merchantInventory.add(new Elixir());
-//        merchantInventory.add(new XpBottle());
+    }
+
+    @Override
+    public void addItem(Stuff stuff) {
+        merchantInventory.add(stuff);
     }
 
     public boolean openSellingShop(GameState gameState) {
@@ -40,15 +41,26 @@ public class MerchantInventory extends Inventory {
             gameState.getDescriptor().updateDescriptor(String.format("%s have nothing to sell !", gameState.getPlayer().getName()));
             return false;
         } else {
-            super.openInventory(true);
+            super.openInventory(gameState.getPlayer().getPlayerStats().getLevel());
             return true;
         }
     }
 
     public void openBuyingSHop(GameState gameState) {
         selling = true;
+        upgradeEquipmentLevel(gameState.getPlayer().getPlayerStats().getLevel());
         inventory = merchantInventory;
-        super.openInventory(true);
+        super.openInventory(gameState.getPlayer().getPlayerStats().getLevel());
+    }
+
+    private void upgradeEquipmentLevel(int level) {
+        for (Stuff stuff : merchantInventory) {
+            if (stuff.isEquipable()) {
+                Equipment equipment = (Equipment) stuff;
+                equipment.setLevel(level);
+                equipment.setPrice(new GameRule().getEquipmentPrice(level, equipment.getRarity()));
+            }
+        }
     }
 
     public void setMerchantInventory(List<Stuff> merchantInventory) {
@@ -57,24 +69,53 @@ public class MerchantInventory extends Inventory {
 
     @Override
     public boolean useSelectedStuff(GameState gameState) {
-        boolean sold = false;
+        if (indexOfSelectedStuff == -1) {
+            return false;
+        }
         PlayerStats stats = gameState.getPlayer().getPlayerStats();
+        // If the merchant is selling to the player
         if (selling) {
-            int price = selectedStuff.getSellingPrice();
+            int price;
+            // if the selectedStuff is an Item.
+            if (selectedStuff.isUsable()) {
+                Item item = (Item) selectedStuff;
+                GameRule gameRule = new GameRule();
+                price = gameRule.getPotionPrice(stats.getLevel(), item.getType());
+            }
+            // if the selected stuff is an Equipment.
+            else {
+                price = selectedStuff.getSellingPrice();
+            }
             if (stats.getMoneyCount() >= price) {
-                stats.spendMoney(price);
                 gameState.getPlayer().getInventory().addItem(selectedStuff);
-                sold = true;
+                removeStuff(selectedStuff);
+                stats.spendMoney(price);
                 gameState.getDescriptor().updateDescriptor(
                         String.format("%s spend %s BTC to buy %s !",
                                 gameState.getPlayer().getName(),
                                 colorize(String.valueOf(price), Colors.YELLOW.textApply()),
                                 selectedStuff.getName()));
             } else {
-                gameState.getDescriptor().updateDescriptor("%s don't have enough BTC !");
+                gameState.getDescriptor().updateDescriptor(String.format("%s don't have enough BTC !",gameState.getPlayer().getName()));
             }
         } else {
-            int price = selectedStuff.getBuyingPrice();
+            int price;
+            if (selectedStuff.isUsable()) {
+                Item item = (Item) selectedStuff;
+                GameRule gameRule = new GameRule();
+                price = (int) (gameRule.getPotionPrice(stats.getLevel(), item.getType()) * 0.60);
+            } else {
+                Equipment equipment = (Equipment) selectedStuff;
+                if (equipment.isEquiped()) {
+                    gameState.getDescriptor().updateDescriptor(
+                            String.format("%s can't sell %s, it's currently equipped.",
+                                    gameState.getPlayer().getName(),
+                                    selectedStuff.getName()));
+                    placeSelectedStuff(false);
+                    return false;
+                }
+                price = selectedStuff.getBuyingPrice();
+            }
             removeStuff(selectedStuff);
             stats.gainMoney(price);
             gameState.getDescriptor().updateDescriptor(
@@ -83,7 +124,8 @@ public class MerchantInventory extends Inventory {
                                 selectedStuff.getName(),
                                 colorize(String.valueOf(price), Colors.YELLOW.textApply())));
         }
-        return sold;
+        placeSelectedStuff(false);
+        return true;
     }
 
     @Override

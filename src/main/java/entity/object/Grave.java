@@ -22,8 +22,8 @@ public class Grave extends ObjectEntity {
         int potionNumber = gameRule.getNumberOfPotionOnMonster();
         ItemFactory itemFactory = new ItemFactory();
         for (int i = 0; i < potionNumber; i++) {
-            Item potion = itemFactory.getItem(gameRule.getPotionType());
-            droppedItems.addItem((Stuff) potion);
+            Item potion = itemFactory.getItem(gameRule.getPotionType(), monster.getMonsterStats().getLevel());
+            droppedItems.addItem(potion);
         }
         droppedMoney = monster.getMonsterStats().getMoneyCount();
     }

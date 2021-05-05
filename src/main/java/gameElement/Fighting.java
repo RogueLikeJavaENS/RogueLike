@@ -103,20 +103,20 @@ public class Fighting {
     }
 
     public static void main(String[] args) {
-        List<LivingEntity> entities = new ArrayList<>();
-        Player p1 = new Player(new Position(1,2),5,5,"p1",1);
-        p1.getStats().upInitiativeNatural(1);
-        entities.add(p1);
-        Player p2 = new Player(new Position(1,2),5,5,"p2",1);
-        p2.getStats().upInitiativeNatural(1);
-        entities.add(p2);
-        Player p3 = new Player(new Position(1,2),5,5,"p3",1);
-        p3.getStats().upInitiativeNatural(3);
-        entities.add(p3);
-        Player p4 = new Player(new Position(1,2),5,5,"p4",1);
-        p4.getStats().upInitiativeNatural(4);
-        entities.add(p4);
-
-        Fighting fighting = new Fighting(entities);
+//        List<LivingEntity> entities = new ArrayList<>();
+//        Player p1 = new Player(new Position(1,2),5,5,"p1",1);
+//        p1.getStats().upInitiativeNatural(1);
+//        entities.add(p1);
+//        Player p2 = new Player(new Position(1,2),5,5,"p2",1);
+//        p2.getStats().upInitiativeNatural(1);
+//        entities.add(p2);
+//        Player p3 = new Player(new Position(1,2),5,5,"p3",1);
+//        p3.getStats().upInitiativeNatural(3);
+//        entities.add(p3);
+//        Player p4 = new Player(new Position(1,2),5,5,"p4",1);
+//        p4.getStats().upInitiativeNatural(4);
+//        entities.add(p4);
+//
+//        Fighting fighting = new Fighting(entities);
     }
 }

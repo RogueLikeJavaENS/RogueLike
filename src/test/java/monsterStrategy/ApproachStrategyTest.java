@@ -9,6 +9,7 @@ import generation.RoomFactory;
 import generation.RoomType;
 import generation.Seed;
 import org.junit.jupiter.api.Test;
+import utils.Classe;
 import utils.Position;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +29,7 @@ class ApproachStrategyTest {
         Position playerPosition2 = new Position(4,4);
         Position playerPosition3 = new Position(7,8);
         Monster monster = monsterFactory.getMonster(0,monsterPosition);
-        Player player = new Player(playerPosition1,10,10,"Hero",1);
+        Player player = new Player(playerPosition1,10,10,"Hero",1, Classe.MAGE);
 
         assertFalse(approach.act(monster,player,gridMap));
         player.setPosition(playerPosition2);

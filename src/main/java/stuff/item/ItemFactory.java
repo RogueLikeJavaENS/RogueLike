@@ -1,5 +1,6 @@
 package stuff.item;
 
+import gameElement.GameRule;
 import stuff.item.keys.GoldKey;
 import stuff.item.keys.FloorKey;
 import stuff.item.potions.*;
@@ -8,22 +9,30 @@ public class ItemFactory {
 
     public ItemFactory(){ }
 
-    public Item getItem(ItemType itemType) {
+    public Item getItem(ItemType itemType, int level) {
+        Item item;
         switch (itemType) {
             case HEALTH_POTION:
-                return new PotionHealth();
+                item = new PotionHealth();
+                break;
             case ELIXIR:
-                return new Elixir();
-            case EMPTY_BOTTLE:
-                return new EmptyBottle();
+                item = new  Elixir();
+                break;
             case XP_BOTTLE:
-                return new XpBottle();
+                item = new XpBottle();
+                break;
             case FLOORKEY:
-                return new FloorKey();
+                item = new FloorKey();
+                break;
             case GOLD_KEY:
-                return new GoldKey();
+                item = new GoldKey();
+                break;
             default:
-                return null;
+                item = new EmptyBottle();
+                break;
         }
+        GameRule gm = new GameRule();
+        item.setPrice(gm.getPotionPrice(level, itemType));
+        return item;
     }
 }

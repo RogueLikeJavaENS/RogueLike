@@ -20,15 +20,6 @@ public class PotionMerchant extends AbstractMerchant {
         super(position, "Jean-Charles", Colors.WHITE, new NPCStats(100,100,5, 1, 1 ,1 ,1 ,1));
         setSprites("~.~", "|_|", Colors.CYAN, Colors.MAGENTA);
         this.merchantInventory = new MerchantInventory();
-        merchantInventory.addItem(new Armor(1, EquipmentRarity.E, EquipmentType.ARMOR));
-        merchantInventory.addItem(new Helmet(1, EquipmentRarity.E, EquipmentType.HELMET));
-        merchantInventory.addItem(new Glove(1, EquipmentRarity.E, EquipmentType.GLOVE));
-        merchantInventory.addItem(new Pants(1, EquipmentRarity.E, EquipmentType.PANT));
-        merchantInventory.addItem(new Weapon(1, EquipmentRarity.E, EquipmentType.WEAPON));
-        merchantInventory.addItem(new Shield(1, EquipmentRarity.E, EquipmentType.SHIELD));
-        merchantInventory.addItem(new PotionHealth());
-        merchantInventory.addItem(new Elixir());
-        merchantInventory.addItem(new XpBottle());
     }
 
     @Override

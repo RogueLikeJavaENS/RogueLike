@@ -1,3 +1,4 @@
+import utils.Classe;
 import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
