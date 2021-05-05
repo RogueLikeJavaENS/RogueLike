@@ -15,12 +15,12 @@ public class Button extends ObjectEntity{
         super(position, Colors.RED, false, false);
         setUpSprites(
                 colorize("#", Colors.DARK_GREY.textApply()) +
-                colorize("█", Attribute.BOLD(), Colors.RED.textApply()) +
+                colorize("■", Attribute.BOLD(), Colors.RED.textApply()) +
                 colorize("#", Colors.DARK_GREY.textApply())
         );
         setBottomSprites(
                 colorize("#", Colors.DARK_GREY.textApply()) +
-                colorize("█", Attribute.BOLD(), Colors.RED.textApply()) +
+                colorize("■", Attribute.BOLD(), Colors.RED.textApply()) +
                 colorize("#", Colors.DARK_GREY.textApply())
         );
         pressed =false;
@@ -32,12 +32,12 @@ public class Button extends ObjectEntity{
             pressed = true;
             setUpSprites(
                     colorize("#", Colors.DARK_GREY.textApply()) +
-                            colorize("█", Attribute.BOLD(), Colors.GREEN.textApply()) +
+                            colorize("■", Attribute.BOLD(), Colors.GREEN.textApply()) +
                             colorize("#", Colors.DARK_GREY.textApply())
             );
             setBottomSprites(
                     colorize("#", Colors.DARK_GREY.textApply()) +
-                            colorize("█", Attribute.BOLD(), Colors.GREEN.textApply()) +
+                            colorize("■", Attribute.BOLD(), Colors.GREEN.textApply()) +
                             colorize("#", Colors.DARK_GREY.textApply())
             );
             gameState.getDescriptor().updateDescriptor(String.format("%s pressed a button...", gameState.getPlayer().getName()));
