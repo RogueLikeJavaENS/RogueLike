@@ -36,6 +36,7 @@ public class VerificationRoom {
         positionToVerify.addAll(positionFrontDoor);
         positionToVerify.remove(basePosition);
         positionToVerify.addAll(positionOfNeededEntity(room));
+        if (positionToVerify.size() == 0) return;
         for (Position pos : positionToVerify){
             if (gridMap.getEntitiesAt(pos.getAbs(),pos.getOrd()).size() == 0){break;}
             boolean isOkay = false;

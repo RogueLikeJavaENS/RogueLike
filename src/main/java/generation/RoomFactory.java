@@ -43,7 +43,7 @@ public class RoomFactory {
         GridMap gridMap = new GridMap(room);
         switch (roomType) {
             case START:
-                currentAvailablePositions.remove(room.getCenter());
+               currentAvailablePositions.remove(room.getCenter());
                 List<Entity> previousEntities = room.getEntities();
                 addHoleAndSpike(room);
                 addChest(room,true);

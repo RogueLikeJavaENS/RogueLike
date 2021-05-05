@@ -123,11 +123,12 @@ public class GridMap {
                     List<Entity> entitiesAt = getEntitiesAt(abs, ord);
                     if (entitiesAt.size() != 0)// print the first entity of the tile
                     {
+                        Entity entityToPrint = getPrimaryEntity(entitiesAt);
                         if (isInRange(abs, ord) && !(entities.get(0) instanceof Player)) {
-                            sb.append(colorize(entitiesAt.get(0).getSprites(i), Colors.DEEP_GREY.bgApply()));
+                            sb.append(colorize(entityToPrint.getSprites(i), Colors.DEEP_GREY.bgApply()));
                         }
                         else {
-                            sb.append(entitiesAt.get(0).getSprites(i));
+                            sb.append(entityToPrint.getSprites(i));
                         }
                     }
                     else // if no entity, print the tile
@@ -151,6 +152,28 @@ public class GridMap {
             }
         }
         strByLine = strLine;
+    }
+
+    private Entity getPrimaryEntity(List<Entity> entityList){
+        Entity primaryEntity = entityList.get(0);
+        if (entityList.size() == 1){
+            return primaryEntity;
+        }
+        for (int i = 1; i<entityList.size();i++ ){
+            if (primaryEntity instanceof Player) break;
+            else if (primaryEntity instanceof Monster){
+                if (entityList.get(i) instanceof Player){
+                    primaryEntity = entityList.get(i);
+                }
+            }
+            else {
+                if (entityList.get(i) instanceof Player || entityList.get(i) instanceof  Monster){
+                    primaryEntity = entityList.get(i);
+                }
+            }
+        }
+
+        return primaryEntity;
     }
 
     public void updateRangeList(Range range) {
