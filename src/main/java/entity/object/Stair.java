@@ -5,6 +5,7 @@ import gameElement.Dungeon;
 import gameElement.GameState;
 import gameElement.MiniMap;
 import generation.DungeonStructure;
+import generation.RoomFactory;
 import generation.Seed;
 import stuff.item.ItemType;
 import stuff.item.keys.FloorKey;
@@ -35,6 +36,7 @@ public class Stair extends ObjectEntity{
         Position initialPos = dungeon.getRoom(0).getCenter();
         gameState.setDungeon(dungeon);
         gameState.getPlayer().setPosition(initialPos);
+        RoomFactory.addMerchant(gameState, dungeon);
         gameState.updateChangingRoom(dungeon.getRoom(0));
         gameState.setMiniMap(new MiniMap(dungeon, gameState));
         gameState.getPlayer().getInventory().removeItem(ItemType.FLOORKEY);

@@ -3,25 +3,35 @@ package stuff.equipment;
 import utils.Colors;
 
 public enum EquipmentRarity {
-    E, D, C, B, A, S, L;
+    E("Common"), D("Uncommon"), C("Rare"), B("Epic"), A("Heroic"), S("Mythic"), L("Legendary");
+
+    private final String rarity;
+
+    EquipmentRarity(String rarity) {
+        this.rarity = rarity;
+    }
 
     public static Colors getColor(EquipmentRarity rarity) {
         switch (rarity) {
             case E:
                 return Colors.GREY;
             case D:
-                return Colors.BROWN;
-            case C:
-                return Colors.ORANGE;
-            case B:
                 return Colors.GREEN;
-            case A:
-                return Colors.RED;
-            case S:
+            case C:
+                return Colors.BLUE;
+            case B:
                 return Colors.MAGENTA;
+            case A:
+                return Colors.YELLOW;
+            case S:
+                return Colors.ORANGE;
             case L:
-                return Colors.CYAN;
+                return Colors.RED;
         }
         return Colors.WHITE;
+    }
+
+    public String getRarity() {
+        return rarity;
     }
 }

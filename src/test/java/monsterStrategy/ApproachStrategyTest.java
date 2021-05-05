@@ -1,5 +1,6 @@
 package monsterStrategy;
 
+import classeSystem.InGameClasses;
 import display.GridMap;
 import entity.living.npc.monster.Monster;
 import entity.living.npc.monster.MonsterFactory;
@@ -29,7 +30,7 @@ class ApproachStrategyTest {
         Position playerPosition3 = new Position(7,8);
         Position playerPosition4 = new Position(1,3);
         Monster monster = monsterFactory.getMonster(0,monsterPosition);
-        Player player = new Player(playerPosition1,10,10,"Hero",1);
+        Player player = new Player(playerPosition1,10,10,"Hero", InGameClasses.DUMMY, 1);
 
         System.out.println("test 1\nMonster = (" + monster.getPosition().getAbs() + ", " + monster.getPosition().getOrd() + ")");
         System.out.println("Player = (" + player.getPosition().getAbs() + ", " + player.getPosition().getOrd() + ")\n");

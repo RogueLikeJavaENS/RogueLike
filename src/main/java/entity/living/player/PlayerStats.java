@@ -1,5 +1,6 @@
 package entity.living.player;
 
+import classeSystem.InGameClasses;
 import entity.living.AbstractStats;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,9 +32,23 @@ public class PlayerStats extends AbstractStats {
         return xp;
     }
 
-    public PlayerStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int money, int level) {
+    public PlayerStats(InGameClasses classe, int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int money, int level) {
         super(lifePoint, manaPoint, range, initiative, damage, armor, money, level);
-        this.classFactor= new int[] {10,10,1,1,1};
+        switch (classe.ordinal()){
+            case 0:
+                this.classFactor = new int[] {10, 7, 2, 1, 1};
+                break;
+            case 1:
+                this.classFactor = new int[] {20, 5, 1, 2, 2};
+                break;
+            case 2:
+                this.classFactor = new int[] {5, 20, 1, 0, 1};
+                break;
+            case 3:
+            default:
+                this.classFactor = new int[] {10, 10, 1, 1, 1};
+                break;
+        }
         this.xp=0;
         this.levelCap=loadXpPerLevel();
         checkCurrentXP();

@@ -20,7 +20,6 @@ import java.util.List;
 
 public class RendererUI {
     GameState gs;
-    private HUD hud;
 
     private final String[] gridAndMapArray;
     private static final String help = "Controls :\n"
@@ -40,10 +39,8 @@ public class RendererUI {
      * Initialize the array gridAndMapArray with its size
      *
      * @param gs : the actual GameState
-     * @param hud : the current HUD
      */
-    public RendererUI(GameState gs, HUD hud) {
-        this.hud = hud;
+    public RendererUI(GameState gs) {
         this.gs = gs;
 
         gs.getGridMap().updateDisplayGridMap();
@@ -54,7 +51,6 @@ public class RendererUI {
         // gridAndMapArray contain the gridMap on even index and the minimap on uneven index
 
         updateGrid(gs.getGridMap());
-        updateHUD(hud);
         updateMap(gs.getMiniMap());
     }
 
@@ -104,14 +100,14 @@ public class RendererUI {
                 break;
 
             case NORMAL: // Print the HUD, the room and the minimap
-                globalSB.append(hud.toString());
+                globalSB.append(gs.getHud().toString());
                 globalSB.append(midRenderer());
                 break;
 
             case FIGHT: // Print the HUD, the room, the minimap and the information about the fight
-                globalSB.append(hud.toString());
+                globalSB.append(gs.getHud().toString());
                 globalSB.append(midRenderer());
-                globalSB.append(hud.getSpellBar());
+                globalSB.append(gs.getHud().getSpellBar());
                 globalSB.append(gs.getFighting().toString());
 
                 break;
@@ -119,11 +115,10 @@ public class RendererUI {
                 globalSB.append(gs.merchant.getMerchantInventory().toStringInventory(gs));
                 break;
             case SHOP_MENU:
-                globalSB.append(gs.getMenu().displayMenu());
-                break;
             case PAUSE_MENU:
+            case ClASS_SELECTION_MENU:
+            case START_MENU:
                 globalSB.append(gs.getMenu().displayMenu());
-                gs.getDescriptor().flushDescriptor();
                 break;
             default:
                 break;
@@ -146,21 +141,10 @@ public class RendererUI {
      * Update all the element of the game
      *
      * @param gs gameState to update
-     * @param hud hud to update
      */
-    public void updateAll(GameState gs, HUD hud){
+    public void updateAll(GameState gs){
         updateGrid(gs.getGridMap());
-        updateHUD(hud);
         updateMap(gs.getMiniMap());
-    }
-
-    /**
-     * Update the HUD
-     *
-     * @param hud the hud to update.
-     */
-    public void updateHUD(HUD hud){
-        this.hud = hud;
     }
 
     /**

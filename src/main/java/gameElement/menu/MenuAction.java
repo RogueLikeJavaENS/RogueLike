@@ -2,6 +2,11 @@ package gameElement.menu;
 
 import gameElement.GameState;
 
+/**
+ *
+ * @author Antoine
+ */
+
 public class MenuAction {
     private String name;
     private Action action;

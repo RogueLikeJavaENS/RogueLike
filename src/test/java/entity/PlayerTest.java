@@ -1,5 +1,6 @@
 package entity;
 
+import classeSystem.InGameClasses;
 import entity.living.player.Player;
 import org.junit.jupiter.api.Test;
 import utils.Position;
@@ -10,7 +11,7 @@ class PlayerTest {
 
     @Test
     void testStats() {
-        Player player = new Player(new Position(0,2),100,100,"hey",1);
+        Player player = new Player(new Position(0,2),100,100,"hey", InGameClasses.DUMMY, 1);
         player.getPlayerStats().gainMoney(100);
         assertEquals(100, player.getPlayerStats().getMoneyCount());
 
