@@ -4,6 +4,10 @@ import display.tiles.Tile;
 import entity.Entity;
 import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
+import entity.living.npc.monster.boss.Boss;
+import entity.living.npc.monster.boss.BossFactory;
+import entity.living.npc.monster.boss.BossPart;
+import entity.living.npc.monster.boss.Bosses;
 import entity.object.*;
 import entity.object.potions.PotionEntityFactory;
 import gameElement.GameRule;
@@ -33,9 +37,17 @@ public class RoomFactory {
         this.currentAvailablePositions = room.getAvailablePositions();
         switch (roomType) {
             case START:
-                addHole(room);
-                addSpike(room);
-                addChest(room,true);    // Basic equipment to start a new adventure
+                BossFactory bossFactory = new BossFactory(floor);
+                Boss rabbitBoss = bossFactory.getBoss(Bosses.KILLER_RABBIT, room.getCenter());
+                List<BossPart> bossParts = rabbitBoss.getBossPartList();
+                room.addEntity(bossParts.get(0));
+                room.addEntity(bossParts.get(1));
+                room.addEntity(bossParts.get(2));
+                room.addEntity(bossParts.get(3));
+                room.addEntity(rabbitBoss);
+//                addHole(room);
+//                addSpike(room);
+//                addChest(room,true);    // Basic equipment to start a new adventure
                 // add some stuffs that make clear it's the start room.
                 break;
             case BOSS:

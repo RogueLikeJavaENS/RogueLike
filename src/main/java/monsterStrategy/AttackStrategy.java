@@ -12,7 +12,6 @@ public class AttackStrategy extends DecoratorStrategy{
         super(strategy);
     }
 
-    @Override
     public boolean act(Monster monster, Player player, GridMap gridMap) {
         int damage = monster.getMonsterStats().getDamageNatural();
         player.getPlayerStats().sufferDamage(damage);
