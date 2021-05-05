@@ -10,12 +10,9 @@ import utils.Position;
  * */
 
 public interface Entity {
-
     void doAction(GameState gameState);
     void doInteraction(GameState gameState);
-
     String toString();
-
     String getSprites(int i);
     Position getPosition();
     boolean getIsNPCAccessible();

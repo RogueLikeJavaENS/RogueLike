@@ -83,16 +83,75 @@ public final class StrategyUtils {
         monster.setPosition(monsterPos);
     }
 
-
-    public static void setMonsterPosition(Monster monster, Player player, GridMap gridMap){
+    public static void aStarAlgorithmMonster(Monster monster, Player player, GridMap gridMap) {
         Position monsterPos = monster.getPosition();
         Position playerPos = player.getPosition();
 
-        Position pos = aStarAlgorithm(monsterPos,playerPos,gridMap);
-        if (pos != null){
-            monster.setPosition(pos);
+        List<Node> openNodes = new ArrayList<>(); //liste des nodes qui sont candidates en tant que Node du chemin
+        List<Node> closedNodes = new ArrayList<>(); //liste des nodes qu'on a déjà vérifié
+        //List<Node> path = new ArrayList<>(); //liste des nodes qui constituent le chemin
+        openNodes.add(new Node(monsterPos, playerPos)); //on ajoute la Node actuelle pour démarrer
+
+        //tant qu'on a des Node à vérifier (donc un potentiel chemin)
+        while (openNodes.size() > 0) {
+            Node currentNode = getMostRelevantNode(openNodes); //on récupère celle qui semble être le meilleur choix
+            openNodes.remove(currentNode);
+            closedNodes.add(currentNode);
+
+            //s'il s'agît d'une Node à moins de 1 de distance avec le joueur, c'est là qu'on doit aller
+            if (getDistance(currentNode.getNodePos(), playerPos) <= 1) {
+                //on remonte le chemin en passant par les parents
+                while (!currentNode.getParentNode().getNodePos().equals(monsterPos)) {
+                    //path.add(currentNode);
+                    currentNode = currentNode.getParentNode();
+                }
+                monster.setPosition(currentNode.getNodePos()); //et on donne au monstre la position de la première node du chemin
+                break;
+            }
+
+            //on récupère les directions possibles depuis la Node courante, donc les non-accessibles ne seront pas un problème
+            List<Direction> possibleDir = foundAccessibleDirection(currentNode.getNodePos(), gridMap);
+
+            Position newNodePos; //je vais peut-être devoir le mettre dans le for ça
+            for (Direction direction : possibleDir) {
+                switch (direction) {
+                    case NORTH:
+                        try {
+                            newNodePos = new Position(currentNode.getNodePos().getAbs(), Check.checkPositivity(currentNode.getNodePos().getOrd()-1));
+                        } catch (IllegalArgumentException illegalArgumentException) { //si on sort de la map
+                            newNodePos = currentNode.getNodePos();
+                        }
+                        break;
+                    case WEST:
+                        try {
+                            newNodePos = new Position(Check.checkPositivity(currentNode.getNodePos().getAbs()-1), currentNode.getNodePos().getOrd());
+                        } catch (IllegalArgumentException illegalArgumentException) { //si on sort de la map
+                            newNodePos = currentNode.getNodePos();
+                        }
+                        break;
+                    case SOUTH:
+                        newNodePos = new Position(currentNode.getNodePos().getAbs(), currentNode.getNodePos().getOrd()+1);
+                        break;
+                    case EAST:
+                        newNodePos = new Position(currentNode.getNodePos().getAbs()+1, currentNode.getNodePos().getOrd());
+                        break;
+                    default:
+                        newNodePos = currentNode.getNodePos();
+                }
+                Node nextNode = new Node(newNodePos, playerPos, monsterPos, currentNode);
+                if (containsNodeHere(closedNodes, newNodePos) != -1) {
+                    continue;
+                }
+                int indexIfExists = containsNodeHere(openNodes, newNodePos);
+                if (indexIfExists != -1) {
+                    openNodes.get(indexIfExists).setParentNode(currentNode);
+                } else {
+                    openNodes.add(nextNode);
+                }
+            }
         }
     }
+
 
     public static Position aStarAlgorithm(Position from, Position to, GridMap gridMap) { ;
 
@@ -166,24 +225,26 @@ public final class StrategyUtils {
         Position monsterPos = monster.getPosition();
         Random gen = new Random();
         List<Direction> accessibleDirection = foundAccessibleDirection(monsterPos, gridMap);
-        Direction direction = accessibleDirection.get(gen.nextInt(accessibleDirection.size()));
-        switch (direction){
-            case EAST:
-                monsterPos.updatePos(1,0);
-                break;
-            case WEST:
-                monsterPos.updatePos(-1,0);
-                break;
-            case NORTH:
-                monsterPos.updatePos(0,-1);
-                break;
-            case SOUTH:
-                monsterPos.updatePos(0,1);
-                break;
-            default:
-                break;
+        if (accessibleDirection.size() != 0){
+            Direction direction = accessibleDirection.get(gen.nextInt(accessibleDirection.size()));
+            switch (direction){
+                case EAST:
+                    monsterPos.updatePos(1,0);
+                    break;
+                case WEST:
+                    monsterPos.updatePos(-1,0);
+                    break;
+                case NORTH:
+                    monsterPos.updatePos(0,-1);
+                    break;
+                case SOUTH:
+                    monsterPos.updatePos(0,1);
+                    break;
+                default:
+                    break;
+            }
+            monster.setPosition(monsterPos);
         }
-        monster.setPosition(monsterPos);
     }
 
 

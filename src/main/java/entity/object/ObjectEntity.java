@@ -10,10 +10,12 @@ public class ObjectEntity extends AbstractEntity {
         super(position, color, isPlayerAccessible,isNPCAccessible);
     }
 
+
     @Override
     public Position getPosition() {
         return super.getPosition();
     }
+
 
     @Override
     public void setPosition(Position position) {

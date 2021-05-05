@@ -47,10 +47,7 @@ public class Dungeon {
 
     private void verifyALlRoom(){
         for (Room room : roomList){
-            boolean isOkay = false;
-            while (isOkay == false){
-                isOkay = VerificationRoom.verificationGenerationRoom(room,this);
-            }
+            VerificationRoom.verificationGenerationRoom(room,this);
         }
     }
 

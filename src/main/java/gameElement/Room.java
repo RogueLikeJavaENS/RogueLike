@@ -63,7 +63,9 @@ public class Room {
     public int getHeight() { return height; }
     public RoomType getRoomType() { return roomType; }
     public List<Entity> getEntities() { return new ArrayList<>(entities); }
-
+    public void removeEntity(Entity entity){
+        this.entities.remove(entity);
+    }
 
     /**
      * Returns the roomNum of the room at the given direction.
