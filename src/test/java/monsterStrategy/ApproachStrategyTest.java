@@ -10,7 +10,6 @@ import generation.RoomFactory;
 import generation.RoomType;
 import generation.Seed;
 import org.junit.jupiter.api.Test;
-import utils.Classe;
 import utils.Position;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -46,7 +46,6 @@ public class RogueLike {
         rendererUI = new RendererUI(gs);
         rendererUI.display();
 
-        RoomFactory.addMerchant(gs, dungeon); // TODO change that
         gameLoop(); // until state equals WIN or LOSE or END
         rendererUI.clearConsole();
         if (gs.getState() == State.WIN) {

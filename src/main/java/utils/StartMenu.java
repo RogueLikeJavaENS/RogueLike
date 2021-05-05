@@ -1,11 +1,7 @@
 package utils;
 
 import classeSystem.InGameClasses;
-import utils.Classe;
-import utils.Colors;
-
 import static com.diogonunes.jcolor.Ansi.colorize;
-
 import java.util.Locale;
 import java.util.Scanner;
 

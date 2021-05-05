@@ -9,7 +9,7 @@ import stuff.item.potions.XpBottle;
 import utils.Colors;
 import utils.Direction;
 import utils.Position;
-import utils.Classe;
+
 
 import java.util.*;
 
@@ -17,7 +17,7 @@ public class Player extends LivingEntity {
     private final List<Spell> spellList;
     private Spell selectedSpell;
     private final Inventory inventory;
-    private final Classe classe;
+    private final InGameClasses classe;
 
     public Player(Position position, int pv, int pm, String name, InGameClasses classe, int level) throws IllegalArgumentException {
         super(position, name, Colors.WHITE, new PlayerStats(classe, pv, pm, 1, 2, 15, 1, 0, level));
@@ -30,6 +30,9 @@ public class Player extends LivingEntity {
         setSprites("o-o", "/^\\", Colors.WHITE);
         setDirection(Direction.SOUTH);
         this.classe = classe;
+        for (int i = 0; i < 10; i++) {
+            inventory.addItem(new XpBottle());
+        }
     }
 
     public void addSpell(Spell spell) {
@@ -47,5 +50,5 @@ public class Player extends LivingEntity {
         return (PlayerStats) stats;
     }
     public Spell getSelectedSpell() { return selectedSpell; }
-    public Classe getClasse() { return classe; }
+    public InGameClasses getClasse() { return classe; }
 }

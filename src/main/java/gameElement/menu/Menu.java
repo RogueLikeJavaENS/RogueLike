@@ -4,6 +4,7 @@ import classeSystem.InGameClasses;
 import entity.living.player.Player;
 import gameElement.Dungeon;
 import gameElement.GameState;
+import generation.RoomFactory;
 import utils.Position;
 import utils.StartMenu;
 import utils.State;
@@ -47,41 +48,37 @@ public class Menu {
                 state.setState(State.ClASS_SELECTION_MENU);
                 state.setMenu(new Menu (state.getState()));
             }));
-            actions.add(new MenuAction("Load Game", state -> {
-                System.out.println("Coming Soon");
-            }));
-            actions.add(new MenuAction("Exit", state -> {
-                state.setState(State.END);
-            }));
+            actions.add(new MenuAction("Load Game", state -> System.out.println("Coming Soon")));
+            actions.add(new MenuAction("Exit", state -> state.setState(State.END)));
         }
         else if (gameState == State.ClASS_SELECTION_MENU) {
                 headMenu = "Tell me more about yourself hero, what class do you want to play ?";
                 actions.add(new MenuAction("Ranger", state -> {
-                    headMenu = "Whats your name ?";
                     String name = StartMenu.getName();
                     Position initialPosition = state.getDungeon().getRoom(0).getCenter();
                     setClassesPicked(InGameClasses.RANGER);
                     System.out.println(getClassesPicked());
                     state.setPlayer(new Player(initialPosition, 100, 100, name, getClassesPicked(), 1));
                     state.setState(State.NORMAL);
+                    RoomFactory.addMerchant(state, state.getDungeon());
                 }));
                 actions.add(new MenuAction("Warrior", state -> {
-                    headMenu = "Whats your name ?";
                     String name = StartMenu.getName();
                     Position initialPosition = state.getDungeon().getRoom(0).getCenter();
                     setClassesPicked(InGameClasses.WARRIOR);
                     System.out.println(getClassesPicked());
                     state.setPlayer(new Player(initialPosition, 100, 100, name, getClassesPicked(), 1));
                     state.setState(State.NORMAL);
+                    RoomFactory.addMerchant(state, state.getDungeon());
                 }));
                 actions.add(new MenuAction("Mage", state -> {
-                    headMenu = "Whats your name ?";
                     String name = StartMenu.getName();
                     Position initialPosition = state.getDungeon().getRoom(0).getCenter();
                     setClassesPicked(InGameClasses.MAGE);
                     System.out.println(getClassesPicked());
                     state.setPlayer(new Player(initialPosition, 100, 100, name, getClassesPicked(), 1));
                     state.setState(State.NORMAL);
+                    RoomFactory.addMerchant(state, state.getDungeon());
                 }));
         }
         else {
@@ -90,12 +87,8 @@ public class Menu {
                 state.setState(State.NORMAL);
                 state.isThereMonstersInventory();
             }));
-            actions.add(new MenuAction("Restart game", state -> {
-                System.out.println("Restarting game not implemented");
-            }));
-            actions.add(new MenuAction("Exit game", state -> {
-                state.setState(State.END);
-            }));
+            actions.add(new MenuAction("Restart game", state -> System.out.println("Restarting game not implemented")));
+            actions.add(new MenuAction("Exit game", state -> state.setState(State.END)));
         }
         selectedAction = actions.get(0);
     }

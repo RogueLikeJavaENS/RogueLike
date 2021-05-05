@@ -53,7 +53,7 @@ public abstract class AbstractStats{
     }
 
     public void changeLifePointTotal(int modifier) {
-        this.lifePointTotal = Math.max((getArmorTotal() + modifier), getLifePointNatural());
+        this.lifePointTotal = Math.max((getLifePointTotal() + modifier), getLifePointNatural());
     }
 
     public void upgradeLifePointNatural(int modifier){
@@ -74,7 +74,7 @@ public abstract class AbstractStats{
     }
 
     public void changeManaPointTotal(int modifier) {
-        this.manaPointTotal = Math.max((getManaPointTotal() + modifier), getLifePointNatural());
+        this.manaPointTotal = Math.max((getManaPointTotal() + modifier), getManaPointNatural());
     }
 
     public void upgradeManaPointNatural(int modifier) {

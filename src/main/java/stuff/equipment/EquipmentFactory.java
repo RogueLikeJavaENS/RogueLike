@@ -1,18 +1,12 @@
 package stuff.equipment;
 
-import com.diogonunes.jcolor.Attribute;
-import display.Descriptor;
+import classeSystem.InGameClasses;
 import gameElement.GameRule;
 import gameElement.GameState;
 import stuff.equipment.equipments.*;
-import utils.Classe;
-import utils.Colors;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class EquipmentFactory {
     private final GameState gameState;
@@ -75,7 +69,7 @@ public class EquipmentFactory {
         return namePlusDesctription;
     }
 
-    private String getAttributeByRarityAndClasses(EquipmentRarity rarity, Classe classe) {
+    private String getAttributeByRarityAndClasses(EquipmentRarity rarity, InGameClasses classe) {
         String attribute = "";
         switch (rarity) {
             case E:
@@ -173,7 +167,7 @@ public class EquipmentFactory {
         return attribute;
     }
 
-    private String getEquipmentByTypeAndClasses(EquipmentType type, Classe classe) {
+    private String getEquipmentByTypeAndClasses(EquipmentType type, InGameClasses classe) {
         String attribute = "";
         switch(type) {
             case WEAPON:
@@ -262,7 +256,7 @@ public class EquipmentFactory {
         return attribute;
     }
 
-    private String getDescriptionByType(String name, EquipmentRarity rarity, EquipmentType type, Classe classe) {
+    private String getDescriptionByType(String name, EquipmentRarity rarity, EquipmentType type, InGameClasses classe) {
         String attribute = String.format("A %s %s ", rarity.getRarity(), name);
         switch(type) {
             case WEAPON:
