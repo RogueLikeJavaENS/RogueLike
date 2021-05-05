@@ -2,16 +2,16 @@ package gameElement;
 
 import display.GridMap;
 import entity.Entity;
+import entity.object.Button;
 import entity.object.Door;
 import generation.GraphDungeon;
 import generation.RoomFactory;
+import generation.RoomType;
 import generation.VerificationRoom;
 import utils.Direction;
 import utils.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * This class is graph representation of the dungeon.
@@ -29,6 +29,7 @@ public class Dungeon {
     private final int floor;
     private final GraphDungeon graph;
     private List<GridMap> gridMapList; // list of gridMap, index by room number.
+    private List<Button> buttons;
 
     public Dungeon(List<Room> roomList, int width, int height, GraphDungeon graph, int maxRoomHeight, int maxRoomWidth, int floor) {
         this.roomList = roomList;
@@ -38,10 +39,13 @@ public class Dungeon {
         this.maxRoomHeight = maxRoomHeight;
         this.maxRoomWidth = maxRoomWidth;
         this.floor = floor;
+        buttons = new ArrayList<>();
         createAllDoor();
         setAllNextDoor();
         closeDoorOfEndRoom();
         initGridMapList();
+        placeAllButtons();
+        setBossDoor();
         verifyALlRoom();
     }
 
@@ -52,6 +56,48 @@ public class Dungeon {
     private void verifyALlRoom(){
         for (Room room : roomList){
             VerificationRoom.verificationGenerationRoom(room,this);
+        }
+    }
+
+    public boolean isAllButtonsPressed(GameState gameState) {
+        int nbButtonsNotClosed = buttons.size();
+        for (Button button : buttons) {
+            if (button.isPressed()) {
+                nbButtonsNotClosed--;
+            }
+        }
+        if (nbButtonsNotClosed == 0) {
+            gameState.getDescriptor().updateDescriptor(String.format("%s pressed all the buttons... the door is opening.", gameState.getPlayer().getName()));
+            return true;
+        } else {
+            gameState.getDescriptor().updateDescriptor(String.format("%d button(s) are not pressed yet.", nbButtonsNotClosed));
+            return false;
+        }
+    }
+
+    private void setBossDoor() {
+        for (Room room : roomList) {
+            if (room.getRoomType() == RoomType.BOSS) {
+                Door door = room.getDoors().get(0);
+                door.setBossDoor();
+            }
+        }
+    }
+
+    private void placeAllButtons() {
+        Random GEN = new Random();
+        int nbButtonPlaced = 0;
+        while(nbButtonPlaced < 5) {
+            Room room = roomList.get(GEN.nextInt(roomList.size()));
+            if (room.getRoomType() == RoomType.MONSTER) {
+                List<Position> positionList = room.getWallAvailablePosition();
+                Collections.shuffle(positionList);
+                Button button = new Button(positionList.remove(0));
+                room.addEntity(button);
+                getGridMap(room).update(button, true);
+                buttons.add(button);
+                nbButtonPlaced++;
+            }
         }
     }
 

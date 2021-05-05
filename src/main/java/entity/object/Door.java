@@ -18,7 +18,7 @@ public class Door extends ObjectEntity {
     private final Direction direction;
     private Door next;
     private boolean isOpen;
-
+    private boolean isBossDoor;
     /**
      * Create a new Door
      * @param position on the room
@@ -38,6 +38,13 @@ public class Door extends ObjectEntity {
             setSprites("[X]", "[X]", Colors.BROWN);
             setIsPlayerAccessible(false);
         }
+        this.isBossDoor = false;
+    }
+
+    public void setBossDoor() {
+        isBossDoor = true;
+        this.next.isBossDoor = true;
+        closeRelyDoor();
     }
 
     /**
@@ -53,7 +60,12 @@ public class Door extends ObjectEntity {
     private void openDoor(){
         this.isOpen = true;
         this.setIsPlayerAccessible(true);
-        setSprites("[ ]", "[ ]", Colors.BROWN);
+        if (isBossDoor) {
+            setSprites("[ ]", "[ ]", Colors.GREEN);
+        }
+        else {
+            setSprites("[ ]", "[ ]", Colors.BROWN);
+        }
 
     }
 
@@ -71,7 +83,12 @@ public class Door extends ObjectEntity {
     private void closeDoor(){
         this.isOpen = false;
         this.setIsPlayerAccessible(false);
-        setSprites("[X]", "[X]", Colors.BROWN);
+        if (isBossDoor) {
+            setSprites("[X]", "[X]", Colors.RED);
+        }
+        else {
+            setSprites("[X]", "[X]", Colors.BROWN);
+        }
     }
 
     /**
@@ -122,14 +139,21 @@ public class Door extends ObjectEntity {
         if (isOpen) {
             gameState.getDescriptor().updateDescriptor("The door is open.");
         } else {
-            Player player = gameState.getPlayer();
-            if (player.getInventory().containsItem(ItemType.FLOORKEY)) {
-                player.getInventory().useItem(ItemType.FLOORKEY, gameState);
-                player.getInventory().addItem(new FloorKey());
-                openRelyDoor();
-                gameState.getDescriptor().updateDescriptor("The door is open now.");
-            } else {
-                gameState.getDescriptor().updateDescriptor("You can't open the door without the key. ");
+            if (isBossDoor) {
+                if (gameState.getDungeon().isAllButtonsPressed(gameState)) {
+                    openRelyDoor();
+                }
+            }
+            else {
+                Player player = gameState.getPlayer();
+                if (player.getInventory().containsItem(ItemType.FLOORKEY)) {
+                    player.getInventory().useItem(ItemType.FLOORKEY, gameState);
+                    player.getInventory().addItem(new FloorKey());
+                    openRelyDoor();
+                    gameState.getDescriptor().updateDescriptor("The door is open now.");
+                } else {
+                    gameState.getDescriptor().updateDescriptor("You can't open the door without the key. ");
+                }
             }
         }
     }

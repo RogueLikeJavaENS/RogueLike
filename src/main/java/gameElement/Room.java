@@ -140,6 +140,32 @@ public class Room {
         return forbiddenPosition;
     }
 
+    public List<Position> getWallAvailablePosition() {
+        List<Position> positionList = new ArrayList<>();
+        for (int abs = 0; abs < width; abs++) {
+            for (int ord = 0; ord < height; ord++) {
+                if (contents[ord][abs] == Tile.WALL.getId() && !isCorner(abs,ord)) {
+                    positionList.add(new Position(abs, ord));
+                }
+            }
+        }
+        return positionList;
+    }
+
+    private boolean isCorner(int abs, int ord) {
+        if (abs > 1 && abs < width-1) {
+            int l = contents[ord][abs-1];
+            int r = contents[ord][abs+1];
+            return l != r;
+        }
+        if (ord > 1 && ord < height-1) {
+            int u = contents[ord-1][abs];
+            int d = contents[ord+1][abs];
+            return u != d;
+        }
+        return false;
+    }
+
     /**
      * Return the list of doors of the room
      *

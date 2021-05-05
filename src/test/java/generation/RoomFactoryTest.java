@@ -57,17 +57,6 @@ class RoomFactoryTest {
         }
     }
 
-    @Test
-    void merchantTest() {
-        Room merchantRoom = roomFactory1.getRoom(seed, RoomType.REST, 1, nextList);
-        boolean contain = false;
-        for (Entity entity : merchantRoom.getEntities()) {
-            if (entity instanceof Merchant) {
-                contain = true;
-            }
-        }
-        assertTrue(contain);
-    }
 
     @Test
     void containPotions() {
