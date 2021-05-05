@@ -7,7 +7,6 @@ import entity.Entity;
 import entity.living.npc.monster.Monster;
 import entity.living.player.Player;
 import utils.Check;
-import utils.CoupleBoolPosition;
 import utils.Direction;
 import utils.Position;
 

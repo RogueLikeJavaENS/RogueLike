@@ -26,12 +26,20 @@ public class RoomFactory {
     private final static Random GEN = new Random();
     private List<Position> currentAvailablePositions;
 
+    /**
+     * Create a room factory
+     * @param width the width of a room
+     * @param height the height of a room
+     * @param empty empty ??
+     * @param floor floor ??
+     */
     public RoomFactory(int width, int height, int empty, int floor) {
         this.width = width;
         this.height = height;
         this.space = empty;
         this.floor = floor;
     }
+
 
     public Room getRoom(Seed seed, RoomType roomType, int current, int[] nextList) {
         Room room = createRoom(current, nextList, roomType);
@@ -78,11 +86,21 @@ public class RoomFactory {
         return room;
     }
 
+    /**
+     * Add a stair at the middle of the room
+     *
+     * @param room the room where we add the stair
+     */
     private void addStairs(Room room) {
         room.addEntity(new Stair(room.getCenter()));
         currentAvailablePositions.remove(room.getCenter());
     }
 
+    /**
+     * Add multiple monster (according to the GameRule) in the room
+     *
+     * @param room the room
+     */
     private void addMonsters(Room room) {
         MonsterFactory monsterFactory = new MonsterFactory(floor);
         int monsterCount = GEN.nextInt(10) % 2 + 2;
@@ -98,6 +116,12 @@ public class RoomFactory {
         }
     }
 
+    /**
+     * Add multiple potions (type of the potion according to the GameRule) in the room
+     *
+     * @param room the room
+     * @param numberOfPotion the number of potion to add
+     */
     private void addPotions(Room room, int numberOfPotion) {
         PotionEntityFactory potionFactory = new PotionEntityFactory();
         for (int i = 0; i < numberOfPotion; i++) {
@@ -108,6 +132,12 @@ public class RoomFactory {
         }
     }
 
+    /**
+     * Add Coins on the Room
+     *
+     * @param room the room
+     * @param numberOfGold the number of Coins to add
+     */
     private void addCoins(Room room, int numberOfGold) {
         for (int i = 0; i < numberOfGold; i++) {
             if (currentAvailablePositions.size() != 0) {
@@ -116,6 +146,12 @@ public class RoomFactory {
         }
     }
 
+    /**
+     * Add a chest (classic or golden) in the room
+     *
+     * @param room the room
+     * @param isClassic true if the chest is classic, false if the chest is golden
+     */
     private void addChest(Room room, boolean isClassic){
         if (currentAvailablePositions.size() != 0){
             if (isClassic){
@@ -130,11 +166,20 @@ public class RoomFactory {
         }
     }
 
+    /**
+     * Add a merchant in the room
+     *
+     * @param room the room
+     */
     private void addMerchant(Room room) {
         room.addEntity(new PotionMerchant(currentAvailablePositions.get(0)));
         currentAvailablePositions.remove(0);
     }
 
+    /**
+     * Add holes and spikes in the room (number of holes and spikes according to the GameRule)
+     * @param room the room
+     */
     private void addHoleAndSpike(Room room){
         int nbHole = gameRule.numberOfHole();
         int nbSpike = gameRule.numberOfSpike();
@@ -148,6 +193,10 @@ public class RoomFactory {
 
     }
 
+    /**
+     * Create a path of hole
+     * @param room the room
+     */
     private void createPathOfHole(Room room){
         int sizeHole = gameRule.sizeOfPathHole();
         Collections.shuffle(currentAvailablePositions);
@@ -168,6 +217,11 @@ public class RoomFactory {
             }
         }
     }
+
+    /**
+     * Create a path of spike
+     * @param room the room
+     */
     private void createPathOfSpike(Room room){
         int sizeSpike = gameRule.sizeOfPathSpike();
         Collections.shuffle(currentAvailablePositions);
@@ -188,7 +242,12 @@ public class RoomFactory {
         }
     }
 
-
+    /**
+     * Return a list of position which are accessible from the position "positio"
+     * @param position the position
+     * @param room the room
+     * @return the list of accessible position around the position
+     */
     private List<Position> getAccessibleDirectionFromPosition(Position position, Room room){
         List<Position> listAccessiblePosition = new ArrayList<>();
         for (int i = 0; i<4;i++){
@@ -200,6 +259,8 @@ public class RoomFactory {
     }
 
     /**
+     * Create a room
+     *
      * @param current The current number of the room
      * @param nextList Array with the position and the number of the next Room
      * @return Room with the correct wall and doors

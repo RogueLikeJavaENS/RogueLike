@@ -28,7 +28,7 @@ public class Room {
     private final RoomType roomType;
 
     /**
-     *
+     * Create a room
      * @param roomNum Number of the room.
      * @param nearRoom List of all rooms. 0-N, 1-E, 2-S, 3-W
      * @param contents Int table that content the id of the game's elements.
@@ -37,7 +37,6 @@ public class Room {
      * @param height Height of the gameElement.Dungeon
      *
      */
-
     public Room(int roomNum, int[] nearRoom, int[][] contents,  Position position, int width, int height, RoomType roomType) {
         this.roomNum = roomNum;
         this.nearRoom = nearRoom;
@@ -49,6 +48,10 @@ public class Room {
         this.roomType = roomType;
     }
 
+    /**
+     * Add an entity to the room
+     * @param entity the entity to add
+     */
     public void addEntity(Entity entity) {
         entities.add(entity);
     }
@@ -63,6 +66,11 @@ public class Room {
     public int getHeight() { return height; }
     public RoomType getRoomType() { return roomType; }
     public List<Entity> getEntities() { return new ArrayList<>(entities); }
+
+    /**
+     * Remove an entity in the room
+     * @param entity the entity to remove
+     */
     public void removeEntity(Entity entity){
         this.entities.remove(entity);
     }
@@ -78,6 +86,11 @@ public class Room {
         return nearRoom[direction.getValue()];
     }
 
+    /**
+     * Return the position which is not in front of a door and where there is no entities
+     *
+     * @return the list of available position
+     */
     public List<Position> getAvailablePositions() {
         List<Position> positions = new ArrayList<>();
         for (int ord = 0; ord < contents.length; ord++) {
@@ -96,6 +109,13 @@ public class Room {
         return positions;
     }
 
+    /**
+     * Return the list of entities which are at the position abs,ord
+     *
+     * @param abs the abscissa of the position
+     * @param ord the ordinate of the position
+     * @return the list of entities at the position abs,ord
+     */
     public List<Entity> getEntitiesAt(int abs, int ord) {
         List<Entity> entitiesAt = new ArrayList<>();
         for (Entity entity : entities) {
@@ -106,6 +126,11 @@ public class Room {
         return entitiesAt;
     }
 
+    /**
+     * Return the list of the position in front of a door
+     *
+     * @return the list of position
+     */
     public List<Position> getForbiddenPositions() {
         ArrayList<Position> forbiddenPosition = new ArrayList<>(); // positions in front of a door is forbidden.
         forbiddenPosition.add(new Position(width/2, 1)); // North
@@ -115,6 +140,11 @@ public class Room {
         return forbiddenPosition;
     }
 
+    /**
+     * Return the list of doors of the room
+     *
+     * @return list of doors
+     */
     public List<Door> getDoors(){
         List<Door> doors = new ArrayList<>();
         for (Entity entity : entities){

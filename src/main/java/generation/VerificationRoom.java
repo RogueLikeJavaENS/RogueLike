@@ -18,11 +18,18 @@ import java.util.List;
 
 public class VerificationRoom {
 
+
+    /**
+     * Verify if there is a path between all the entities use in the game
+     *
+     * @param room room to verify
+     * @param dungeon dungeon to verify
+     */
     public static void verificationGenerationRoom(Room room, Dungeon dungeon){
         List<Position> positionToVerify = new ArrayList<>();
         GridMap gridMap = dungeon.getGridMap(room);
 
-        // Get position of the door
+        // Get position of the doors
         List<Door> doorList = room.getDoors();
         List<Position> positionDoor = new ArrayList<>();
         for (Door door : doorList){
@@ -36,37 +43,38 @@ public class VerificationRoom {
         positionToVerify.remove(basePosition);
         positionToVerify.addAll(positionOfNeededEntity(room));
 
-        int acc_debug = 0;
         if (positionToVerify.size() == 0) return;
 
         for (Position pos : positionToVerify){
+
             if (gridMap.getEntitiesAt(pos.getAbs(),pos.getOrd()).size() == 0){break;}
+
             boolean isOkay = false;
-            while (!isOkay){
+            while (!isOkay){ // while there is no path continue to remove
                 Position position = StrategyUtils.aStarAlgorithm(basePosition,pos,gridMap);
-                if (position == null){
+                if (position == null){ // No path between the entities
                     Entity entityToRemove = removeSpikeOrHole(room);
-                    if (entityToRemove == null){
+                    if (entityToRemove == null){ // No spike or Hole to remove, stop the verification
                         return;
                     }
-                    else {
+                    else { // remove the chosen entity
                         room.removeEntity(entityToRemove);
-                        Position posEntityToRemove = entityToRemove.getPosition();
                         gridMap.update(entityToRemove,false);
                     }
-            }
-                else {
+                }
+                else { // path between the entities
                     isOkay = true;
                 }
             }
         }
     }
 
-    private static Position moveMonster(Room room){
-        Position availablePos = room.getAvailablePositions().get(0);
-        return availablePos;
-    }
-
+    /**
+     * Return a Spike or a Hole to remove
+     *
+     * @param room room where we need to remove a Spike or a Hole
+     * @return the object to remove
+     */
     private static Entity removeSpikeOrHole(Room room){
         List<Entity> roomEntity = room.getEntities();
         Collections.shuffle(roomEntity);
@@ -80,6 +88,13 @@ public class VerificationRoom {
         return entityToRemove;
     }
 
+    /**
+     * Give the list of position in front of the doors
+     *
+     * @param doorList the list of the door
+     * @param room the room where are the doors
+     * @return the list of position of the front
+     */
     private static List<Position> positionFrontDoor(List<Position> doorList, Room room){
         List<Position> positionList= new ArrayList<>();
         for (Position pos : doorList){
@@ -101,6 +116,12 @@ public class VerificationRoom {
         return positionList;
     }
 
+    /**
+     * Return the list of positions all the entity which need to be accessible
+     *
+     * @param room the where are the entity
+     * @return the list of the positions
+     */
     private static List<Position> positionOfNeededEntity(Room room){
         List<Entity> entityList = room.getEntities();
         List<Position> entityPositions = new ArrayList<>();

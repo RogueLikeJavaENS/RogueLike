@@ -45,18 +45,30 @@ public class Dungeon {
         verifyALlRoom();
     }
 
+    /**
+     * Verify if all the room are good
+     *
+     */
     private void verifyALlRoom(){
         for (Room room : roomList){
             VerificationRoom.verificationGenerationRoom(room,this);
         }
     }
 
+    /**
+     * Close the door of the final room (where the stair is)
+     *
+     */
     private void closeDoorOfEndRoom(){
         List<Door> doorList = roomList.get(roomList.size()-2).getDoors();
         for (Door door : doorList){
             door.closeRelyDoor();
         }    }
 
+    /**
+     * Initialize all the gridMap of the dungeon
+     *
+     */
     private void initGridMapList(){
         this.gridMapList = new ArrayList<>();
         for (Room room : roomList) {
@@ -64,6 +76,10 @@ public class Dungeon {
         }
     }
 
+    /**
+     * Create all the doors of the dungeon
+     *
+     */
     private void createAllDoor(){
         for (Room room : roomList) {
             int[] nearRoom = room.getNearRoom();
@@ -76,6 +92,10 @@ public class Dungeon {
         }
     }
 
+    /**
+     * Rely by peer all the door of the dungeon
+     *
+     */
     private void setAllNextDoor() {
         for (Room room : roomList) {
             int[] nearRoom = room.getNearRoom();
@@ -93,7 +113,13 @@ public class Dungeon {
         }
     }
 
-
+    /**
+     * Return the door of the room "room" at the position "position"
+     *
+     * @param position position of the door
+     * @param room room where the door is
+     * @return the door or null if there is no door
+     */
     private Door getDoorAt(Position position, Room room){
         List<Entity> entityList = room.getEntities();
         for (Entity entity: entityList) {
@@ -104,6 +130,13 @@ public class Dungeon {
         return null;
     }
 
+    /**
+     * Return the position of the door with it's direction an it's room
+     *
+     * @param dir direction of the door (N-S-E-W)
+     * @param room room where whe search the door
+     * @return the position of the door
+     */
     private Position getDoorPosition(int dir, Room room){
         int[][] roomContent = room.getContents();
         Position pos = new Position(0,0);

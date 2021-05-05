@@ -16,7 +16,7 @@ public class GameRule {
     /////////// Hole and Spike /////////
 
     /**
-     * 0 to 3 path of hole in a room
+     * 5 to 10 hole in a room
      */
     public int numberOfHole(){
         return GEN.nextInt(5)+5;
@@ -32,7 +32,7 @@ public class GameRule {
 
 
     /**
-     * 0 to 2 path of spike in a room
+     * 10 to 15 spike in a room
      */
     public int numberOfSpike(){
         return GEN.nextInt(5)+10;
