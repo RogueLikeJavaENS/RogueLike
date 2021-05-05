@@ -1,5 +1,6 @@
 package entity.object;
 
+import classeSystem.InGameClasses;
 import display.HUD;
 import entity.living.player.Player;
 import gameElement.Dungeon;
@@ -16,7 +17,7 @@ class StairTest {
     void doAction() {
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
-        Player test = new Player(null,100, 100, "test", 100);
+        Player test = new Player(null,100, 100, "test", InGameClasses.DUMMY, 100);
         HUD hud = new HUD(test);
         GameState gs = new GameState(test, dungeon, hud);
         Stair test2 = new Stair(null);

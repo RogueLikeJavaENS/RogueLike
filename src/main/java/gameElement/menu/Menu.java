@@ -11,11 +11,15 @@ import utils.State;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *this class manage all our ingame menu system
+ * @author Antoine et Luca
+ */
 public class Menu {
     private List<MenuAction> actions;
     private MenuAction selectedAction;
     private String headMenu;
-    private InGameClasses classesPicked;
+    private InGameClasses classesPicked = InGameClasses.DUMMY;
 
     public Menu(State gameState) {
         headMenu = "";
@@ -40,11 +44,8 @@ public class Menu {
         else if (gameState == State.START_MENU) {
             headMenu = "Welcome to RogueSouls";
             actions.add(new MenuAction("New Game", state -> {
-                Position initialPosition = state.getDungeon().getRoom(0).getCenter();
-                String name = StartMenu.getName();
                 state.setState(State.ClASS_SELECTION_MENU);
                 state.setMenu(new Menu (state.getState()));
-                state.setPlayer(new Player(initialPosition, 100, 100, name, 1));
             }));
             actions.add(new MenuAction("Load Game", state -> {
                 System.out.println("Coming Soon");
@@ -54,17 +55,32 @@ public class Menu {
             }));
         }
         else if (gameState == State.ClASS_SELECTION_MENU) {
-                headMenu = "Pick a class hero";
+                headMenu = "Tell me more about yourself hero, what class do you want to play ?";
                 actions.add(new MenuAction("Ranger", state -> {
-                    classesPicked = InGameClasses.RANGER;
+                    headMenu = "Whats your name ?";
+                    String name = StartMenu.getName();
+                    Position initialPosition = state.getDungeon().getRoom(0).getCenter();
+                    setClassesPicked(InGameClasses.RANGER);
+                    System.out.println(getClassesPicked());
+                    state.setPlayer(new Player(initialPosition, 100, 100, name, getClassesPicked(), 1));
                     state.setState(State.NORMAL);
                 }));
                 actions.add(new MenuAction("Warrior", state -> {
-                    classesPicked = InGameClasses.WARRIOR;
+                    headMenu = "Whats your name ?";
+                    String name = StartMenu.getName();
+                    Position initialPosition = state.getDungeon().getRoom(0).getCenter();
+                    setClassesPicked(InGameClasses.WARRIOR);
+                    System.out.println(getClassesPicked());
+                    state.setPlayer(new Player(initialPosition, 100, 100, name, getClassesPicked(), 1));
                     state.setState(State.NORMAL);
                 }));
                 actions.add(new MenuAction("Mage", state -> {
-                    classesPicked = InGameClasses.MAGE;
+                    headMenu = "Whats your name ?";
+                    String name = StartMenu.getName();
+                    Position initialPosition = state.getDungeon().getRoom(0).getCenter();
+                    setClassesPicked(InGameClasses.MAGE);
+                    System.out.println(getClassesPicked());
+                    state.setPlayer(new Player(initialPosition, 100, 100, name, getClassesPicked(), 1));
                     state.setState(State.NORMAL);
                 }));
         }
@@ -112,5 +128,13 @@ public class Menu {
             sb.append(action.getName()).append("\n");
         }
         return sb.toString();
+    }
+
+    public void setClassesPicked(InGameClasses classesPicked) {
+        this.classesPicked = classesPicked;
+    }
+
+    public InGameClasses getClassesPicked() {
+        return classesPicked;
     }
 }

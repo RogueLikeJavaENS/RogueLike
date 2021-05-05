@@ -1,9 +1,11 @@
 package entity.living.player;
 
+import classeSystem.InGameClasses;
 import entity.living.Inventory;
 import entity.living.LivingEntity;
 import spells.BasicAttack;
 import spells.*;
+import stuff.item.potions.XpBottle;
 import utils.Colors;
 import utils.Direction;
 import utils.Position;
@@ -15,8 +17,8 @@ public class Player extends LivingEntity {
     private Spell selectedSpell;
     private final Inventory inventory;
 
-    public Player(Position position, int pv, int pm, String name, int level) throws IllegalArgumentException {
-        super(position, name, Colors.WHITE, new PlayerStats(pv, pm, 1, 2, 15, 1, 0, level));
+    public Player(Position position, int pv, int pm, String name, InGameClasses classe, int level) throws IllegalArgumentException {
+        super(position, name, Colors.WHITE, new PlayerStats(classe, pv, pm, 1, 2, 15, 1, 0, level));
         spellList = new ArrayList<>();
         inventory = new Inventory();
         addSpell(new BasicAttack()); //hard coded to test

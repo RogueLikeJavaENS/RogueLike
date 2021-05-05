@@ -1,5 +1,6 @@
 package monsterStrategy;
 
+import classeSystem.InGameClasses;
 import display.GridMap;
 import entity.living.npc.monster.Monster;
 import entity.living.npc.monster.MonsterFactory;
@@ -28,7 +29,7 @@ class ApproachStrategyTest {
         Position playerPosition2 = new Position(4,4);
         Position playerPosition3 = new Position(7,8);
         Monster monster = monsterFactory.getMonster(0,monsterPosition);
-        Player player = new Player(playerPosition1,10,10,"Hero",1);
+        Player player = new Player(playerPosition1,10,10,"Hero", InGameClasses.DUMMY, 1);
 
         assertFalse(approach.act(monster,player,gridMap));
         player.setPosition(playerPosition2);
