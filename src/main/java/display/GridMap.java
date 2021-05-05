@@ -3,6 +3,8 @@ package display;
 import display.tiles.EmptyTile;
 import entity.Entity;
 import entity.living.LivingEntity;
+import entity.living.npc.monster.boss.Boss;
+import entity.living.npc.monster.boss.BossPart;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
 import gameElement.Room;
@@ -209,7 +211,7 @@ public class GridMap {
             return false;
         }
         for (Entity entity : getEntitiesAt(abs, ord)) {
-            if (!(entity instanceof Monster) && (!entity.getIsPlayerAccessible())) {
+            if (!(entity instanceof Monster) && !(entity instanceof BossPart) && (!entity.getIsPlayerAccessible())) {
                 return false;
             }
         }

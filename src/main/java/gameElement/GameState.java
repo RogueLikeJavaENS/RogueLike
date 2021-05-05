@@ -4,8 +4,11 @@ import display.*;
 import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.npc.merchants.Merchant;
+import entity.living.npc.monster.boss.Boss;
+import entity.living.npc.monster.boss.BossPart;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
+import entity.object.Carrot;
 import entity.object.Grave;
 import gameElement.menu.Menu;
 import generation.RoomFactory;
@@ -194,6 +197,12 @@ public class GameState {
             currentFightExp += monster.getMonsterStats().getXpWorth();
             fighting.removeMonster(monster);
             gridMap.update(monster, false);
+            if (monster instanceof Boss) {
+                Boss boss = (Boss) monster;
+                for (BossPart currentPart : boss.getBossPartList()) {
+                    gridMap.update(currentPart, false);
+                }
+            }
             //isThereMonster est appelée à chaque déplacement (bug?) donc je dois faire le check à la mort des monstres
             if (gridMap.getMonsters().size() == 0) {
                 player.getPlayerStats().grantXP(currentFightExp);
@@ -235,22 +244,43 @@ public class GameState {
      * @author Raphael and Antoine
      */
     public boolean useSpell() {
+        boolean hitBoss = false;
         Spell spell = player.getSelectedSpell();
         if (player.getPlayerStats().consumeMp(spell.getManaCost())) {
             for (Position pos : gridMap.getRangeList()) {
                 List<Entity> entityList = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());
                 for (Entity currentEntity : entityList) {
-                    if (pos.equals(currentEntity.getPosition()) && currentEntity instanceof Monster) {
-                        Monster monster = (Monster) currentEntity;
-                        int damages = (int)Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
-                        monster.getMonsterStats().sufferDamage(damages);
-                        descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
-                                player.getName(),
-                                spell,
-                                colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
-                                colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
-                                monster.getName()));
-                        isMonsterAlive(monster);
+                    if (pos.equals(currentEntity.getPosition())) {
+                        if (currentEntity instanceof Monster && !(currentEntity instanceof Boss)) {
+                            Monster monster = (Monster) currentEntity;
+                            int damages = (int) Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
+                            monster.getMonsterStats().sufferDamage(damages);
+                            descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
+                                    player.getName(),
+                                    spell,
+                                    colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
+                                    colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
+                                    monster.getName()));
+                            isMonsterAlive(monster);
+                        } else if (currentEntity instanceof Carrot) {
+                            gridMap.update(currentEntity, false);
+                            descriptor.updateDescriptor(String.format("%s used %s for %s mana and destroyed a trapped carrot !",
+                                    player.getName(),
+                                    spell,
+                                    colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply())));
+                        } else if (!hitBoss && currentEntity instanceof BossPart) {
+                            BossPart monster = (BossPart) currentEntity;
+                            int damages = (int) Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
+                            monster.dealDamageBoss(damages);
+                            descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
+                                    player.getName(),
+                                    spell,
+                                    colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
+                                    colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
+                                    monster.getMyBoss().getName()));
+                            isMonsterAlive(monster.getMyBoss());
+                            hitBoss = true;
+                        }
                     }
                 }
             }
