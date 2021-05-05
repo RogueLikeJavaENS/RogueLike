@@ -18,7 +18,7 @@ public class ApproachStrategy extends DecoratorStrategy {
             if (!monster.isAgroPlayer()){
                 monster.setAgroPlayer(true);
             }
-            StrategyUtils.aStarAlgorithm(monster, player,gridMap);
+            StrategyUtils.setMonsterPosition(monster, player,gridMap);
             this.updateStrategyDescription(String.format("%s approaches %s",monster.getName(),player.getName()));
         }
         return canMove;

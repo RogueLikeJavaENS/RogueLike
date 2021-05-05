@@ -7,6 +7,7 @@ import entity.Entity;
 import entity.living.npc.monster.Monster;
 import entity.living.player.Player;
 import utils.Check;
+import utils.CoupleBoolPosition;
 import utils.Direction;
 import utils.Position;
 
@@ -82,14 +83,23 @@ public final class StrategyUtils {
         monster.setPosition(monsterPos);
     }
 
-    public static void aStarAlgorithm(Monster monster, Player player, GridMap gridMap) {
+
+    public static void setMonsterPosition(Monster monster, Player player, GridMap gridMap){
         Position monsterPos = monster.getPosition();
         Position playerPos = player.getPosition();
+
+        Position pos = aStarAlgorithm(monsterPos,playerPos,gridMap);
+        if (pos != null){
+            monster.setPosition(pos);
+        }
+    }
+
+    public static Position aStarAlgorithm(Position from, Position to, GridMap gridMap) { ;
 
         List<Node> openNodes = new ArrayList<>(); //liste des nodes qui sont candidates en tant que Node du chemin
         List<Node> closedNodes = new ArrayList<>(); //liste des nodes qu'on a déjà vérifié
         //List<Node> path = new ArrayList<>(); //liste des nodes qui constituent le chemin
-        openNodes.add(new Node(monsterPos, playerPos)); //on ajoute la Node actuelle pour démarrer
+        openNodes.add(new Node(from, to)); //on ajoute la Node actuelle pour démarrer
 
         //tant qu'on a des Node à vérifier (donc un potentiel chemin)
         while (openNodes.size() > 0) {
@@ -98,14 +108,13 @@ public final class StrategyUtils {
             closedNodes.add(currentNode);
 
             //s'il s'agît d'une Node à moins de 1 de distance avec le joueur, c'est là qu'on doit aller
-            if (getDistance(currentNode.getNodePos(), playerPos) <= 1) {
+            if (getDistance(currentNode.getNodePos(), to) < 1) {
                 //on remonte le chemin en passant par les parents
-                while (!currentNode.getParentNode().getNodePos().equals(monsterPos)) {
+                while ( !currentNode.getParentNode().getNodePos().equals(from)) {
                     //path.add(currentNode);
                     currentNode = currentNode.getParentNode();
                 }
-                monster.setPosition(currentNode.getNodePos()); //et on donne au monstre la position de la première node du chemin
-                break;
+                return  currentNode.getNodePos(); //et on donne au monstre la position de la première node du chemin
             }
 
             //on récupère les directions possibles depuis la Node courante, donc les non-accessibles ne seront pas un problème
@@ -137,7 +146,7 @@ public final class StrategyUtils {
                     default:
                         newNodePos = currentNode.getNodePos();
                 }
-                Node nextNode = new Node(newNodePos, playerPos, monsterPos, currentNode);
+                Node nextNode = new Node(newNodePos, to, from, currentNode);
                 if (containsNodeHere(closedNodes, newNodePos) != -1) {
                     continue;
                 }
@@ -149,6 +158,8 @@ public final class StrategyUtils {
                 }
             }
         }
+        //Node lastCurrentNode = null;
+        return null;
     }
 
     public static void moveRandomly(Monster monster, GridMap gridMap){

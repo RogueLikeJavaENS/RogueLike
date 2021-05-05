@@ -64,12 +64,13 @@ public class GridMap {
     private void fillEntityContent() { entities = room.getEntities(); }
 
     public void update(List<Entity> entitiesToAdd, List<Entity> entitiesToRemove) {
-        for(Entity entity : entitiesToAdd) {
-            addEntity(entity);
-        }
         for(Entity entity : entitiesToRemove) {
             removeEntity(entity);
         }
+        for(Entity entity : entitiesToAdd) {
+            addEntity(entity);
+        }
+
     }
 
     /**

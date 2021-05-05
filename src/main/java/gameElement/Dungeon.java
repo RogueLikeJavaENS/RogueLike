@@ -4,7 +4,8 @@ import display.GridMap;
 import entity.Entity;
 import entity.object.Door;
 import generation.GraphDungeon;
-import generation.RoomType;
+import generation.RoomFactory;
+import generation.VerificationRoom;
 import utils.Direction;
 import utils.Position;
 
@@ -41,7 +42,16 @@ public class Dungeon {
         setAllNextDoor();
         closeDoorOfEndRoom();
         initGridMapList();
+        verifyALlRoom();
+    }
 
+    private void verifyALlRoom(){
+        for (Room room : roomList){
+            boolean isOkay = false;
+            while (isOkay == false){
+                isOkay = VerificationRoom.verificationGenerationRoom(room,this);
+            }
+        }
     }
 
     private void closeDoorOfEndRoom(){

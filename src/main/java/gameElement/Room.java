@@ -64,6 +64,7 @@ public class Room {
     public RoomType getRoomType() { return roomType; }
     public List<Entity> getEntities() { return new ArrayList<>(entities); }
 
+
     /**
      * Returns the roomNum of the room at the given direction.
      * @param direction NORTH, SOUTH, EAST or WEST
@@ -92,7 +93,7 @@ public class Room {
         return positions;
     }
 
-    private List<Entity> getEntitiesAt(int abs, int ord) {
+    public List<Entity> getEntitiesAt(int abs, int ord) {
         List<Entity> entitiesAt = new ArrayList<>();
         for (Entity entity : entities) {
             if (entity.getPosition().equals(abs, ord)) {

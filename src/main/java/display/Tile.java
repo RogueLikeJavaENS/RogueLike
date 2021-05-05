@@ -11,6 +11,7 @@ import gameElement.GameState;
 
 public interface Tile {
 
+    Tile getTileFromId(int id);
     String toString();
     boolean isPlayerAccessible();
     void setPlayerAccessible(boolean isPlayerAccessible);

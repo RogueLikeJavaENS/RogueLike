@@ -1,13 +1,17 @@
 package generation;
 
+import display.GridMap;
 import display.tiles.Tile;
 import entity.Entity;
 import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
 import entity.object.*;
 import entity.object.potions.PotionEntityFactory;
+import gameElement.Dungeon;
 import gameElement.GameRule;
 import gameElement.Room;
+import monsterStrategy.StrategyUtils;
+import utils.CoupleBoolPosition;
 import utils.Direction;
 import utils.Position;
 
@@ -15,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class RoomFactory {
     private final int width; // 15
@@ -35,10 +40,17 @@ public class RoomFactory {
     public Room getRoom(Seed seed, RoomType roomType, int current, int[] nextList) {
         Room room = createRoom(current, nextList, roomType);
         this.currentAvailablePositions = room.getAvailablePositions();
+        GridMap gridMap = new GridMap(room);
         switch (roomType) {
             case START:
-                addChest(room,true);    // Basic equipment to start a new adventure
+                currentAvailablePositions.remove(room.getCenter());
+                List<Entity> previousEntities = room.getEntities();
+                addHoleAndSpike(room);
+                addChest(room,true);
+                // Basic equipment to start a new adventure
                 // add some stuffs that make clear it's the start room.
+                List<Entity> nextEntities = room.getEntities();
+                gridMap.update(nextEntities, previousEntities);
                 break;
             case BOSS:
                 break;
@@ -47,14 +59,17 @@ public class RoomFactory {
                 break;
             case NORMAL:
                 // nothing special for now.
+                addHoleAndSpike(room);
                 break;
             case MONSTER:
+                addHoleAndSpike(room);
                 addMonsters(room);
                 if (gameRule.presenceOfClassicChestOnMonsterRoom()){
                     addChest(room,true);
                 }
                 break;
             case REST:
+                addHoleAndSpike(room);
                 addCoins(room, 5);
                 addMerchant(room);
                 break;
@@ -107,10 +122,12 @@ public class RoomFactory {
     private void addChest(Room room, boolean isClassic){
         if (currentAvailablePositions.size() != 0){
             if (isClassic){
-                room.addEntity(new Chest(currentAvailablePositions.get(0),true));
+                room.addEntity(new Chest(currentAvailablePositions.remove(0),true));
+                ;
             }
             else{
-                room.addEntity(new Chest(currentAvailablePositions.get(0),false));
+                room.addEntity(new Chest(currentAvailablePositions.remove(0),false));
+
             }
 
         }
@@ -120,6 +137,66 @@ public class RoomFactory {
         room.addEntity(new PotionMerchant(currentAvailablePositions.remove(0)));
     }
 
+    private void addHoleAndSpike(Room room){
+        int nbHole = gameRule.numberOfHole();
+        int nbSpike = gameRule.numberOfSpike();
+
+        for(int i = 0; i< nbSpike; i++){
+            createPathOfSpike(room);
+        }
+        for(int i = 0; i <nbHole; i++){
+            createPathOfHole(room);
+        }
+
+    }
+
+    private void createPathOfHole(Room room){
+        int sizeHole = gameRule.sizeOfHole();
+        Collections.shuffle(currentAvailablePositions);
+        Position currentPosition = currentAvailablePositions.remove(0);
+        room.addEntity(new Hole(currentPosition));
+        sizeHole --;
+        for (int i = 0; i<sizeHole; i++){
+            List<Position> accessiblePos = getAccessibleDirectionFromPosition(currentPosition,room);
+            if (accessiblePos.size() == 0) {
+                break;
+            }
+            else {
+                Collections.shuffle(accessiblePos);
+                currentPosition = accessiblePos.get(0);
+                room.addEntity(new Hole(currentPosition));
+            }
+        }
+    }
+    private void createPathOfSpike(Room room){
+        int sizeSpike = gameRule.sizeOfSpike();
+        Collections.shuffle(currentAvailablePositions);
+        Position currentPosition = currentAvailablePositions.remove(0);
+        room.addEntity(new Spike(currentPosition));
+        sizeSpike --;
+        for (int i = 0; i<sizeSpike; i++){
+            List<Position> accessiblePos = getAccessibleDirectionFromPosition(currentPosition,room);
+            if (accessiblePos.size() == 0) {
+                break;
+            }
+            else {
+                Collections.shuffle(accessiblePos);
+                currentPosition = accessiblePos.get(0);
+                room.addEntity(new Spike(currentPosition));
+            }
+        }
+    }
+
+
+    private List<Position> getAccessibleDirectionFromPosition(Position position, Room room){
+        List<Position> listAccessiblePosition = new ArrayList<>();
+        for (int i = 0; i<4;i++){
+            if(room.getAvailablePositions().contains(position.getPosInFront(Direction.intToDirection(i)))){
+                listAccessiblePosition.add(position.getPosInFront(Direction.intToDirection(i)));
+            }
+        }
+        return listAccessiblePosition;
+    }
 
     /**
      * @param current The current number of the room
