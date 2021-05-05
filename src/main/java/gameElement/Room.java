@@ -82,7 +82,7 @@ public class Room {
         List<Position> positions = new ArrayList<>();
         for (int ord = 0; ord < contents.length; ord++) {
             for (int abs = 0; abs < contents[0].length; abs++) {
-                //if (abs == width/2 && ord == height/2) break;
+                if (abs == width/2 && ord == height/2) break;
                 if (contents[ord][abs] == Tile.FLOOR.getId() && getEntitiesAt(abs, ord).size() == 0) {
                     positions.add(new Position(abs, ord));
                 }
@@ -124,4 +124,5 @@ public class Room {
         }
         return doors;
     }
+
 }

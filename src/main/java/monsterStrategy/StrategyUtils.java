@@ -152,8 +152,21 @@ public final class StrategyUtils {
         }
     }
 
+    private static boolean isNextTo(Position from, Position to){
+        if (from.getAbs() == to.getAbs()){
+            return Math.abs(from.getOrd() - to.getOrd()) == 1;
+        }
+        else if (from.getOrd() == to.getOrd()){
+            return Math.abs(from.getAbs() - to.getAbs()) == 1;
+        }
+        return false;
+    }
 
     public static Position aStarAlgorithm(Position from, Position to, GridMap gridMap) { ;
+
+        if (isNextTo(from,to)){
+            return from;
+        }
 
         List<Node> openNodes = new ArrayList<>(); //liste des nodes qui sont candidates en tant que Node du chemin
         List<Node> closedNodes = new ArrayList<>(); //liste des nodes qu'on a déjà vérifié

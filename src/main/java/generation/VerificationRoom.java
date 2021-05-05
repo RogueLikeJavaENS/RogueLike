@@ -19,7 +19,6 @@ import java.util.List;
 public class VerificationRoom {
 
     public static void verificationGenerationRoom(Room room, Dungeon dungeon){
-        List<Entity> listRoomEntity = room.getEntities();
         List<Position> positionToVerify = new ArrayList<>();
         GridMap gridMap = dungeon.getGridMap(room);
 
@@ -36,18 +35,26 @@ public class VerificationRoom {
         positionToVerify.addAll(positionFrontDoor);
         positionToVerify.remove(basePosition);
         positionToVerify.addAll(positionOfNeededEntity(room));
+
+        int acc_debug = 0;
         if (positionToVerify.size() == 0) return;
+
         for (Position pos : positionToVerify){
             if (gridMap.getEntitiesAt(pos.getAbs(),pos.getOrd()).size() == 0){break;}
             boolean isOkay = false;
-            while (isOkay == false){
+            while (!isOkay){
                 Position position = StrategyUtils.aStarAlgorithm(basePosition,pos,gridMap);
                 if (position == null){
                     Entity entityToRemove = removeSpikeOrHole(room);
-                    room.getEntities().remove(entityToRemove);
-                    Position posEntityToRemove = entityToRemove.getPosition();
-                    gridMap.getEntitiesAt(posEntityToRemove.getAbs(), posEntityToRemove.getOrd()).remove(entityToRemove);
-                }
+                    if (entityToRemove == null){
+                        return;
+                    }
+                    else {
+                        room.removeEntity(entityToRemove);
+                        Position posEntityToRemove = entityToRemove.getPosition();
+                        gridMap.update(entityToRemove,false);
+                    }
+            }
                 else {
                     isOkay = true;
                 }
@@ -55,13 +62,21 @@ public class VerificationRoom {
         }
     }
 
+    private static Position moveMonster(Room room){
+        Position availablePos = room.getAvailablePositions().get(0);
+        return availablePos;
+    }
+
     private static Entity removeSpikeOrHole(Room room){
         List<Entity> roomEntity = room.getEntities();
         Collections.shuffle(roomEntity);
-        while (!(roomEntity.get(0) instanceof Spike) && !(roomEntity.get(0) instanceof Hole)){
-            Collections.shuffle(roomEntity);
+        Entity entityToRemove = null;
+        for (Entity entity : roomEntity){
+            if (entity instanceof Spike || entity instanceof Hole){
+                entityToRemove = entity;
+                break;
+            }
         }
-        Entity entityToRemove = roomEntity.get(0);
         return entityToRemove;
     }
 

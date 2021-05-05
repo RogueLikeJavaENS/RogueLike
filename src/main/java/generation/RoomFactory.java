@@ -7,11 +7,8 @@ import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
 import entity.object.*;
 import entity.object.potions.PotionEntityFactory;
-import gameElement.Dungeon;
 import gameElement.GameRule;
 import gameElement.Room;
-import monsterStrategy.StrategyUtils;
-import utils.CoupleBoolPosition;
 import utils.Direction;
 import utils.Position;
 
@@ -19,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class RoomFactory {
     private final int width; // 15
@@ -44,13 +40,10 @@ public class RoomFactory {
         switch (roomType) {
             case START:
                currentAvailablePositions.remove(room.getCenter());
-                List<Entity> previousEntities = room.getEntities();
                 addHoleAndSpike(room);
                 addChest(room,true);
                 // Basic equipment to start a new adventure
                 // add some stuffs that make clear it's the start room.
-                List<Entity> nextEntities = room.getEntities();
-                gridMap.update(nextEntities, previousEntities);
                 break;
             case BOSS:
                 break;
@@ -87,6 +80,7 @@ public class RoomFactory {
 
     private void addStairs(Room room) {
         room.addEntity(new Stair(room.getCenter()));
+        currentAvailablePositions.remove(room.getCenter());
     }
 
     private void addMonsters(Room room) {
@@ -95,10 +89,12 @@ public class RoomFactory {
         int type;
         for (int i = 0; i < monsterCount; i++) {
             type = GEN.nextInt(2);
-            room.addEntity(monsterFactory.getMonster(type, currentAvailablePositions.remove(0)));
+            room.addEntity(monsterFactory.getMonster(type, currentAvailablePositions.get(0)));
+            currentAvailablePositions.remove(0);
         }
         for (int i = 0; i < monsterCount; i++) {
-            room.addEntity(new Coins(currentAvailablePositions.remove(0)));
+            room.addEntity(new Coins(currentAvailablePositions.get(0)));
+            currentAvailablePositions.remove(0);
         }
     }
 
@@ -106,7 +102,8 @@ public class RoomFactory {
         PotionEntityFactory potionFactory = new PotionEntityFactory();
         for (int i = 0; i < numberOfPotion; i++) {
             if (currentAvailablePositions.size() != 0) {
-                room.addEntity((Entity) potionFactory.getPotionEntity(gameRule.getPotionType(), currentAvailablePositions.remove(0)));
+                room.addEntity((Entity) potionFactory.getPotionEntity(gameRule.getPotionType(), currentAvailablePositions.get(0)));
+                currentAvailablePositions.remove(0);
             }
         }
     }
@@ -122,19 +119,20 @@ public class RoomFactory {
     private void addChest(Room room, boolean isClassic){
         if (currentAvailablePositions.size() != 0){
             if (isClassic){
-                room.addEntity(new Chest(currentAvailablePositions.remove(0),true));
-                ;
+                room.addEntity(new Chest(currentAvailablePositions.get(0),true));
+                currentAvailablePositions.remove(0);
             }
             else{
-                room.addEntity(new Chest(currentAvailablePositions.remove(0),false));
-
+                room.addEntity(new Chest(currentAvailablePositions.get(0),false));
+                currentAvailablePositions.remove(0);
             }
 
         }
     }
 
     private void addMerchant(Room room) {
-        room.addEntity(new PotionMerchant(currentAvailablePositions.remove(0)));
+        room.addEntity(new PotionMerchant(currentAvailablePositions.get(0)));
+        currentAvailablePositions.remove(0);
     }
 
     private void addHoleAndSpike(Room room){
@@ -142,18 +140,19 @@ public class RoomFactory {
         int nbSpike = gameRule.numberOfSpike();
 
         for(int i = 0; i< nbSpike; i++){
-            createPathOfSpike(room);
+            room.addEntity(new Spike(currentAvailablePositions.remove(0)));
         }
         for(int i = 0; i <nbHole; i++){
-            createPathOfHole(room);
+            room.addEntity(new Hole(currentAvailablePositions.remove(0)));
         }
 
     }
 
     private void createPathOfHole(Room room){
-        int sizeHole = gameRule.sizeOfHole();
+        int sizeHole = gameRule.sizeOfPathHole();
         Collections.shuffle(currentAvailablePositions);
-        Position currentPosition = currentAvailablePositions.remove(0);
+        Position currentPosition = currentAvailablePositions.get(0);
+        currentAvailablePositions.remove(0);
         room.addEntity(new Hole(currentPosition));
         sizeHole --;
         for (int i = 0; i<sizeHole; i++){
@@ -164,12 +163,13 @@ public class RoomFactory {
             else {
                 Collections.shuffle(accessiblePos);
                 currentPosition = accessiblePos.get(0);
+                currentAvailablePositions.remove(currentPosition);
                 room.addEntity(new Hole(currentPosition));
             }
         }
     }
     private void createPathOfSpike(Room room){
-        int sizeSpike = gameRule.sizeOfSpike();
+        int sizeSpike = gameRule.sizeOfPathSpike();
         Collections.shuffle(currentAvailablePositions);
         Position currentPosition = currentAvailablePositions.remove(0);
         room.addEntity(new Spike(currentPosition));
@@ -182,6 +182,7 @@ public class RoomFactory {
             else {
                 Collections.shuffle(accessiblePos);
                 currentPosition = accessiblePos.get(0);
+                currentAvailablePositions.remove(currentPosition);
                 room.addEntity(new Spike(currentPosition));
             }
         }
