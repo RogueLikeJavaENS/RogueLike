@@ -85,7 +85,7 @@ public class RoomFactory {
             case REST:
                 addHoleAndSpike(room);
                 addCoins(room, 5);
-                addMerchant(room);
+                //addMerchant(room);
                 break;
             case TREASURE:
                 addChest(room,false);
