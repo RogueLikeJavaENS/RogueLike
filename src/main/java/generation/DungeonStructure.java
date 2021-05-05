@@ -1,6 +1,5 @@
 package generation;
 
-import entity.object.Chest;
 import gameElement.Dungeon;
 import gameElement.Room;
 

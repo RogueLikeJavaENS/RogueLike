@@ -24,7 +24,12 @@ public class LivingEntity extends AbstractEntity {
         super(position, color,false,false); // false because a living entity is never accessible.
         this.name = name;
         this.stats = stats;
+    }
 
+    public LivingEntity(Position position, String name, Colors color, AbstractStats stats, boolean isNPCAccessible) throws IllegalArgumentException {
+        super(position, color,false, isNPCAccessible); // false because a living entity is never accessible.
+        this.name = name;
+        this.stats = stats;
     }
 
     public AbstractStats getStats() {
