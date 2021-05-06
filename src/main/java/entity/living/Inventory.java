@@ -99,7 +99,7 @@ public class Inventory {
                 }
             }
         }
-        if (itemToDelete != null) {
+        if (itemToDelete != null && used) {
             inventory.remove(itemToDelete);
         }
         return used;
