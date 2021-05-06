@@ -86,13 +86,20 @@ public class Dungeon {
 
     private void placeAllButtons() {
         Random GEN = new Random();
+        ArrayList<Integer> idRoomList = new ArrayList<>();
+        for (int i = 0; i < roomList.size(); i++) {
+            idRoomList.add(i);
+        }
+        Collections.shuffle(idRoomList);
         int nbButtonPlaced = 0;
-        while(nbButtonPlaced < 5) {
-            Room room = roomList.get(GEN.nextInt(roomList.size()));
+        while(nbButtonPlaced < 4) {
+            Room room = roomList.get(idRoomList.remove(0));
             if (room.getRoomType() == RoomType.MONSTER) {
+
                 List<Position> positionList = room.getWallAvailablePosition();
                 Collections.shuffle(positionList);
-                Button button = new Button(positionList.remove(0));
+                Position position = positionList.remove(0);
+                Button button = new Button(position);
                 room.addEntity(button);
                 getGridMap(room).update(button, true);
                 buttons.add(button);

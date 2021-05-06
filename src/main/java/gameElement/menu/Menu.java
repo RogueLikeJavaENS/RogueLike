@@ -1,16 +1,20 @@
 package gameElement.menu;
 
 import classeSystem.InGameClasses;
+import com.diogonunes.jcolor.Attribute;
 import entity.living.player.Player;
 import gameElement.Dungeon;
 import gameElement.GameState;
 import generation.RoomFactory;
+import utils.Colors;
 import utils.Position;
 import utils.StartMenu;
 import utils.State;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
  *this class manage all our ingame menu system
@@ -26,7 +30,7 @@ public class Menu {
         headMenu = "";
         actions = new ArrayList<>();
         if (gameState == State.SHOP_MENU) {
-            headMenu = "Shop Menu";
+            headMenu = "Shop Menu :";
             actions.add(new MenuAction("Buy", state -> {
                 state.setState(State.SHOP);
                 state.merchant.getMerchantInventory().openBuyingSHop(state);
@@ -43,7 +47,15 @@ public class Menu {
             }));
         }
         else if (gameState == State.START_MENU) {
-            headMenu = "Welcome to RogueSouls";
+            headMenu =
+                    colorize("  _____                           _____             _     \n" +
+                    " |  __ \\                         / ____|           | |    \n" +
+                    " | |__) |___   __ _ _   _  ___  | (___   ___  _   _| |___ \n" +
+                    " |  _  // _ \\ / _` | | | |/ _ \\  \\___ \\ / _ \\| | | | / __|\n" +
+                    " | | \\ \\ (_) | (_| | |_| |  __/  ____) | (_) | |_| | \\__ \\\n" +
+                    " |_|  \\_\\___/ \\__, |\\__,_|\\___| |_____/ \\___/ \\__,_|_|___/\n" +
+                    "               __/ |                                      \n" +
+                    "              |___/                                       \n\n", Attribute.BOLD(), Colors.RED.textApply() );
             actions.add(new MenuAction("New Game", state -> {
                 state.setState(State.ClASS_SELECTION_MENU);
                 state.setMenu(new Menu (state.getState()));
@@ -82,7 +94,7 @@ public class Menu {
                 }));
         }
         else {
-            headMenu = "Pause Menu";
+            headMenu = "Pause Menu : ";
             actions.add(new MenuAction("Resume game", state -> {
                 state.setState(State.NORMAL);
                 state.isThereMonstersInventory();
@@ -110,7 +122,7 @@ public class Menu {
 
     public String displayMenu() {
         StringBuilder sb = new StringBuilder();
-        sb.append(headMenu).append(" :\n");
+        sb.append(headMenu).append(" \n");
         for (MenuAction action : actions) {
             if (action.equals(selectedAction)) {
                 sb.append(" -> ");

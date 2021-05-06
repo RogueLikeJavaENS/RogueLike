@@ -23,7 +23,7 @@ public class Player extends LivingEntity {
     private final InGameClasses classe;
 
     public Player(Position position, int pv, int pm, String name, InGameClasses classe, int level) throws IllegalArgumentException {
-        super(position, name, Colors.WHITE, new PlayerStats(classe, 500, 5000, 1, 2, 15, 1, 0, level));
+        super(position, name, Colors.WHITE, new PlayerStats(classe, 100, 100, 1, 2, 15, 1, 0, level));
         spellList = new ArrayList<>();
         inventory = new Inventory();
         addSpell(new BasicAttack()); //hard coded to test
@@ -33,21 +33,6 @@ public class Player extends LivingEntity {
         setSprites("o-o", "/^\\", Colors.WHITE);
         setDirection(Direction.SOUTH);
         this.classe = classe;
-        inventory.addItem(new FloorKey());
-        inventory.addItem(new Elixir());
-        inventory.addItem(new Elixir());
-        inventory.addItem(new Elixir());
-        inventory.addItem(new Elixir());
-        inventory.addItem(new Elixir());
-        inventory.addItem(new Elixir());
-        inventory.addItem(new PotionHealth());
-        inventory.addItem(new PotionHealth());
-        inventory.addItem(new PotionHealth());
-        inventory.addItem(new PotionHealth());
-        inventory.addItem(new PotionHealth());
-        inventory.addItem(new PotionHealth());
-        inventory.addItem(new PotionHealth());
-
     }
 
     public void addSpell(Spell spell) {
