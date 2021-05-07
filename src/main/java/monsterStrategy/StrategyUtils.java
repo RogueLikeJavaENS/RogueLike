@@ -180,12 +180,13 @@ public final class StrategyUtils {
 
             //s'il s'agît d'une Node à moins de 1 de distance avec le joueur, c'est là qu'on doit aller
             if (getDistance(currentNode.getNodePos(), to) < 1) {
+                return currentNode.getNodePos();
                 //on remonte le chemin en passant par les parents
-                while ( !currentNode.getParentNode().getNodePos().equals(from)) {
+                //while ( !currentNode.getParentNode().getNodePos().equals(from)) {
                     //path.add(currentNode);
-                    currentNode = currentNode.getParentNode();
-                }
-                return  currentNode.getNodePos(); //et on donne au monstre la position de la première node du chemin
+                    //currentNode = currentNode.getParentNode();
+                //}
+                //return  currentNode.getNodePos(); //et on donne au monstre la position de la première node du chemin
             }
 
             //on récupère les directions possibles depuis la Node courante, donc les non-accessibles ne seront pas un problème
@@ -232,6 +233,7 @@ public final class StrategyUtils {
         //Node lastCurrentNode = null;
         return null;
     }
+
 
     public static void moveRandomly(Monster monster, GridMap gridMap){
         Position monsterPos = monster.getPosition();

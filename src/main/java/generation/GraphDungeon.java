@@ -129,7 +129,7 @@ public class GraphDungeon {
             for (int j = 0; j < 4; j++) {
                 Direction direction = Direction.intToDirection(j);
                 Position position = new Position(doors[5],doors[4]);
-                if (doors[j] == -1 && isAvailablePosition(position,direction) ){
+                if (doors[j] == -1 && isAvailablePosition(position,direction) && !graph.containsKey(position)){
                     graph.get(i)[j] = roomId;
                     Position newPos = position.getPosInFront(direction);
                     int[] newDoors = DungeonStructure.initNextlist();

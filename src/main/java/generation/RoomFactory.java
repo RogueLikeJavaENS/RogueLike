@@ -91,7 +91,6 @@ public class RoomFactory {
                 addChest(room,false);
                 addCoins(room, gameRule.getNumberOfGoldInTreasureRoom());
                 addPotions(room, gameRule.getNumberOfPotionInTreasureRoom());
-
                 break;
 
         }

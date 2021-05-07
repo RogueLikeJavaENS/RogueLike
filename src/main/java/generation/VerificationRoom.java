@@ -25,9 +25,14 @@ public class VerificationRoom {
      * @param room room to verify
      * @param dungeon dungeon to verify
      */
-    public static void verificationGenerationRoom(Room room, Dungeon dungeon){
+    public static void verificationGenerationRoom( Dungeon dungeon, GridMap gridMap){
+
+
         List<Position> positionToVerify = new ArrayList<>();
-        GridMap gridMap = dungeon.getGridMap(room);
+
+        //GridMap gridMap = dungeon.getGridMap(room);
+        Room room = gridMap.getRoom();
+        System.out.println("bonjour "+room.getRoomType()+" "+room.getDoors().size());
 
         // Get position of the doors
         List<Door> doorList = room.getDoors();
@@ -41,32 +46,41 @@ public class VerificationRoom {
         // Set position to verify
         positionToVerify.addAll(positionFrontDoor);
         positionToVerify.remove(basePosition);
-        positionToVerify.addAll(positionOfNeededEntity(room));
+        System.out.println("Base Position"+basePosition);
 
+        positionToVerify.addAll(positionOfNeededEntity(room));
+        System.out.println("Pos to verify : "+positionToVerify);
         if (positionToVerify.size() == 0) return;
 
         for (Position pos : positionToVerify){
-
-            if (gridMap.getEntitiesAt(pos.getAbs(),pos.getOrd()).size() == 0){break;}
-
+            //if (gridMap.getEntitiesAt(pos.getAbs(),pos.getOrd()).size() == 0){break;}
+            System.out.println("Current Pos : "+pos);
             boolean isOkay = false;
-            while (!isOkay){ // while there is no path continue to remove
+            while (true){ // while there is no path continue to remove
                 Position position = StrategyUtils.aStarAlgorithm(basePosition,pos,gridMap);
+                System.out.println("Position : "+position);
                 if (position == null){ // No path between the entities
+                    System.out.println("pos non available");
                     Entity entityToRemove = removeSpikeOrHole(room);
-                    if (entityToRemove == null){ // No spike or Hole to remove, stop the verification
-                        return;
-                    }
-                    else { // remove the chosen entity
-                        room.removeEntity(entityToRemove);
-                        gridMap.update(entityToRemove,false);
-                    }
+                    break;
+                    //if (entityToRemove == null){ // No spike or Hole to remove, stop the verification
+                        //System.out.println("quit");
+                        //return;
+                    //}
+                    //else { // remove the chosen entity
+                        //room.removeEntity(entityToRemove);
+                        //System.out.println("Entity List"+room.getEntities());
+                        //gridMap.update(entityToRemove,false);
+                        //System.out.println("GridMap List"+gridMap.getEntities());
+                    //}
                 }
                 else { // path between the entities
-                    isOkay = true;
+                    //isOkay = true;
+                    break;
                 }
             }
         }
+
     }
 
     /**
