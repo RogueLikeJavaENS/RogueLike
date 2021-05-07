@@ -5,9 +5,6 @@ import entity.living.Inventory;
 import entity.living.LivingEntity;
 import spells.BasicAttack;
 import spells.*;
-import stuff.item.keys.FloorKey;
-import stuff.item.potions.Elixir;
-import stuff.item.potions.PotionHealth;
 import stuff.item.potions.XpBottle;
 import utils.Colors;
 import utils.Direction;
@@ -33,6 +30,21 @@ public class Player extends LivingEntity {
         setSprites("o-o", "/^\\", Colors.WHITE);
         setDirection(Direction.SOUTH);
         this.classe = classe;
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
+        inventory.addItem(new XpBottle());
     }
 
     public void addSpell(Spell spell) {

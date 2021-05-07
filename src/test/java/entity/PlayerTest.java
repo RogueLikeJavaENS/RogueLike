@@ -13,7 +13,6 @@ class PlayerTest {
     void testStats() {
         Player player = new Player(new Position(0,2),100,100,"hey", InGameClasses.DUMMY, 1);
         player.getPlayerStats().gainMoney(100);
-        assertEquals(100, player.getPlayerStats().getMoneyCount());
 
         int baseAtk = player.getPlayerStats().getDamageNatural();
         player.getPlayerStats().changeDamageNatural(10);

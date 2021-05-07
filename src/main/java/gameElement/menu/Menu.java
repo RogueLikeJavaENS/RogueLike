@@ -64,7 +64,27 @@ public class Menu {
             actions.add(new MenuAction("Exit", state -> state.setState(State.END)));
         }
         else if (gameState == State.ClASS_SELECTION_MENU) {
-                headMenu = "Tell me more about yourself hero, what class do you want to play ?";
+                headMenu = "" +
+                        "           .-----.            / \\\n" +
+                        " \\ ' /   _/    )/             | |\n" +
+                        "- ( ) -('---''--)             |.|\n" +
+                        " / . \\((()\\^_^/)()            |.|\n" +
+                        "  \\\\_\\ (()_)-((()()           |:|      __\n" +
+                        "   '- \\ )/\\._./(()          ,_|:|_,   /  )                           /^\\     .\n" +
+                        "     '/\\/( X   ) \\            (Oo    / _I_                      /\\   \"V\"\n" +
+                        "     (___)|___/ ) \\            +\\ \\  || __|                    /__\\   I      O  o\n" +
+                        "          |.#_|(___)              \\ \\||___|                   //..\\\\  I     . \n" +
+                        "         /\\    \\ ( (_               \\ /.:.\\-\\                 \\].`[/  I\n" +
+                        "         \\/\\/\\/\\) \\\\                 |.:. /-----\\             /l\\/j\\  (]    .  O\n" +
+                        "         | / \\ |                     |___|::oOo::|           /. ~~ ,\\/I          .\n" +
+                        "         |(   \\|                     /   |:<_T_>:|           \\\\L__j^\\/I       o\n" +
+                        "        _|_)__|_\\_                  |_____\\ ::: /             \\/--v}  I     o   .\n" +
+                        "        )...()...(                   | |  \\ \\:/               |    |  I   _________\n" +
+                        "         | (   \\ |                   | |   | |                |    |  I c(`       ')o\n" +
+                        "      .-'__,)  (  \\                  \\ /   | \\___             |    l  I   \\.     ,/\n" +
+                        "                '\\_-,                / |   \\_____\\          _/j  L l\\_!  _//^---^\\\\_  \n" +
+                        "                                     `-'\n" +
+                        "Choose your class Hero :\n";
                 actions.add(new MenuAction("Ranger", state -> {
                     String name = StartMenu.getName();
                     Position initialPosition = state.getDungeon().getRoom(0).getCenter();
