@@ -5,6 +5,10 @@ import display.tiles.Tile;
 import entity.Entity;
 import entity.living.npc.merchants.PotionMerchant;
 import entity.living.npc.monster.MonsterFactory;
+import entity.living.npc.monster.boss.Boss;
+import entity.living.npc.monster.boss.BossFactory;
+import entity.living.npc.monster.boss.BossPart;
+import entity.living.npc.monster.boss.Bosses;
 import entity.object.*;
 import entity.object.potions.PotionEntityFactory;
 import gameElement.Dungeon;
@@ -63,10 +67,22 @@ public class RoomFactory {
                currentAvailablePositions.remove(room.getCenter());
                 addHoleAndSpike(room);
                 addChest(room,true);
+
                 // Basic equipment to start a new adventure
+//                addHole(room);
+//                addSpike(room);
+//                addChest(room,true);    // Basic equipment to start a new adventure
                 // add some stuffs that make clear it's the start room.
                 break;
             case BOSS:
+                BossFactory bossFactory = new BossFactory(floor);
+                Boss rabbitBoss = bossFactory.getBoss(Bosses.KILLER_RABBIT, room.getCenter());
+                List<BossPart> bossParts = rabbitBoss.getBossPartList();
+                room.addEntity(bossParts.get(0));
+                room.addEntity(bossParts.get(1));
+                room.addEntity(bossParts.get(2));
+                room.addEntity(bossParts.get(3));
+                room.addEntity(rabbitBoss);
                 break;
             case END:
                 addStairs(room);    // Go to the next floor
@@ -214,7 +230,6 @@ public class RoomFactory {
 
                 potionMerchant.getMerchantInventory().setMerchantInventory(merchantInventory);
                 Position position =  availablePositions.remove(0);
-                System.out.println("Adding Merchant in room " + room.getRoomNum()+ " "+position);
                 room.addEntity(new PotionMerchant(position));
                 dungeon.getGridMap(room).update(potionMerchant, true);
             }

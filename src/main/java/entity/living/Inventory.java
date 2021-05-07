@@ -99,7 +99,7 @@ public class Inventory {
                 }
             }
         }
-        if (itemToDelete != null) {
+        if (itemToDelete != null && used) {
             inventory.remove(itemToDelete);
         }
         return used;
@@ -662,13 +662,17 @@ public class Inventory {
     }
 
     public void removeItem(ItemType type){
+        Stuff itemToDelete = null;
         for(Stuff stuff : inventory){
             if (stuff.isUsable()){
                 Item item = (Item) stuff;
                 if (item.getType() == type){
-                    inventory.remove(item);
+                    itemToDelete = item;
                 }
             }
+        }
+        if (itemToDelete != null) {
+            inventory.remove(itemToDelete);
         }
     }
 

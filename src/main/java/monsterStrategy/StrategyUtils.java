@@ -5,6 +5,7 @@ import display.Tile;
 import display.tiles.DoorTile;
 import entity.Entity;
 import entity.living.npc.monster.Monster;
+import entity.living.npc.monster.boss.Boss;
 import entity.living.player.Player;
 import utils.Check;
 import utils.Direction;
@@ -22,6 +23,12 @@ public final class StrategyUtils {
         Position monsterPos = monster.getPosition();
         Position playerPos = player.getPosition();
         return getDistance(monsterPos, playerPos);
+    }
+
+    public static double getDistance(Boss boss, Player player){
+        Position bossPos = boss.getPosition();
+        Position playerPos = player.getPosition();
+        return getDistance(bossPos, playerPos);
     }
 
     public static double getDistance(Position firstPos, Position secondPos){
@@ -304,6 +311,46 @@ public final class StrategyUtils {
         }
 
         return accessibleDirection;
+    }
+
+    public static List<Direction> foundInaccessibleDirection(Position position,GridMap gridMap){
+        List<Direction> inaccessibleDirection = new ArrayList<>();
+        inaccessibleDirection.add(Direction.NORTH);
+        inaccessibleDirection.add(Direction.EAST);
+        inaccessibleDirection.add(Direction.SOUTH);
+        inaccessibleDirection.add(Direction.WEST);
+        List<Entity> entityList;
+        Tile tile;
+
+        int abs = position.getAbs();
+        int ord = position.getOrd();
+
+        entityList = gridMap.getEntitiesAt(abs+1,ord);
+        tile = gridMap.getTileAt(abs+1,ord);
+        if (tile.isNPCAccessible() && !(tile instanceof DoorTile) &&
+                (entityList.size() == 0 || entityList.get(0).getIsNPCAccessible())){
+            inaccessibleDirection.remove(Direction.EAST);
+        }
+        entityList = gridMap.getEntitiesAt(abs-1,ord);
+        tile = gridMap.getTileAt(abs-1,ord);
+        if (tile.isNPCAccessible() && !(tile instanceof DoorTile) &&
+                (entityList.size() == 0 || entityList.get(0).getIsNPCAccessible())){
+            inaccessibleDirection.remove(Direction.WEST);
+        }
+        entityList = gridMap.getEntitiesAt(abs,ord+1);
+        tile = gridMap.getTileAt(abs,ord+1);
+        if (tile.isNPCAccessible() && !(tile instanceof DoorTile) &&
+                (entityList.size() == 0 || entityList.get(0).getIsNPCAccessible())){
+            inaccessibleDirection.remove(Direction.SOUTH);
+        }
+        entityList = gridMap.getEntitiesAt(abs,ord-1);
+        tile = gridMap.getTileAt(abs,ord-1);
+        if (tile.isNPCAccessible() && !(tile instanceof DoorTile) &&
+                (entityList.size() == 0 || entityList.get(0).getIsNPCAccessible())){
+            inaccessibleDirection.remove(Direction.NORTH);
+        }
+
+        return inaccessibleDirection;
     }
 
     private static Node getMostRelevantNode(List<Node> list) {
