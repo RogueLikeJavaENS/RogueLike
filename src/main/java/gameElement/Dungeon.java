@@ -5,7 +5,6 @@ import entity.Entity;
 import entity.object.Button;
 import entity.object.Door;
 import generation.GraphDungeon;
-import generation.RoomFactory;
 import generation.RoomType;
 import generation.VerificationRoom;
 import utils.Direction;
@@ -15,7 +14,6 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.TreeMap;
 
 /**
  * This class is graph representation of the dungeon.
@@ -61,7 +59,7 @@ public class Dungeon {
         for (GridMap gridMap : gridMapList) {
             Room room = gridMap.getRoom();
             if (room.getRoomType() == RoomType.REST || room.getRoomType() == RoomType.MONSTER || room.getRoomType() == RoomType.START || room.getRoomType() == RoomType.NORMAL) {
-                VerificationRoom.verificationGenerationRoom(this,gridMap);
+                VerificationRoom.verificationGenerationRoom(gridMap);
             }
         }
     }

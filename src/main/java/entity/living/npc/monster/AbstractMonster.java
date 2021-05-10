@@ -96,4 +96,8 @@ public abstract class AbstractMonster extends NPC implements Monster {
      */
     public String getName(){ return super.getName();}
 
+    @Override
+    public boolean isMonster() {
+        return true;
+    }
 }

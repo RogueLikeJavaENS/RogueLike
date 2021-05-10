@@ -1,16 +1,10 @@
 package generation;
 
 import display.GridMap;
+import display.tiles.Tile;
 import entity.Entity;
-import entity.living.npc.merchants.Merchant;
-import entity.living.npc.monster.Monster;
-import entity.object.Chest;
-import entity.object.Door;
-import entity.object.Hole;
-import entity.object.Spike;
-import gameElement.Dungeon;
+import entity.object.*;
 import gameElement.Room;
-import monsterStrategy.StrategyUtils;
 import utils.Dijksrta;
 import utils.Position;
 import java.util.ArrayList;
@@ -24,44 +18,37 @@ public class VerificationRoom {
      * Verify if there is a path between all the entities use in the game
      *
      * @param gridMap gridMap to verify
-     * @param dungeon dungeon to verify
      */
-    public static void verificationGenerationRoom(Dungeon dungeon, GridMap gridMap){
-        Dijksrta dij = new Dijksrta();
-
-        List<Position> positionToVerify = new ArrayList<>();
-
-        //GridMap gridMap = dungeon.getGridMap(room);
+    public static void verificationGenerationRoom(GridMap gridMap){
+        Dijksrta dij = new Dijksrta(gridMap);
         Room room = gridMap.getRoom();
 
-        // Get position of the doors
-        List<Door> doorList = room.getDoors();
-        List<Position> positionDoor = new ArrayList<>();
-        for (Door door : doorList){
-            positionDoor.add(door.getPosition());
-        }
-        List<Position> positionFrontDoor = positionFrontDoor(positionDoor,room);
-        Position basePosition = positionFrontDoor.get(0);
+        List<Position> positionOfEntityList = positionOfNeededEntity(room);
+        Position startDoorPos = room.getDoors().get(0).getPosition();
+        positionOfEntityList.remove(startDoorPos);
+        Position basePosition = positionAround(startDoorPos, room).get(0);
 
-        // Set position to verify
-        positionToVerify.addAll(positionFrontDoor);
-        positionToVerify.remove(basePosition);
-        positionToVerify.addAll(positionOfNeededEntity(room));
+        List<Position> positionAroundList;
 
-        if (positionToVerify.size() == 0) return;
-
-        boolean isOkay = false;
-        while (isOkay){
-            isOkay = dij.isThereAPath(basePosition,gridMap,positionToVerify);
-            if (!isOkay){
+        for (Position entityPos: positionOfEntityList) {
+            positionAroundList = positionAround(entityPos,room);
+            boolean isOkay = dij.isThereAPath(basePosition, positionAroundList);
+            int i = 0;
+            while (!isOkay){
                 Entity entityToRemove = removeSpikeOrHole(room);
                 if (entityToRemove != null){
                     room.removeEntity(entityToRemove);
                     gridMap.update(entityToRemove,false);
+                    dij.update(gridMap, entityToRemove.getPosition());
                 }
-
+                isOkay = dij.isThereAPath(basePosition, positionAroundList);
+                i++;
+                if (i == 100){
+                    System.exit(1);
+                }
             }
         }
+        System.out.println("fin de la room\n\n\n");
     }
 
     /**
@@ -75,7 +62,7 @@ public class VerificationRoom {
         Collections.shuffle(roomEntity);
         Entity entityToRemove = null;
         for (Entity entity : roomEntity){
-            if (entity instanceof Spike || entity instanceof Hole){
+            if (entity.isTrap()){
                 entityToRemove = entity;
                 break;
             }
@@ -111,6 +98,25 @@ public class VerificationRoom {
         return positionList;
     }
 
+    private static List<Position> positionAround(Position position, Room room){
+        List<Position> positionAround = new ArrayList<>();
+        int abs = position.getAbs();
+        int ord = position.getOrd();
+        if (abs !=0 && room.getContents()[ord][abs-1] == Tile.FLOOR.getId()){
+            positionAround.add(new Position(abs-1, ord));
+        }
+        if (abs !=room.getWidth()-1 && room.getContents()[ord][abs+1] == Tile.FLOOR.getId()){
+            positionAround.add(new Position(abs+1, ord));
+        }
+        if (ord !=0 && room.getContents()[ord-1][abs] == Tile.FLOOR.getId()){
+            positionAround.add(new Position(abs, ord-1));
+        }
+        if (ord !=room.getHeight()-1 && room.getContents()[ord+1][abs] == Tile.FLOOR.getId()){
+            positionAround.add(new Position(abs, ord+1));
+        }
+        return positionAround;
+    }
+
     /**
      * Return the list of positions all the entity which need to be accessible
      *
@@ -121,7 +127,7 @@ public class VerificationRoom {
         List<Entity> entityList = room.getEntities();
         List<Position> entityPositions = new ArrayList<>();
         for (Entity entity : entityList){
-            if (entity instanceof Monster || entity instanceof Merchant || entity instanceof Chest){
+            if (!entity.isTrap() && !(entity instanceof Coins)){
                 entityPositions.add(entity.getPosition());
             }
         }
