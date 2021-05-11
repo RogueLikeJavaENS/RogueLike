@@ -78,9 +78,9 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
 
     /* SETTERS */
 
-    public void setBonusArmor(int bonusArmor) { this.bonusArmor = bonusArmor; }
-    public void setBonusLife(int bonus) { this.bonusLife = bonus; }
-    public void setBonusMana(int bonus) { this.bonusMana = bonus; }
-    public void setBonusInitiative(int bonus) { this.bonusInitiative = bonus; }
-    public void setBonusDamage(int bonus) { this.bonusDamage = bonus; }
+    public void setBonusArmor(int bonus) { this.bonusArmor = Math.max(bonus, 1); }
+    public void setBonusLife(int bonus) { this.bonusLife = Math.max(bonus, 1); }
+    public void setBonusMana(int bonus) { this.bonusMana = Math.max(bonus, 1); }
+    public void setBonusInitiative(int bonus) { this.bonusInitiative = Math.max(bonus, 1); }
+    public void setBonusDamage(int bonus) { this.bonusDamage = Math.max(bonus, 1); }
 }
