@@ -1,8 +1,10 @@
 package gameElement;
 
+import classeSystem.InGameClasses;
 import stuff.equipment.Equipment;
 import stuff.equipment.EquipmentRarity;
 import stuff.equipment.EquipmentType;
+import stuff.equipment.AbstractEquipment;
 import stuff.item.ItemType;
 import java.util.Random;
 
@@ -300,6 +302,115 @@ public class GameRule {
 
     public int getNumberOfEquipmentsOnBossCorpse() {
         return GEN.nextInt(2)+1;
+    }
+
+    public void SetBonusEquipement(Equipment equipement, InGameClasses classe){
+        GameRule gamerule = new GameRule();
+        int value = equipement.getLevel()+equipement.getRarity().ordinal()+1;
+        switch (equipement.getType()){
+            case WEAPON:
+                switch (classe){
+                    case RANGER:
+                    case WARRIOR:
+                        equipement.setBonusDamage(value);
+                        break;
+                    case MAGE:
+                        equipement.setBonusDamage(value/4);
+                        equipement.setBonusMana(value*10);
+                        break;
+                }
+                break;
+            case SHIELD:
+                switch (classe){
+                    case RANGER:
+                        equipement.setBonusInitiative((value/2));
+                        equipement.setBonusArmor(value/4);
+                        break;
+                    case MAGE:
+                        equipement.setBonusMana(value);
+                        equipement.setBonusArmor(value/2);
+                        break;
+                    case WARRIOR:
+                        equipement.setBonusArmor(value);
+                        break;
+                }
+                break;
+            case ARMOR:
+                switch (classe){
+                    case RANGER:
+                        equipement.setBonusArmor(value/2);
+                        equipement.setBonusInitiative(value/4);
+                        equipement.setBonusMana(value/4);
+                        break;
+                    case MAGE:
+                        equipement.setBonusMana(value*5);
+                        equipement.setBonusArmor(value/4);
+                        break;
+                    case WARRIOR:
+                        equipement.setBonusArmor(value);
+                        equipement.setBonusLife(value*5);
+                        break;
+                }
+                break;
+            case BOOT:
+                switch (classe){
+                    case RANGER:
+                        equipement.setBonusInitiative(value);
+                        equipement.setBonusArmor(1);
+                        break;
+                    case MAGE:
+                        equipement.setBonusMana(value);
+                        equipement.setBonusArmor(1);
+                        break;
+                    case WARRIOR:
+                        equipement.setBonusArmor(value);
+                        break;
+                }
+                break;
+            case GLOVE:
+                switch (classe){
+                    case RANGER:
+                        equipement.setBonusArmor(value/4);
+                        break;
+                    case MAGE:
+                        equipement.setBonusMana(value);
+                        equipement.setBonusArmor(value/4);
+                        break;
+                    case WARRIOR:
+                        equipement.setBonusDamage(value*2);
+                        equipement.setBonusArmor(value/4);
+                        break;
+                }
+                break;
+            case PANT:
+                switch (classe){
+                    case RANGER:
+                        equipement.setBonusArmor(value/2);
+                        break;
+                    case MAGE:
+                        equipement.setBonusArmor(value/4);
+                        break;
+                    case WARRIOR:
+                        equipement.setBonusInitiative(value/4);
+                        equipement.setBonusArmor(value/2);
+                        break;
+                }
+                break;
+            case HELMET:
+                switch (classe){
+                    case RANGER:
+                        equipement.setBonusArmor(value/2);
+                        break;
+                    case MAGE:
+                        equipement.setBonusArmor(value/4);
+                        equipement.setBonusInitiative(value/4);
+                        break;
+                    case WARRIOR:
+                        equipement.setBonusArmor(value);
+                        break;
+                }
+                break;
+        }
     }
 
     ///////////// Bonus of equipment //////////////

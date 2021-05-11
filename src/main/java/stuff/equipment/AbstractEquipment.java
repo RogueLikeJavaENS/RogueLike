@@ -1,5 +1,6 @@
 package stuff.equipment;
 
+import gameElement.GameRule;
 import stuff.AbstractStuff;
 
 import java.util.Objects;
@@ -77,9 +78,9 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
 
     /* SETTERS */
 
-    protected void setBonusArmor(int bonusArmor) { this.bonusArmor = bonusArmor; }
-    protected void setBonusLife(int bonus) { this.bonusLife = bonus; }
-    protected void setBonusMana(int bonus) { this.bonusMana = bonus; }
-    protected void setBonusInitiative(int bonus) { this.bonusInitiative = bonus; }
-    protected void setBonusDamage(int bonus) { this.bonusDamage = bonus; }
+    public void setBonusArmor(int bonusArmor) { this.bonusArmor = bonusArmor; }
+    public void setBonusLife(int bonus) { this.bonusLife = bonus; }
+    public void setBonusMana(int bonus) { this.bonusMana = bonus; }
+    public void setBonusInitiative(int bonus) { this.bonusInitiative = bonus; }
+    public void setBonusDamage(int bonus) { this.bonusDamage = bonus; }
 }

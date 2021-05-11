@@ -48,19 +48,24 @@ public class MerchantInventory extends Inventory {
 
     public void openBuyingSHop(GameState gameState) {
         selling = true;
-        upgradeEquipmentLevel(gameState.getPlayer().getPlayerStats().getLevel());
+        upgradeEquipmentLevel(gameState);
         inventory = merchantInventory;
         super.openInventory(gameState.getPlayer().getPlayerStats().getLevel());
     }
 
-    private void upgradeEquipmentLevel(int level) {
+    private void upgradeEquipmentLevel(GameState gameState) {
+        List<Stuff> newInventory = new ArrayList<>();
+        EquipmentFactory factory = new EquipmentFactory(gameState);
         for (Stuff stuff : merchantInventory) {
             if (stuff.isEquipable()) {
                 Equipment equipment = (Equipment) stuff;
-                equipment.setLevel(level);
-                equipment.setPrice(new GameRule().getEquipmentPrice(level, equipment.getRarity()));
+                newInventory.add(factory.getCopyOfEquipment(equipment));
+            }
+            else {
+                newInventory.add(stuff);
             }
         }
+        this.merchantInventory=newInventory;
     }
 
     public void setMerchantInventory(List<Stuff> merchantInventory) {

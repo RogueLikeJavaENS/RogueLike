@@ -15,4 +15,9 @@ public interface Equipment extends Stuff {
     int getBonusLife();
     int getBonusMana();
     int getLevel();
+    void setBonusDamage(int value);
+    void setBonusMana(int value);
+    void setBonusInitiative(int value);
+    void setBonusArmor(int value);
+    void setBonusLife(int value);
 }

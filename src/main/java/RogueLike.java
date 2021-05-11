@@ -8,7 +8,6 @@ import gameElement.menu.Menu;
 import stuff.item.ItemType;
 import gameElement.*;
 import generation.*;
-import stuff.item.potions.XpBottle;
 import utils.*;
 import static com.diogonunes.jcolor.Ansi.colorize;
 import java.awt.event.KeyEvent;

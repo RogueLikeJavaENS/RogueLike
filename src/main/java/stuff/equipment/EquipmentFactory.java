@@ -14,7 +14,7 @@ public class EquipmentFactory {
     public EquipmentFactory(GameState gameState) { this.gameState = gameState; }
 
     public Equipment getCopyOfEquipment(Equipment equipment) {
-        return getEquipment(equipment.getLevel(), equipment.getType(), equipment.getRarity());
+        return getEquipment(gameState.getPlayer().getPlayerStats().getLevel(), equipment.getType(), equipment.getRarity());
     }
 
     public Equipment getEquipment(int level, EquipmentType type, EquipmentRarity rarity) {
@@ -51,6 +51,7 @@ public class EquipmentFactory {
         equipment.setDescription(namePlusDesctription.get(1));
         equipment.setName(namePlusDesctription.get(0));
         equipment.setPrice(gm.getEquipmentPrice(gameState.getPlayer().getPlayerStats().getLevel(), rarity));
+        gm.SetBonusEquipement(equipment, gameState.getPlayer().getClasse());
         return equipment;
     }
 

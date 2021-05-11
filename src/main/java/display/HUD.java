@@ -49,12 +49,12 @@ public class HUD {
                 colorize("HP: ", Colors.RED.textApply()) +
                 colorize(String.valueOf(player.getStats().getLifePointActual()), Colors.RED.textApply()) +
                 colorize("/", Colors.RED.textApply()) +
-                colorize(String.valueOf(player.getStats().getLifePointNatural()), Colors.RED.textApply()) +
+                colorize(String.valueOf(player.getStats().getLifePointTotal()), Colors.RED.textApply()) +
                 "  " + //"HP: xx/yy "
                 colorize("MP: ", Colors.BLUE.textApply()) +
                 colorize(String.valueOf(player.getStats().getManaPointActual()), Colors.BLUE.textApply()) +
                 colorize("/", Colors.BLUE.textApply()) +
-                colorize(String.valueOf(player.getStats().getManaPointNatural()), Colors.BLUE.textApply()) + //"MP: xx/yy"
+                colorize(String.valueOf(player.getStats().getManaPointTotal()), Colors.BLUE.textApply()) + //"MP: xx/yy"
                 "  " +
                 colorize("BTC: ", Colors.YELLOW.textApply()) +
                 colorize(String.valueOf(player.getPlayerStats().getMoneyCount()), Colors.YELLOW.textApply()) + //"BTC: xxx"

@@ -197,7 +197,7 @@ public class RoomFactory {
 
     public static void addMerchant(GameState gameState, Dungeon dungeon) {
         for (Room room : dungeon.getRoomList()) {
-            if (room.getRoomType() == RoomType.REST) {
+            if (room.getRoomType() == RoomType.START) {
                 List<Position> availablePositions = room.getAvailablePositions();
                 PotionMerchant potionMerchant = new PotionMerchant(availablePositions.remove(0));
                 ItemFactory itemFactory = new ItemFactory();
