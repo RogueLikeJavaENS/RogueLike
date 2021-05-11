@@ -199,7 +199,7 @@ public class GameState {
     public void isMonsterAlive(Monster monster) {
         if (monster.getMonsterStats().getLifePointActual() == 0) {
             currentFightExp += monster.getMonsterStats().getXpWorth();
-            fighting.removeMonster(monster);
+            fighting.removeMonster((LivingEntity) monster);
             gridMap.update(monster, false);
             if (monster instanceof Boss) {
                 Boss boss = (Boss) monster;

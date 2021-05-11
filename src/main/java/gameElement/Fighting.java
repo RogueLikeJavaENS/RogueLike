@@ -1,6 +1,7 @@
 package gameElement;
 
 import classeSystem.InGameClasses;
+import entity.Entity;
 import entity.living.LivingEntity;
 import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
@@ -21,10 +22,17 @@ public class Fighting {
     private LivingEntity currentEntity;
     private List<LivingEntity> bufferEntity;
     private int round;
+    private List<Integer> initiativeList;
+    private int initiativeGauge;
 
     public Fighting(List<LivingEntity> entities) {
         turnOrder = entities;
         sortTurnOrder();
+        initiativeList = new ArrayList<>();
+        for (int i = 0; i < turnOrder.size(); i++) {
+            initiativeList.add(0);
+        }
+        initiativeGauge = turnOrder.get(0).getStats().getInitiativeTotal(); //on récupère la plus grande initiative, qui sera la "taille" de la jauge
         bufferEntity = new ArrayList<>(turnOrder);
         currentEntity = bufferEntity.remove(0);
         round = 1;
@@ -66,9 +74,19 @@ public class Fighting {
         });
     }
 
-    public void removeMonster(Monster monster) {
+    public void removeMonster(LivingEntity monster) {
+        initiativeList.remove(turnOrder.indexOf(monster));
         turnOrder.remove(monster);
         bufferEntity.remove(monster);
+        initiativeGauge = turnOrder.get(0).getStats().getInitiativeTotal();
+    }
+
+    public boolean canAct(LivingEntity entity) {
+        int index = turnOrder.indexOf(entity);
+        int newInitiative = initiativeList.get(index) + entity.getStats().getInitiativeTotal();
+        boolean enoughInitiative = newInitiative >= initiativeGauge;
+        initiativeList.set(index, (initiativeList.get(index) + entity.getStats().getInitiativeTotal())%initiativeGauge);
+        return enoughInitiative;
     }
 
     @Override
@@ -77,13 +95,16 @@ public class Fighting {
         sb.append("Round Fight : ").append(round).append("\n");
         sb.append("#----------------------------------------#\n");
         for(LivingEntity entity : turnOrder) {
+            String initiativeString = String.format("%d/%d", initiativeList.get(turnOrder.indexOf(entity)%initiativeGauge), initiativeGauge);
             if (entity.equals(currentEntity)) {
                 sb.append(colorize(" -> ", Colors.RED.textApply()));
             } else {
                 sb.append("    ");
             }
             sb.append(entity.getName());
-            sb.append(" ".repeat(15 - entity.getName().length()));
+            sb.append(" ".repeat(10 - entity.getName().length()));
+            sb.append(initiativeString);
+            sb.append(" ".repeat(5 - initiativeString.length()));
             sb.append("HP: ").append(entity.getStats().getLifePointActual());
             sb.append(" ".repeat(6 - String.valueOf(entity.getStats().getLifePointActual()).length()));
             sb.append("LVL: ").append(entity.getStats().getLevel()).append("\n");
