@@ -139,7 +139,6 @@ public class Dijksrta {
         for (Position pos : dest){
             int nbDest = getNumberWithPosition(pos);
 
-            System.out.println("Distance : "+ distance[nbDest]);
             if (distance[nbDest] != Integer.MAX_VALUE){
                 return true;
             }

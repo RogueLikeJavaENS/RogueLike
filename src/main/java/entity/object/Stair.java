@@ -32,11 +32,10 @@ public class Stair extends ObjectEntity{
 
     public void takeStair(GameState gameState) {
         Seed seed = new Seed();
-        Dungeon dungeon = DungeonStructure.createDungeon(seed, gameState.getDungeon().getFloor()+1);
+        Dungeon dungeon = DungeonStructure.createDungeon(seed, gameState.getDungeon().getFloor()+1, gameState.getPlayer().getClasse());
         Position initialPos = dungeon.getRoom(0).getCenter();
         gameState.setDungeon(dungeon);
         gameState.getPlayer().setPosition(initialPos);
-        RoomFactory.addMerchant(gameState, dungeon);
         gameState.updateChangingRoom(dungeon.getRoom(0));
         gameState.setMiniMap(new MiniMap(dungeon, gameState));
         gameState.getPlayer().getInventory().removeItem(ItemType.FLOORKEY);

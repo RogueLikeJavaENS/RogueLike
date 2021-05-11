@@ -1,11 +1,10 @@
-import classeSystem.InGameClasses;
 import com.diogonunes.jcolor.Attribute;
 import display.HUD;
 import display.RendererUI;
 import entity.living.LivingEntity;
 import entity.living.player.Player;
 import gameElement.menu.InGameMenu;
-import gameElement.menu.OpenInventory;
+import entity.living.inventory.OpenInventory;
 import gameElement.menu.StartMenu;
 import stuff.item.ItemType;
 import gameElement.*;
@@ -38,7 +37,7 @@ public class RogueLike {
         StartMenu start = new StartMenu(sp);
 
         Seed seed = new Seed();
-        Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
+        Dungeon dungeon = DungeonStructure.createDungeon(seed, 1, start.getClasse());
         Position initialPosition = dungeon.getRoom(0).getCenter();
         Player player = new Player(initialPosition,100, 100, start.getName(), start.getClasse(), 1);
 
@@ -97,6 +96,7 @@ public class RogueLike {
                 }
                 sp.reset();
             }
+            gs.isPlayerAlive();
         }
     }
 
@@ -139,10 +139,6 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(0, -1);
                     }
-                } else if (state == State.INVENTORY) {
-                    modifiedMenu = gs.getPlayer().getInventory().previousSelectedStuff();
-                } else if (state == State.SHOP) {
-                    modifiedMenu = gs.getMerchant().getMerchantInventory().previousSelectedStuff();
                 }
                 break;
             case KeyEvent.VK_Q:
@@ -152,13 +148,6 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(-1, 0);
                     }
-                } else if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().switchCategory();
-                    modifiedMenu = true;
-                }
-                else if (state == State.SHOP) {
-                    gs.getMerchant().getMerchantInventory().switchCategory();
-                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_S:
@@ -168,10 +157,6 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(0, 1);
                     }
-                } else if (state == State.INVENTORY) {
-                    modifiedMenu = gs.getPlayer().getInventory().nextSelectedStuff();
-                } else if (state == State.SHOP) {
-                    modifiedMenu = gs.getMerchant().getMerchantInventory().nextSelectedStuff();
                 }
                 break;
             case KeyEvent.VK_D:
@@ -181,12 +166,6 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(1, 0);
                     }
-                } else if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().switchCategory();
-                    modifiedMenu = true;
-                } else if (state == State.SHOP) {
-                    gs.getMerchant().getMerchantInventory().switchCategory();
-                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_W:
@@ -230,14 +209,9 @@ public class RogueLike {
                 modifiedMenu = true;
                 break;
             case KeyEvent.VK_I:
-                if (state != State.INVENTORY) {
-                    OpenInventory inv = new OpenInventory(gs, player.getInventory());
-                    modifiedMenu = true;
-                    acted = inv.hasActed();
-//                    gs.getPlayer().getInventory().openInventory(player.getPlayerStats().getLevel());
-//                    gs.setState(State.INVENTORY);
-//                    modifiedMenu = true;
-                }
+                OpenInventory inv = new OpenInventory(gs, player.getInventory());
+                modifiedMenu = true;
+                acted = inv.hasActed();
                 break;
             case KeyEvent.VK_H:
                 gs.setHelp(!gs.getHelp());
@@ -273,15 +247,7 @@ public class RogueLike {
                 }
                 break;
             case KeyEvent.VK_ESCAPE: // escape
-                if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().closeInventory();
-                    gs.setState(State.NORMAL);
-                    gs.isThereMonstersInventory();
-                } else if (state == State.MAP) {
-                    gs.setState(State.NORMAL);
-                    gs.isThereMonsters();
-                } else if (state == State.SHOP) {
-                    gs.getMerchant().getMerchantInventory().closeInventory();
+                if (state == State.MAP) {
                     gs.setState(State.NORMAL);
                     gs.isThereMonsters();
                 } else {
@@ -294,18 +260,6 @@ public class RogueLike {
             case KeyEvent.VK_E:
                 if (state == State.NORMAL || state == State.FIGHT) {
                     acted = gs.interact();
-                } else if (state == State.INVENTORY) {
-                    modifiedMenu = true;
-                    boolean used = gs.getPlayer().getInventory().useSelectedStuff(gs);
-                    if (used) {
-                        acted = gs.isThereMonstersInventory();
-                        if (acted) {
-                            gs.getFighting().next();
-                        }
-                    }
-                } else if (state == State.SHOP) {
-                    gs.getMerchant().getMerchantInventory().useSelectedStuff(gs);
-                    modifiedMenu = true;
                 }
                 break;
                 default:

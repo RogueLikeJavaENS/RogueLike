@@ -1,4 +1,4 @@
-package entity.living;
+package entity.living.inventory;
 
 import com.diogonunes.jcolor.Attribute;
 import entity.living.player.Player;
@@ -6,14 +6,19 @@ import entity.living.player.PlayerStats;
 import gameElement.GameRule;
 import gameElement.GameState;
 import stuff.Stuff;
-import stuff.equipment.*;
-import stuff.item.*;
-import utils.*;
-import java.util.*;
+import stuff.equipment.Equipment;
+import stuff.equipment.EquipmentRarity;
+import stuff.item.Item;
+import stuff.item.ItemType;
+import utils.Colors;
+import utils.CoupleStuff;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-public class Inventory {
+public class AbstractInventory implements Inventory {
     protected List<Stuff> inventory;
     protected List<Stuff> equiped;
     protected Stuff selectedStuff;
@@ -26,7 +31,7 @@ public class Inventory {
     protected List<CoupleStuff> sortedItem;
     protected int indexOfSelectedStuff;
 
-    public Inventory() {
+    public AbstractInventory() {
         inventory = new ArrayList<>();
         equiped = new ArrayList<>();
         sortedItem = new ArrayList<>();
@@ -350,13 +355,13 @@ public class Inventory {
         StringBuilder sb = new StringBuilder();
 
         String separationItems =
-            "|"+
-            colorize("----------------------", Colors.GREY.textApply())+"|"+
-            colorize("----", Colors.GREY.textApply())+"|"+
-            colorize("---", Colors.GREY.textApply())+"|"+
-            colorize("-----", Colors.GREY.textApply())+"|"+
-            colorize("-----", Colors.GREY.textApply())+"|"+
-            colorize("------------------------------------------------------------------", Colors.GREY.textApply())+"|\n";
+                "|"+
+                        colorize("----------------------", Colors.GREY.textApply())+"|"+
+                        colorize("----", Colors.GREY.textApply())+"|"+
+                        colorize("---", Colors.GREY.textApply())+"|"+
+                        colorize("-----", Colors.GREY.textApply())+"|"+
+                        colorize("-----", Colors.GREY.textApply())+"|"+
+                        colorize("------------------------------------------------------------------", Colors.GREY.textApply())+"|\n";
 
         sb.append("|------------------------------|--------------------------------------|\n");
         if (onEquipments) {
@@ -461,8 +466,8 @@ public class Inventory {
             /* DESCRIPTION */
             String description = equipment.getDescription();
             description = description.replace(
-                            equipment.getRarity().getRarity(),
-                            colorize(equipment.getRarity().getRarity(), Attribute.BOLD(), EquipmentRarity.getColor(equipment.getRarity()).textApply()));
+                    equipment.getRarity().getRarity(),
+                    colorize(equipment.getRarity().getRarity(), Attribute.BOLD(), EquipmentRarity.getColor(equipment.getRarity()).textApply()));
             sb.append(" ").append(description).append(" ".repeat(des_size-equipment.getDescription().length())).append("|\n");
 
         } else {

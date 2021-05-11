@@ -13,7 +13,7 @@ public class AttackStrategy extends DecoratorStrategy{
     }
 
     public boolean act(Monster monster, Player player, GridMap gridMap) {
-        int damage = monster.getMonsterStats().getDamageNatural();
+        int damage = monster.getMonsterStats().getDamageTotal();
         player.getPlayerStats().sufferDamage(damage);
         this.updateStrategyDescription(String.format("%s attacked and inflicted %s damages to %s",monster.getName(),colorize(Integer.toString(damage),Colors.RED.textApply()),player.getName()));
         return true;

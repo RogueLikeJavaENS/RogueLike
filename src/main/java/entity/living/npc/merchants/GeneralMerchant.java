@@ -1,5 +1,7 @@
 package entity.living.npc.merchants;
 
+import entity.living.inventory.Inventory;
+import entity.living.inventory.MerchantInventory;
 import entity.living.npc.NPCStats;
 import gameElement.GameState;
 import gameElement.menu.InGameMenu;
@@ -24,7 +26,7 @@ public class GeneralMerchant extends AbstractMerchant {
 
     }
 
-    public MerchantInventory getMerchantInventory() {
+    public Inventory getMerchantInventory() {
         return merchantInventory;
     }
 }

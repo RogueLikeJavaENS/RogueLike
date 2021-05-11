@@ -1,26 +1,18 @@
-package entity.living.npc.merchants;
+package entity.living.inventory;
 
 import com.diogonunes.jcolor.Attribute;
-import entity.living.Inventory;
 import entity.living.player.PlayerStats;
 import gameElement.GameRule;
 import gameElement.GameState;
 import stuff.Stuff;
 import stuff.equipment.Equipment;
-import stuff.equipment.EquipmentFactory;
-import stuff.equipment.EquipmentRarity;
-import stuff.equipment.EquipmentType;
-import stuff.equipment.equipments.*;
 import stuff.item.Item;
-import stuff.item.potions.Elixir;
-import stuff.item.potions.PotionHealth;
-import stuff.item.potions.XpBottle;
 import utils.Colors;
 import static com.diogonunes.jcolor.Ansi.colorize;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MerchantInventory extends Inventory {
+public class MerchantInventory extends AbstractInventory {
 
     private List<Stuff> merchantInventory;
 
@@ -55,10 +47,6 @@ public class MerchantInventory extends Inventory {
                 equipment.setPrice(new GameRule().getEquipmentPrice(level, equipment.getRarity()));
             }
         }
-    }
-
-    public void setMerchantInventory(List<Stuff> merchantInventory) {
-        this.merchantInventory = merchantInventory;
     }
 
     @Override

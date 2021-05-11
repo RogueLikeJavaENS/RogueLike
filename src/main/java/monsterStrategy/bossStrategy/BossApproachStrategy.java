@@ -15,12 +15,12 @@ public class BossApproachStrategy extends DecoratorStrategy {
 
     public boolean act(Monster monster, Player player, GridMap gridmap) {
         Boss boss = (Boss) monster;
-        if (boss.hasMoved()) {
+        boss.updatePosBoss(gridmap);
+        if (boss.hasSpecial()) {
             boss.doSpecialAction(player, gridmap);
-            boss.setMoved(false);
+            boss.setActedSpecial(false);
         } else {
-            boss.updatePosBoss(gridmap);
-            boss.setMoved(true);
+            boss.setActedSpecial(true);
         }
         return true;
     }

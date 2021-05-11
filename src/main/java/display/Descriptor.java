@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Descriptor {
     private List<String> buffer;
-    private final static int LINE = 5;
+    private final static int LINE = 8;
 
     public Descriptor(){
         this.buffer = new ArrayList<>();

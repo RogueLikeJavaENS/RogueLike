@@ -1,7 +1,7 @@
 package entity.living.player;
 
 import classeSystem.InGameClasses;
-import entity.living.Inventory;
+import entity.living.inventory.PlayerInventory;
 import entity.living.LivingEntity;
 import spells.BasicAttack;
 import spells.*;
@@ -16,13 +16,13 @@ import java.util.*;
 public class Player extends LivingEntity {
     private final List<Spell> spellList;
     private Spell selectedSpell;
-    private final Inventory inventory;
+    private final PlayerInventory playerInventory;
     private final InGameClasses classe;
 
     public Player(Position position, int pv, int pm, String name, InGameClasses classe, int level) throws IllegalArgumentException {
-        super(position, name, Colors.WHITE, new PlayerStats(classe, 100, 100, 1, 2, 15, 1, 1000, level));
+        super(position, name, Colors.WHITE, new PlayerStats(classe, 100, 100, 1, 2, 15, 1, 0, level));
         spellList = new ArrayList<>();
-        inventory = new Inventory();
+        playerInventory = new PlayerInventory();
         addSpell(new BasicAttack()); //hard coded to test
         addSpell(new FireAura());
         addSpell(new FireBall());
@@ -30,21 +30,6 @@ public class Player extends LivingEntity {
         setSprites("o-o", "/^\\", Colors.WHITE);
         setDirection(Direction.SOUTH);
         this.classe = classe;
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
-        inventory.addItem(new XpBottle());
     }
 
     public void addSpell(Spell spell) {
@@ -54,7 +39,7 @@ public class Player extends LivingEntity {
         this.selectedSpell = selectedSpell;
     }
 
-    public Inventory getInventory() { return inventory; }
+    public PlayerInventory getInventory() { return playerInventory; }
     public List<Spell> getSpells() {
         return spellList;
     }

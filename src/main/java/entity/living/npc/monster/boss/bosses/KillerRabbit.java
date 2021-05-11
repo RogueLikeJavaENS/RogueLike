@@ -28,18 +28,9 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class KillerRabbit extends AbstractBoss {
 
-    private Direction previousDirection = null;
-    private List<Direction> bufferPath;
-    private int turnCounter = 0;
-
     public KillerRabbit(String name, Position position, Colors color, Strategy strategy, AbstractStats stats) {
         super(name, position, color, strategy, stats);
         List<BossPart> listBossParts = new ArrayList<>();
-        bufferPath = new ArrayList<>();
-        bufferPath.add(Direction.NORTH);
-        bufferPath.add(Direction.EAST);
-        bufferPath.add(Direction.SOUTH);
-        bufferPath.add(Direction.WEST);
         setSprites(colorize("   ", Attribute.BOLD(),Colors.PINK.textApply()),
                 colorize(" \\ ", Attribute.BOLD(),Colors.PINK.textApply()));
 
@@ -86,86 +77,16 @@ public class KillerRabbit extends AbstractBoss {
         setBossParts(listBossParts);
     }
 
+    @Override
+    public void setActedSpecial(boolean hasSpecial) {
+        super.setActedSpecial(true);
+    }
+
     public void doSpecialAction(Player player, GridMap gridmap) {
         gridmap.update(new Carrot(new Position(getPosition().getAbs(), getPosition().getOrd()),
                         Colors.ORANGE,
                         true,
                         true),
                  true);
-    }
-
-    public void updatePosBoss(GridMap gridMap) {
-        if (turnCounter == 20) {
-            bufferPath.clear();
-            bufferInit();
-        }
-        List<Direction> impossibleDirection = new ArrayList<>();
-
-        if (previousDirection != null) {
-            impossibleDirection.add(previousDirection.oppositeDirection());
-        }
-
-        for (BossPart currentBossPart : getBossPartList()) {
-            impossibleDirection.addAll(StrategyUtils.foundInaccessibleDirection(currentBossPart.getPosition(), gridMap));
-        }
-        List<Direction> copyOfBufferPath = List.copyOf(bufferPath);
-        copyOfBufferPath = copyOfBufferPath.stream()
-                .filter(direction -> !impossibleDirection.contains(direction))
-                .collect(Collectors.toList());
-
-        Direction direction;
-        if (!copyOfBufferPath.isEmpty()) {
-            Random gen = new Random();
-            direction = copyOfBufferPath.get(gen.nextInt(copyOfBufferPath.size()));
-            previousDirection = direction;
-            bufferPath.add(previousDirection);
-            turnCounter++;
-        } else {
-            direction = Direction.NONE;
-        }
-        switch (direction){
-            //pas fou de faire quasi la même chose dans chaque case mais on peut pas faire une position négative temporaire et flemme de faire des couples
-            case EAST:
-                getPosition().updatePos(1,0);
-                for (BossPart currentBossPart : getBossPartList()) {
-                    currentBossPart.getPosition().updatePos(1,0);
-                }
-                break;
-            case WEST:
-                getPosition().updatePos(-1,0);
-                for (BossPart currentBossPart : getBossPartList()) {
-                    currentBossPart.getPosition().updatePos(-1,0);
-                }
-                break;
-            case NORTH:
-                getPosition().updatePos(0,-1);
-                for (BossPart currentBossPart : getBossPartList()) {
-                    currentBossPart.getPosition().updatePos(0,-1);
-                }
-                break;
-            case SOUTH:
-                getPosition().updatePos(0,1);
-                for (BossPart currentBossPart : getBossPartList()) {
-                    currentBossPart.getPosition().updatePos(0,1);
-                }
-                break;
-            default:
-                getPosition().updatePos(0,0);
-                for (BossPart currentBossPart : getBossPartList()) {
-                    currentBossPart.getPosition().updatePos(0,0);
-                }
-                break;
-        }
-    }
-
-    private void bufferInit() {
-        bufferPath.add(Direction.NORTH);
-        bufferPath.add(Direction.EAST);
-        bufferPath.add(Direction.WEST);
-        bufferPath.add(Direction.SOUTH);
-    }
-
-    public List<Direction> getBufferPath() {
-        return bufferPath;
     }
 }

@@ -55,7 +55,6 @@ public class GameState {
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
-        RoomFactory.addMerchant(this, dungeon);
         currentFightExp = 0;
         isThereMonsters();
     }

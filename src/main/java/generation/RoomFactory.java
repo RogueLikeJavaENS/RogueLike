@@ -1,30 +1,19 @@
 package generation;
 
-import display.GridMap;
+import classeSystem.InGameClasses;
 import display.tiles.Tile;
 import entity.Entity;
+import entity.living.inventory.Inventory;
 import entity.living.npc.merchants.GeneralMerchant;
 import entity.living.npc.monster.MonsterFactory;
-import entity.living.npc.monster.boss.Boss;
-import entity.living.npc.monster.boss.BossFactory;
-import entity.living.npc.monster.boss.BossPart;
-import entity.living.npc.monster.boss.Bosses;
+import entity.living.npc.monster.boss.*;
 import entity.object.*;
 import entity.object.potions.PotionEntityFactory;
-import gameElement.Dungeon;
-import gameElement.GameRule;
-import gameElement.GameState;
-import gameElement.Room;
+import gameElement.*;
 import utils.Direction;
-import stuff.Stuff;
-import stuff.equipment.EquipmentFactory;
-import stuff.equipment.EquipmentRarity;
-import stuff.equipment.EquipmentType;
-import stuff.item.ItemFactory;
+import stuff.equipment.*;
 import stuff.item.keys.GoldKey;
-import stuff.item.potions.Elixir;
-import stuff.item.potions.PotionHealth;
-import stuff.item.potions.XpBottle;
+import stuff.item.potions.*;
 import utils.Position;
 
 import java.util.ArrayList;
@@ -60,22 +49,14 @@ public class RoomFactory {
     public Room getRoom(Seed seed, RoomType roomType, int current, int[] nextList) {
         Room room = createRoom(current, nextList, roomType);
         this.currentAvailablePositions = room.getAvailablePositions();
-        GridMap gridMap = new GridMap(room);
         switch (roomType) {
             case START:
-               currentAvailablePositions.remove(room.getCenter());
+                currentAvailablePositions.remove(room.getCenter());
                 addHoleAndSpike(room);
                 addChest(room,true);
                 break;
             case BOSS:
-                BossFactory bossFactory = new BossFactory(floor);
-                Boss rabbitBoss = bossFactory.getBoss(Bosses.KILLER_RABBIT, room.getCenter());
-                List<BossPart> bossParts = rabbitBoss.getBossPartList();
-                room.addEntity(bossParts.get(0));
-                room.addEntity(bossParts.get(1));
-                room.addEntity(bossParts.get(2));
-                room.addEntity(bossParts.get(3));
-                room.addEntity(rabbitBoss);
+                addBoss(room);
                 break;
             case END:
                 addStairs(room);    // Go to the next floor
@@ -100,9 +81,7 @@ public class RoomFactory {
                 addCoins(room, gameRule.getNumberOfGoldInTreasureRoom());
                 addPotions(room, gameRule.getNumberOfPotionInTreasureRoom());
                 break;
-
         }
-        // add some traps, walls, holes...
         return room;
     }
 
@@ -136,6 +115,16 @@ public class RoomFactory {
         }
     }
 
+    private void addBoss(Room room) {
+        BossFactory bossFactory = new BossFactory(floor);
+        Boss boss = bossFactory.getBoss(Bosses.KILLER_RABBIT, room.getCenter());
+        List<BossPart> bossParts = boss.getBossPartList();
+        room.addEntity(bossParts.get(0));
+        room.addEntity(bossParts.get(1));
+        room.addEntity(bossParts.get(2));
+        room.addEntity(bossParts.get(3));
+        room.addEntity(boss);
+    }
     /**
      * Add multiple potions (type of the potion according to the GameRule) in the room
      *
@@ -186,40 +175,41 @@ public class RoomFactory {
         }
     }
 
-    public static void addMerchant(GameState gameState, Dungeon dungeon) {
+    public static void addMerchant(Dungeon dungeon, InGameClasses playerClasse) {
         for (Room room : dungeon.getRoomList()) {
-            if (room.getRoomType() == RoomType.START) {
+            if (room.getRoomType() == RoomType.REST) {
                 List<Position> availablePositions = room.getAvailablePositions();
                 GeneralMerchant generalMerchant = new GeneralMerchant(availablePositions.remove(0));
-                EquipmentFactory equipmentFactory = new EquipmentFactory(gameState);
+                EquipmentFactory equipmentFactory = new EquipmentFactory(playerClasse);
                 GameRule gm = new GameRule();
-                List<Stuff> merchantInventory = new ArrayList<>();
+
+                Inventory merchantInventory = generalMerchant.getMerchantInventory();
 
                 for (int i = 0; i < gm.getNumberOfEquipMerchantShop(); i++) {
                     int level = 1;
                     EquipmentRarity equipmentRarity = gm.getRarityEquipmentInMerchantShop();
                     EquipmentType equipmentType = gm.getEquipmentTypeInMerchantShop();
-                    merchantInventory.add(equipmentFactory.getEquipment(level, equipmentType, equipmentRarity));
+                    merchantInventory.addItem(equipmentFactory.getEquipment(level, equipmentType, equipmentRarity));
                 }
 
                 for (int i = 0; i < 5; i++) {
-                    merchantInventory.add(new PotionHealth());
-                    merchantInventory.add(new Elixir());
+                    merchantInventory.addItem(new PotionHealth());
+                    merchantInventory.addItem(new Elixir());
                     if (i < 2) {
-                        merchantInventory.add(new XpBottle());
+                        merchantInventory.addItem(new XpBottle());
                     }
                 }
-                merchantInventory.add(new GoldKey());
+                merchantInventory.addItem(new GoldKey());
 
-                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.ARMOR, EquipmentRarity.E));
-                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.HELMET, EquipmentRarity.E));
-                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.BOOT, EquipmentRarity.E));
-                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.PANT, EquipmentRarity.E));
-                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.GLOVE, EquipmentRarity.E));
-                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.SHIELD, EquipmentRarity.E));
-                merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.WEAPON, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.ARMOR, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.HELMET, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.BOOT, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.PANT, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.GLOVE, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.SHIELD, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.WEAPON, EquipmentRarity.E));
 
-                generalMerchant.getMerchantInventory().setMerchantInventory(merchantInventory);
+
                 Position position =  availablePositions.remove(0);
                 room.addEntity(new GeneralMerchant(position));
                 dungeon.getGridMap(room).update(generalMerchant, true);

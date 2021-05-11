@@ -7,7 +7,7 @@
 2. [Fight](#fight)
 3. [Merchant](#merchant)
 4. [Map](#map)
-5. [Inventory](#inventory)
+5. [Inventory](#playerInventory)
 6. [Room Types](#room-types)
    - [Fighting Room](#fighting-room)
    - [Merchant Room](#merchant-room)
@@ -24,7 +24,7 @@
 ### Normal inputs
 `Movements`  **Z** Up, **Q** Left, **S** Down, **D** Right.<br>
 `Interaction`  **E** Interact with an entity (Merchants).<br>
-`Menu`  **I** Open and close the inventory, **M** Open and close the Map, **H** Hide/show controls.<br>
+`Menu`  **I** Open and close the playerInventory, **M** Open and close the Map, **H** Hide/show controls.<br>
 `Potion`  **V** Use Healing Potion, **B** Use Elixir, **N** Use XP Bottle<br>
 `Quit`  **ESC** Excape the game.<br>
 
@@ -40,7 +40,7 @@ A **fight** start whenever the player is in a room with a monster. The fight is 
 When a monster is playing, you can skip the description by pressing any key.<br>
 During the player turn, he has 1 action.<br>
 `move`, `attack` and `use potion` are consuming the player turn.<br> 
-You can open the minimap, turn yourself with **Caps. lock**, select sorts, and open the inventory without consuming your action.<br>
+You can open the minimap, turn yourself with **Caps. lock**, select sorts, and open the playerInventory without consuming your action.<br>
 When a monster is killed, the hero gain **XP**, [BTC](#btc) and [Potions](#potions).
 
 ## Merchant
@@ -52,7 +52,7 @@ You can encounter Potion Merchant in the dungeon. You can buy for **10** [BTC](#
 By openning the map, you can see all rooms of the current floor of the dungeon.
 
 ## Inventory
-The inventory isn't used in this version... please follow us to see the progress.
+The playerInventory isn't used in this version... please follow us to see the progress.
 
 ## Room Types
 ### Fighting Room

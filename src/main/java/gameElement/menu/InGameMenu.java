@@ -2,6 +2,7 @@ package gameElement.menu;
 
 import com.diogonunes.jcolor.Attribute;
 import display.RendererUI;
+import entity.living.inventory.OpenInventory;
 import gameElement.GameState;
 import utils.Colors;
 import utils.ScanPanel;

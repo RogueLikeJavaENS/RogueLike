@@ -13,7 +13,6 @@ import java.util.List;
 
 public class VerificationRoom {
 
-
     /**
      * Verify if there is a path between all the entities use in the game
      *
@@ -33,7 +32,6 @@ public class VerificationRoom {
         for (Position entityPos: positionOfEntityList) {
             positionAroundList = positionAround(entityPos,room);
             boolean isOkay = dij.isThereAPath(basePosition, positionAroundList);
-            int i = 0;
             while (!isOkay){
                 Entity entityToRemove = removeSpikeOrHole(room);
                 if (entityToRemove != null){
@@ -42,13 +40,8 @@ public class VerificationRoom {
                     dij.update(gridMap, entityToRemove.getPosition());
                 }
                 isOkay = dij.isThereAPath(basePosition, positionAroundList);
-                i++;
-                if (i == 100){
-                    System.exit(1);
-                }
             }
         }
-        System.out.println("fin de la room\n\n\n");
     }
 
     /**

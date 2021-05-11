@@ -1,7 +1,6 @@
-package gameElement.menu;
+package entity.living.inventory;
 
 import display.RendererUI;
-import entity.living.Inventory;
 import gameElement.GameState;
 import utils.State;
 
