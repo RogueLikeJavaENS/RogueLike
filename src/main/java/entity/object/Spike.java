@@ -23,4 +23,9 @@ public class Spike extends ObjectEntity{
         player.getPlayerStats().sufferDamage(damage);
         gameState.getDescriptor().updateDescriptor(String.format("%s walked on spikes and lost %d HP.",player.getName(),damage));
     }
+
+    @Override
+    public boolean isTrap() {
+        return true;
+    }
 }

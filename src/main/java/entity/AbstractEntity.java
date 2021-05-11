@@ -54,6 +54,15 @@ public abstract class AbstractEntity implements Entity {
         // do nothing
     }
 
+    @Override
+    public boolean isMonster() {
+        return false;
+    }
+
+    public boolean isTrap(){
+        return false;
+    }
+
     /**
      * Return the position of the entity
      * @return the position

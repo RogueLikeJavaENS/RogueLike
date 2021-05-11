@@ -274,4 +274,8 @@ public class GridMap {
     public List<Position> getRangeList() {
         return rangeList;
     }
+
+    public Room getRoom() {
+        return room;
+    }
 }

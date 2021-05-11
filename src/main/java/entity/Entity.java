@@ -17,5 +17,7 @@ public interface Entity {
     Position getPosition();
     boolean getIsNPCAccessible();
     boolean getIsPlayerAccessible();
+    boolean isMonster();
+    boolean isTrap();
 
 }

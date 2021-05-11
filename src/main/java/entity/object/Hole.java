@@ -20,4 +20,9 @@ public class Hole extends ObjectEntity{
         gameState.updateChangingRoom(gameState.getDungeon().getRoom(0));
         gameState.getDescriptor().updateDescriptor(String.format("%s fell in a hole which lead him at the begin of the floor.",gameState.getPlayer().getName()));
     }
+
+    @Override
+    public boolean isTrap() {
+        return true;
+    }
 }
