@@ -66,13 +66,7 @@ public class RoomFactory {
             case START:
                currentAvailablePositions.remove(room.getCenter());
                 addHoleAndSpike(room);
-                addChest(room,true);
-
-                // Basic equipment to start a new adventure
-//                addHole(room);
-//                addSpike(room);
-//                addChest(room,true);    // Basic equipment to start a new adventure
-                // add some stuffs that make clear it's the start room.
+                addChest(room,true);    
                 break;
             case BOSS:
                 BossFactory bossFactory = new BossFactory(floor);
@@ -107,7 +101,6 @@ public class RoomFactory {
                 addChest(room,false);
                 addCoins(room, gameRule.getNumberOfGoldInTreasureRoom());
                 addPotions(room, gameRule.getNumberOfPotionInTreasureRoom());
-
                 break;
 
         }
