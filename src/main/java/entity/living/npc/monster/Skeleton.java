@@ -28,7 +28,7 @@ public class Skeleton extends AbstractMonster {
                 new MonsterStats(basicHP+(hpModifier*level),
                         basicMP+(mpModifier*level),
                         1,
-                        5,//1+level,
+                        1+level,
                         2+level,
                         level,
                         level,

@@ -9,16 +9,14 @@ import java.util.List;
 
 
 public class EquipmentFactory {
-    private final GameState gameState;
     private final InGameClasses classe;
 
-    public EquipmentFactory(GameState gameState, InGameClasses classe) {
-        this.gameState = gameState;
-        this.classe = classe;
+    public EquipmentFactory(InGameClasses playerClasse) {
+        this.classe = playerClasse;
     }
 
-    public Equipment getCopyOfEquipment(Equipment equipment) {
-        return getEquipment(gameState.getPlayer().getPlayerStats().getLevel(), equipment.getType(), equipment.getRarity());
+    public Equipment getCopyOfEquipment(Equipment equipment, int level) {
+        return getEquipment(level, equipment.getType(), equipment.getRarity());
     }
 
     public Equipment getEquipment(int level, EquipmentType type, EquipmentRarity rarity) {
@@ -54,7 +52,7 @@ public class EquipmentFactory {
         List<String> namePlusDesctription = buildDescriptionAndName(type, rarity);
         equipment.setDescription(namePlusDesctription.get(1));
         equipment.setName(namePlusDesctription.get(0));
-        gm.SetBonusEquipement(equipment, gameState.getPlayer().getClasse());
+        gm.SetBonusEquipement(equipment, classe);
         equipment.setPrice(gm.getEquipmentPrice(level, rarity));
         return equipment;
     }

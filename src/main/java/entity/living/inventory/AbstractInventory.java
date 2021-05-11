@@ -151,16 +151,16 @@ public class AbstractInventory implements Inventory {
         if (equipment.getBonusArmor() != 0) {
             player.getPlayerStats().changeArmorTotal(equipModifier * equipment.getBonusArmor());
         }
-        else if (equipment.getBonusDamage() != 0) {
+        if (equipment.getBonusDamage() != 0) {
             player.getPlayerStats().changeDamageTotal(equipModifier * equipment.getBonusDamage());
         }
-        else if (equipment.getBonusMana() != 0) {
+        if (equipment.getBonusMana() != 0) {
             player.getPlayerStats().changeManaPointTotal(equipModifier * equipment.getBonusMana());
         }
-        else if (equipment.getBonusLife() != 0) {
+        if (equipment.getBonusLife() != 0) {
             player.getPlayerStats().changeLifePointTotal(equipModifier * equipment.getBonusLife());
         }
-        else if (equipment.getBonusInitiative() != 0) {
+        if (equipment.getBonusInitiative() != 0) {
             player.getPlayerStats().editInitiativeActual(equipModifier * equipment.getBonusInitiative());
         }
     }

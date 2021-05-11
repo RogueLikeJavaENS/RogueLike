@@ -6,6 +6,7 @@ import gameElement.GameRule;
 import gameElement.GameState;
 import stuff.Stuff;
 import stuff.equipment.Equipment;
+import stuff.equipment.EquipmentFactory;
 import stuff.item.Item;
 import utils.Colors;
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -41,11 +42,11 @@ public class MerchantInventory extends AbstractInventory {
 
     private void upgradeEquipmentLevel(GameState gameState) {
         List<Stuff> newInventory = new ArrayList<>();
-        EquipmentFactory factory = new EquipmentFactory(gameState);
+        EquipmentFactory factory = new EquipmentFactory(gameState.getPlayer().getClasse());
         for (Stuff stuff : merchantInventory) {
             if (stuff.isEquipable()) {
                 Equipment equipment = (Equipment) stuff;
-                newInventory.add(factory.getCopyOfEquipment(equipment));
+                newInventory.add(factory.getCopyOfEquipment(equipment, gameState.getPlayer().getPlayerStats().getLevel()));
             }
             else {
                 newInventory.add(stuff);

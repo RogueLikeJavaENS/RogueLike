@@ -5,7 +5,6 @@ import entity.living.inventory.PlayerInventory;
 import entity.living.LivingEntity;
 import spells.BasicAttack;
 import spells.*;
-import stuff.item.potions.XpBottle;
 import utils.Colors;
 import utils.Direction;
 import utils.Position;
@@ -19,8 +18,8 @@ public class Player extends LivingEntity {
     private final PlayerInventory playerInventory;
     private final InGameClasses classe;
 
-    public Player(Position position, int pv, int pm, String name, InGameClasses classe, int level) throws IllegalArgumentException {
-        super(position, name, Colors.WHITE, new PlayerStats(classe, 100, 100, 1, 2, 15, 1, 50000, level));
+    public Player(Position position, String name, InGameClasses classe, int level) throws IllegalArgumentException {
+        super(position, name, Colors.WHITE, new PlayerStats(classe, 100, 100, 1, 2, 1, 1, 200, level));
         spellList = new ArrayList<>();
         playerInventory = new PlayerInventory();
         addSpell(new BasicAttack()); //hard coded to test

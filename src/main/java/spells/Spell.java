@@ -6,6 +6,8 @@ import utils.Position;
 public interface Spell {
     String toString();
 
+    int getDamage();
+
     double getDamageMult();
 
     int getManaCost();

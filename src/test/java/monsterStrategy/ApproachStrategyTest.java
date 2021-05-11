@@ -30,7 +30,7 @@ class ApproachStrategyTest {
         Position playerPosition3 = new Position(7,8);
         Position playerPosition4 = new Position(1,3);
         Monster monster = monsterFactory.getMonster(0,monsterPosition);
-        Player player = new Player(playerPosition1,10,10,"Hero", InGameClasses.DUMMY, 1);
+        Player player = new Player(playerPosition1,"Hero", InGameClasses.DUMMY, 1);
 
         assertFalse(approach.act(monster,player,gridMap));
         player.setPosition(playerPosition2);

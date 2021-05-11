@@ -15,6 +15,7 @@ public class FireAura extends AbstractSpell {
     public FireAura() {
         super(colorize("Fire Aura", Colors.RED.textApply()),
                 1.4,
+                15,
                 new Range(),
                 10
         );

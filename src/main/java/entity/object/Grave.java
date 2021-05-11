@@ -31,6 +31,7 @@ public class Grave extends ObjectEntity {
         int level = gameState.getPlayer().getPlayerStats().getLevel();
         ItemFactory itemFactory = new ItemFactory();
         EquipmentFactory equipmentFactory = new EquipmentFactory(gameState.getPlayer().getClasse());
+
         for (int i = 0; i < gameRule.getNumberOfPotionsOnCorpse(); i++) {
             droppedItems.add(itemFactory.getItem(gameRule.getPotionType(), level));
         }
@@ -70,6 +71,7 @@ public class Grave extends ObjectEntity {
                 } else {
                     dropDescriptor.append(", ");
                 }
+                gameState.getPlayer().getInventory().addItem(stuff);
             }
             gameState.getDescriptor().updateDescriptor(dropDescriptor.toString());
         }

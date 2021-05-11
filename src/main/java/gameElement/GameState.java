@@ -258,9 +258,10 @@ public class GameState {
                         if(currentEntity.isMonster()) {
                             Monster monster = (Monster) currentEntity;
                             if (!monster.isBoss()) {
-                                int damages = (int) Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
+                                int damage = spell.getDamage();
+                                double mult = spell.getDamageMult();
+                                int damages = (int) (damage + mult * player.getPlayerStats().getDamageTotal());
                                 damages = monster.getMonsterStats().sufferDamage(damages);
-                                monster.getMonsterStats().sufferDamage(damages);
                                 descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
                                         player.getName(),
                                         spell,
@@ -279,8 +280,10 @@ public class GameState {
                         }
                         else if (!hitBoss && currentEntity.isBossPart()) {
                             BossPart bossPart = (BossPart) currentEntity;
-                            int damages = (int) Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
-                            damages = monster.dealDamageBoss(damages);
+                            int damage = spell.getDamage();
+                            double mult = spell.getDamageMult();
+                            int damages = (int) (damage + mult * player.getPlayerStats().getDamageTotal());
+                            damages = bossPart.dealDamageBoss(damages);
                             descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
                                     player.getName(),
                                     spell,

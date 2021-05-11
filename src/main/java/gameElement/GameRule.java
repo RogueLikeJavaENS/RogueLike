@@ -383,7 +383,7 @@ public class GameRule {
                 }
                 break;
             case PANT:
-                switch (classe){
+                switch (classe) {
                     case RANGER:
                         equipement.setBonusArmor(value/2);
                         break;

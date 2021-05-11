@@ -5,15 +5,22 @@ import utils.Direction;
 
 public abstract class AbstractSpell implements Spell {
     String name;
+    int damage;
     double damageMult;
     Range range;
     int manaCost;
 
-    public AbstractSpell(String name, double damageMult, Range range, int manaCost) {
+    public AbstractSpell(String name, double damageMult, int damage, Range range, int manaCost) {
         this.name = name;
         this.damageMult = damageMult;
+        this.damage = damage;
         this.range = range;
         this.manaCost = manaCost;
+    }
+
+    @Override
+    public int getDamage() {
+        return (damage);
     }
 
     @Override

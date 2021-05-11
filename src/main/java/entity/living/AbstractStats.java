@@ -64,8 +64,7 @@ public abstract class AbstractStats{
     }
 
     public int sufferDamage(int damage) {
-        //TODO L'armures enlève un %age des dégâts reçuent pour ne pas prendre du 0
-        damage = Check.checkPositivity(damage-2*armorTotal);
+        damage = Check.checkPositivity(damage-armorTotal);
         this.lifePointActual = Check.checkPositivity(getLifePointActual() - damage);
         return damage;
     }

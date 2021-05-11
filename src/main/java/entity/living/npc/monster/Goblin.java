@@ -29,7 +29,7 @@ public class Goblin extends AbstractMonster implements Monster {
                 new MonsterStats(basicHP+(hpModifier*level),
                         basicMP+(mpModifier*level),
                         1,
-                        34,//3+level,
+                        3+level,
                         2+level,
                         level,
                         level,
