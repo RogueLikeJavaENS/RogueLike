@@ -1,5 +1,6 @@
 package entity.living.npc.monster;
 
+import gameElement.GameState;
 import monsterStrategy.Strategy;
 import utils.Colors;
 import utils.Position;
@@ -28,13 +29,22 @@ public class Goblin extends AbstractMonster implements Monster {
                 new MonsterStats(basicHP+(hpModifier*level),
                         basicMP+(mpModifier*level),
                         1,
-                        (3+level),
-                        (3+level),
-                        (4+level),
+                        34,//3+level,
+                        2+level,
                         level,
                         level,
-                        (5*level)));
+                        level,
+                        5*level));
         setSprites("_o_", "| |", Colors.GREEN);
         setBasicSprites("_o_", "| |");
+    }
+
+    @Override
+    public void doAction(GameState gameState) {
+        getStrategy().doAct(this, gameState.getPlayer(), gameState.getGridMap());
+        if (getStrategy().getStrategyDescription() != null) {
+            gameState.getDescriptor().updateDescriptor(getStrategy().getStrategyDescription());
+        }
+        getMonsterStats().recoverHp(5);
     }
 }

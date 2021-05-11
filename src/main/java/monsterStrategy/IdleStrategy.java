@@ -20,6 +20,7 @@ public class IdleStrategy extends DecoratorStrategy {
             }
             updateStrategyDescription(null);
             StrategyUtils.moveRandomly(monster, gridMap);
+            this.updateStrategyDescription(String.format("%s couldn't see %s.",monster.getName(), player.getName()));
         }
         return canMove;
     }
