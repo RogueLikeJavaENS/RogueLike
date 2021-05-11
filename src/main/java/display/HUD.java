@@ -64,7 +64,7 @@ public class HUD {
                 " Xp Bottle: " + colorize(String.valueOf(player.getInventory().getItemNumber(ItemType.XP_BOTTLE)), Colors.GREEN.textApply()) +
                 "\n" +
                 "A : " +
-                player.getSelectedSpell().toString() +
+                player.getPlayerStats().getSelectedSpell().toString() +
                 "\n";
         listStrHud.add(finalString);
         return listStrHud; //"Name:    Lvl: 42    HP: 69/420    MP: 42/56" (example)
@@ -85,7 +85,7 @@ public class HUD {
     public void spellSelectionString(int spellPosition) {
         StringBuilder spellsString = new StringBuilder();
         StringBuilder currentSpellString = new StringBuilder();
-        List<Spell> playerSpells = player.getSpells();
+        List<Spell> playerSpells = player.getPlayerStats().getSpells();
         Spell currentSpell;
         for (int i = 0; i < playerSpells.size(); i++) {
             currentSpell = playerSpells.get(i);

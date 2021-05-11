@@ -1,9 +1,14 @@
 package entity.living.player;
 
-import classeSystem.InGameClasses;
+import classeSystem.*;
 import entity.living.AbstractStats;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import spells.BasicAttack;
+import spells.FireAura;
+import spells.FireBall;
+import spells.Spell;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 /**
  * class adding to AbstractStats (by extending it) the stats necessary to a player.
@@ -11,6 +16,9 @@ import java.util.Map;
  */
 
 public class PlayerStats extends AbstractStats {
+    private final List<Spell> spellList;
+    private Spell selectedSpell;
+    private final InGameClasses classe;
     private final int[] classFactor;
     private final Map<Integer, Integer> levelCap;
     private int xp;
@@ -34,6 +42,10 @@ public class PlayerStats extends AbstractStats {
 
     public PlayerStats(InGameClasses classe, int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int money, int level) {
         super(lifePoint, manaPoint, range, initiative, damage, armor, money, level);
+        this.classe=classe;
+        spellList = new ArrayList<>();
+        getRewardForLevelForClass(classe, level);
+        selectedSpell = spellList.get(0); //Default selected attack is the BasicAttack
         switch (classe.ordinal()){
             case 0:
                 this.classFactor = new int[] {10, 7, 2, 1, 1};
@@ -95,5 +107,40 @@ public class PlayerStats extends AbstractStats {
         changeDamageNatural(classFactor[3]);
         changeArmorNatural(classFactor[4]);
         setLevel(getLevel()+1);
+        getRewardForLevelForClass(getClasse(), getLevel());
     }
+
+    private void getRewardForLevelForClass(InGameClasses classe, int level){
+        switch (classe){
+            case DUMMY:
+            case RANGER:
+            case WARRIOR:
+            case MAGE:
+                for (pathMage reward:
+                     pathMage.values()) {
+                    if (reward.getLevel().equals(level)){
+                        addSpell(reward.getReward());
+                    }
+                }
+                break;
+        }
+    }
+
+//    public void addSpell(Spell spell) {
+//        spellList.add(spell);
+//    }
+
+    public void addSpell(String spellname){
+        try {
+            Class<?> spellLookUp = Class.forName("spells."+spellname);
+            spellList.add((Spell) spellLookUp.getDeclaredConstructor().newInstance());
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setSelectedSpell(Spell selectedSpell) { this.selectedSpell = selectedSpell; }
+    public List<Spell> getSpells() { return spellList; }
+    public Spell getSelectedSpell() { return selectedSpell; }
+    public  InGameClasses getClasse() {return classe;}
 }

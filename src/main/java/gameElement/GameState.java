@@ -61,7 +61,7 @@ public class GameState {
 
 
     public void updateRange() {
-        Spell spell = player.getSelectedSpell();
+        Spell spell = player.getPlayerStats().getSelectedSpell();
         spell.setRange(player.getPosition(), player.getDirection());
         range = spell.getRange();
         gridMap.updateRangeList(range);
@@ -234,7 +234,7 @@ public class GameState {
     private void initFight(List<LivingEntity> monsters) {
         List<LivingEntity> fightList = new ArrayList<>(monsters);
         fightList.add(player);
-        player.setSelectedSpell(player.getSpells().get(0));
+        player.getPlayerStats().setSelectedSpell(player.getPlayerStats().getSpells().get(0));
         hud.spellSelectionString(0);
         fighting = new Fighting(fightList);
     }
@@ -249,7 +249,7 @@ public class GameState {
      */
     public boolean useSpell() {
         boolean hitBoss = false;
-        Spell spell = player.getSelectedSpell();
+        Spell spell = player.getPlayerStats().getSelectedSpell();
         if (player.getPlayerStats().consumeMp(spell.getManaCost())) {
             for (Position pos : gridMap.getRangeList()) {
                 List<Entity> entityList = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());

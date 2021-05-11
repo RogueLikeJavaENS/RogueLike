@@ -182,9 +182,9 @@ public class RogueLike {
                 break;
             case KeyEvent.VK_RIGHT:
                 if (state == State.FIGHT) {
-                    int indexSpell =  player.getSpells().indexOf(player.getSelectedSpell());
-                    int newIndexSpell = (indexSpell+1) % player.getSpells().size();
-                    player.setSelectedSpell(player.getSpells().get(newIndexSpell));
+                    int indexSpell =  player.getPlayerStats().getSpells().indexOf(player.getPlayerStats().getSelectedSpell());
+                    int newIndexSpell = (indexSpell+1) % player.getPlayerStats().getSpells().size();
+                    player.getPlayerStats().setSelectedSpell(player.getPlayerStats().getSpells().get(newIndexSpell));
                     gs.getHud().spellSelectionString(newIndexSpell);
                     gs.updateRange();
                     turned = true;
@@ -192,10 +192,10 @@ public class RogueLike {
                 break;
             case KeyEvent.VK_LEFT:
                 if (state == State.FIGHT) {
-                    int indexSpell = player.getSpells().indexOf(player.getSelectedSpell());
-                    int nbSpells = player.getSpells().size();
+                    int indexSpell = player.getPlayerStats().getSpells().indexOf(player.getPlayerStats().getSelectedSpell());
+                    int nbSpells = player.getPlayerStats().getSpells().size();
                     int newIndexSpell = (indexSpell+nbSpells-1) % nbSpells;
-                    player.setSelectedSpell(player.getSpells().get(newIndexSpell));
+                    player.getPlayerStats().setSelectedSpell(player.getPlayerStats().getSpells().get(newIndexSpell));
                     gs.getHud().spellSelectionString(newIndexSpell);
                     gs.updateRange();
                     turned = true;
