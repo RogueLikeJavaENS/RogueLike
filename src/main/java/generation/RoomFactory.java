@@ -3,7 +3,7 @@ package generation;
 import display.GridMap;
 import display.tiles.Tile;
 import entity.Entity;
-import entity.living.npc.merchants.PotionMerchant;
+import entity.living.npc.merchants.GeneralMerchant;
 import entity.living.npc.monster.MonsterFactory;
 import entity.living.npc.monster.boss.Boss;
 import entity.living.npc.monster.boss.BossFactory;
@@ -30,7 +30,6 @@ import utils.Position;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -67,12 +66,6 @@ public class RoomFactory {
                currentAvailablePositions.remove(room.getCenter());
                 addHoleAndSpike(room);
                 addChest(room,true);
-
-                // Basic equipment to start a new adventure
-//                addHole(room);
-//                addSpike(room);
-//                addChest(room,true);    // Basic equipment to start a new adventure
-                // add some stuffs that make clear it's the start room.
                 break;
             case BOSS:
                 BossFactory bossFactory = new BossFactory(floor);
@@ -101,7 +94,6 @@ public class RoomFactory {
             case REST:
                 addHoleAndSpike(room);
                 addCoins(room, 5);
-                //addMerchant(room);
                 break;
             case TREASURE:
                 addChest(room,false);
@@ -199,8 +191,7 @@ public class RoomFactory {
         for (Room room : dungeon.getRoomList()) {
             if (room.getRoomType() == RoomType.REST) {
                 List<Position> availablePositions = room.getAvailablePositions();
-                PotionMerchant potionMerchant = new PotionMerchant(availablePositions.remove(0));
-                ItemFactory itemFactory = new ItemFactory();
+                GeneralMerchant generalMerchant = new GeneralMerchant(availablePositions.remove(0));
                 EquipmentFactory equipmentFactory = new EquipmentFactory(gameState);
                 GameRule gm = new GameRule();
                 List<Stuff> merchantInventory = new ArrayList<>();
@@ -229,10 +220,10 @@ public class RoomFactory {
                 merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.SHIELD, EquipmentRarity.E));
                 merchantInventory.add(equipmentFactory.getEquipment(1, EquipmentType.WEAPON, EquipmentRarity.E));
 
-                potionMerchant.getMerchantInventory().setMerchantInventory(merchantInventory);
+                generalMerchant.getMerchantInventory().setMerchantInventory(merchantInventory);
                 Position position =  availablePositions.remove(0);
-                room.addEntity(new PotionMerchant(position));
-                dungeon.getGridMap(room).update(potionMerchant, true);
+                room.addEntity(new GeneralMerchant(position));
+                dungeon.getGridMap(room).update(generalMerchant, true);
             }
         }
     }

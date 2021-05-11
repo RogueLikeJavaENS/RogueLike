@@ -22,4 +22,5 @@ public abstract class AbstractMerchant extends NPC implements Merchant {
     public HashMap<Stuff, Integer> getShops() {
         return null;
     }
+
 }

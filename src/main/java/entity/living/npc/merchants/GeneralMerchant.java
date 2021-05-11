@@ -2,21 +2,15 @@ package entity.living.npc.merchants;
 
 import entity.living.npc.NPCStats;
 import gameElement.GameState;
-import gameElement.menu.Menu;
-import stuff.equipment.EquipmentRarity;
-import stuff.equipment.EquipmentType;
-import stuff.equipment.equipments.*;
-import stuff.item.potions.Elixir;
-import stuff.item.potions.PotionHealth;
-import stuff.item.potions.XpBottle;
+import gameElement.menu.InGameMenu;
 import utils.*;
 
 
-public class PotionMerchant extends AbstractMerchant {
+public class GeneralMerchant extends AbstractMerchant {
 
     private MerchantInventory merchantInventory;
 
-    public PotionMerchant(Position position) {
+    public GeneralMerchant(Position position) {
         super(position, "Jean-Charles", Colors.WHITE, new NPCStats(100,100,5, 1, 1 ,1 ,1 ,1));
         setSprites("~.~", "|_|", Colors.CYAN, Colors.MAGENTA);
         this.merchantInventory = new MerchantInventory();
@@ -24,9 +18,9 @@ public class PotionMerchant extends AbstractMerchant {
 
     @Override
     public void doInteraction(GameState gameState) {
-        //merchantInventory.openSellingSHop(gameState);
+        merchantInventory.openSellingShop(gameState);
         gameState.setState(State.SHOP_MENU);
-        gameState.setMenu(new Menu(gameState.getState()));
+        new InGameMenu(gameState);
         gameState.setMerchant(this);
     }
 

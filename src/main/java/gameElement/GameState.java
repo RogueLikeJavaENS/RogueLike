@@ -10,12 +10,13 @@ import entity.living.player.Player;
 import entity.living.npc.monster.Monster;
 import entity.object.Carrot;
 import entity.object.Grave;
-import gameElement.menu.Menu;
+import gameElement.menu.InGameMenu;
 import generation.RoomFactory;
 import spells.*;
 import utils.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
@@ -38,11 +39,12 @@ public class GameState {
     private HUD hud;
     private int currentFightExp;
     public Merchant merchant;
-    private Menu menu;
+    private final ScanPanel sp;
 
-    public GameState(Player player, Dungeon dungeon, HUD hud) {
+    public GameState(Player player, Dungeon dungeon, HUD hud, ScanPanel sp) {
         this.dungeon = dungeon;
         this.player = player;
+        this.sp = sp;
         this.currentRoom = dungeon.getRoomList().get(0); //dungeon.getRoomList().size()-2
         this.gridMap = dungeon.getGridMap(currentRoom);
         this.gameRule = new GameRule();
@@ -53,6 +55,7 @@ public class GameState {
         player.setPosition(currentRoom.getCenter());
         state = State.NORMAL;
         gridMap.update(player, true);
+        RoomFactory.addMerchant(this, dungeon);
         currentFightExp = 0;
         isThereMonsters();
     }
@@ -308,10 +311,10 @@ public class GameState {
     public MiniMap getMiniMap() { return miniMap; }
     public GameRule getGameRule() { return gameRule; }
     public Descriptor getDescriptor() { return descriptor; }
-    public Menu getMenu() { return menu; }
     public HUD getHud() {
         return hud;
     }
+    public ScanPanel getScanPanel() { return sp; }
 
     /* SETTERS */
     public void setState(State newState) {this.state = newState; }
@@ -321,7 +324,6 @@ public class GameState {
     public void setHelp(boolean help){ this.help = help; }
     public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
     public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
-    public void setMenu(Menu menu) { this.menu = menu; }
     public void setHud(HUD hud) { this.hud = hud; }
     public void setPlayer(Player player) {
         gridMap.update(getPlayer(), false);

@@ -114,12 +114,6 @@ public class RendererUI {
             case SHOP:
                 globalSB.append(gs.merchant.getMerchantInventory().toStringInventory(gs));
                 break;
-            case SHOP_MENU:
-            case PAUSE_MENU:
-            case ClASS_SELECTION_MENU:
-            case START_MENU:
-                globalSB.append(gs.getMenu().displayMenu());
-                break;
             default:
                 break;
         }
@@ -205,7 +199,7 @@ public class RendererUI {
      * Use it before re-print the renderer
      *
      */
-    public void clearConsole() {
+    public static void clearConsole() {
         try {
             String os = System.getProperty("os.name");
             if (os.contains("Windows")) {

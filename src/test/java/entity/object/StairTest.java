@@ -8,6 +8,7 @@ import gameElement.GameState;
 import generation.DungeonStructure;
 import generation.Seed;
 import org.junit.jupiter.api.Test;
+import utils.ScanPanel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +20,7 @@ class StairTest {
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
         Player test = new Player(null,100, 100, "test", InGameClasses.DUMMY, 100);
         HUD hud = new HUD(test);
-        GameState gs = new GameState(test, dungeon, hud);
+        GameState gs = new GameState(test, dungeon, hud, new ScanPanel());
         Stair test2 = new Stair(null);
         int temp = gs.getDungeon().getFloor();
         test2.doAction(gs);

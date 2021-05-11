@@ -67,7 +67,6 @@ public class Inventory {
         boolean used = false;
         if (indexOfSelectedStuff != -1) {
             if (onEquipments) {
-                int index = containsStuff(selectedStuff, sortedEquipment);
                 Equipment equipment = (Equipment) selectedStuff;
                 used = useEquipment(equipment, gameState);
             } else {
@@ -316,26 +315,6 @@ public class Inventory {
         return sb.toString();
     }
 
-    private int containsEquipedType(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean ini, Equipment equipment) {
-        for (Stuff stuff : equiped) {
-            Equipment e = (Equipment) stuff;
-            if (e.getType().equals(equipment.getType())) {
-                if (hp) {
-                    return e.getBonusLife();
-                } else if (mp) {
-                    return e.getBonusMana();
-                } else if (dmg) {
-                    return e.getBonusDamage();
-                } else if (armor) {
-                    return e.getBonusArmor();
-                } else if (ini) {
-                    return e.getBonusInitiative();
-                }
-            }
-        }
-        return -1;
-    }
-
     protected static int containsStuff(Stuff stuff, List<CoupleStuff> coupleStuffList) {
         for (int i = 0; i < coupleStuffList.size(); i++) {
             if (coupleStuffList.get(i).getStuff().isEquipable() && stuff.isEquipable()) {
@@ -405,6 +384,26 @@ public class Inventory {
         }
         sb.append(" -------------------------------------------------------------------------------------------------------------- \n");
         return sb.toString();
+    }
+
+    private int containsEquipedType(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean ini, Equipment equipment) {
+        for (Stuff stuff : equiped) {
+            Equipment e = (Equipment) stuff;
+            if (e.getType().equals(equipment.getType())) {
+                if (hp) {
+                    return e.getBonusLife();
+                } else if (mp) {
+                    return e.getBonusMana();
+                } else if (dmg) {
+                    return e.getBonusDamage();
+                } else if (armor) {
+                    return e.getBonusArmor();
+                } else if (ini) {
+                    return e.getBonusInitiative();
+                }
+            }
+        }
+        return -1;
     }
 
     private String stuffLineToString(CoupleStuff coupleStuff) {
