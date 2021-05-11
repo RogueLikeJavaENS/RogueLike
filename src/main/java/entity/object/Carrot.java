@@ -30,4 +30,9 @@ public class Carrot extends ObjectEntity {
         gameState.getGridMap().update(this, false);
         gameState.getDescriptor().updateDescriptor("You cleaned up the carrot.");
     }
+
+    @Override
+    public boolean isDestroyable() {
+        return true;
+    }
 }

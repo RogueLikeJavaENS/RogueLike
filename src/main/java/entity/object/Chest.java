@@ -1,5 +1,6 @@
 package entity.object;
 
+import com.diogonunes.jcolor.Attribute;
 import entity.living.player.Player;
 import gameElement.GameRule;
 import gameElement.GameState;
@@ -13,6 +14,10 @@ import stuff.item.ItemType;
 import stuff.item.keys.GoldKey;
 import utils.Colors;
 import utils.Position;
+
+import java.awt.*;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
  * This class represent a Chest which could contains Equipment, Gold, Potion and Golden Key.
@@ -73,31 +78,48 @@ public class Chest extends ObjectEntity {
             }
             player.getInventory().addItem(itemToAdd);
         }
-        if (nbElixir > 0){ gameState.getDescriptor().updateDescriptor(String.format("You found %d %s in the chest",nbElixir,ItemType.ELIXIR)); }
-        if (nbHealthPotion > 0){ gameState.getDescriptor().updateDescriptor(String.format("You found %d %s in the chest",nbHealthPotion,ItemType.HEALTH_POTION)); }
-        if(nbXPBottle > 0){ gameState.getDescriptor().updateDescriptor(String.format("You found %d %s in the chest",nbXPBottle,ItemType.XP_BOTTLE)); }
+        if (nbElixir > 0){ gameState.getDescriptor().updateDescriptor(String.format(
+                "You found %d %s in the chest", nbElixir, colorize(ItemType.ELIXIR.toString(), Attribute.BOLD(), Colors.BLUE.textApply()))); }
+        if (nbHealthPotion > 0){ gameState.getDescriptor().updateDescriptor(String.format(
+                "You found %d %s in the chest", nbHealthPotion, colorize(ItemType.HEALTH_POTION.toString(), Attribute.BOLD(), Colors.RED.textApply()))); }
+        if(nbXPBottle > 0){ gameState.getDescriptor().updateDescriptor(String.format(
+                "You found %d %s in the chest", nbXPBottle, colorize(ItemType.XP_BOTTLE.toString(), Attribute.BOLD(), Colors.GREEN.textApply()))); }
 
         /// Fill the equipment
         int nbEquipment = gr.getNumberOfEquipmentInChest();
-        EquipmentFactory equipmentFactory = new EquipmentFactory(gameState);
-        for(int i=0; i<nbEquipment; i++){
-            EquipmentType equipmentType = gr.getEquipmentType();
-            EquipmentRarity equipmentRarity = gr.getEquipmentRarity(isClassic);
-            Equipment equipment = equipmentFactory.getEquipment(player.getPlayerStats().getLevel(),equipmentType,equipmentRarity);
-            player.getInventory().addItem(equipment);
-            gameState.getDescriptor().updateDescriptor(String.format("You found a %s %s in the chest",equipment.getName(),equipment.getRarity()));
+        EquipmentFactory equipmentFactory = new EquipmentFactory(gameState.getPlayer().getClasse());
+        if (nbEquipment > 0) {
+            StringBuilder description = new StringBuilder();
+            description.append("You found : ");
+            for(int i=0; i<nbEquipment; i++){
+                EquipmentType equipmentType = gr.getEquipmentType();
+                EquipmentRarity equipmentRarity = gr.getEquipmentRarity(isClassic);
+                Equipment equipment = equipmentFactory.getEquipment(player.getPlayerStats().getLevel(),equipmentType,equipmentRarity);
+                player.getInventory().addItem(equipment);
+                description.append(String.format(
+                        "%s",colorize(equipment.getName(), Attribute.BOLD(), EquipmentRarity.getColor(equipmentRarity).textApply())));
+                if (i == nbEquipment-1) {
+                    description.append(".");
+                } else {
+                    description.append(", ");
+                }
+            }
+            gameState.getDescriptor().updateDescriptor(description.toString());
         }
+
 
         /// Fill the Gold
         int nbGold = gr.getNumberOfGoldInChest(isClassic);
         player.getPlayerStats().gainMoney(nbGold);
-        gameState.getDescriptor().updateDescriptor(String.format("You found %d gold in the chest",nbGold));
+        gameState.getDescriptor().updateDescriptor(String.format(
+                "You found %s BTC in the chest", colorize(String.valueOf(nbGold), Attribute.BOLD(), Colors.YELLOW.textApply())));
 
         /// Fill the golden key
         if (isClassic){
             if(gr.presenceOfGoldenKeyInClassicChest()){
                 player.getInventory().addItem(new GoldKey());
-                gameState.getDescriptor().updateDescriptor("You found a GoldKey in the chest !");
+                gameState.getDescriptor().updateDescriptor(colorize(
+                        "You found a GoldKey in the chest !", Attribute.BOLD(), Colors.YELLOW.textApply()));
             }
         }
     }

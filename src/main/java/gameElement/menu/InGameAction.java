@@ -7,11 +7,11 @@ import gameElement.GameState;
  * @author Antoine
  */
 
-public class MenuAction {
+public class InGameAction {
     private String name;
     private Action action;
 
-    public MenuAction(String name, Action action) {
+    public InGameAction(String name, Action action) {
         this.name = name;
         this.action = action;
     }

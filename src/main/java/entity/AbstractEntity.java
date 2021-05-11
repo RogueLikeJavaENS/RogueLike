@@ -54,12 +54,19 @@ public abstract class AbstractEntity implements Entity {
         // do nothing
     }
 
-    @Override
     public boolean isMonster() {
         return false;
     }
 
     public boolean isTrap(){
+        return false;
+    }
+
+    public boolean isDestroyable() {
+        return false;
+    }
+
+    public boolean isBossPart() {
         return false;
     }
 

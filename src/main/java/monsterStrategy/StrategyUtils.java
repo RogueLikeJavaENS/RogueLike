@@ -31,6 +31,22 @@ public final class StrategyUtils {
         return getDistance(bossPos, playerPos);
     }
 
+    public static boolean isNextToBoss(Boss boss, Player player) {
+        Position bossPos = boss.getPosition();
+        Position playerPos = player.getPosition();
+        int absP = playerPos.getAbs();
+        int ordP = playerPos.getOrd();
+        int absB = bossPos.getAbs();
+        int ordB = bossPos.getOrd();
+        if (absP == absB || absP == absB+1) {
+            return ordP >= ordB - 1 && ordP <= ordB + 2;
+        }
+        if (ordP == ordB || ordP == ordB+1) {
+            return absP >= absB - 1 && absP <= absB + 2;
+        }
+        return false;
+    }
+
     public static double getDistance(Position firstPos, Position secondPos){
         int dx = firstPos.getAbs() - secondPos.getAbs();
         int dy = firstPos.getOrd() - secondPos.getOrd();

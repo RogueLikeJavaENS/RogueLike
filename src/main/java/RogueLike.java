@@ -1,10 +1,11 @@
-import classeSystem.InGameClasses;
 import com.diogonunes.jcolor.Attribute;
 import display.HUD;
 import display.RendererUI;
 import entity.living.LivingEntity;
 import entity.living.player.Player;
-import gameElement.menu.Menu;
+import gameElement.menu.InGameMenu;
+import entity.living.inventory.OpenInventory;
+import gameElement.menu.StartMenu;
 import stuff.item.ItemType;
 import gameElement.*;
 import generation.*;
@@ -32,21 +33,19 @@ public class RogueLike {
      * Creates an instance of the game.
      */
     RogueLike() throws InterruptedException {
-        StartMenu start = new StartMenu();
-        start.begin();
-        Seed seed = new Seed();
-        Dungeon dungeon = DungeonStructure.createDungeon(seed, 1);
-        Position initialPosition = dungeon.getRoom(0).getCenter();
-        Player player = new Player(initialPosition,1, 1, "dummy", InGameClasses.DUMMY, 1);
         sp = new ScanPanel();
-        gs = new GameState(player, dungeon, new HUD(player));
-        gs.setState(State.START_MENU);
-        gs.setMenu(new Menu (gs.getState()));
+        StartMenu start = new StartMenu(sp);
+
+        Seed seed = new Seed();
+        Dungeon dungeon = DungeonStructure.createDungeon(seed, 1, start.getClasse());
+        Position initialPosition = dungeon.getRoom(0).getCenter();
+        Player player = new Player(initialPosition,100, 100, start.getName(), start.getClasse(), 1);
+
+        gs = new GameState(player, dungeon, new HUD(player), sp);
         rendererUI = new RendererUI(gs);
         rendererUI.display();
-
         gameLoop(); // until state equals WIN or LOSE or END
-        rendererUI.clearConsole();
+        RendererUI.clearConsole();
         if (gs.getState() == State.WIN) {
             rendererUI.winEnd();
         }
@@ -97,6 +96,7 @@ public class RogueLike {
                 }
                 sp.reset();
             }
+            gs.isPlayerAlive();
         }
     }
 
@@ -139,13 +139,6 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(0, -1);
                     }
-                } else if (state == State.INVENTORY) {
-                    modifiedMenu = gs.getPlayer().getInventory().previousSelectedStuff();
-                } else if (state == State.SHOP) {
-                    modifiedMenu = gs.merchant.getMerchantInventory().previousSelectedStuff();
-                } else if (state == State.SHOP_MENU || state == State.PAUSE_MENU || state == State.ClASS_SELECTION_MENU || state == State.START_MENU) {
-                    gs.getMenu().nextSelection();
-                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_Q:
@@ -155,13 +148,6 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(-1, 0);
                     }
-                } else if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().switchCategory();
-                    modifiedMenu = true;
-                }
-                else if (state == State.SHOP) {
-                    gs.merchant.getMerchantInventory().switchCategory();
-                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_S:
@@ -171,13 +157,6 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(0, 1);
                     }
-                } else if (state == State.INVENTORY) {
-                    modifiedMenu = gs.getPlayer().getInventory().nextSelectedStuff();
-                } else if (state == State.SHOP) {
-                    modifiedMenu = gs.merchant.getMerchantInventory().nextSelectedStuff();
-                } else if (state == State.SHOP_MENU || state == State.PAUSE_MENU || state == State.ClASS_SELECTION_MENU || state == State.START_MENU) {
-                    gs.getMenu().previousSelection();
-                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_D:
@@ -187,12 +166,6 @@ public class RogueLike {
                     if (!positionLocked) {
                         acted = gs.movePlayer(1, 0);
                     }
-                } else if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().switchCategory();
-                    modifiedMenu = true;
-                } else if (state == State.SHOP) {
-                    gs.merchant.getMerchantInventory().switchCategory();
-                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_W:
@@ -236,11 +209,9 @@ public class RogueLike {
                 modifiedMenu = true;
                 break;
             case KeyEvent.VK_I:
-                if (state != State.INVENTORY) {
-                    gs.getPlayer().getInventory().openInventory(player.getPlayerStats().getLevel());
-                    gs.setState(State.INVENTORY);
-                    modifiedMenu = true;
-                }
+                OpenInventory inv = new OpenInventory(gs, player.getInventory());
+                modifiedMenu = true;
+                acted = inv.hasActed();
                 break;
             case KeyEvent.VK_H:
                 gs.setHelp(!gs.getHelp());
@@ -276,23 +247,12 @@ public class RogueLike {
                 }
                 break;
             case KeyEvent.VK_ESCAPE: // escape
-                if (state == State.INVENTORY) {
-                    gs.getPlayer().getInventory().closeInventory();
-                    gs.setState(State.NORMAL);
-                    gs.isThereMonstersInventory();
-                } else if (state == State.MAP) {
+                if (state == State.MAP) {
                     gs.setState(State.NORMAL);
                     gs.isThereMonsters();
-                } else if (state == State.SHOP) {
-                    gs.merchant.getMerchantInventory().closeInventory();
-                    gs.setState(State.NORMAL);
-                    gs.isThereMonsters();
-                } else if (state == State.SHOP_MENU || state == State.PAUSE_MENU) {
-                    gs.setState(State.NORMAL);
-                    gs.isThereMonstersInventory();
                 } else {
-                    gs.setMenu(new Menu(state));
                     gs.setState(State.PAUSE_MENU);
+                    new InGameMenu(gs);
                 }
                 modifiedMenu = true;
                 //exitStateInput();
@@ -300,21 +260,6 @@ public class RogueLike {
             case KeyEvent.VK_E:
                 if (state == State.NORMAL || state == State.FIGHT) {
                     acted = gs.interact();
-                } else if (state == State.INVENTORY) {
-                    modifiedMenu = true;
-                    boolean used = gs.getPlayer().getInventory().useSelectedStuff(gs);
-                    if (used) {
-                        acted = gs.isThereMonstersInventory();
-                        if (acted) {
-                            gs.getFighting().next();
-                        }
-                    }
-                } else if (state == State.SHOP) {
-                    gs.merchant.getMerchantInventory().useSelectedStuff(gs);
-                    modifiedMenu = true;
-                } else if (state == State.SHOP_MENU || state == State.PAUSE_MENU || state == State.ClASS_SELECTION_MENU || state == State.START_MENU) {
-                    gs.getMenu().selectAction(gs);
-                    modifiedMenu = true;
                 }
                 break;
                 default:
@@ -330,6 +275,10 @@ public class RogueLike {
     private void monsterStateInput() throws InterruptedException {
         System.out.println(colorize("Monsters' turn, press any key ...", Attribute.ITALIC(), Colors.RED.textApply()));
         int a = retrieveKey(sp);
+        if (a == KeyEvent.VK_ESCAPE) {
+            gs.setState(State.PAUSE_MENU);
+            new InGameMenu(gs);
+        }
         monsterPlayed = true;
     }
 

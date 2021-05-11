@@ -23,4 +23,9 @@ public class BossPart extends LivingEntity {
     public Boss getMyBoss() {
         return myBoss;
     }
+
+    @Override
+    public boolean isBossPart() {
+        return true;
+    }
 }

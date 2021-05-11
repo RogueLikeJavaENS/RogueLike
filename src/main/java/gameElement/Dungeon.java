@@ -1,10 +1,12 @@
 package gameElement;
 
+import classeSystem.InGameClasses;
 import display.GridMap;
 import entity.Entity;
 import entity.object.Button;
 import entity.object.Door;
 import generation.GraphDungeon;
+import generation.RoomFactory;
 import generation.RoomType;
 import generation.VerificationRoom;
 import utils.Direction;
@@ -31,10 +33,12 @@ public class Dungeon {
     private final int floor;
     private final GraphDungeon graph;
     private List<GridMap> gridMapList; // list of gridMap, index by room number.
-    private List<Button> buttons;
+    private final List<Button> buttons;
+    private final InGameClasses playerClasse;
 
-    public Dungeon(List<Room> roomList, int width, int height, GraphDungeon graph, int maxRoomHeight, int maxRoomWidth, int floor) {
+    public Dungeon(List<Room> roomList, int width, int height, GraphDungeon graph, int maxRoomHeight, int maxRoomWidth, int floor, InGameClasses classe) {
         this.roomList = roomList;
+        this.playerClasse = classe;
         this.graph = graph;
         this.width = width;
         this.height = height;
@@ -48,6 +52,7 @@ public class Dungeon {
         initGridMapList();
         placeAllButtons();
         setBossDoor();
+        addAllMerchants();
         verifyALlRoom();
     }
 
@@ -90,7 +95,6 @@ public class Dungeon {
     }
 
     private void placeAllButtons() {
-        Random GEN = new Random();
         ArrayList<Integer> idRoomList = new ArrayList<>();
         for (int i = 0; i < roomList.size(); i++) {
             idRoomList.add(i);
@@ -127,11 +131,18 @@ public class Dungeon {
      * Initialize all the gridMap of the dungeon
      *
      */
-    private void initGridMapList(){
+    private void initGridMapList() {
         this.gridMapList = new ArrayList<>();
         for (Room room : roomList) {
             gridMapList.add(new GridMap(room));
         }
+    }
+
+    /**
+     * Add all merchant in REST room.
+     */
+    private void addAllMerchants() {
+        RoomFactory.addMerchant(this, playerClasse);
     }
 
     /**

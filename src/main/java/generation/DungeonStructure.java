@@ -1,5 +1,6 @@
 package generation;
 
+import classeSystem.InGameClasses;
 import gameElement.Dungeon;
 import gameElement.Room;
 
@@ -20,7 +21,7 @@ public class DungeonStructure {
     private final static int ROOM_WIDTH = 15;
     private final static int ROOM_HEIGHT = 11;
 
-    public static Dungeon createDungeon(Seed seed, int floor){
+    public static Dungeon createDungeon(Seed seed, int floor, InGameClasses classe){
         List<Room> roomList = new ArrayList<>();
         GraphDungeon dungeon1 = new GraphDungeon(seed);
         HashMap<Integer,int[]> graph = dungeon1.getGraph();
@@ -31,7 +32,7 @@ public class DungeonStructure {
             roomList.add(room);
         }
 
-        return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1,ROOM_HEIGHT,ROOM_WIDTH, floor);
+        return new Dungeon(roomList, DUNGEON_WIDTH, DUNGEON_HEIGHT, dungeon1,ROOM_HEIGHT,ROOM_WIDTH, floor, classe);
     }
 
     /**

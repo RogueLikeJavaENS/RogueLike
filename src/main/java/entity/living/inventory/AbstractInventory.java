@@ -1,4 +1,4 @@
-package entity.living;
+package entity.living.inventory;
 
 import com.diogonunes.jcolor.Attribute;
 import entity.living.player.Player;
@@ -6,14 +6,19 @@ import entity.living.player.PlayerStats;
 import gameElement.GameRule;
 import gameElement.GameState;
 import stuff.Stuff;
-import stuff.equipment.*;
-import stuff.item.*;
-import utils.*;
-import java.util.*;
+import stuff.equipment.Equipment;
+import stuff.equipment.EquipmentRarity;
+import stuff.item.Item;
+import stuff.item.ItemType;
+import utils.Colors;
+import utils.CoupleStuff;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-public class Inventory {
+public class AbstractInventory implements Inventory {
     protected List<Stuff> inventory;
     protected List<Stuff> equiped;
     protected Stuff selectedStuff;
@@ -26,7 +31,7 @@ public class Inventory {
     protected List<CoupleStuff> sortedItem;
     protected int indexOfSelectedStuff;
 
-    public Inventory() {
+    public AbstractInventory() {
         inventory = new ArrayList<>();
         equiped = new ArrayList<>();
         sortedItem = new ArrayList<>();
@@ -67,7 +72,6 @@ public class Inventory {
         boolean used = false;
         if (indexOfSelectedStuff != -1) {
             if (onEquipments) {
-                int index = containsStuff(selectedStuff, sortedEquipment);
                 Equipment equipment = (Equipment) selectedStuff;
                 used = useEquipment(equipment, gameState);
             } else {
@@ -206,6 +210,14 @@ public class Inventory {
         }
     }
 
+    public void openSellingShop(GameState gameState) {
+        //
+    }
+
+    public void openBuyingSHop(GameState gameState) {
+        //
+    }
+
     public void openInventory(int level) {
         GameRule gameRule = new GameRule();
         indexOfSelectedStuff = -1;
@@ -246,6 +258,7 @@ public class Inventory {
             onEquipments = false;
             if (sortedItem.isEmpty()) {
                 selectedStuff = null;
+                indexOfSelectedStuff = -1;
             } else {
                 indexOfSelectedStuff = 0;
                 selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
@@ -254,6 +267,7 @@ public class Inventory {
             onEquipments = true;
             if (sortedEquipment.isEmpty()) {
                 selectedStuff = null;
+                indexOfSelectedStuff = -1;
             } else {
                 indexOfSelectedStuff = 0;
                 selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();
@@ -316,26 +330,6 @@ public class Inventory {
         return sb.toString();
     }
 
-    private int containsEquipedType(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean ini, Equipment equipment) {
-        for (Stuff stuff : equiped) {
-            Equipment e = (Equipment) stuff;
-            if (e.getType().equals(equipment.getType())) {
-                if (hp) {
-                    return e.getBonusLife();
-                } else if (mp) {
-                    return e.getBonusMana();
-                } else if (dmg) {
-                    return e.getBonusDamage();
-                } else if (armor) {
-                    return e.getBonusArmor();
-                } else if (ini) {
-                    return e.getBonusInitiative();
-                }
-            }
-        }
-        return -1;
-    }
-
     protected static int containsStuff(Stuff stuff, List<CoupleStuff> coupleStuffList) {
         for (int i = 0; i < coupleStuffList.size(); i++) {
             if (coupleStuffList.get(i).getStuff().isEquipable() && stuff.isEquipable()) {
@@ -361,13 +355,13 @@ public class Inventory {
         StringBuilder sb = new StringBuilder();
 
         String separationItems =
-            "|"+
-            colorize("----------------------", Colors.GREY.textApply())+"|"+
-            colorize("----", Colors.GREY.textApply())+"|"+
-            colorize("---", Colors.GREY.textApply())+"|"+
-            colorize("-----", Colors.GREY.textApply())+"|"+
-            colorize("-----", Colors.GREY.textApply())+"|"+
-            colorize("------------------------------------------------------------------", Colors.GREY.textApply())+"|\n";
+                "|"+
+                        colorize("----------------------", Colors.GREY.textApply())+"|"+
+                        colorize("----", Colors.GREY.textApply())+"|"+
+                        colorize("---", Colors.GREY.textApply())+"|"+
+                        colorize("-----", Colors.GREY.textApply())+"|"+
+                        colorize("-----", Colors.GREY.textApply())+"|"+
+                        colorize("------------------------------------------------------------------", Colors.GREY.textApply())+"|\n";
 
         sb.append("|------------------------------|--------------------------------------|\n");
         if (onEquipments) {
@@ -405,6 +399,26 @@ public class Inventory {
         }
         sb.append(" -------------------------------------------------------------------------------------------------------------- \n");
         return sb.toString();
+    }
+
+    private int containsEquipedType(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean ini, Equipment equipment) {
+        for (Stuff stuff : equiped) {
+            Equipment e = (Equipment) stuff;
+            if (e.getType().equals(equipment.getType())) {
+                if (hp) {
+                    return e.getBonusLife();
+                } else if (mp) {
+                    return e.getBonusMana();
+                } else if (dmg) {
+                    return e.getBonusDamage();
+                } else if (armor) {
+                    return e.getBonusArmor();
+                } else if (ini) {
+                    return e.getBonusInitiative();
+                }
+            }
+        }
+        return -1;
     }
 
     private String stuffLineToString(CoupleStuff coupleStuff) {
@@ -452,8 +466,8 @@ public class Inventory {
             /* DESCRIPTION */
             String description = equipment.getDescription();
             description = description.replace(
-                            equipment.getRarity().getRarity(),
-                            colorize(equipment.getRarity().getRarity(), Attribute.BOLD(), EquipmentRarity.getColor(equipment.getRarity()).textApply()));
+                    equipment.getRarity().getRarity(),
+                    colorize(equipment.getRarity().getRarity(), Attribute.BOLD(), EquipmentRarity.getColor(equipment.getRarity()).textApply()));
             sb.append(" ").append(description).append(" ".repeat(des_size-equipment.getDescription().length())).append("|\n");
 
         } else {

@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface Boss extends Monster {
 
-    boolean hasMoved();
-    void setMoved(boolean moved);
+    boolean hasSpecial();
+    void setActedSpecial(boolean moved);
     void doSpecialAction(Player player, GridMap gridmap);
     void updatePosBoss(GridMap gridMap);
     List<BossPart> getBossPartList();

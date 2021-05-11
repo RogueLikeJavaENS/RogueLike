@@ -32,7 +32,7 @@
 - Improving monsters' IA
 - Adding a class system
 - Implementing traps
-- Implementing a real and functionning inventory
+- Implementing a real and functionning playerInventory
 - Adding equipements
 - Improving the turn order handling system
 - Adding bosses / the mega merchant

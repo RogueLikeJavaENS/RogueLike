@@ -1,26 +1,18 @@
-package entity.living.npc.merchants;
+package entity.living.inventory;
 
 import com.diogonunes.jcolor.Attribute;
-import entity.living.Inventory;
 import entity.living.player.PlayerStats;
 import gameElement.GameRule;
 import gameElement.GameState;
 import stuff.Stuff;
 import stuff.equipment.Equipment;
-import stuff.equipment.EquipmentFactory;
-import stuff.equipment.EquipmentRarity;
-import stuff.equipment.EquipmentType;
-import stuff.equipment.equipments.*;
 import stuff.item.Item;
-import stuff.item.potions.Elixir;
-import stuff.item.potions.PotionHealth;
-import stuff.item.potions.XpBottle;
 import utils.Colors;
 import static com.diogonunes.jcolor.Ansi.colorize;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MerchantInventory extends Inventory {
+public class MerchantInventory extends AbstractInventory {
 
     private List<Stuff> merchantInventory;
 
@@ -34,16 +26,10 @@ public class MerchantInventory extends Inventory {
         merchantInventory.add(stuff);
     }
 
-    public boolean openSellingShop(GameState gameState) {
+    public void openSellingShop(GameState gameState) {
         inventory = gameState.getPlayer().getInventory().getInventory();
         selling = false;
-        if (inventory.isEmpty()) {
-            gameState.getDescriptor().updateDescriptor(String.format("%s have nothing to sell !", gameState.getPlayer().getName()));
-            return false;
-        } else {
-            super.openInventory(gameState.getPlayer().getPlayerStats().getLevel());
-            return true;
-        }
+        super.openInventory(gameState.getPlayer().getPlayerStats().getLevel());
     }
 
     public void openBuyingSHop(GameState gameState) {
@@ -66,10 +52,6 @@ public class MerchantInventory extends Inventory {
             }
         }
         this.merchantInventory=newInventory;
-    }
-
-    public void setMerchantInventory(List<Stuff> merchantInventory) {
-        this.merchantInventory = merchantInventory;
     }
 
     @Override

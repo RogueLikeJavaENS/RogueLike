@@ -10,8 +10,12 @@ import java.util.List;
 
 public class EquipmentFactory {
     private final GameState gameState;
+    private final InGameClasses classe;
 
-    public EquipmentFactory(GameState gameState) { this.gameState = gameState; }
+    public EquipmentFactory(GameState gameState, InGameClasses classe) {
+        this.gameState = gameState;
+        this.classe = classe;
+    }
 
     public Equipment getCopyOfEquipment(Equipment equipment) {
         return getEquipment(gameState.getPlayer().getPlayerStats().getLevel(), equipment.getType(), equipment.getRarity());
@@ -50,8 +54,8 @@ public class EquipmentFactory {
         List<String> namePlusDesctription = buildDescriptionAndName(type, rarity);
         equipment.setDescription(namePlusDesctription.get(1));
         equipment.setName(namePlusDesctription.get(0));
-        equipment.setPrice(gm.getEquipmentPrice(gameState.getPlayer().getPlayerStats().getLevel(), rarity));
         gm.SetBonusEquipement(equipment, gameState.getPlayer().getClasse());
+        equipment.setPrice(gm.getEquipmentPrice(level, rarity));
         return equipment;
     }
 
@@ -60,11 +64,11 @@ public class EquipmentFactory {
         String description;
         String name;
 
-        String rarityAttribute = getAttributeByRarityAndClasses(rarity, gameState.getPlayer().getClasse());
-        String typeClasse = getEquipmentByTypeAndClasses(type, gameState.getPlayer().getClasse());
+        String rarityAttribute = getAttributeByRarityAndClasses(rarity, classe);
+        String typeClasse = getEquipmentByTypeAndClasses(type, classe);
 
         name = rarityAttribute + " " + typeClasse;
-        description = getDescriptionByType(name, rarity, type, gameState.getPlayer().getClasse());
+        description = getDescriptionByType(name, rarity, type, classe);
         namePlusDesctription.add(name);
         namePlusDesctription.add(description);
         return namePlusDesctription;
