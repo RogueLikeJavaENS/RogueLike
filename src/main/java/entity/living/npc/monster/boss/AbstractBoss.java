@@ -35,4 +35,9 @@ public abstract class AbstractBoss extends AbstractMonster implements Boss {
     public List<BossPart> getBossPartList() {
         return bossParts;
     }
+
+    @Override
+    public boolean isBoss() {
+        return true;
+    }
 }

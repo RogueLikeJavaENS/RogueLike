@@ -245,6 +245,7 @@ public class Inventory {
             onEquipments = false;
             if (sortedItem.isEmpty()) {
                 selectedStuff = null;
+                indexOfSelectedStuff = -1;
             } else {
                 indexOfSelectedStuff = 0;
                 selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
@@ -253,6 +254,7 @@ public class Inventory {
             onEquipments = true;
             if (sortedEquipment.isEmpty()) {
                 selectedStuff = null;
+                indexOfSelectedStuff = -1;
             } else {
                 indexOfSelectedStuff = 0;
                 selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();

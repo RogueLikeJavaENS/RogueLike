@@ -19,5 +19,6 @@ public interface Entity {
     boolean getIsPlayerAccessible();
     boolean isMonster();
     boolean isTrap();
-
+    boolean isDestroyable();
+    boolean isBossPart();
 }

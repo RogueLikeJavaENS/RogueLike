@@ -62,17 +62,19 @@ public class InGameMenu {
     }
 
     private void loopMenu(GameState gameState) throws InterruptedException {
+        boolean display = true;
         while (!endMenu) {
-            RendererUI.clearConsole();
-            displayMenu();
-
+            if (display) {
+                RendererUI.clearConsole();
+                displayMenu();
+            }
             sp.reset();
             int keyCode = 0;
             while(keyCode == 0) {
                 keyCode = sp.getKeyPressed();
                 Thread.sleep(1);  // Without that, Java deletes the loop
             }
-
+            display = true;
             switch (keyCode) {
                 case KeyEvent.VK_Z:
                 case KeyEvent.VK_UP:
@@ -93,6 +95,7 @@ public class InGameMenu {
                     endMenu = true;
                     break;
                 default:
+                    display = false;
                     break;
             }
         }

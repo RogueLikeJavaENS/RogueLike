@@ -5,6 +5,7 @@ import display.RendererUI;
 import entity.living.LivingEntity;
 import entity.living.player.Player;
 import gameElement.menu.InGameMenu;
+import gameElement.menu.OpenInventory;
 import gameElement.menu.StartMenu;
 import stuff.item.ItemType;
 import gameElement.*;
@@ -141,7 +142,7 @@ public class RogueLike {
                 } else if (state == State.INVENTORY) {
                     modifiedMenu = gs.getPlayer().getInventory().previousSelectedStuff();
                 } else if (state == State.SHOP) {
-                    modifiedMenu = gs.merchant.getMerchantInventory().previousSelectedStuff();
+                    modifiedMenu = gs.getMerchant().getMerchantInventory().previousSelectedStuff();
                 }
                 break;
             case KeyEvent.VK_Q:
@@ -156,7 +157,7 @@ public class RogueLike {
                     modifiedMenu = true;
                 }
                 else if (state == State.SHOP) {
-                    gs.merchant.getMerchantInventory().switchCategory();
+                    gs.getMerchant().getMerchantInventory().switchCategory();
                     modifiedMenu = true;
                 }
                 break;
@@ -170,7 +171,7 @@ public class RogueLike {
                 } else if (state == State.INVENTORY) {
                     modifiedMenu = gs.getPlayer().getInventory().nextSelectedStuff();
                 } else if (state == State.SHOP) {
-                    modifiedMenu = gs.merchant.getMerchantInventory().nextSelectedStuff();
+                    modifiedMenu = gs.getMerchant().getMerchantInventory().nextSelectedStuff();
                 }
                 break;
             case KeyEvent.VK_D:
@@ -184,7 +185,7 @@ public class RogueLike {
                     gs.getPlayer().getInventory().switchCategory();
                     modifiedMenu = true;
                 } else if (state == State.SHOP) {
-                    gs.merchant.getMerchantInventory().switchCategory();
+                    gs.getMerchant().getMerchantInventory().switchCategory();
                     modifiedMenu = true;
                 }
                 break;
@@ -230,9 +231,12 @@ public class RogueLike {
                 break;
             case KeyEvent.VK_I:
                 if (state != State.INVENTORY) {
-                    gs.getPlayer().getInventory().openInventory(player.getPlayerStats().getLevel());
-                    gs.setState(State.INVENTORY);
+                    OpenInventory inv = new OpenInventory(gs, player.getInventory());
                     modifiedMenu = true;
+                    acted = inv.hasActed();
+//                    gs.getPlayer().getInventory().openInventory(player.getPlayerStats().getLevel());
+//                    gs.setState(State.INVENTORY);
+//                    modifiedMenu = true;
                 }
                 break;
             case KeyEvent.VK_H:
@@ -277,7 +281,7 @@ public class RogueLike {
                     gs.setState(State.NORMAL);
                     gs.isThereMonsters();
                 } else if (state == State.SHOP) {
-                    gs.merchant.getMerchantInventory().closeInventory();
+                    gs.getMerchant().getMerchantInventory().closeInventory();
                     gs.setState(State.NORMAL);
                     gs.isThereMonsters();
                 } else {
@@ -300,7 +304,7 @@ public class RogueLike {
                         }
                     }
                 } else if (state == State.SHOP) {
-                    gs.merchant.getMerchantInventory().useSelectedStuff(gs);
+                    gs.getMerchant().getMerchantInventory().useSelectedStuff(gs);
                     modifiedMenu = true;
                 }
                 break;
@@ -317,6 +321,10 @@ public class RogueLike {
     private void monsterStateInput() throws InterruptedException {
         System.out.println(colorize("Monsters' turn, press any key ...", Attribute.ITALIC(), Colors.RED.textApply()));
         int a = retrieveKey(sp);
+        if (a == KeyEvent.VK_ESCAPE) {
+            gs.setState(State.PAUSE_MENU);
+            new InGameMenu(gs);
+        }
         monsterPlayed = true;
     }
 

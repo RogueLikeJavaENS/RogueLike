@@ -60,9 +60,6 @@ public class GameState {
         isThereMonsters();
     }
 
-    public void setMerchant(Merchant merchant) {
-        this.merchant = merchant;
-    }
 
     public void updateRange() {
         Spell spell = player.getSelectedSpell();
@@ -171,6 +168,11 @@ public class GameState {
         }
     }
 
+    /**
+     * Use to return in the game if exiting the inventory or the pause menu.
+     * Check if there was monster in the room.
+     * @return if the player acted or not.
+     */
     public boolean isThereMonstersInventory() {
         boolean acted = false;
         List<LivingEntity> monsters = getGridMap().getMonsters();
@@ -254,34 +256,38 @@ public class GameState {
                 List<Entity> entityList = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());
                 for (Entity currentEntity : entityList) {
                     if (pos.equals(currentEntity.getPosition())) {
-                        if (currentEntity instanceof Monster && !(currentEntity instanceof Boss)) {
+                        if(currentEntity.isMonster()) {
                             Monster monster = (Monster) currentEntity;
-                            int damages = (int) Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
-                            monster.getMonsterStats().sufferDamage(damages);
-                            descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
-                                    player.getName(),
-                                    spell,
-                                    colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
-                                    colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
-                                    monster.getName()));
-                            isMonsterAlive(monster);
-                        } else if (currentEntity instanceof Carrot) {
+                            if (!monster.isBoss()) {
+                                int damages = (int) Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
+                                monster.getMonsterStats().sufferDamage(damages);
+                                descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
+                                        player.getName(),
+                                        spell,
+                                        colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
+                                        colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
+                                        monster.getName()));
+                                isMonsterAlive(monster);
+                            }
+                        }
+                        else if (currentEntity.isDestroyable()) {
                             gridMap.update(currentEntity, false);
-                            descriptor.updateDescriptor(String.format("%s used %s for %s mana and destroyed a trapped carrot !",
+                            descriptor.updateDescriptor(String.format("%s used %s for %s mana and destroyed a trap!",
                                     player.getName(),
                                     spell,
                                     colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply())));
-                        } else if (!hitBoss && currentEntity instanceof BossPart) {
-                            BossPart monster = (BossPart) currentEntity;
+                        }
+                        else if (!hitBoss && currentEntity.isBossPart()) {
+                            BossPart bossPart = (BossPart) currentEntity;
                             int damages = (int) Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
-                            monster.dealDamageBoss(damages);
+                            bossPart.dealDamageBoss(damages);
                             descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
                                     player.getName(),
                                     spell,
                                     colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
                                     colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
-                                    monster.getMyBoss().getName()));
-                            isMonsterAlive(monster.getMyBoss());
+                                    bossPart.getMyBoss().getName()));
+                            isMonsterAlive(bossPart.getMyBoss());
                             hitBoss = true;
                         }
                     }
@@ -315,6 +321,7 @@ public class GameState {
         return hud;
     }
     public ScanPanel getScanPanel() { return sp; }
+    public Merchant getMerchant() { return merchant; }
 
     /* SETTERS */
     public void setState(State newState) {this.state = newState; }
@@ -325,6 +332,9 @@ public class GameState {
     public void setDungeon(Dungeon dungeon) { this.dungeon = dungeon; }
     public void setMiniMap(MiniMap miniMap) { this.miniMap = miniMap; }
     public void setHud(HUD hud) { this.hud = hud; }
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
+    }
     public void setPlayer(Player player) {
         gridMap.update(getPlayer(), false);
         this.player = player;

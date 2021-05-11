@@ -99,4 +99,13 @@ public abstract class AbstractMonster extends NPC implements Monster {
     public boolean isMonster() {
         return true;
     }
+
+    public boolean isBoss() {
+        return false;
+    }
+
+    @Override
+    public boolean isBossPart() {
+        return false;
+    }
 }

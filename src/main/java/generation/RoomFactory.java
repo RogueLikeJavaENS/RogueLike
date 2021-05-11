@@ -3,6 +3,7 @@ package generation;
 import display.GridMap;
 import display.tiles.Tile;
 import entity.Entity;
+import entity.living.npc.merchants.GeneralMerchant;
 import entity.living.npc.monster.MonsterFactory;
 import entity.living.npc.monster.boss.Boss;
 import entity.living.npc.monster.boss.BossFactory;
