@@ -20,7 +20,7 @@ public class Carrot extends ObjectEntity {
         Random gen = new Random();
         int damage = 50 + gen.nextInt(70);
         Player player = gameState.getPlayer();
-        player.getPlayerStats().sufferDamage(damage);
+        damage = player.getPlayerStats().sufferDamage(damage);
         gameState.getDescriptor().updateDescriptor(String.format("%s walked on the Rabbit's carrot and lost %d HP.",player.getName(),damage));
         gameState.getGridMap().update(this, false);
     }

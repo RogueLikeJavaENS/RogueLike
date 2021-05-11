@@ -2,13 +2,13 @@ package utils;
 
 public class Check {
 
+    /**
+     * Prevents a value from being negative
+     * @param i value to check
+     * @return the value if it is positive, 0 otherwise
+     */
     public static int checkPositivity(int i) {
-        if (i < 0){
-            throw new IllegalArgumentException("The number is negative and should be positive");
-        }
-        else {
-            return i;
-        }
+        return Math.max(i, 0);
     }
 
 }

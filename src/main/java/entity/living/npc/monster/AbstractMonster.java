@@ -4,7 +4,6 @@ import entity.living.*;
 import gameElement.GameState;
 import entity.living.npc.NPC;
 import monsterStrategy.Strategy;
-import stuff.Inventory;
 import utils.Position;
 import utils.Colors;
 

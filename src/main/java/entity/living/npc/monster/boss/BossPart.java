@@ -16,8 +16,9 @@ public class BossPart extends LivingEntity {
         myBoss = boss;
     }
 
-    public void dealDamageBoss(int damage) {
-        myBoss.getMonsterStats().sufferDamage(damage);
+    public int dealDamageBoss(int damage) {
+        damage = myBoss.getMonsterStats().sufferDamage(damage);
+        return damage;
     }
 
     public Boss getMyBoss() {

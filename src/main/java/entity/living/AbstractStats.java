@@ -57,19 +57,21 @@ public abstract class AbstractStats{
     }
 
     public void upgradeLifePointNatural(int modifier){
-        Check.checkPositivity(modifier);
+        modifier = Check.checkPositivity(modifier);
         this.lifePointNatural = getLifePointNatural()+modifier;
         changeLifePointTotal(modifier);
         recoverHp(modifier);
     }
 
-    public void sufferDamage(int damage) {
-        Check.checkPositivity(damage);
-        this.lifePointActual = Math.max((getLifePointActual() - damage), 0);
+    public int sufferDamage(int damage) {
+        //TODO L'armures enlève un %age des dégâts reçuent pour ne pas prendre du 0
+        damage = Check.checkPositivity(damage-2*armorTotal);
+        this.lifePointActual = Check.checkPositivity(getLifePointActual() - damage);
+        return damage;
     }
 
     public void recoverHp(int heal) {
-        Check.checkPositivity(heal);
+        heal = Check.checkPositivity(heal);
         this.lifePointActual = Math.min((getLifePointActual() + heal), getLifePointNatural());
     }
 
@@ -78,25 +80,20 @@ public abstract class AbstractStats{
     }
 
     public void upgradeManaPointNatural(int modifier) {
-        Check.checkPositivity(modifier);
+        modifier = Check.checkPositivity(modifier);
         this.manaPointNatural = getManaPointNatural()+modifier;
         changeManaPointTotal(modifier);
         recoverMp(modifier);
     }
 
     public boolean consumeMp(int cost) {
-        Check.checkPositivity(cost);
-        if ((getManaPointActual()-cost)>=0) {
-            this.manaPointActual = getManaPointActual()-cost;
-            return true;
-        }
-        else {
-            return false;
-        }
+        cost = Check.checkPositivity(cost);
+        manaPointActual = Check.checkPositivity(manaPointActual - cost);
+        return manaPointActual >= 0;
     }
 
     public void recoverMp(int recover) {
-        Check.checkPositivity(recover);
+        recover = Check.checkPositivity(recover);
         this.manaPointActual = Math.min((getManaPointActual() + recover), getManaPointNatural());
     }
 
@@ -105,7 +102,7 @@ public abstract class AbstractStats{
     }
 
     public void upInitiativeNatural(int upgrade) {
-        Check.checkPositivity(upgrade);
+        upgrade = Check.checkPositivity(upgrade);
         this.initiativeNatural=getInitiativeNatural()+upgrade;
         editInitiativeActual(upgrade);
     }
@@ -115,7 +112,7 @@ public abstract class AbstractStats{
     }
 
     public void changeDamageNatural(int modifier) {
-        Check.checkPositivity(modifier);
+        modifier = Check.checkPositivity(modifier);
         this.damageNatural = getDamageNatural()+modifier;
         changeDamageTotal(modifier);
     }
@@ -125,7 +122,7 @@ public abstract class AbstractStats{
     }
 
     public void changeArmorNatural(int modifier) {
-        Check.checkPositivity(modifier);
+        modifier = Check.checkPositivity(modifier);
         this.armorNatural = getArmorNatural()+modifier;
         changeArmorTotal(modifier);
     }
@@ -135,21 +132,17 @@ public abstract class AbstractStats{
     }
 
     public void setLevel(int level) {
-        if (level>=1){
-            this.level=level;
-        }
-        else {
-            throw new IllegalArgumentException("this level input need to be above or equal 1");
-        }
+        this.level = Math.max(level, 1);
     }
 
     public void gainMoney(int up) {
-        Check.checkPositivity(up);
+        up = Check.checkPositivity(up);
         this.moneyCount = getMoneyCount()+up;
     }
 
     public void spendMoney(int down) {
-        this.moneyCount = Math.max((getMoneyCount()-down), 0);
+        down = Check.checkPositivity(down);
+        moneyCount = Math.max((moneyCount - down), 0);
     }
 
     /* GETTERS */
@@ -173,5 +166,4 @@ public abstract class AbstractStats{
 
     /* SETTERS */
     public void setLifePointActual(int lifePointActual) { this.lifePointActual = lifePointActual; }
-
 }

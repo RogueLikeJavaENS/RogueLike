@@ -195,7 +195,7 @@ public class GameState {
     public void isMonsterAlive(Monster monster) {
         if (monster.getMonsterStats().getLifePointActual() == 0) {
             currentFightExp += monster.getMonsterStats().getXpWorth();
-            fighting.removeMonster(monster);
+            fighting.removeMonster((LivingEntity) monster);
             gridMap.update(monster, false);
             if (monster instanceof Boss) {
                 Boss boss = (Boss) monster;
@@ -254,7 +254,7 @@ public class GameState {
                         if (currentEntity instanceof Monster && !(currentEntity instanceof Boss)) {
                             Monster monster = (Monster) currentEntity;
                             int damages = (int) Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
-                            monster.getMonsterStats().sufferDamage(damages);
+                            damages = monster.getMonsterStats().sufferDamage(damages);
                             descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
                                     player.getName(),
                                     spell,
@@ -271,7 +271,7 @@ public class GameState {
                         } else if (!hitBoss && currentEntity instanceof BossPart) {
                             BossPart monster = (BossPart) currentEntity;
                             int damages = (int) Math.ceil(spell.getDamageMult() * player.getPlayerStats().getDamageTotal());
-                            monster.dealDamageBoss(damages);
+                            damages = monster.dealDamageBoss(damages);
                             descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
                                     player.getName(),
                                     spell,

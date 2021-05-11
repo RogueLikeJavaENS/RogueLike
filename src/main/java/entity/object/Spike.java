@@ -20,7 +20,7 @@ public class Spike extends ObjectEntity{
     public void doAction(GameState gameState) {
         int damage = gameState.getDungeon().getFloor()*2;
         Player player = gameState.getPlayer();
-        player.getPlayerStats().sufferDamage(damage);
+        damage = player.getPlayerStats().sufferDamage(damage);
         gameState.getDescriptor().updateDescriptor(String.format("%s walked on spikes and lost %d HP.",player.getName(),damage));
     }
 }
