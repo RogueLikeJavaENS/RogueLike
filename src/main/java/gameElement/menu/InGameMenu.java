@@ -105,14 +105,10 @@ public class InGameMenu {
         if (stateMenu.equals(State.SHOP_MENU)) {
             headMenu = shopHead;
             actions.add(new InGameAction("Buy", state -> {
-                state.setState(State.SHOP);
-                state.merchant.getMerchantInventory().openBuyingSHop(state);
+                new OpenInventory(state, state.getMerchant().getMerchantInventory(), true);
             }));
             actions.add(new InGameAction("Sell", state -> {
-                boolean opened = state.merchant.getMerchantInventory().openSellingShop(state);
-                if (opened) {
-                    state.setState(State.SHOP);
-                }
+                new OpenInventory(state, state.getMerchant().getMerchantInventory(), false);
             }));
             actions.add(new InGameAction("Exit Shop", state -> {
                 state.setState(State.NORMAL);

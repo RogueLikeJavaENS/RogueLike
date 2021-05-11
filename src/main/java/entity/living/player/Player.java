@@ -20,7 +20,7 @@ public class Player extends LivingEntity {
     private final InGameClasses classe;
 
     public Player(Position position, int pv, int pm, String name, InGameClasses classe, int level) throws IllegalArgumentException {
-        super(position, name, Colors.WHITE, new PlayerStats(classe, 100, 100, 1, 2, 15, 1, 0, level));
+        super(position, name, Colors.WHITE, new PlayerStats(classe, 100, 100, 1, 2, 15, 1, 1000, level));
         spellList = new ArrayList<>();
         inventory = new Inventory();
         addSpell(new BasicAttack()); //hard coded to test

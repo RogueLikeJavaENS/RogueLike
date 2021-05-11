@@ -3,14 +3,13 @@ package gameElement.menu;
 import display.RendererUI;
 import entity.living.Inventory;
 import gameElement.GameState;
-import utils.ScanPanel;
 import utils.State;
 
 import java.awt.event.KeyEvent;
 
 public class OpenInventory {
     private final GameState gs;
-    private final Inventory inventory;
+    private Inventory inventory;
     private boolean acted;
     private boolean exitInventory;
 
@@ -20,6 +19,30 @@ public class OpenInventory {
         exitInventory = false;
         acted = false;
         inventory.openInventory(gs.getPlayer().getPlayerStats().getLevel());
+        try {
+            inventoryLoop();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public OpenInventory(GameState gs, Inventory inventory, boolean selling) {
+        this.gs = gs;
+        this.inventory = inventory;
+        exitInventory = false;
+        acted = false;
+        if (!selling) {
+            if (gs.getPlayer().getInventory().getInventory().isEmpty()) {
+                exitInventory = true;
+                gs.getDescriptor().updateDescriptor(
+                        String.format("%s have nothing to sell !", gs.getPlayer().getName()));
+            } else {
+                inventory.openSellingShop(gs);
+            }
+        }
+        else {
+            inventory.openBuyingSHop(gs);
+        }
         try {
             inventoryLoop();
         } catch (InterruptedException e) {
@@ -88,6 +111,7 @@ public class OpenInventory {
 
     private void displayInventory() {
         System.out.println(inventory.toStringInventory(gs));
+        System.out.println(gs.getDescriptor());
     }
 
 }

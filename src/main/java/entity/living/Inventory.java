@@ -205,6 +205,14 @@ public class Inventory {
         }
     }
 
+    public void openSellingShop(GameState gameState) {
+        //
+    }
+
+    public void openBuyingSHop(GameState gameState) {
+        //
+    }
+
     public void openInventory(int level) {
         GameRule gameRule = new GameRule();
         indexOfSelectedStuff = -1;

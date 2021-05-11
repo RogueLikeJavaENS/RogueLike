@@ -18,10 +18,10 @@ public class GeneralMerchant extends AbstractMerchant {
 
     @Override
     public void doInteraction(GameState gameState) {
-        merchantInventory.openSellingShop(gameState);
         gameState.setState(State.SHOP_MENU);
-        new InGameMenu(gameState);
         gameState.setMerchant(this);
+        new InGameMenu(gameState);
+
     }
 
     public MerchantInventory getMerchantInventory() {

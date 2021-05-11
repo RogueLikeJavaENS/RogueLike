@@ -34,16 +34,10 @@ public class MerchantInventory extends Inventory {
         merchantInventory.add(stuff);
     }
 
-    public boolean openSellingShop(GameState gameState) {
+    public void openSellingShop(GameState gameState) {
         inventory = gameState.getPlayer().getInventory().getInventory();
         selling = false;
-        if (inventory.isEmpty()) {
-            gameState.getDescriptor().updateDescriptor(String.format("%s have nothing to sell !", gameState.getPlayer().getName()));
-            return false;
-        } else {
-            super.openInventory(gameState.getPlayer().getPlayerStats().getLevel());
-            return true;
-        }
+        super.openInventory(gameState.getPlayer().getPlayerStats().getLevel());
     }
 
     public void openBuyingSHop(GameState gameState) {
