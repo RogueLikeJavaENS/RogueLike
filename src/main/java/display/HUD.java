@@ -112,6 +112,5 @@ public class HUD {
         return spellBar;
     }
 
-    // Pour l'instant le HUD est petit, quand il s'aggrandira, Juliette le modifira afin qu'il s'affiche sur plusieurs
-    // lignes pour ne pas empieter sur la minimap
+
 }
