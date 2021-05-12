@@ -9,11 +9,11 @@ public class BasicAttackMage extends AbstractSpell {
     public BasicAttackMage() {
         super("Attack",
                 1.0,
-                12,
+                14,
                 new Range(),
                 0,
                 true,
-                1,
+                2,
                 null
         );
     }

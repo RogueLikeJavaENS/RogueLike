@@ -1,5 +1,6 @@
 package game.entity.living.player;
 
+import com.sun.jna.platform.mac.Carbon;
 import game.entity.living.player.classeSystem.*;
 import game.entity.living.AbstractStats;
 import game.entity.living.player.spell.Spell;
@@ -22,6 +23,8 @@ public class PlayerStats extends AbstractStats {
     private int xp;
     private int xpRequired;
     private int killCounter;
+    private int turnPassed;
+    private int bonusArmorTemporary;
 
     public int getXpRequired() {
         return xpRequired;
@@ -65,6 +68,30 @@ public class PlayerStats extends AbstractStats {
         killCounter = 0;
         this.levelCap=loadXpPerLevel();
         checkCurrentXP();
+    }
+
+    /**
+     * handle the temporary bonuses and what to do when the max turn allowed reach 0.
+     */
+    public void manageTemporaryBonus(){
+        turnPassed--;
+        if(turnPassed<=0){
+            changeArmorTotal(-bonusArmorTemporary);
+            bonusArmorTemporary = 0;
+            turnPassed = 0;
+        }
+    }
+
+    /**
+     * set the values necessary to handle the temporary bonuses.
+     * Only work for armor for now.
+     * @param bonus value added
+     * @param turn number of turn it should stay up
+     */
+    public void setBonusArmorTemporary(int bonus, int turn){
+        this.turnPassed=turn;
+        this.bonusArmorTemporary=bonus;
+        changeArmorTotal(bonus);
     }
 
     private Map<Integer, Integer> loadXpPerLevel(){
@@ -167,4 +194,7 @@ public class PlayerStats extends AbstractStats {
     public List<Spell> getSpells() { return spellList; }
     public Spell getSelectedSpell() { return selectedSpell; }
     public  InGameClasses getClasse() {return classe;}
+    public int getTurnPassed() {
+        return turnPassed;
+    }
 }
