@@ -1,9 +1,6 @@
 package game.entity.living.npc.monster;
 
-import game.entity.living.npc.monster.monsters.Goblin;
-import game.entity.living.npc.monster.monsters.MerchantMonster;
-import game.entity.living.npc.monster.monsters.Mimic;
-import game.entity.living.npc.monster.monsters.Skeleton;
+import game.entity.living.npc.monster.monsters.*;
 import game.entity.living.player.Player;
 import game.entity.living.npc.monster.monsterStrategy.*;
 import utils.Position;
@@ -27,7 +24,7 @@ public class MonsterFactory {
     // Create a Strategy
     // private final Strategy nameStrategy = new ...Strategy(Condition, new Strategy(...))
     private final Strategy goblinStrategy = new IdleStrategy(isFarFromPlayer, new EscapeStrategy(isMidlife, new ApproachStrategy(alwaysTrue, new AttackStrategy(null))));
-    private final Strategy skeletonStrategy = new IdleStrategy(isFarFromPlayer, new ApproachStrategy(alwaysTrue, new AttackStrategy(null)));
+    private final Strategy classicAttackStrategy = new IdleStrategy(isFarFromPlayer, new ApproachStrategy(alwaysTrue, new AttackStrategy(null)));
 
 
     /**
@@ -49,15 +46,18 @@ public class MonsterFactory {
 
         if (monsterType == MonsterType.SKELETON.ordinal()){
 
-            return new Skeleton(position,"Skeleton", getLevel(), skeletonStrategy);
+            return new Skeleton(position,"Skeleton", getLevel(), classicAttackStrategy);
         }
         else if (monsterType == MonsterType.GOBLIN.ordinal()){
             return new Goblin(position, "Goblin", getLevel(), goblinStrategy);
         }
         else if (monsterType == MonsterType.MIMIC.ordinal()) {
-            return new Mimic(position, "Mimic", getLevel(), skeletonStrategy);
+            return new Mimic(position, "Mimic", getLevel(), classicAttackStrategy);
         } else if (monsterType == MonsterType.MERCHANT.ordinal()) {
-            return  new MerchantMonster(position, "Angry Merchant", getLevel(), skeletonStrategy);
+            return  new MerchantMonster(position, "Angry Merchant", getLevel(), classicAttackStrategy);
+        }
+        else if (monsterType == MonsterType.BAT.ordinal()){
+            return new Bat(position, "Bat", getLevel(), classicAttackStrategy);
         }
 
         ///// in order to create a monster you have to write
