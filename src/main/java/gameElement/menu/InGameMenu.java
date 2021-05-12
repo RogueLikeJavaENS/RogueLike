@@ -2,9 +2,16 @@ package gameElement.menu;
 
 import com.diogonunes.jcolor.Attribute;
 import display.RendererUI;
+import entity.Entity;
 import entity.living.inventory.OpenInventory;
+import entity.living.npc.monster.Monster;
+import entity.living.npc.monster.MonsterFactory;
+import entity.living.npc.monster.MonsterType;
+import entity.living.player.Player;
 import gameElement.GameState;
+import spells.Spell;
 import utils.Colors;
+import utils.Position;
 import utils.ScanPanel;
 import utils.State;
 
@@ -110,6 +117,31 @@ public class InGameMenu {
             }));
             actions.add(new InGameAction("Sell", state -> {
                 new OpenInventory(state, state.getMerchant().getMerchantInventory(), false);
+            }));
+            actions.add(new InGameAction("Attack the Merchant", state -> {
+                Position pos = state.getMerchant().getPosition();
+                state.getGridMap().update((Entity) state.getMerchant(), false);
+                MonsterFactory mf = new MonsterFactory(state.getDungeon().getFloor());
+                Monster angryMerchant = mf.getMonster(MonsterType.MERCHANT.ordinal(), pos);
+                state.getGridMap().update(angryMerchant, true);
+                state.setState(State.NORMAL);
+                Player player = state.getPlayer();
+                Spell spell = player.getSpells().get(0);
+                int damage = spell.getDamage();
+                double mult = spell.getDamageMult();
+                int damages = (int) (damage + mult * state.getPlayer().getPlayerStats().getDamageTotal());
+                angryMerchant.getMonsterStats().sufferDamage(damages);
+
+                state.getDescriptor().updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
+                        player.getName(),
+                        spell,
+                        colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
+                        colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
+                        angryMerchant.getName()));
+                state.isMonsterAlive(angryMerchant);
+                state.isThereMonsters();
+                state.getDescriptor().updateDescriptor(
+                        "Merchant : "+colorize(String.format("It's treason then, you will die %s !", state.getPlayer().getName()), Attribute.BOLD(), Colors.RED.textApply()));
             }));
             actions.add(new InGameAction("Exit Shop", state -> {
                 state.setState(State.NORMAL);

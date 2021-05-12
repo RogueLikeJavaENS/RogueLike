@@ -50,6 +50,11 @@ public class MonsterFactory {
         else if (monsterType == MonsterType.GOBLIN.ordinal()){
             return new Goblin(position, "Goblin", getLevel(), goblinStrategy);
         }
+        else if (monsterType == MonsterType.MIMIC.ordinal()) {
+            return new Mimic(position, "Mimic", getLevel(), skeletonStrategy);
+        } else if (monsterType == MonsterType.MERCHANT.ordinal()) {
+            return  new MerchantMonster(position, "Angry Merchant", getLevel(), skeletonStrategy);
+        }
 
         ///// in order to create a monster you have to write
         // else if (monsterType == "typeOfMonster")

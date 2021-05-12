@@ -33,6 +33,8 @@ public class RogueLike {
      * Creates an instance of the game.
      */
     RogueLike() throws InterruptedException {
+        MusicStuff musicStuff = new MusicStuff();
+        musicStuff.playNormalMusic();
         sp = new ScanPanel();
         StartMenu start = new StartMenu(sp);
 
@@ -41,7 +43,7 @@ public class RogueLike {
         Position initialPosition = dungeon.getRoom(0).getCenter();
         Player player = new Player(initialPosition, start.getName(), start.getClasse(), 1);
 
-        gs = new GameState(player, dungeon, new HUD(player), sp);
+        gs = new GameState(player, dungeon, new HUD(player), sp, musicStuff);
         rendererUI = new RendererUI(gs);
         rendererUI.display();
         gameLoop(); // until state equals WIN or LOSE or END

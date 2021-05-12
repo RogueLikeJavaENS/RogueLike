@@ -40,8 +40,10 @@ public class GameState {
     private int currentFightExp;
     public Merchant merchant;
     private final ScanPanel sp;
+    private final MusicStuff musicStuff;
 
-    public GameState(Player player, Dungeon dungeon, HUD hud, ScanPanel sp) {
+    public GameState(Player player, Dungeon dungeon, HUD hud, ScanPanel sp, MusicStuff musicStuff) {
+        this.musicStuff = musicStuff;
         this.dungeon = dungeon;
         this.player = player;
         this.sp = sp;
@@ -212,6 +214,7 @@ public class GameState {
                 player.getPlayerStats().grantXP(currentFightExp);
                 descriptor.updateDescriptor(String.format("You took down all the monsters and earned %d exp points!", currentFightExp));
                 currentFightExp = 0;
+                musicStuff.playNormalMusic();
             }
 
             Grave grave = new Grave(monster, gameRule, this);
@@ -232,6 +235,7 @@ public class GameState {
      * @param monsters the monsters present in the current room.
      */
     private void initFight(List<LivingEntity> monsters) {
+        musicStuff.playFightMusic();
         List<LivingEntity> fightList = new ArrayList<>(monsters);
         fightList.add(player);
         player.setSelectedSpell(player.getSpells().get(0));
