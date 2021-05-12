@@ -81,12 +81,15 @@ public class Fighting {
         initiativeGauge = turnOrder.get(0).getStats().getInitiativeTotal();
     }
 
+    public void updateEntityInitiativeGauge(LivingEntity entity){
+        int index = turnOrder.indexOf(entity);
+        initiativeList.set(index, (initiativeList.get(index) + entity.getStats().getInitiativeTotal())%initiativeGauge);
+    }
+
     public boolean canAct(LivingEntity entity) {
         int index = turnOrder.indexOf(entity);
         int newInitiative = initiativeList.get(index) + entity.getStats().getInitiativeTotal();
-        boolean enoughInitiative = newInitiative >= initiativeGauge;
-        initiativeList.set(index, (initiativeList.get(index) + entity.getStats().getInitiativeTotal())%initiativeGauge);
-        return enoughInitiative;
+        return newInitiative >= initiativeGauge;
     }
 
     @Override

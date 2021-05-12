@@ -122,6 +122,7 @@ public class RogueLike {
             inactiveStateInput("The current entity is too slow to act, press any key ...");
         }
         if (acted || monsterPlayed) { // if a monster or the Player played, go to the next turn.
+            fight.updateEntityInitiativeGauge(entity);
             fight.next();
         }
         gs.isPlayerAlive();
