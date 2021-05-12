@@ -19,8 +19,10 @@ public class PotionHealth extends AbstractItem {
         Player player = gameState.getPlayer();
         int hpAmount = 10+(5*player.getStats().getLevel());
         if (player.getPlayerStats().getLifePointNatural()!=player.getPlayerStats().getLifePointActual()) {
+            gameState.getDescriptor().updateDescriptor(String.format("%s used a Health Potion and gained %s HP", player.getName(),
+                                    colorize(Integer.toString(Math.min(hpAmount,player.getPlayerStats().getLifePointTotal()-player.getPlayerStats().getLifePointActual())),
+                            Colors.RED.textApply())));
             player.getPlayerStats().recoverHp(hpAmount);
-            gameState.getDescriptor().updateDescriptor(String.format("%s used a Health Potion and gained %s HP", player.getName(), colorize(Integer.toString(hpAmount), Colors.RED.textApply())));
             return true;
         }
         else {
