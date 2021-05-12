@@ -8,7 +8,7 @@ package game.entity.living.player.classeSystem;
 //this structure can be reused for each new class being added.
 public enum pathMage {
 
-    REWARD_0("Skill", 1, "BasicAttack"),
+    REWARD_0("Skill", 1, "BasicAttackMage"),
     REWARD_1("Skill", 1, "FireAura"),
     REWARD_2("Skill", 2, "FireBall"),
     REWARD_3("Skill", 3, "Heal");
