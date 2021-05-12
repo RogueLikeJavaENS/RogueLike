@@ -63,13 +63,9 @@ public class GameRule {
     /**
      *
      */
-    public MonsterType getMonsterType(){
-        int nb = GEN.nextInt(2);
-        if (nb == 0){ return MonsterType.SKELETON;}
-        else if (nb == 1){ return MonsterType.GOBLIN;}
+    public int getMonsterType(){
+        return GEN.nextInt(5);
 
-
-        return MonsterType.MIMIC; // Don't normally append
     }
 
 
