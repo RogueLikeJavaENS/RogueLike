@@ -224,8 +224,11 @@ public class GameState {
      *
      */
     public void changeRoomFight() {
-        setState(State.NORMAL);
         isThereMonsters();
+        if (state == State.NORMAL) {
+            System.out.println("coucou");
+            musicStuff.playNormalMusic();
+        }
     }
 
     /**
@@ -250,59 +253,8 @@ public class GameState {
      * @author Raphael and Antoine
      */
     public boolean useSpell() {
-        boolean hitBoss = false;
         Spell spell = player.getPlayerStats().getSelectedSpell();
-        if (player.getPlayerStats().consumeMp(spell.getManaCost())) {
-            for (Position pos : gridMap.getRangeList()) {
-                List<Entity> entityList = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());
-                for (Entity currentEntity : entityList) {
-                    if (pos.equals(currentEntity.getPosition())) {
-                        if(currentEntity.isMonster()) {
-                            Monster monster = (Monster) currentEntity;
-                            if (!monster.isBoss()) {
-                                int damage = spell.getDamage();
-                                double mult = spell.getDamageMult();
-                                int damages = (int) (damage + mult * player.getPlayerStats().getDamageTotal());
-                                damages = monster.getMonsterStats().sufferDamage(damages);
-                                descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
-                                        player.getName(),
-                                        spell,
-                                        colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
-                                        colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
-                                        monster.getName()));
-                                isMonsterAlive(monster);
-                            }
-                        }
-                        else if (currentEntity.isDestroyable()) {
-                            gridMap.update(currentEntity, false);
-                            descriptor.updateDescriptor(String.format("%s used %s for %s mana and destroyed a trap!",
-                                    player.getName(),
-                                    spell,
-                                    colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply())));
-                        }
-                        else if (!hitBoss && currentEntity.isBossPart()) {
-                            BossPart bossPart = (BossPart) currentEntity;
-                            int damage = spell.getDamage();
-                            double mult = spell.getDamageMult();
-                            int damages = (int) (damage + mult * player.getPlayerStats().getDamageTotal());
-                            damages = bossPart.dealDamageBoss(damages);
-                            descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
-                                    player.getName(),
-                                    spell,
-                                    colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
-                                    colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
-                                    bossPart.getMyBoss().getName()));
-                            isMonsterAlive(bossPart.getMyBoss());
-                            hitBoss = true;
-                        }
-                    }
-                }
-            }
-            return true;
-        } else {
-            descriptor.updateDescriptor("Not enough PM !");
-            return false;
-        }
+        return spell.useSpell(this);
     }
 
     /**
@@ -327,6 +279,7 @@ public class GameState {
     }
     public ScanPanel getScanPanel() { return sp; }
     public Merchant getMerchant() { return merchant; }
+    public MusicStuff getMusicStuff() { return musicStuff; }
 
     /* SETTERS */
     public void setState(State newState) {this.state = newState; }

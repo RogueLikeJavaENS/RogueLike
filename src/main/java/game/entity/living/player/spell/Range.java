@@ -6,7 +6,10 @@ public class Range {
     private Position topLeftCorner;
     private Position bottomRightCorner;
 
-    public Range() {}
+    public Range() {
+        topLeftCorner = null;
+        bottomRightCorner = null;
+    }
 
     public Position getTopLeftCorner() {
         return topLeftCorner;

@@ -19,7 +19,9 @@ public class FireAura extends AbstractSpell {
                 1.4,
                 15,
                 new Range(),
-                10
+                10,
+                true,
+                null
         );
     }
 

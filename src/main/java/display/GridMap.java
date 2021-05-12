@@ -183,16 +183,18 @@ public class GridMap {
 
     public void updateRangeList(Range range) {
         rangeList.clear();
-        for (int abs = range.getTopLeftCorner().getAbs();
-             abs <= range.getBottomRightCorner().getAbs();
-             abs++) {
-            for (int ord = range.getTopLeftCorner().getOrd();
-                 ord <= range.getBottomRightCorner().getOrd();
-                 ord++) {
-                if (isOnValidPosition(abs, ord)) {
-                    rangeList.add(new Position(abs, ord));
-                }
+        if (range.getBottomRightCorner() != null) {
+            for (int abs = range.getTopLeftCorner().getAbs();
+                 abs <= range.getBottomRightCorner().getAbs();
+                 abs++) {
+                for (int ord = range.getTopLeftCorner().getOrd();
+                     ord <= range.getBottomRightCorner().getOrd();
+                     ord++) {
+                    if (isOnValidPosition(abs, ord)) {
+                        rangeList.add(new Position(abs, ord));
+                    }
 
+                }
             }
         }
     }

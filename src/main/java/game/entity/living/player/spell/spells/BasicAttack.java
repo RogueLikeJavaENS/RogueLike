@@ -13,7 +13,9 @@ public class BasicAttack extends AbstractSpell {
                 1.0,
                 12,
                 new Range(),
-                0
+                0,
+                true,
+                null
         );
     }
 

@@ -18,9 +18,9 @@ public class Player extends LivingEntity {
         setSprites("o-o", "/^\\", Colors.WHITE);
         setDirection(Direction.SOUTH);
         this.classe = classe;
-//        for (int i = 0; i < 100; i++) {
-//            playerInventory.addItem(new XpBottle());
-//        }
+        for (int i = 0; i < 100; i++) {
+            playerInventory.addItem(new XpBottle());
+        }
     }
 
     public PlayerInventory getInventory() { return playerInventory; }

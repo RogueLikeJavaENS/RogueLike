@@ -19,7 +19,10 @@ public class FireBall extends AbstractSpell {
                 1.6,
                 16,
                 new Range(),
-                15);
+                15,
+                true,
+                null
+        );
     }
 
     @Override
