@@ -132,7 +132,7 @@ public class GameState {
 
     /**
      * Check if the player moved on Entity.
-     * The methods throw the action related to the game.entity.
+     * The methods throw the action related to the entity.
      */
     public void isOnEntity() {
         int playerAbs = player.getPosition().getAbs();
@@ -214,7 +214,7 @@ public class GameState {
                 currentFightExp = 0;
                 musicStuff.playNormalMusic();
             }
-
+            player.getPlayerStats().incrementeKillCounter();
             Grave grave = new Grave(monster, gameRule, this);
             gridMap.update(grave, true);
         }
@@ -242,10 +242,10 @@ public class GameState {
     }
 
     /**
-     * Uses the player's selected game.entity.living.player.spell and applies its effects to the area within its range.
-     * If the player doesn't have enough mana, the game.entity.living.player.spell fails.
+     * Uses the player's selected spell and applies its effects to the area within its range.
+     * If the player doesn't have enough mana, the spell fails.
      *
-     * @return weither the game.entity.living.player.spell has been successfully used or not.
+     * @return weither spell has been successfully used or not.
      *
      * @author Raphael and Antoine
      */
@@ -260,17 +260,21 @@ public class GameState {
                         if(currentEntity.isMonster()) {
                             Monster monster = (Monster) currentEntity;
                             if (!monster.isBoss()) {
-                                int damage = spell.getDamage();
-                                double mult = spell.getDamageMult();
-                                int damages = (int) (damage + mult * player.getPlayerStats().getDamageTotal());
-                                damages = monster.getMonsterStats().sufferDamage(damages);
-                                descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
-                                        player.getName(),
-                                        spell,
-                                        colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
-                                        colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
-                                        monster.getName()));
-                                isMonsterAlive(monster);
+                                if (monster.getMonsterStats().hasAvoided()){
+                                    descriptor.updateDescriptor(String.format("%s dodged %s's attack!", monster.getName(), player.getName()));
+                                } else {
+                                    int damage = spell.getDamage();
+                                    double mult = spell.getDamageMult();
+                                    int damages = (int) (damage + mult * player.getPlayerStats().getDamageTotal());
+                                    damages = monster.getMonsterStats().sufferDamage(damages);
+                                    descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
+                                            player.getName(),
+                                            spell,
+                                            colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
+                                            colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
+                                            monster.getName()));
+                                    isMonsterAlive(monster);
+                                }
                             }
                         }
                         else if (currentEntity.isDestroyable()) {
@@ -282,18 +286,22 @@ public class GameState {
                         }
                         else if (!hitBoss && currentEntity.isBossPart()) {
                             BossPart bossPart = (BossPart) currentEntity;
-                            int damage = spell.getDamage();
-                            double mult = spell.getDamageMult();
-                            int damages = (int) (damage + mult * player.getPlayerStats().getDamageTotal());
-                            damages = bossPart.dealDamageBoss(damages);
-                            descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
-                                    player.getName(),
-                                    spell,
-                                    colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
-                                    colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
-                                    bossPart.getMyBoss().getName()));
-                            isMonsterAlive(bossPart.getMyBoss());
-                            hitBoss = true;
+                            if (bossPart.getMyBoss().getMonsterStats().hasAvoided()){
+                                descriptor.updateDescriptor(String.format("%s dodged %s's attack!", bossPart.getMyBoss().getName(), player.getName()));
+                            } else {
+                                int damage = spell.getDamage();
+                                double mult = spell.getDamageMult();
+                                int damages = (int) (damage + mult * player.getPlayerStats().getDamageTotal());
+                                damages = bossPart.dealDamageBoss(damages);
+                                descriptor.updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
+                                        player.getName(),
+                                        spell,
+                                        colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
+                                        colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
+                                        bossPart.getMyBoss().getName()));
+                                isMonsterAlive(bossPart.getMyBoss());
+                                hitBoss = true;
+                            }
                         }
                     }
                 }

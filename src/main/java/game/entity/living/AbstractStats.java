@@ -2,6 +2,8 @@ package game.entity.living;
 
 import utils.Check;
 
+import java.util.Random;
+
 /**
  * Abstract class managing the stats of any living game.entity
  * @author luca
@@ -20,8 +22,8 @@ public abstract class AbstractStats{
     private final int rangeNatural;
     private int rangeTotal;
 
-    private int initiativeNatural;
-    private int initiativeTotal;
+    private int agilityNatural;
+    private int agilityTotal;
 
     private int damageNatural;
     private int damageTotal;
@@ -33,7 +35,7 @@ public abstract class AbstractStats{
     private int level;
 
 
-    public AbstractStats(int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int moneyCount, int level) {
+    public AbstractStats(int lifePoint, int manaPoint, int range, int agility, int damage, int armor, int moneyCount, int level) {
         this.lifePointNatural = lifePoint;
         this.lifePointActual = lifePoint;
         this.lifePointTotal = lifePoint;
@@ -42,8 +44,8 @@ public abstract class AbstractStats{
         this.manaPointTotal = manaPoint;
         this.rangeNatural = range;
         this.rangeTotal = range;
-        this.initiativeNatural = initiative;
-        this.initiativeTotal = initiative;
+        this.agilityNatural = agility;
+        this.agilityTotal = agility;
         this.damageNatural = damage;
         this.damageTotal = damage;
         this.armorNatural = armor;
@@ -67,6 +69,12 @@ public abstract class AbstractStats{
         damage = Check.checkPositivity(damage-armorTotal);
         this.lifePointActual = Check.checkPositivity(getLifePointActual() - damage);
         return damage;
+    }
+
+    public boolean hasAvoided() {
+        Random gen = new Random();
+        int hitRoll = gen.nextInt(100);
+        return hitRoll<Math.min(2*agilityTotal, 30);
     }
 
     public void recoverHp(int heal) {
@@ -100,14 +108,14 @@ public abstract class AbstractStats{
         this.rangeTotal = Math.max((getRangeTotal() + modify), getRangeNatural());
     }
 
-    public void upInitiativeNatural(int upgrade) {
+    public void upAgilityNatural(int upgrade) {
         upgrade = Check.checkPositivity(upgrade);
-        this.initiativeNatural=getInitiativeNatural()+upgrade;
-        editInitiativeActual(upgrade);
+        this.agilityNatural = getAgilityNatural()+upgrade;
+        editAgiltyActual(upgrade);
     }
 
-    public void editInitiativeActual(int modify) {
-        this.initiativeTotal = Math.max((getInitiativeTotal() + modify), getInitiativeNatural());
+    public void editAgiltyActual(int modify) {
+        this.agilityTotal = Math.max((getAgilityTotal() + modify), getAgilityNatural());
     }
 
     public void changeDamageNatural(int modifier) {
@@ -152,8 +160,8 @@ public abstract class AbstractStats{
     public int getMoneyCount() { return moneyCount; }
     public int getArmorNatural() { return armorNatural; }
     public int getArmorTotal() { return armorTotal; }
-    public int getInitiativeNatural(){ return initiativeNatural; }
-    public int getInitiativeTotal(){ return initiativeTotal; }
+    public int getAgilityNatural(){ return agilityNatural; }
+    public int getAgilityTotal(){ return agilityTotal; }
     public int getRangeNatural() { return rangeNatural; }
     public int getRangeTotal() { return rangeTotal; }
     public int getManaPointTotal() { return manaPointTotal; }
@@ -162,7 +170,4 @@ public abstract class AbstractStats{
     public int getLifePointTotal() { return lifePointTotal; }
     public int getLifePointNatural() { return lifePointNatural; }
     public int getLifePointActual() { return lifePointActual; }
-
-    /* SETTERS */
-    public void setLifePointActual(int lifePointActual) { this.lifePointActual = lifePointActual; }
 }

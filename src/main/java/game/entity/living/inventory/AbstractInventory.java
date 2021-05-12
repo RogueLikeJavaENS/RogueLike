@@ -160,8 +160,8 @@ public class AbstractInventory implements Inventory {
         if (equipment.getBonusLife() != 0) {
             player.getPlayerStats().changeLifePointTotal(equipModifier * equipment.getBonusLife());
         }
-        if (equipment.getBonusInitiative() != 0) {
-            player.getPlayerStats().editInitiativeActual(equipModifier * equipment.getBonusInitiative());
+        if (equipment.getBonusAgility() != 0) {
+            player.getPlayerStats().editAgiltyActual(equipModifier * equipment.getBonusAgility());
         }
     }
 
@@ -401,7 +401,7 @@ public class AbstractInventory implements Inventory {
         return sb.toString();
     }
 
-    private int containsEquipedType(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean ini, Equipment equipment) {
+    private int containsEquipedType(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean agi, Equipment equipment) {
         for (Stuff stuff : equiped) {
             Equipment e = (Equipment) stuff;
             if (e.getType().equals(equipment.getType())) {
@@ -413,8 +413,8 @@ public class AbstractInventory implements Inventory {
                     return e.getBonusDamage();
                 } else if (armor) {
                     return e.getBonusArmor();
-                } else if (ini) {
-                    return e.getBonusInitiative();
+                } else if (agi) {
+                    return e.getBonusAgility();
                 }
             }
         }
@@ -508,17 +508,17 @@ public class AbstractInventory implements Inventory {
         Player player = gameState.getPlayer();
         PlayerStats stats = player.getPlayerStats();
 
-        int xp, name, btc, lvl, rge, atk, def, ini, mp, hp;
+        int xp, name, btc, lvl, rge, atk, def, agi, mp, hp;
         if (onEquipments) {
             atk = bonusEquipment(false,false, true, false, false, stats);
             def = bonusEquipment(false,false, false, true, false, stats);
-            ini = bonusEquipment(false,false, false, false, true, stats);
+            agi = bonusEquipment(false,false, false, false, true, stats);
             mp = bonusEquipment(false,true, false, false, false, stats);
             hp = bonusEquipment(true,false, false, false, false, stats);
         } else {
             atk = Integer.MAX_VALUE;
             def = Integer.MAX_VALUE;
-            ini = Integer.MAX_VALUE;
+            agi = Integer.MAX_VALUE;
             mp = Integer.MAX_VALUE;
             hp = Integer.MAX_VALUE;
         }
@@ -528,7 +528,7 @@ public class AbstractInventory implements Inventory {
         String MP_Bonus = colorBonus(mp);
         String Damage_Bonus = colorBonus(atk);
         String Armor_Bonus = colorBonus(def);
-        String Ini_Bonus = colorBonus(ini);
+        String Agi_Bonus = colorBonus(agi);
 
         String playerName = player.getName();
         String XP = "XP : "+stats.getXp()+"/"+stats.getXpRequired();
@@ -539,13 +539,13 @@ public class AbstractInventory implements Inventory {
         String LVL = "LVL: " + stats.getLevel();
         String ATK = "ATK: " + stats.getDamageTotal();
         String DEF = "DEF: " + stats.getArmorTotal();
-        String INI = "INI: " + stats.getInitiativeTotal();
+        String AGI = "AGI: " + stats.getAgilityTotal();
         String RGE = "RGE: " + stats.getRangeTotal();
-        String KIL = "KIL: " + "0"; //TODO
+        String KIL = "KIL: " + stats.getKillCounter(); //TODO
 
         atk = bonusLength(atk) + ATK.length();
         def = bonusLength(def) + DEF.length();
-        ini = bonusLength(ini) + INI.length();
+        agi = bonusLength(agi) + AGI.length();
         mp = bonusLength(mp) + MP.length();
         hp = bonusLength(hp) + HP.length();
         xp = XP.length();
@@ -560,7 +560,7 @@ public class AbstractInventory implements Inventory {
         BTC = colorize(BTC, Colors.YELLOW.textApply());
         ATK = ATK + Damage_Bonus;
         DEF = DEF + Armor_Bonus;
-        INI = INI + Ini_Bonus;
+        AGI = AGI + Agi_Bonus;
 
         // TODO add class
 
@@ -572,15 +572,14 @@ public class AbstractInventory implements Inventory {
                 "| " + HP + " ".repeat(29 - hp) + "| " +
                 DEF + " ".repeat(37 - def) + "|\n" +
                 "| " + MP + " ".repeat(29 - mp) + "| " +
-                INI + " ".repeat(37 - ini) + "|\n" +
+                AGI + " ".repeat(37 - agi) + "|\n" +
                 "| " + BTC + " ".repeat(29 - btc) + "| " +
                 RGE + " ".repeat(37 - rge) + "|\n" +
                 "| " + FLR + " ".repeat(29 - FLR.length()) + "| " +
                 KIL + " ".repeat(37 - KIL.length()) + "|\n";
     }
 
-    private int bonusEquipment(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean ini, PlayerStats stats) {
-        String res = "";
+    private int bonusEquipment(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean agi, PlayerStats stats) {
         if (selectedStuff == null) {
             return Integer.MAX_VALUE;
         }
@@ -610,10 +609,10 @@ public class AbstractInventory implements Inventory {
                 total = stats.getArmorTotal();
                 bonus = equipment.getBonusArmor();
             }
-            else if (ini && equipment.getBonusInitiative() != 0) {
-                natural = stats.getInitiativeNatural();
-                total = stats.getInitiativeTotal();
-                bonus = equipment.getBonusInitiative();
+            else if (agi && equipment.getBonusAgility() != 0) {
+                natural = stats.getAgilityNatural();
+                total = stats.getAgilityTotal();
+                bonus = equipment.getBonusAgility();
             }
             if (bonus == -1) {
                 return 0;
@@ -623,7 +622,7 @@ public class AbstractInventory implements Inventory {
                     return -bonus;
                 }
                 else if (!equipment.isEquiped()) {
-                    int current_bonus = containsEquipedType(hp, mp, dmg, armor, ini, equipment);
+                    int current_bonus = containsEquipedType(hp, mp, dmg, armor, agi, equipment);
 
                     if (natural + bonus == total) {
                         return 0;

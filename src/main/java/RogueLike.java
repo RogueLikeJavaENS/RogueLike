@@ -113,17 +113,11 @@ public class RogueLike {
     private void doTurnOrder() throws InterruptedException {
         Fighting fight = gs.getFighting();
         LivingEntity entity = fight.getCurrentEntity();
-        if (fight.canAct(entity)) {
-            if (entity instanceof Player) {
-                playerInput();
-            } else {
-                entity.doAction(gs);
-                inactiveStateInput("Monsters' turn, press any key ...");
-            }
+        if (entity instanceof Player) {
+            playerInput();
         } else {
-            gs.getDescriptor().updateDescriptor(String.format("%s could not act before the others!", entity.getName()));
-            //gives the player the time to see what's going on, and gives him the possibility to stop the game, and it changes the boolean to skip the turn
-            inactiveStateInput("The current game.entity is too slow to act, press any key ...");
+            entity.doAction(gs);
+            inactiveStateInput("Monster's turn, press any key ...");
         }
         if (acted || monsterPlayed) { // if a monster or the Player played, go to the next turn.
             fight.next();

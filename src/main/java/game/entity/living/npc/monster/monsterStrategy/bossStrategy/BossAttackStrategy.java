@@ -18,9 +18,13 @@ public class BossAttackStrategy extends DecoratorStrategy {
         Boss boss = (Boss) monster;
         boolean canAttack = StrategyUtils.isNextToBoss(boss, player);
         if (canAttack) {
-            int damage = boss.getMonsterStats().getDamageTotal();
-            player.getPlayerStats().sufferDamage(damage);
-            this.updateStrategyDescription(String.format("%s attacked and inflicted %s damages to %s", boss.getName(), damage, player.getName()));
+            if (player.getPlayerStats().hasAvoided()){
+                this.updateStrategyDescription(String.format("%s dodged %s's attack!", player.getName(), boss.getName()));
+            } else {
+                int damage = boss.getMonsterStats().getDamageTotal();
+                player.getPlayerStats().sufferDamage(damage);
+                this.updateStrategyDescription(String.format("%s attacked and inflicted %s damages to %s", boss.getName(), damage, player.getName()));
+            }
         }
         return canAttack;
     }
