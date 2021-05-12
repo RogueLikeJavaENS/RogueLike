@@ -26,6 +26,7 @@ public class Room {
     private final Position position;
     private final List<Entity> entities;
     private final RoomType roomType;
+    private boolean wasVisited;
 
     /**
      * Create a room
@@ -46,6 +47,12 @@ public class Room {
         this.position = position;
         this.entities = new ArrayList<>();
         this.roomType = roomType;
+        if (roomType == RoomType.START){
+            wasVisited = true;
+        }
+        else {
+            wasVisited = false;
+        }
     }
 
     /**
@@ -66,6 +73,9 @@ public class Room {
     public int getHeight() { return height; }
     public RoomType getRoomType() { return roomType; }
     public List<Entity> getEntities() { return new ArrayList<>(entities); }
+    boolean getWasVisited(){ return wasVisited;}
+    void setWasVisited(boolean wasVisited){ this.wasVisited = wasVisited;}
+
 
     /**
      * Remove an game.entity in the room
@@ -180,5 +190,15 @@ public class Room {
         }
         return doors;
     }
+
+    public void setNearRoomBossEndVisited(){
+        for (Door door : this.getDoors()){
+            Room nextRoom = door.getNextRoom();
+            if (nextRoom.getRoomType() == RoomType.END || nextRoom.getRoomType() == RoomType.BOSS){
+                nextRoom.setWasVisited(true);
+            }
+        }
+    }
+
 
 }

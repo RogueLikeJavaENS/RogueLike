@@ -1,5 +1,6 @@
 package game.elements;
 
+import generation.RoomType;
 import utils.Direction;
 import utils.Position;
 import java.util.ArrayList;
@@ -158,7 +159,7 @@ public class MiniMap {
     private String buildRoom(Room room, int line) {
         String strLine = "";
 
-        if (room == null){
+        if (room == null || room.getWasVisited() == false){
             strLine = "       ";
         }
         else {
@@ -176,17 +177,40 @@ public class MiniMap {
                         sb.append("#  ");
                     } else {sb.append("|  ");}
 
-                    if (gameState.getCurrentRoom().equals(room)){sb.append(colorize("@ ", Colors.RED.textApply()));}
+                    if (gameState.getCurrentRoom().equals(room)){
+                        sb.append(colorize("@", Colors.PINK.textApply()));
+                    }
+
                     else {
-                        sb.append(room.getRoomNum());
-                        if (room.getRoomNum() < 10) {
-                            sb.append(" ");
+                        RoomType roomType = room.getRoomType();
+                        switch (roomType){
+                            case START:
+                                sb.append(colorize("*",Colors.GREEN.textApply()));
+                                break;
+                            case END:
+                                sb.append(colorize("^",Colors.BROWN.textApply()));
+                                break;
+                            case BOSS:
+                                sb.append(colorize("B",Colors.RED.textApply()));
+                                break;
+                            case REST:
+                                sb.append(colorize("~",Colors.CYAN.textApply()));
+                                break;
+                            case MONSTER:
+                                sb.append(colorize("M",Colors.RED.textApply()));
+                                break;
+                            case TREASURE:
+                                sb.append(colorize("$",Colors.YELLOW.textApply()));
+                                break;
+                            default:
+                                sb.append(" ");
+                                break;
                         }
                     }
 
                     if (room.getRoomAt(Direction.EAST) != -1) {
-                        sb.append(" #");
-                    } else sb.append(" |");
+                        sb.append("  #");
+                    } else sb.append("  |");
                     return  sb.toString();
 
                  //case 2:{ return "|     |"; }

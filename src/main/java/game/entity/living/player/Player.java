@@ -13,7 +13,7 @@ public class Player extends LivingEntity {
     private final InGameClasses classe;
 
     public Player(Position position, String name, InGameClasses classe) throws IllegalArgumentException {
-        super(position, name, Colors.WHITE, new PlayerStats(classe, 100, 100, 1, 2, 1, 1, 200, 1));
+        super(position, name, Colors.WHITE, new PlayerStats(classe, 100, 100, 1, 1, 1, 1, 0, 1));
         playerInventory = new PlayerInventory();
         setSprites("o-o", "/^\\", Colors.WHITE);
         setDirection(Direction.SOUTH);

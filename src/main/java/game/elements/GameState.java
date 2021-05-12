@@ -72,6 +72,11 @@ public class GameState {
      * @param room The new room
      */
     public void updateChangingRoom(Room room) {
+        if (room.getWasVisited() == false){
+            room.setWasVisited(true);
+            room.setNearRoomBossEndVisited();
+            miniMap.updateMap();
+        }
         gridMap.update(player, false);      // remove the player from the previous room
         setCurrentRoom(room);                   // set the current room with the new room
         setGridMap(dungeon.getGridMap(room));   // take the gridmap that represent the new room
