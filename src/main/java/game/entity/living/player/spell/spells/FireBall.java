@@ -25,4 +25,9 @@ public class FireBall extends AbstractSpell {
                 null
         );
     }
+
+    @Override
+    public boolean isZoning() {
+        return true;
+    }
 }

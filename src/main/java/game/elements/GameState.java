@@ -1,6 +1,7 @@
 package game.elements;
 
 import display.*;
+import game.entity.living.npc.monster.monsterStrategy.StrategyUtils;
 import game.tile.Tile;
 import game.entity.Entity;
 import game.entity.living.LivingEntity;
@@ -12,8 +13,8 @@ import game.entity.living.npc.monster.Monster;
 import game.entity.object.elements.Grave;
 import game.entity.living.player.spell.*;
 import utils.*;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
@@ -65,6 +66,50 @@ public class GameState {
         spell.setRange(player.getPosition(), player.getDirection());
         range = spell.getRange();
         gridMap.updateRangeList(range);
+        if (!spell.isZoning()) {
+            noZoningRange(gridMap.getRangeList());
+        }
+    }
+
+    private void noZoningRange(List<Position> rangeList) {
+        sortRangeList(rangeList);
+        List<Position> newRangeList = new ArrayList<>();
+        for (Position pos : rangeList) {
+            List<Entity> entities = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());
+            for (Entity entity: entities) {
+                if (entity.isMonster()) {
+                    newRangeList.add(pos);
+                    rangeList.clear();
+                    rangeList.addAll(newRangeList);
+                    return;
+                }
+            }
+            newRangeList.add(pos);
+        }
+        rangeList.clear();
+        rangeList.addAll(newRangeList);
+    }
+
+    private void sortRangeList(List<Position> rangeList) {
+        HashMap<Double, Position> ranges = new HashMap<>();
+        List<Position> rangeSorted = new ArrayList<>();
+        Position playerPos = player.getPosition();
+
+        for (Position position : rangeList) {
+            if (!position.equals(playerPos)) {
+                double distance = StrategyUtils.getDistance(playerPos, position);
+                ranges.put(distance, position);
+            }
+        }
+
+        TreeMap<Double, Position> treeSorted = new TreeMap<>(ranges);
+
+        for (Double key : treeSorted.keySet()) {
+            rangeSorted.add(treeSorted.get(key));
+        }
+
+        rangeList.clear();
+        rangeList.addAll(rangeSorted);
     }
 
     /**
