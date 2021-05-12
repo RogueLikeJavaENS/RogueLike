@@ -8,7 +8,8 @@ package game.entity.living.player.classeSystem;
 //this structure can be reused for each new class being added.
 public enum pathRanger {
 
-    REWARD_0("Skill", 1, "BasicAttackRanger");
+    REWARD_0("Skill", 1, "BasicAttackRanger"),
+    REWARD_1("Skill", 2, "Dash");
 
     private String info;
     private Integer level;

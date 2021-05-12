@@ -90,6 +90,7 @@ public abstract class AbstractSpell implements Spell {
                         }
                     }
                 }
+                doSpecialEffect(gameState);
             }
             else {
                 doSpecialEffect(gameState);
@@ -103,7 +104,9 @@ public abstract class AbstractSpell implements Spell {
 
 
     public void doSpecialEffect(GameState gameState) {
-        effect.doEffect(gameState);
+        if (effect != null) {
+            effect.doEffect(gameState);
+        }
     }
 
     public boolean isDamaging() {
