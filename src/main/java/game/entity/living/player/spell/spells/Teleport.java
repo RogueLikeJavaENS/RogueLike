@@ -10,13 +10,13 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class Teleport extends AbstractSpell {
     public Teleport() {
-        super(colorize("Fire Ball", Colors.RED.textApply()),
+        super(colorize("Teleport", Colors.BLUE.textApply()),
                 0,
                 0,
                 new Range(),
                 15,
                 false,
-                1,
+                3,
                 null
         );
     }

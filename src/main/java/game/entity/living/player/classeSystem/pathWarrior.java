@@ -8,7 +8,13 @@ package game.entity.living.player.classeSystem;
 //this structure can be reused for each new class being added.
 public enum pathWarrior {
 
-    REWARD_0("Skill", 1, "BasicAttackWarrior");
+    REWARD_0("Skill", 1, "BasicAttackWarrior"),
+    REWARD_1("Skill",1,"StrongPunch"),
+    REWARD_2("Skill",2,"TourbiLOL");
+    //REWARD_3("Skill",3,"Charge");
+    //REWARD_4("Skill",4,"IronSkin");
+    //REWARD_5("Skill",5,"ThrowWeapon");
+    //REWARD_6("Skill",6,"FloorPunch");
 
     private String info;
     private Integer level;
