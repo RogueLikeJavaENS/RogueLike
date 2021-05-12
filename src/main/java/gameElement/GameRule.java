@@ -431,6 +431,14 @@ public class GameRule {
         return level;
     }
 
+    /**
+     * 5% of chance that a chest is a mimic
+     */
+    public boolean isChestMimic() {
+        int nb = GEN.nextInt(100);
+        return nb < 5;
+    }
+
     public static void main(String[] args) {
         System.out.println(new GameRule().getEquipmentPrice(1, EquipmentRarity.L));
     }

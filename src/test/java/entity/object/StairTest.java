@@ -20,7 +20,7 @@ class StairTest {
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1, InGameClasses.MAGE);
         Player test = new Player(null, "test", InGameClasses.DUMMY, 100);
         HUD hud = new HUD(test);
-        GameState gs = new GameState(test, dungeon, hud, new ScanPanel());
+        GameState gs = new GameState(test, dungeon, hud, new ScanPanel(), null);
         Stair test2 = new Stair(null);
         int temp = gs.getDungeon().getFloor();
         test2.doAction(gs);

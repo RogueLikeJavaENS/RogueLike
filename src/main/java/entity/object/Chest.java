@@ -1,6 +1,10 @@
 package entity.object;
 
 import com.diogonunes.jcolor.Attribute;
+import entity.living.npc.monster.Mimic;
+import entity.living.npc.monster.Monster;
+import entity.living.npc.monster.MonsterFactory;
+import entity.living.npc.monster.MonsterType;
 import entity.living.player.Player;
 import gameElement.GameRule;
 import gameElement.GameState;
@@ -29,6 +33,7 @@ public class Chest extends ObjectEntity {
 
     private final boolean isClassic;
     private boolean opened;
+    private final boolean isMimic;
 
     /**
      * Create a new Chest golden or classic
@@ -36,9 +41,10 @@ public class Chest extends ObjectEntity {
      * @param position position of the chest
      * @param isClassic true if the chest is classic false if the chest is golden
      */
-    public Chest(Position position, boolean isClassic) {
+    public Chest(Position position, boolean isClassic, boolean isMimic) {
         super(position, Colors.WHITE, false,false);
         this.isClassic = isClassic;
+        this.isMimic = isMimic;
         if (isClassic) {
             setSprites(" _ ", "[¤]", Colors.BROWN);
         }
@@ -130,6 +136,15 @@ public class Chest extends ObjectEntity {
      */
     @Override
     public void doInteraction(GameState gameState) {
+        if (isMimic) {
+            Position pos = getPosition();
+            gameState.getGridMap().update(this, false);
+            MonsterFactory mf = new MonsterFactory(gameState.getDungeon().getFloor());
+            Monster mimic = mf.getMonster(MonsterType.MIMIC.ordinal(), pos);
+            gameState.getGridMap().update(mimic, true);
+            gameState.isThereMonsters();
+            return;
+        }
 
         if(!opened){
             if (isClassic){
