@@ -149,9 +149,14 @@ public class RogueLike {
         if (acted || monsterPlayed) { // if a monster or the Player played, go to the next turn.
             if (acted){
                 gs.getPlayer().getPlayerStats().manageTemporaryBonus();
-                gs.getDescriptor().updateDescriptor(
-                        String.format("Il vous reste %d tour sur votre Bonus", gs.getPlayer().getPlayerStats().getTurnPassed())
-                );
+                int turnPassed = gs.getPlayer().getPlayerStats().getTurnPassed();
+                if (turnPassed != -1){
+                        gs.getDescriptor().updateDescriptor(
+                                String.format("Il vous reste %d tour sur votre Bonus", turnPassed));
+                        if (turnPassed == 0) {
+                            gs.getPlayer().getPlayerStats().resetTurnPassed();
+                        }
+                }
             }
             fight.next();
         }

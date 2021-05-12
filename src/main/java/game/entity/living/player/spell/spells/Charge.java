@@ -31,15 +31,16 @@ public class Charge extends AbstractSpell {
                         List<Entity> entities = gridMap.getEntitiesAt(position.getAbs(), position.getOrd());
                         if (entities.isEmpty()) {
                             chargePlayer(gameState, position);
-                            return;
+                            return true;
                         }
                         for (Entity entity : entities) {
                             if (entity.getIsPlayerAccessible()) {
                                 chargePlayer(gameState, position);
-                                return;
+                                return true;
                             }
                         }
                     }
+                    return false;
                 }));
     }
 
@@ -53,6 +54,11 @@ public class Charge extends AbstractSpell {
 
     @Override
     public boolean isZoning() {
+        return true;
+    }
+
+    @Override
+    public boolean isMovement() {
         return true;
     }
 }

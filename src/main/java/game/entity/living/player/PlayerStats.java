@@ -44,6 +44,7 @@ public class PlayerStats extends AbstractStats {
 
     public PlayerStats(InGameClasses classe, int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int money, int level) {
         super(lifePoint, manaPoint, range, initiative, damage, armor, money, level);
+        turnPassed = -1;
         this.classe=classe;
         spellList = new ArrayList<>();
         getRewardForLevelForClass(classe, level);
@@ -74,11 +75,12 @@ public class PlayerStats extends AbstractStats {
      * handle the temporary bonuses and what to do when the max turn allowed reach 0.
      */
     public void manageTemporaryBonus(){
-        turnPassed--;
-        if(turnPassed<=0){
-            changeArmorTotal(-bonusArmorTemporary);
-            bonusArmorTemporary = 0;
-            turnPassed = 0;
+        if (turnPassed != -1) {
+            turnPassed--;
+            if(turnPassed == 0){
+                changeArmorTotal(-bonusArmorTemporary);
+                bonusArmorTemporary = 0;
+            }
         }
     }
 
@@ -185,7 +187,9 @@ public class PlayerStats extends AbstractStats {
         this.killCounter += 1;
     }
     public void setSelectedSpell(Spell selectedSpell) { this.selectedSpell = selectedSpell; }
-
+    public void resetTurnPassed() {
+        turnPassed = -1;
+    }
 
     public int getKillCounter() {
         return killCounter;

@@ -17,6 +17,7 @@ import java.util.List;
 import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class Teleport extends AbstractSpell {
+
     public Teleport() {
         super(colorize("Teleport", Colors.BLUE.textApply()),
                 0,
@@ -33,15 +34,16 @@ public class Teleport extends AbstractSpell {
                         List<Entity> entities = gridMap.getEntitiesAt(position.getAbs(), position.getOrd());
                         if (entities.isEmpty()) {
                             teleportPlayer(gameState, position);
-                            return;
+                            return true;
                         }
                         for (Entity entity : entities) {
                             if (entity.getIsPlayerAccessible()) {
                                 teleportPlayer(gameState, position);
-                                return;
+                                return true;
                             }
                         }
                     }
+                    return false;
                 }));
     }
 
@@ -60,6 +62,11 @@ public class Teleport extends AbstractSpell {
 
     @Override
     public boolean isZoning() {
+        return true;
+    }
+
+    @Override
+    public boolean isMovement() {
         return true;
     }
 }

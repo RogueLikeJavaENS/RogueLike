@@ -66,8 +66,11 @@ public class GameState {
         spell.setRange(player.getPosition(), player.getDirection());
         range = spell.getRange();
         gridMap.updateRangeList(range);
-        sortRangeList(gridMap.getRangeList());
+         if (spell.isMovement()) {
+             sortRangeList(gridMap.getRangeList());
+         }
         if (!spell.isZoning()) {
+            sortRangeList(gridMap.getRangeList());
             noZoningRange(gridMap.getRangeList());
         }
     }

@@ -20,4 +20,6 @@ public interface Spell {
     boolean useSpell(GameState gameState);
 
     boolean isZoning();
+
+    boolean isMovement();
 }

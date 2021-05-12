@@ -33,6 +33,7 @@ public class IronSkin extends AbstractSpell {
                             " and improved his armor by" +
                             colorize(String.format(" %d ",armorBonus), Attribute.BOLD(), Colors.DEEP_GREY.textApply()) +
                             "DEF.", gameState.getPlayer().getName()));
+                    return true;
                 }));
     }
 }

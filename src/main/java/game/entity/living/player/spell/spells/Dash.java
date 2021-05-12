@@ -57,6 +57,12 @@ public class Dash extends AbstractSpell {
                                     colorize("Dash", Attribute.BOLD(), Colors.GREEN.textApply())+
                                     " for "+
                                     colorize(String.format("%d MP.", 20), Attribute.BOLD(), Colors.BLUE.textApply()), player.getName()));
+                    return true;
                 }));
+    }
+
+    @Override
+    public boolean isMovement() {
+        return true;
     }
 }
