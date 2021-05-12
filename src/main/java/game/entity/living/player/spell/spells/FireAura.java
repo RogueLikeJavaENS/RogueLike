@@ -27,6 +27,11 @@ public class FireAura extends AbstractSpell {
     }
 
     @Override
+    public boolean isZoning() {
+        return true;
+    }
+
+    @Override
     public void setTopLeftCorner(Position entityPos, Direction direction) {
         int availableRange = 1;
         int topLeftAbs = entityPos.getAbs()-availableRange;

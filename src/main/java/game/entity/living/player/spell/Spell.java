@@ -18,4 +18,6 @@ public interface Spell {
     void setRange(Position entityPos, Direction direction);
 
     boolean useSpell(GameState gameState);
+
+    boolean isZoning();
 }

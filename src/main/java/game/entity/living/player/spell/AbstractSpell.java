@@ -136,22 +136,29 @@ public abstract class AbstractSpell implements Spell {
         setBottomRightCorner(entityPos, direction);
         setTopLeftCorner(entityPos, direction);
     }
+
+    @Override
+    public boolean isZoning() {
+        return false;
+    }
+
     public void setTopLeftCorner(Position entityPos, Direction direction) {
+        int avalaibleRangeCopy = avalaibleRange;
         switch (direction) {
             case NORTH:
-                if (entityPos.getOrd() < avalaibleRange) {
-                    avalaibleRange = entityPos.getOrd();
+                if (entityPos.getOrd() < avalaibleRangeCopy) {
+                    avalaibleRangeCopy = entityPos.getOrd();
                 }
                 range.setTopLeftCorner(new Position(
-                        entityPos.getAbs(), entityPos.getOrd() - avalaibleRange
+                        entityPos.getAbs(), entityPos.getOrd() - avalaibleRangeCopy
                 ));
                 break;
             case WEST:
-                if (entityPos.getAbs() < avalaibleRange) {
-                    avalaibleRange = entityPos.getAbs();
+                if (entityPos.getAbs() < avalaibleRangeCopy) {
+                    avalaibleRangeCopy = entityPos.getAbs();
                 }
                 range.setTopLeftCorner(new Position(
-                        entityPos.getAbs() - avalaibleRange, entityPos.getOrd()
+                        entityPos.getAbs() - avalaibleRangeCopy, entityPos.getOrd()
                 ));
                 break;
             default:
