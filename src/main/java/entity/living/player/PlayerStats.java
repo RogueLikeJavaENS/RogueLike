@@ -12,6 +12,7 @@ import java.util.*;
 
 /**
  * class adding to AbstractStats (by extending it) the stats necessary to a player.
+ * class now also handle the player spell List to more easily link it to its leveling process.
  * @author luca
  */
 
@@ -110,6 +111,7 @@ public class PlayerStats extends AbstractStats {
         getRewardForLevelForClass(getClasse(), getLevel());
     }
 
+    //extract what gain each class depending on their level
     private void getRewardForLevelForClass(InGameClasses classe, int level){
         switch (classe){
             case DUMMY:
@@ -125,11 +127,10 @@ public class PlayerStats extends AbstractStats {
                 break;
         }
     }
-
-//    public void addSpell(Spell spell) {
-//        spellList.add(spell);
-//    }
-
+    /**
+     * add a Spell to the Player spellList using reflection.
+     * @param spellname Name of the Spell being added.
+     **/
     public void addSpell(String spellname){
         try {
             Class<?> spellLookUp = Class.forName("spells."+spellname);

@@ -1,5 +1,11 @@
 package classeSystem;
 
+/**
+ * enumerator handling all reward by level for the mageClass.
+ * @author luca
+ */
+
+//this structure can be reused for each new class being added.
 public enum pathMage {
 
     REWARD_0("Skill", 1, "BasicAttack"),
