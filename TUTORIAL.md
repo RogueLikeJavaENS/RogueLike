@@ -5,19 +5,20 @@
    - [Normal](#normal-inputs)
    - [Fighting](#fighting-inputs)
 2. [Fight](#fight)
-3. [Merchant](#merchant)
-4. [Map](#map)
-5. [Inventory](#playerInventory)
-6. [Room Types](#room-types)
+   - [Spells](#spells)
+4. [Merchant](#merchant)
+5. [Map](#map)
+6. [Inventory](#Inventory)
+7. [Room Types](#room-types)
    - [Fighting Room](#fighting-room)
    - [Merchant Room](#merchant-room)
    - [Treasure Room](#treasure-room)
    - [End Room](#end-room)
-7. [Game Elements](#game-elements)
+8. [Game Elements](#game-elements)
    - [Monsters](#monsters)
    - [BTC](#btc)
    - [Potions](#potions)
-   - [Spells](#spells)
+   
 
 
 ## Controls
@@ -32,7 +33,7 @@
 `When a monster play` You can press **ANY** key to pass their turns.<br>
 `Pass your turn` When its your turn you may press W, to let the monster act.<br>
 `Movement` **Caps Lock.** Lock the player, you can turn without moving<br>
-`Spells` **A** Use the selected Spell, **1 2 3 4 5 6 7 8 9** Select a game.entity.living.player.spell.<br>
+`Spells` **A** Use the selected Spell, **← →** Select a Spell.<br>
 
 ## Fight
 <img src="https://user-images.githubusercontent.com/57185748/115145041-05cbc400-a050-11eb-99d7-4e3600ae8415.png" width="350"><br>
@@ -43,9 +44,44 @@ During the player turn, he has 1 action.<br>
 You can open the minimap, turn yourself with **Caps. lock**, select sorts, and open the playerInventory without consuming your action.<br>
 When a monster is killed, the hero gain **XP**, [BTC](#btc) and [Potions](#potions).
 
+
+### Spells
+You can consumes an amout of mana in order to use a spell . It deals damage to all monsters within the range.<br>
+Each spell has diffents range area.<br>
+You can gain spell by gaining level.<br>
+
+#### Ranger Spells
+   - `Put Trap` : lvl 1, you can set a trap to trick the monster, be careful you can hurt yourself
+   - `Basic Attack` : lvl 1, don't consume mana and have a long range 
+   - `Fire Arrow` : lvl 2, du more damage than a basick attack, hut only the first monster in the range
+   - `Dash` : lvl 3, you can advance to the end of the range
+   - `Heal` : lvl 4, can heal yourself
+   - `Sniper` : lvl 5, hurt all the monster in the range
+   - `100 arrows` : lvl 6, have a special range and make a lot of damage
+   
+#### Mage Spells
+   - `Fire Aura` : lvl 1, cast a fire wall around you 
+   - `Basic Attack` : lvl 1, hit with your magic staff
+   - `Fire Ball` : lvl 2, throw a ball of fire on the first monster you found 
+   - `Teleport` : lvl 3, teleport you at the end of your range
+   - `Heal` : lvl 4, can heal yourself
+   - `Fire Stroke` : lvl 5, throw a powerful strike of fire which hit all the monster he encounters
+   - `HellWave` : lvl 6, throw a powerful wave of fire in front of you
+   
+
+#### Warrior Spells
+   - `Basic Attack` : lvl 1, hit the monster in front of you with your sword 
+   - `Strong Punch` : lvl 1, powerful hit to the monster in front of you 
+   - `TourbiLOL` : lvl 2, you turn and turn and slice all the monster around you
+   - `Iron Skin` : lvl 3, you make yourself more resistant 
+   - `Charge` : lvl 4, you charge and hit every monster on your path
+   - `Throw Axe` : lvl 5, with a perfect throw of axe you hit the first monster in your range
+   - `Ground Punch` : lvl 6, a powerful punch on the ground hit all the enemies around you
+
 ## Merchant
 ![merchant](https://user-images.githubusercontent.com/57185748/115144943-96ee6b00-a04f-11eb-8c06-6c8837ba9554.png)<br>
-You can encounter Potion Merchant in the dungeon. You can buy for **10** [BTC](#btc) a random potion.
+![menuMerchant](https://user-images.githubusercontent.com/71182082/118045032-b0958080-b377-11eb-9592-948f35a71793.png)
+You can encounter Potion Merchant in the dungeon.<br>
 
 ## Map
 <img src="https://user-images.githubusercontent.com/57185748/115144962-aa013b00-a04f-11eb-8e2e-3c7c51660b85.png" width="350"><br>
@@ -91,6 +127,7 @@ The Skeleton is an angry monster once he sees you, he will follow you to the dea
 You can find BTC on the floor in a lot of room, or drop them on monster you kill.<br>
 Thoses BTC allow you to buy some potion to the merchant.<br>
 
+
 ## Potions
 ![Potion](https://user-images.githubusercontent.com/71182082/115144721-825da300-a04e-11eb-9691-d53f02732e79.png)<br>
 You can find potions on the treasure room or buy them at the merchant room.<br>
@@ -110,16 +147,7 @@ Use her to gain Mana.<br>
 ### XP Bottle
 ![image](https://user-images.githubusercontent.com/71182082/115144747-b042e780-a04e-11eb-9d84-bd391c360dd3.png)<br>
 Use her to gain Xp.<br>
+
+
 =======
 
-## Spells
-A game.entity.living.player.spell consumes an amout of mana. It deals damage to all monsters within the range.<br>
-Each game.entity.living.player.spell has diffents range area.<br>
-### Basic Attack
-![image](https://user-images.githubusercontent.com/57185748/115145221-c81b6b00-a050-11eb-8fed-479363e065e1.png)<br>
-
-### Fire Aura 
-![image](https://user-images.githubusercontent.com/57185748/115145227-cea9e280-a050-11eb-9fe8-a4b029f2810f.png)<br>
-
-### Fire Ball
-![image](https://user-images.githubusercontent.com/57185748/115145233-d36e9680-a050-11eb-9f10-590bd982c6bc.png)<br>
