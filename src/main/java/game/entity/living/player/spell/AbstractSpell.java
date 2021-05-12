@@ -24,8 +24,9 @@ public abstract class AbstractSpell implements Spell {
     protected int manaCost;
     private boolean damaging;
     private SpecialEffect effect;
+    private int avalaibleRange;
 
-    public AbstractSpell(String name, double damageMult, int damage, Range range, int manaCost, boolean damaging, SpecialEffect effect) {
+    public AbstractSpell(String name, double damageMult, int damage, Range range, int manaCost, boolean damaging, int avalaibleRange, SpecialEffect effect) {
         this.name = name;
         this.damageMult = damageMult;
         this.damage = damage;
@@ -33,6 +34,7 @@ public abstract class AbstractSpell implements Spell {
         this.manaCost = manaCost;
         this.damaging = damaging;
         this.effect = effect;
+        this.avalaibleRange = avalaibleRange;
     }
 
     public boolean useSpell(GameState gameState) {
@@ -135,10 +137,46 @@ public abstract class AbstractSpell implements Spell {
         setTopLeftCorner(entityPos, direction);
     }
     public void setTopLeftCorner(Position entityPos, Direction direction) {
-        range.setTopLeftCorner(entityPos);
+        switch (direction) {
+            case NORTH:
+                if (entityPos.getOrd() < avalaibleRange) {
+                    avalaibleRange = entityPos.getOrd();
+                }
+                range.setTopLeftCorner(new Position(
+                        entityPos.getAbs(), entityPos.getOrd() - avalaibleRange
+                ));
+                break;
+            case WEST:
+                if (entityPos.getAbs() < avalaibleRange) {
+                    avalaibleRange = entityPos.getAbs();
+                }
+                range.setTopLeftCorner(new Position(
+                        entityPos.getAbs() - avalaibleRange, entityPos.getOrd()
+                ));
+                break;
+            default:
+                range.setTopLeftCorner(new Position(
+                        entityPos.getAbs(), entityPos.getOrd()
+                ));
+        }
     }
 
-    public void setBottomRightCorner(Position entitiyPos, Direction direction) {
-        range.setBottomRightCorner(entitiyPos);
+    public void setBottomRightCorner(Position entityPos, Direction direction) {
+        switch (direction) {
+            case EAST:
+                range.setBottomRightCorner(new Position(
+                        entityPos.getAbs() + avalaibleRange, entityPos.getOrd()
+                ));
+                break;
+            case SOUTH:
+                range.setBottomRightCorner(new Position(
+                        entityPos.getAbs(), entityPos.getOrd() + avalaibleRange
+                ));
+                break;
+            default:
+                range.setBottomRightCorner(new Position(
+                        entityPos.getAbs(), entityPos.getOrd()
+                ));
+        }
     }
 }
