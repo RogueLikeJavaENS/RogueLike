@@ -21,6 +21,7 @@ public class FireAura extends AbstractSpell {
                 new Range(),
                 10,
                 true,
+                1,
                 null
         );
     }

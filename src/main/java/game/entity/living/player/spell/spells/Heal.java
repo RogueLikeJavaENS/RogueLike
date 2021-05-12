@@ -16,6 +16,7 @@ public class Heal extends AbstractSpell {
                 new Range(),
                 10,
                 false,
+                0,
                 (gameState -> {
                     int level = gameState.getPlayer().getPlayerStats().getLevel();
                     int recover = 7+2*level;
