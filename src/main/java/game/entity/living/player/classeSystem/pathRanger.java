@@ -10,7 +10,8 @@ public enum pathRanger {
 
     REWARD_0("Skill", 1, "BasicAttackRanger"),
     REWARD_1("Skill", 1, "Trap"),
-    REWARD_2("Skill", 2, "Sniper");
+    REWARD_2("Skill", 2, "Sniper"),
+    REWARD_3("Skill", 6,"Multishot");
 
     private String info;
     private Integer level;
