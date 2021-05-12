@@ -120,7 +120,7 @@ public class RogueLike {
                         rendererUI.display();
                     }
                 } else {
-                    gs.isOnEntity();
+                    gs.isOnEntity(gs.getPlayer());
                     rendererUI.updateAll(gs);
                     rendererUI.display();
                 }
@@ -144,6 +144,7 @@ public class RogueLike {
         } else {
             entity.doAction(gs);
             inactiveStateInput("Monster's turn, press any key ...");
+            gs.isOnEntity(entity);
         }
         if (acted || monsterPlayed) { // if a monster or the Player played, go to the next turn.
             fight.next();

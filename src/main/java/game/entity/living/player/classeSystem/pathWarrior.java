@@ -13,8 +13,8 @@ public enum pathWarrior {
     REWARD_2("Skill",2,"TourbiLOL"),
     //REWARD_3("Skill",3,"Charge");
     //REWARD_4("Skill",4,"IronSkin");
-    REWARD_5("Skill",5,"ThrowAxe");
-    //REWARD_6("Skill",6,"FloorPunch");
+    REWARD_5("Skill",5,"ThrowAxe"),
+    REWARD_6("Skill",6,"Earthquake");
 
     private String info;
     private Integer level;
