@@ -116,7 +116,21 @@ public class PlayerStats extends AbstractStats {
         switch (classe){
             case DUMMY:
             case RANGER:
+                for (pathRanger reward:
+                        pathRanger.values()) {
+                    if (reward.getLevel() == level){
+                        addSpell(reward.getReward());
+                    }
+                }
+                break;
             case WARRIOR:
+                for (pathWarrior reward:
+                        pathWarrior.values()) {
+                    if (reward.getLevel() == level){
+                        addSpell(reward.getReward());
+                    }
+                }
+                break;
             case MAGE:
                 for (pathMage reward:
                      pathMage.values()) {
