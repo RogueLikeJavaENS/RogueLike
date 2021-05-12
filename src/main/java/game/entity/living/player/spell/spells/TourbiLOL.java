@@ -20,6 +20,10 @@ public class TourbiLOL extends AbstractSpell {
                 null);
     }
 
+    public boolean isZoning() {
+        return true;
+    }
+
     @Override
     public void setTopLeftCorner(Position entityPos, Direction direction) {
         int availableRange = 1;

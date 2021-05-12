@@ -12,9 +12,9 @@ public enum pathMage {
     REWARD_1("Skill", 1, "FireAura"),
     REWARD_2("Skill", 2, "FireBall"),
     REWARD_3("Skill", 3, "Teleport"),
-    REWARD_4("Skill", 4, "Heal");
-    //REWARD_5("Skill", 5, "FireStroke"),
-    //REWARD_6("Skill", 6, "HellWave");
+    REWARD_4("Skill", 4, "Heal"),
+    REWARD_5("Skill", 5, "FireStroke");
+    //REWARD_6("Skill", 1, "HellWave");
 
     private String info;
     private Integer level;
