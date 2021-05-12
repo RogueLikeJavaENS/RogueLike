@@ -111,7 +111,7 @@ public class RoomFactory {
         int monsterCount = GEN.nextInt(10) % 2 + 2;
         int type;
         for (int i = 0; i < monsterCount; i++) {
-            type = GEN.nextInt(2);
+            type = gameRule.getMonsterType().ordinal();
             room.addEntity(monsterFactory.getMonster(type, currentAvailablePositions.get(0)));
             currentAvailablePositions.remove(0);
         }

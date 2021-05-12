@@ -56,7 +56,8 @@ public class MonsterFactory {
         }
         else if (monsterType == MonsterType.MIMIC.ordinal()) {
             return new Mimic(position, "Mimic", getLevel(), skeletonStrategy);
-        } else if (monsterType == MonsterType.MERCHANT.ordinal()) {
+        }
+        else if (monsterType == MonsterType.MERCHANT.ordinal()) {
             return  new MerchantMonster(position, "Angry Merchant", getLevel(), skeletonStrategy);
         }
 
