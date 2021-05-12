@@ -26,7 +26,7 @@ public class VerificationRoom {
         Position startDoorPos = room.getDoors().get(0).getPosition();
         positionOfEntityList.remove(startDoorPos);
         Position basePosition = positionAround(startDoorPos, room).get(0);
-
+        positionOfEntityList.add(room.getCenter());
         List<Position> positionAroundList;
 
         for (Position entityPos: positionOfEntityList) {

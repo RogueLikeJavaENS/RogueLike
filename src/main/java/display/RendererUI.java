@@ -22,16 +22,18 @@ public class RendererUI {
     GameState gs;
 
     private final String[] gridAndMapArray;
-    private static final String help = "Controls :\n"
-            + "| Escape : Exit the game | H : Hide Controls  \n"
-            + "| Z : Up | Q : Left | S : Down | D : Right \n"
-            + "| I : Inventory | M : Minimap | Escape with the same button\n"
-            + "| V : Potion Health | B : Elixir | N : XpBottle\n"
-            + "| E : Interact with merchant | W : Wait\n"
-            + "| CapsLock : Lock the player to change direction\n"
-            + "| LEFT and RIGHT : Select game.entity.living.player.spell"
+    private static final String controls = "Controls :\n\n"
+            + "| Escape : Go on the menu  \n"
+            + "\nMove on the room : \n| Z : Up | Q : Left | S : Down | D : Right \n"
+            + "\nShortcut Potion : \n| V : Potion Health | B : Elixir | N : XpBottle\n\n"
+            + "| I : Open Inventory | M : Open Minimap | Escape : Close Inventory or Minimap \n\n"
+            + "| E : Interact with the world (merchant, chest ...) \n"
+            + "\nIn fight :\n"
+            + "| CapsLock : Lock the player to change direction | W : Pass your turn\n"
+            + "| LEFT and RIGHT : Select another spell"
+            + "| A : Use a spell\n"
             + "\n\n";
-    private static final String miniHelp = "H : Show All Controls\n\n";
+    private static final String miniHelp = "Escape : Go on the menu\n\n";
 
 
     /**
@@ -78,14 +80,8 @@ public class RendererUI {
      */
     public String toStringGame(){
         StringBuilder globalSB = new StringBuilder();
-        // Controls always print
-        if (gs.getHelp()){
-            globalSB.append(help);
-        }
-        else {
-            globalSB.append(miniHelp);
-        }
 
+        globalSB.append(miniHelp);
 
         switch (gs.getState()){
             case MAP: // Print the map of the dungeon
@@ -192,6 +188,11 @@ public class RendererUI {
         System.out.println("#######################################################");
         System.out.println("#                      YOU LOSE !                     #");
         System.out.println("#######################################################");
+    }
+
+
+    public static String getControls(){
+        return controls;
     }
 
     /**

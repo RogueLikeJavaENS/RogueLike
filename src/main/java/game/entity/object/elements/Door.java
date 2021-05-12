@@ -48,6 +48,8 @@ public class Door extends ObjectEntity {
         closeRelyDoor();
     }
 
+    public Room getNextRoom() { return nextRoom; }
+
     /**
      * Set the associate door
      */

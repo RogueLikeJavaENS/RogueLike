@@ -1,5 +1,6 @@
 package game.elements;
 
+import game.entity.living.npc.monster.MonsterType;
 import game.entity.living.player.classeSystem.InGameClasses;
 import game.stuff.equipment.Equipment;
 import game.stuff.equipment.EquipmentRarity;
@@ -58,6 +59,19 @@ public class GameRule {
         int nb = GEN.nextInt(100);
         return nb < 20;
     }
+
+    /**
+     *
+     */
+    public MonsterType getMonsterType(){
+        int nb = GEN.nextInt(2);
+        if (nb == 0){ return MonsterType.SKELETON;}
+        else if (nb == 1){ return MonsterType.GOBLIN;}
+
+
+        return MonsterType.MIMIC; // Don't normally append
+    }
+
 
 
     //////////// Treasure Room //////////

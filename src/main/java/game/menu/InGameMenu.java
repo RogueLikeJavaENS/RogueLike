@@ -42,7 +42,7 @@ public class InGameMenu {
                     "  _________UUUUUUUUUUUUUUUUUUUUUUUUU()())()))()\n" +
                     "  UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU))\n" +
                     "()UUUUUUUUUU|| ___ || ___ || ___ ||UUUUUUUUUU()\n" +
-                    "(()|__\\S/__||| ~|~ || ~|~ || ~|~ ||___\\S/__|()(\n" +
+                    "(()|__\\$/__||| ~|~ || ~|~ || ~|~ ||___\\$/__|()(\n" +
                     "))(|-------||| \"\"\" || \"\"\" || \"\"\" ||  _____ |()(\n" +
                     "(()|-------||| ___ ||/_º_\\|| ___ ||  ~|~|~ |(()\n" +
                     ")))|-------||| ~|~ |||\"\"\"||| ~|~ ||  \"\"\"\"\" |)()\n" +
@@ -95,7 +95,9 @@ public class InGameMenu {
                 case KeyEvent.VK_E:
                 case KeyEvent.VK_ENTER:
                     selectedAction.doAction(gameState);
-                    endMenu = true;
+                    if (gameState.getState() != State.PAUSE_MENU) {
+                        endMenu = true;
+                    }
                     break;
                 case KeyEvent.VK_ESCAPE:
                     gameState.setState(State.NORMAL);
@@ -147,14 +149,28 @@ public class InGameMenu {
                 state.setState(State.NORMAL);
                 state.isThereMonsters();
             }));
-        } else if (stateMenu.equals(State.PAUSE_MENU)) {
+        } else if (stateMenu.equals(State.PAUSE_MENU)) {  // Menu Pause
             headMenu = pauseHead;
             actions.add(new InGameAction("Resume game", state -> {
                 state.setState(State.NORMAL);
                 state.isThereMonstersInventory();
             }));
-            actions.add(new InGameAction("Restart game", state -> System.out.println("Restarting game not implemented")));
+            actions.add(new InGameAction("Controls", state -> {
+                RendererUI.clearConsole();
+                System.out.println(RendererUI.getControls());
+                sp.reset();
+                int keyCode = 0;
+                while(keyCode == 0) {
+                    keyCode = sp.getKeyPressed();
+                    try {
+                        Thread.sleep(1);  // Without that, Java deletes the loop
+                    }catch(Exception e){}
+                }
+                sp.reset();
+                state.setState(State.PAUSE_MENU);
+            }));
             actions.add(new InGameAction("Exit game", state -> state.setState(State.END)));
+
         }
         selectedAction = actions.get(0);
     }

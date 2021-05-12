@@ -5,6 +5,8 @@ import com.diogonunes.jcolor.Attribute;
 import display.RendererUI;
 import utils.Colors;
 import utils.ScanPanel;
+import utils.State;
+
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,8 +97,18 @@ public class StartMenu {
             actions.add(new StartMenuAction("New Game", () -> {
                 initMenu(false); // init Class Selection Menu.
             }));
-            actions.add(new StartMenuAction("Load Game", () -> {
-                // not implemented yet
+            actions.add(new StartMenuAction("Controls", () -> {
+                RendererUI.clearConsole();
+                System.out.println(RendererUI.getControls());
+                sp.reset();
+                int keyCode = 0;
+                while(keyCode == 0) {
+                    keyCode = sp.getKeyPressed();
+                    try {
+                        Thread.sleep(1);  // Without that, Java deletes the loop
+                    }catch(Exception e){}
+                }
+                sp.reset();
             }));
             actions.add(new StartMenuAction("Exit Game", () -> System.exit(0)));
         }
