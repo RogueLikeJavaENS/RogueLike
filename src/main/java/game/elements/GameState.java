@@ -137,7 +137,7 @@ public class GameState {
 
     /**
      * Check if the player moved on Entity.
-     * The methods throw the action related to the game.entity.
+     * The methods throw the action related to the entity.
      */
     public void isOnEntity() {
         int playerAbs = player.getPosition().getAbs();
@@ -219,7 +219,7 @@ public class GameState {
                 currentFightExp = 0;
                 musicStuff.playNormalMusic();
             }
-
+            player.getPlayerStats().incrementeKillCounter();
             Grave grave = new Grave(monster, gameRule, this);
             gridMap.update(grave, true);
         }
@@ -250,10 +250,10 @@ public class GameState {
     }
 
     /**
-     * Uses the player's selected game.entity.living.player.spell and applies its effects to the area within its range.
-     * If the player doesn't have enough mana, the game.entity.living.player.spell fails.
+     * Uses the player's selected spell and applies its effects to the area within its range.
+     * If the player doesn't have enough mana, the spell fails.
      *
-     * @return weither the game.entity.living.player.spell has been successfully used or not.
+     * @return weither spell has been successfully used or not.
      *
      * @author Raphael and Antoine
      */

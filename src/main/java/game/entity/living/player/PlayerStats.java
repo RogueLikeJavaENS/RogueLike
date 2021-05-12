@@ -21,6 +21,7 @@ public class PlayerStats extends AbstractStats {
     private final Map<Integer, Integer> levelCap;
     private int xp;
     private int xpRequired;
+    private int killCounter;
 
     public int getXpRequired() {
         return xpRequired;
@@ -61,6 +62,7 @@ public class PlayerStats extends AbstractStats {
                 break;
         }
         this.xp=0;
+        killCounter = 0;
         this.levelCap=loadXpPerLevel();
         checkCurrentXP();
     }
@@ -102,7 +104,7 @@ public class PlayerStats extends AbstractStats {
     private void levelUp(){
         upgradeLifePointNatural(classFactor[0]);
         upgradeManaPointNatural(classFactor[1]);
-        upInitiativeNatural(classFactor[2]);
+        upAgilityNatural(classFactor[2]);
         changeDamageNatural(classFactor[3]);
         changeArmorNatural(classFactor[4]);
         setLevel(getLevel()+1);
@@ -138,7 +140,16 @@ public class PlayerStats extends AbstractStats {
         }
     }
 
+    public void incrementeKillCounter() {
+        this.killCounter += 1;
+    }
     public void setSelectedSpell(Spell selectedSpell) { this.selectedSpell = selectedSpell; }
+
+
+    public int getKillCounter() {
+        return killCounter;
+    }
+
     public List<Spell> getSpells() { return spellList; }
     public Spell getSelectedSpell() { return selectedSpell; }
     public  InGameClasses getClasse() {return classe;}

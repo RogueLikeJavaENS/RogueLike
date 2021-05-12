@@ -11,7 +11,7 @@ public interface Equipment extends Stuff {
     EquipmentType getType();
     int getBonusDamage();
     int getBonusArmor();
-    int getBonusInitiative();
+    int getBonusAgility();
     int getBonusLife();
     int getBonusMana();
     int getLevel();

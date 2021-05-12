@@ -70,7 +70,7 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
     public EquipmentType getType() { return type; }
     public int getBonusDamage() { return bonusDamage; }
     public int getBonusArmor() { return bonusArmor; }
-    public int getBonusInitiative() { return bonusInitiative; }
+    public int getBonusAgility() { return bonusInitiative; }
     public int getBonusLife() { return bonusLife; }
     public int getBonusMana() { return bonusMana; }
     public int getLevel() { return level; }

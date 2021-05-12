@@ -129,18 +129,22 @@ public class InGameMenu {
                 state.setState(State.NORMAL);
                 Player player = state.getPlayer();
                 Spell spell = player.getPlayerStats().getSpells().get(0);
-                int damage = spell.getDamage();
-                double mult = spell.getDamageMult();
-                int damages = (int) (damage + mult * state.getPlayer().getPlayerStats().getDamageTotal());
-                angryMerchant.getMonsterStats().sufferDamage(damages);
+                if (angryMerchant.getMonsterStats().hasAvoided()){
+                    state.getDescriptor().updateDescriptor(String.format("%s dodged %s's attack!", player.getName(), angryMerchant.getName()));
+                } else {
+                    int damage = spell.getDamage();
+                    double mult = spell.getDamageMult();
+                    int damages = (int) (damage + mult * state.getPlayer().getPlayerStats().getDamageTotal());
+                    angryMerchant.getMonsterStats().sufferDamage(damages);
 
-                state.getDescriptor().updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
-                        player.getName(),
-                        spell,
-                        colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
-                        colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
-                        angryMerchant.getName()));
-                state.isMonsterAlive(angryMerchant);
+                    state.getDescriptor().updateDescriptor(String.format("%s used %s for %s mana and inflicted %s damages to the %s !",
+                            player.getName(),
+                            spell,
+                            colorize(Integer.toString(spell.getManaCost()), Colors.BLUE.textApply()),
+                            colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
+                            angryMerchant.getName()));
+                    state.isMonsterAlive(angryMerchant);
+                }
                 state.isThereMonsters();
                 state.getDescriptor().updateDescriptor(
                         "Merchant : "+colorize(String.format("It's treason then, you will die %s !", state.getPlayer().getName()), Attribute.BOLD(), Colors.RED.textApply()));
