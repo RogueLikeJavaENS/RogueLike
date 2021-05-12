@@ -70,6 +70,9 @@ public class PlayerStats extends AbstractStats {
         checkCurrentXP();
     }
 
+    /**
+     * handle the temporary bonuses and what to do when the max turn allowed reach 0.
+     */
     public void manageTemporaryBonus(){
         turnPassed--;
         if(turnPassed<=0){
@@ -79,6 +82,12 @@ public class PlayerStats extends AbstractStats {
         }
     }
 
+    /**
+     * set the values necessary to handle the temporary bonuses.
+     * Only work for armor for now.
+     * @param bonus value added
+     * @param turn number of turn it should stay up
+     */
     public void setBonusArmorTemporary(int bonus, int turn){
         this.turnPassed=turn;
         this.bonusArmorTemporary=bonus;

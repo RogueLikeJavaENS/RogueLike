@@ -7,6 +7,12 @@ import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * This spell improve the warrior defense of armorBonus for the duration of numberTurn
+ * The bonus is managed in playerStats and the gameloop.
+ * @author luca
+ */
+
 public class IronSkin extends AbstractSpell {
     public IronSkin() {
         super("IronSkin",
