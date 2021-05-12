@@ -37,6 +37,6 @@ public class Zombie extends AbstractMonster {
                         level,
                         5 * level));
         setSprites("_#_", "§ §", Colors.GREEN);
-        setBasicSprites("_#_", "/ \\");
+        setBasicSprites("_#_", "§ §");
     }
 }
