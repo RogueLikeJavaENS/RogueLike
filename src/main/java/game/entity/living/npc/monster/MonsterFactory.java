@@ -62,6 +62,9 @@ public class MonsterFactory {
         else if(monsterType == MonsterType.ZOMBIE.ordinal()){
             return new Zombie(position, "Zombie", getLevel(), classicAttackStrategy);
         }
+        else if(monsterType == MonsterType.ORC.ordinal()){
+            return new Orc(position, "Orc", getLevel(), classicAttackStrategy);
+        }
 
         ///// in order to create a monster you have to write
         // else if (monsterType == "typeOfMonster")
