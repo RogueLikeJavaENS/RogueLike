@@ -22,15 +22,6 @@ public enum pathMage {
         this.reward = reward;
     }
 
-    public static pathMage getRewardForLevel(Integer level){
-        for(pathMage reward : pathMage.values()){
-            if(reward.getLevel().equals(level)){
-                return reward;
-            }
-        }
-        return null;
-    }
-
     public String getInfo() {
         return info;
     }
