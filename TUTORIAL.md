@@ -23,7 +23,7 @@
 ## Controls
 ### Normal inputs
 `Movements`  **Z** Up, **Q** Left, **S** Down, **D** Right.<br>
-`Interaction`  **E** Interact with an entity (Merchants).<br>
+`Interaction`  **E** Interact with an game.entity (Merchants).<br>
 `Menu`  **I** Open and close the playerInventory, **M** Open and close the Map, **H** Hide/show controls.<br>
 `Potion`  **V** Use Healing Potion, **B** Use Elixir, **N** Use XP Bottle<br>
 `Quit`  **ESC** Excape the game.<br>
@@ -32,7 +32,7 @@
 `When a monster play` You can press **ANY** key to pass their turns.<br>
 `Pass your turn` When its your turn you may press W, to let the monster act.<br>
 `Movement` **Caps Lock.** Lock the player, you can turn without moving<br>
-`Spells` **A** Use the selected Spell, **1 2 3 4 5 6 7 8 9** Select a spell.<br>
+`Spells` **A** Use the selected Spell, **1 2 3 4 5 6 7 8 9** Select a game.entity.living.player.spell.<br>
 
 ## Fight
 <img src="https://user-images.githubusercontent.com/57185748/115145041-05cbc400-a050-11eb-99d7-4e3600ae8415.png" width="350"><br>
@@ -113,8 +113,8 @@ Use her to gain Xp.<br>
 =======
 
 ## Spells
-A spell consumes an amout of mana. It deals damage to all monsters within the range.<br>
-Each spells has diffents range area.<br>
+A game.entity.living.player.spell consumes an amout of mana. It deals damage to all monsters within the range.<br>
+Each game.entity.living.player.spell has diffents range area.<br>
 ### Basic Attack
 ![image](https://user-images.githubusercontent.com/57185748/115145221-c81b6b00-a050-11eb-8fed-479363e065e1.png)<br>
 

@@ -1,8 +1,8 @@
 package utils;
 
 import display.GridMap;
-import entity.Entity;
-import gameElement.Room;
+import game.entity.Entity;
+import game.elements.Room;
 
 import java.util.*;
 

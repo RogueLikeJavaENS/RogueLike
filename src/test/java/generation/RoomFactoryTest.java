@@ -1,10 +1,9 @@
 package generation;
 
-import entity.Entity;
-import entity.living.npc.merchants.Merchant;
-import entity.living.npc.monster.Monster;
-import entity.object.Coins;
-import gameElement.Room;
+import game.entity.Entity;
+import game.entity.living.npc.monster.Monster;
+import game.entity.object.elements.Coins;
+import game.elements.Room;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,8 +61,8 @@ class RoomFactoryTest {
     void containPotions() {
 //        Room treasureRoom = roomFactory1.getRoom(seed, RoomType.TREASURE, 1, nextList);
 //        int nbPotions = 0;
-//        for (Entity entity : treasureRoom.getEntities()) {
-//            if (entity instanceof Potion) {
+//        for (Entity game.entity : treasureRoom.getEntities()) {
+//            if (game.entity instanceof Potion) {
 //                nbPotions++;
 //            }
 //        }

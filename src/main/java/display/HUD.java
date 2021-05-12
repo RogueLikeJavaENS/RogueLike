@@ -1,8 +1,8 @@
 package display;
 
-import entity.living.player.Player;
-import spells.Spell;
-import stuff.item.ItemType;
+import game.entity.living.player.Player;
+import game.entity.living.player.spell.Spell;
+import game.stuff.item.ItemType;
 import utils.Colors;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class HUD {
     /**
      * Creates the string containing the player's list of spells and highlights the one corresponding to the parameter, if it exists.
      *
-     * @param spellPosition position of the spell starting from 1 to 10 (0 on the keyboard).
+     * @param spellPosition position of the game.entity.living.player.spell starting from 1 to 10 (0 on the keyboard).
      *
      * @author Raphael
      */
@@ -92,7 +92,7 @@ public class HUD {
             spellsString.append("| ");
             currentSpellString.append(i + 1).append(" : ")
                     .append(currentSpell.toString()); //Example : "| 1 : Fire Ball | 2 : Thanos' Snap | 3 : Tactical Nuke
-            if (i == spellPosition) { //if it's the spell we want to select
+            if (i == spellPosition) { //if it's the game.entity.living.player.spell we want to select
                 spellsString.append(colorize(currentSpellString.toString(),Colors.BLACK.textApply(), Colors.WHITE.bgApply()));
             } else {
                 spellsString.append(currentSpellString);

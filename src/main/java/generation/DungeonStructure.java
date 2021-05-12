@@ -1,8 +1,8 @@
 package generation;
 
-import classeSystem.InGameClasses;
-import gameElement.Dungeon;
-import gameElement.Room;
+import game.entity.living.player.classeSystem.InGameClasses;
+import game.elements.Dungeon;
+import game.elements.Room;
 
 import java.util.ArrayList;
 import java.util.Arrays;

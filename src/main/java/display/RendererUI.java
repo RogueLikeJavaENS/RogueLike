@@ -1,7 +1,7 @@
 package display;
 
-import gameElement.GameState;
-import gameElement.MiniMap;
+import game.elements.GameState;
+import game.elements.MiniMap;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -29,7 +29,7 @@ public class RendererUI {
             + "| V : Potion Health | B : Elixir | N : XpBottle\n"
             + "| E : Interact with merchant | W : Wait\n"
             + "| CapsLock : Lock the player to change direction\n"
-            + "| LEFT and RIGHT : Select spell"
+            + "| LEFT and RIGHT : Select game.entity.living.player.spell"
             + "\n\n";
     private static final String miniHelp = "H : Show All Controls\n\n";
 

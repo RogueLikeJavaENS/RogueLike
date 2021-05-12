@@ -1,8 +1,7 @@
 package utils;
 
-import stuff.Stuff;
+import game.stuff.Stuff;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class CoupleStuff {

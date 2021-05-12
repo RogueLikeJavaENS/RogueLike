@@ -1,10 +1,10 @@
 package generation;
 
 import display.GridMap;
-import display.tiles.Tile;
-import entity.Entity;
-import entity.object.*;
-import gameElement.Room;
+import game.tile.TileEnum;
+import game.entity.Entity;
+import game.entity.object.elements.Coins;
+import game.elements.Room;
 import utils.Dijksrta;
 import utils.Position;
 import java.util.ArrayList;
@@ -95,25 +95,25 @@ public class VerificationRoom {
         List<Position> positionAround = new ArrayList<>();
         int abs = position.getAbs();
         int ord = position.getOrd();
-        if (abs !=0 && room.getContents()[ord][abs-1] == Tile.FLOOR.getId()){
+        if (abs !=0 && room.getContents()[ord][abs-1] == TileEnum.FLOOR.getId()){
             positionAround.add(new Position(abs-1, ord));
         }
-        if (abs !=room.getWidth()-1 && room.getContents()[ord][abs+1] == Tile.FLOOR.getId()){
+        if (abs !=room.getWidth()-1 && room.getContents()[ord][abs+1] == TileEnum.FLOOR.getId()){
             positionAround.add(new Position(abs+1, ord));
         }
-        if (ord !=0 && room.getContents()[ord-1][abs] == Tile.FLOOR.getId()){
+        if (ord !=0 && room.getContents()[ord-1][abs] == TileEnum.FLOOR.getId()){
             positionAround.add(new Position(abs, ord-1));
         }
-        if (ord !=room.getHeight()-1 && room.getContents()[ord+1][abs] == Tile.FLOOR.getId()){
+        if (ord !=room.getHeight()-1 && room.getContents()[ord+1][abs] == TileEnum.FLOOR.getId()){
             positionAround.add(new Position(abs, ord+1));
         }
         return positionAround;
     }
 
     /**
-     * Return the list of positions all the entity which need to be accessible
+     * Return the list of positions all the game.entity which need to be accessible
      *
-     * @param room the where are the entity
+     * @param room the where are the game.entity
      * @return the list of the positions
      */
     private static List<Position> positionOfNeededEntity(Room room){

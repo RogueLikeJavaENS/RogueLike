@@ -1,13 +1,15 @@
 import com.diogonunes.jcolor.Attribute;
 import display.HUD;
 import display.RendererUI;
-import entity.living.LivingEntity;
-import entity.living.player.Player;
-import gameElement.menu.InGameMenu;
-import entity.living.inventory.OpenInventory;
-import gameElement.menu.StartMenu;
-import stuff.item.ItemType;
-import gameElement.*;
+import game.elements.Dungeon;
+import game.elements.Fighting;
+import game.elements.GameState;
+import game.entity.living.LivingEntity;
+import game.entity.living.player.Player;
+import game.menu.InGameMenu;
+import game.entity.living.inventory.OpenInventory;
+import game.menu.StartMenu;
+import game.stuff.item.ItemType;
 import generation.*;
 import utils.*;
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -41,7 +43,7 @@ public class RogueLike {
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1, start.getClasse());
         Position initialPosition = dungeon.getRoom(0).getCenter();
-        Player player = new Player(initialPosition, start.getName(), start.getClasse(), 1);
+        Player player = new Player(initialPosition, start.getName(), start.getClasse());
 
         gs = new GameState(player, dungeon, new HUD(player), sp, musicStuff);
         rendererUI = new RendererUI(gs);
@@ -121,7 +123,7 @@ public class RogueLike {
         } else {
             gs.getDescriptor().updateDescriptor(String.format("%s could not act before the others!", entity.getName()));
             //gives the player the time to see what's going on, and gives him the possibility to stop the game, and it changes the boolean to skip the turn
-            inactiveStateInput("The current entity is too slow to act, press any key ...");
+            inactiveStateInput("The current game.entity is too slow to act, press any key ...");
         }
         if (acted || monsterPlayed) { // if a monster or the Player played, go to the next turn.
             fight.next();
@@ -183,9 +185,9 @@ public class RogueLike {
                 break;
             case KeyEvent.VK_A:
                 if (state == State.FIGHT) {
-                    acted = gs.useSpell(); //true if the spell was casted, false if not enough pm
+                    acted = gs.useSpell(); //true if the game.entity.living.player.spell was casted, false if not enough pm
                     modifiedMenu = true;
-                    gs.getHud().spellListString(); //remove the highlightning of the selected spell
+                    gs.getHud().spellListString(); //remove the highlightning of the selected game.entity.living.player.spell
                 }
                 break;
             case KeyEvent.VK_RIGHT:

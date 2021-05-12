@@ -1,19 +1,25 @@
 package generation;
 
-import classeSystem.InGameClasses;
-import display.tiles.Tile;
-import entity.Entity;
-import entity.living.inventory.Inventory;
-import entity.living.npc.merchants.GeneralMerchant;
-import entity.living.npc.monster.MonsterFactory;
-import entity.living.npc.monster.boss.*;
-import entity.object.*;
-import entity.object.potions.PotionEntityFactory;
-import gameElement.*;
+import game.entity.living.player.classeSystem.InGameClasses;
+import game.tile.TileEnum;
+import game.elements.Dungeon;
+import game.elements.GameRule;
+import game.elements.Room;
+import game.entity.Entity;
+import game.entity.living.inventory.Inventory;
+import game.entity.living.npc.merchants.GeneralMerchant;
+import game.entity.living.npc.monster.MonsterFactory;
+import game.entity.living.npc.monster.boss.*;
+import game.entity.object.elements.Chest;
+import game.entity.object.elements.Coins;
+import game.entity.object.elements.Stair;
+import game.entity.object.potion.PotionEntityFactory;
+import game.entity.object.traps.Hole;
+import game.entity.object.traps.Spike;
 import utils.Direction;
-import stuff.equipment.*;
-import stuff.item.keys.GoldKey;
-import stuff.item.potions.*;
+import game.stuff.equipment.*;
+import game.stuff.item.keys.GoldKey;
+import game.stuff.item.potions.*;
 import utils.Position;
 
 import java.util.ArrayList;
@@ -177,7 +183,7 @@ public class RoomFactory {
 
     public static void addMerchant(Dungeon dungeon, InGameClasses playerClasse) {
         for (Room room : dungeon.getRoomList()) {
-            if (room.getRoomType() == RoomType.START) {
+            if (room.getRoomType() == RoomType.REST) {
                 List<Position> availablePositions = room.getAvailablePositions();
                 GeneralMerchant generalMerchant = new GeneralMerchant(availablePositions.remove(0));
                 EquipmentFactory equipmentFactory = new EquipmentFactory(playerClasse);
@@ -316,13 +322,13 @@ public class RoomFactory {
         int[][] contents;
         contents = new int[height][width];
 
-        Tile emptyTile = Tile.EMPTY;
-        Tile floor = Tile.FLOOR;
+        TileEnum emptyTileEnum = TileEnum.EMPTY;
+        TileEnum floor = TileEnum.FLOOR;
 
-        fillSquare(0, 0, space, space, emptyTile.getId(), contents); // fill void NORTH-WEST
-        fillSquare(width - space, 0, width -1, space, emptyTile.getId(), contents); // NORTH-EAST
-        fillSquare(0, height - space, space, height -1 ,emptyTile.getId(),contents); // SOUTH-WEST
-        fillSquare(width - space, height - space, width -1 , height -1, emptyTile.getId(), contents);
+        fillSquare(0, 0, space, space, emptyTileEnum.getId(), contents); // fill void NORTH-WEST
+        fillSquare(width - space, 0, width -1, space, emptyTileEnum.getId(), contents); // NORTH-EAST
+        fillSquare(0, height - space, space, height -1 , emptyTileEnum.getId(),contents); // SOUTH-WEST
+        fillSquare(width - space, height - space, width -1 , height -1, emptyTileEnum.getId(), contents);
         fillSquare(space +1, space +1, width -(space +2), height -(space +2),floor.getId(), contents);
 
         fillNorth(nextList[0] != -1, contents);
@@ -345,12 +351,12 @@ public class RoomFactory {
 
     private void fillNorth(boolean hasDoor, int[][] contents) {
         if (hasDoor) {
-            fillSquare(space, 0, width -(space +1), space, Tile.WALL.getId(), contents); //Northern wall
-            fillSquare(space +1, 1, width -(space +2), space, Tile.FLOOR.getId(), contents); // Floor
-            contents[0][width /2] = Tile.DOOR.getId(); // Door
+            fillSquare(space, 0, width -(space +1), space, TileEnum.WALL.getId(), contents); //Northern wall
+            fillSquare(space +1, 1, width -(space +2), space, TileEnum.FLOOR.getId(), contents); // Floor
+            contents[0][width /2] = TileEnum.DOOR.getId(); // Door
         } else {
-            fillSquare(space, 0, width -(space +1), space -1, Tile.EMPTY.getId(), contents);
-            fillSquare(space +1, space, width -(space +2), space, Tile.WALL.getId(), contents); // Northern wall
+            fillSquare(space, 0, width -(space +1), space -1, TileEnum.EMPTY.getId(), contents);
+            fillSquare(space +1, space, width -(space +2), space, TileEnum.WALL.getId(), contents); // Northern wall
         }
     }
 
@@ -365,15 +371,15 @@ public class RoomFactory {
     private void fillSouth(boolean hasDoor, int[][] contents) {
         if (hasDoor) {
             fillSquare(space, height -(space +1), width -(space +1), height -1,
-                    Tile.WALL.getId(), contents);
+                    TileEnum.WALL.getId(), contents);
             fillSquare(space +1, height -(space +1), width -(space +2), height -(space),
-                    Tile.FLOOR.getId(), contents);
-            contents[height -1][width /2] = Tile.DOOR.getId();
+                    TileEnum.FLOOR.getId(), contents);
+            contents[height -1][width /2] = TileEnum.DOOR.getId();
         } else {
             fillSquare(space, height -(space), width -(space +1), height -1,
-                    Tile.EMPTY.getId(), contents);
+                    TileEnum.EMPTY.getId(), contents);
             fillSquare(space +1, height -(space +1), width -(space +2), height -(space +1),
-                    Tile.WALL.getId(), contents);
+                    TileEnum.WALL.getId(), contents);
         }
     }
 
@@ -388,15 +394,15 @@ public class RoomFactory {
     private void fillEast(boolean hasDoor, int[][] contents) {
         if (hasDoor) {
             fillSquare(width -(space +1), space, width -1, height -(space +1),
-                    Tile.WALL.getId(), contents);
+                    TileEnum.WALL.getId(), contents);
             fillSquare(width -(space +1), space +1 , width -2, height -(space +2),
-                    Tile.FLOOR.getId(), contents);
-            contents[height /2][width -1] = Tile.DOOR.getId();
+                    TileEnum.FLOOR.getId(), contents);
+            contents[height /2][width -1] = TileEnum.DOOR.getId();
         } else {
             fillSquare(width -(space), space, width -1, height -(space +1),
-                    Tile.EMPTY.getId(), contents);
+                    TileEnum.EMPTY.getId(), contents);
             fillSquare(width -(space +1), space, width -(space +1), height -(space +1),
-                    Tile.WALL.getId(), contents);
+                    TileEnum.WALL.getId(), contents);
         }
     }
 
@@ -411,15 +417,15 @@ public class RoomFactory {
     private void fillWest(boolean hasDoor, int[][] contents) {
         if (hasDoor) {
             fillSquare(0, space, space, height -(space +1),
-                    Tile.WALL.getId(), contents);
+                    TileEnum.WALL.getId(), contents);
             fillSquare(1, space +1, space, height -(space +2),
-                    Tile.FLOOR.getId(), contents);
-            contents[height /2][0] = Tile.DOOR.getId();
+                    TileEnum.FLOOR.getId(), contents);
+            contents[height /2][0] = TileEnum.DOOR.getId();
         } else {
             fillSquare(0, space, space -1, height -(space +1),
-                    Tile.EMPTY.getId(), contents);
+                    TileEnum.EMPTY.getId(), contents);
             fillSquare(space, space, space, height -(space +1),
-                    Tile.WALL.getId(), contents);
+                    TileEnum.WALL.getId(), contents);
         }
     }
 

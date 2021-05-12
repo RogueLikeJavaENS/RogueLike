@@ -21,9 +21,9 @@
 - Differents types of Room.
 - Move with direction of the player.
 - Monsters.
-- Basic systems of spells.
+- Basic systems of game.entity.living.player.spell.
 - Basic merchants.
-- Range of spell.
+- Range of game.entity.living.player.spell.
 - Level and Xp management
 - BTC
 
@@ -43,7 +43,7 @@
 - Skill tree
 - Implementing differente sizes for basic potions
 - Adding new types of potion
-- Creating a rarity system for equipement (and possibly every stuff)
+- Creating a rarity system for equipement (and possibly every game.stuff)
 - Add Easter Eggs (sshhh you didn't see that)
 
 ## Project Member
