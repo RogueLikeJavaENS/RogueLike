@@ -59,6 +59,9 @@ public class MonsterFactory {
         else if (monsterType == MonsterType.BAT.ordinal()){
             return new Bat(position, "Bat", getLevel(), classicAttackStrategy);
         }
+        else if(monsterType == MonsterType.ZOMBIE.ordinal()){
+            return new Zombie(position, "Zombie", getLevel(), classicAttackStrategy);
+        }
 
         ///// in order to create a monster you have to write
         // else if (monsterType == "typeOfMonster")

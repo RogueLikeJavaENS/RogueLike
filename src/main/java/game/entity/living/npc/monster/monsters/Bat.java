@@ -11,7 +11,7 @@ import utils.Position;
 /**
  * This class describe the monster Bat
  * He has some basic statistic
- *
+ * @author luca
  */
 public class Bat extends AbstractMonster implements Monster {
     private final static int basicHP = 20;
