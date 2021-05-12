@@ -155,6 +155,7 @@ public class Chest extends ObjectEntity {
                     opened =true;
                     setSprites("/  ", "[¤]", Colors.YELLOW);
                     fillChest(false,gameState);
+                    gameState.getPlayer().getInventory().removeItem(ItemType.GOLD_KEY);
                 }
                 else{
                     gameState.getDescriptor().updateDescriptor("You don't have the gold key, you can't open this golden chest.");
