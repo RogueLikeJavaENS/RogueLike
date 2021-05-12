@@ -1,23 +1,20 @@
 package game.entity.living.player.classeSystem;
 
 /**
- * enumerator handling all reward by level for the mageClass.
+ * enumerator handling all reward by level for the warriorClass.
  * @author luca
  */
 
 //this structure can be reused for each new class being added.
-public enum pathMage {
+public enum pathWarrior {
 
-    REWARD_0("Skill", 1, "BasicAttackMage"),
-    REWARD_1("Skill", 1, "FireAura"),
-    REWARD_2("Skill", 2, "FireBall"),
-    REWARD_3("Skill", 4, "Heal");
+    REWARD_0("Skill", 1, "BasicAttackWarrior");
 
     private String info;
     private Integer level;
     private String reward;
 
-    pathMage(String info, Integer level, String reward){
+    pathWarrior(String info, Integer level, String reward){
         this.info = info;
         this.level=level;
         this.reward = reward;
