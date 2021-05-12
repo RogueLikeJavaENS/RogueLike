@@ -6,9 +6,9 @@ import game.entity.living.player.spell.Range;
 import utils.Direction;
 import utils.Position;
 
-public class BasicAttack extends AbstractSpell {
+public class BasicAttackWarrior extends AbstractSpell {
 
-    public BasicAttack() {
+    public BasicAttackWarrior() {
         super("Attack",
                 1.0,
                 12,
