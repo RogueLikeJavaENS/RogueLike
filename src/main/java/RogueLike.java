@@ -260,7 +260,8 @@ public class RogueLike {
                 if (state == State.MAP) {
                     gs.setState(State.NORMAL);
                     gs.isThereMonsters();
-                } else {
+                }
+                else {
                     gs.setState(State.PAUSE_MENU);
                     new InGameMenu(gs);
                 }
