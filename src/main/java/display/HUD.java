@@ -1,8 +1,8 @@
 package display;
 
-import entity.living.player.Player;
-import spells.Spell;
-import stuff.item.ItemType;
+import game.entity.living.player.Player;
+import game.entity.living.spell.Spell;
+import game.stuff.item.ItemType;
 import utils.Colors;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
 import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
- * HUD is used to create a string of a player's info such as name, level, HP and MP, as well as its spells during combat.
+ * HUD is used to create a string of a player's info such as name, level, HP and MP, as well as its gameElement.spells during combat.
  *
  * @author Raphael
  *
@@ -76,7 +76,7 @@ public class HUD {
     }
 
     /**
-     * Creates the string containing the player's list of spells and highlights the one corresponding to the parameter, if it exists.
+     * Creates the string containing the player's list of gameElement.spells and highlights the one corresponding to the parameter, if it exists.
      *
      * @param spellPosition position of the spell starting from 1 to 10 (0 on the keyboard).
      *

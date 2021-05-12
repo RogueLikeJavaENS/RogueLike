@@ -1,14 +1,15 @@
 package display;
 
-import display.tiles.EmptyTile;
-import entity.Entity;
-import entity.living.LivingEntity;
-import entity.living.npc.monster.boss.Boss;
-import entity.living.npc.monster.boss.BossPart;
-import entity.living.player.Player;
-import entity.living.npc.monster.Monster;
-import gameElement.Room;
-import spells.Range;
+import game.tile.tiles.EmptyTile;
+import game.tile.Tile;
+import game.tile.TileFactory;
+import game.entity.Entity;
+import game.entity.living.LivingEntity;
+import game.entity.living.npc.monster.boss.BossPart;
+import game.entity.living.player.Player;
+import game.entity.living.npc.monster.Monster;
+import game.element.Room;
+import game.entity.living.spell.Range;
 import utils.Colors;
 import utils.Position;
 
@@ -78,8 +79,8 @@ public class GridMap {
     /**
      * Update the list entities.
      *
-     * @param entity The entity to add or to remove.
-     * @param add true to add / false to remove the entity
+     * @param entity The gameElement.entity to add or to remove.
+     * @param add true to add / false to remove the gameElement.entity
      */
     public void update(Entity entity, boolean add) {
         if(add) {
@@ -93,7 +94,7 @@ public class GridMap {
     }
 
     /**
-     * Add an entity on the list of entities
+     * Add an gameElement.entity on the list of entities
      * @param entity the Entity to add
      */
     private void addEntity(Entity entity) {
@@ -103,7 +104,7 @@ public class GridMap {
     }
 
     /**
-     * Remove entity of the list of entities
+     * Remove gameElement.entity of the list of entities
      * @param entity the Entity to remove
      */
     private void removeEntity(Entity entity) {
@@ -125,7 +126,7 @@ public class GridMap {
                 for (int abs = 0; abs < room.getWidth(); abs++)
                 {
                     List<Entity> entitiesAt = getEntitiesAt(abs, ord);
-                    if (entitiesAt.size() != 0)// print the first entity of the tile
+                    if (entitiesAt.size() != 0)// print the first gameElement.entity of the tile
                     {
                         Entity entityToPrint = getPrimaryEntity(entitiesAt);
                         if (isInRange(abs, ord) && !(entities.get(0) instanceof Player)) {
@@ -135,7 +136,7 @@ public class GridMap {
                             sb.append(entityToPrint.getSprites(i));
                         }
                     }
-                    else // if no entity, print the tile
+                    else // if no gameElement.entity, print the tile
                     {
                         if (isInRange(abs, ord)) {
                             sb.append(colorize(tiles[ord][abs].toString(), Colors.DEEP_GREY.bgApply()));

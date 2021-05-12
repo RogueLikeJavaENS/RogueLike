@@ -1,7 +1,7 @@
 package display;
 
-import gameElement.GameState;
-import gameElement.MiniMap;
+import game.element.GameState;
+import game.element.MiniMap;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

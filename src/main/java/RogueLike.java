@@ -1,13 +1,15 @@
 import com.diogonunes.jcolor.Attribute;
 import display.HUD;
 import display.RendererUI;
-import entity.living.LivingEntity;
-import entity.living.player.Player;
-import gameElement.menu.InGameMenu;
-import entity.living.inventory.OpenInventory;
-import gameElement.menu.StartMenu;
-import stuff.item.ItemType;
-import gameElement.*;
+import game.element.Dungeon;
+import game.element.Fighting;
+import game.element.GameState;
+import game.entity.living.LivingEntity;
+import game.entity.living.player.Player;
+import game.menu.InGameMenu;
+import game.entity.living.inventory.OpenInventory;
+import game.menu.StartMenu;
+import game.stuff.item.ItemType;
 import generation.*;
 import utils.*;
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -119,7 +121,7 @@ public class RogueLike {
         } else {
             gs.getDescriptor().updateDescriptor(String.format("%s could not act before the others!", entity.getName()));
             //gives the player the time to see what's going on, and gives him the possibility to stop the game, and it changes the boolean to skip the turn
-            inactiveStateInput("The current entity is too slow to act, press any key ...");
+            inactiveStateInput("The current gameElement.entity is too slow to act, press any key ...");
         }
         if (acted || monsterPlayed) { // if a monster or the Player played, go to the next turn.
             fight.next();
