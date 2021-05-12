@@ -87,9 +87,7 @@ public class GridMap {
             addEntity(entity);
         }
         else {
-            //System.out.printf("Gridmap: Size gridmap before : %d\n", getEntities().size() );
             removeEntity(entity);
-            //System.out.printf("GridMap : Size gridmap after : %d\n", getEntities().size() );
         }
     }
 

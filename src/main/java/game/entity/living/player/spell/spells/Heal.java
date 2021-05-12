@@ -28,6 +28,7 @@ public class Heal extends AbstractSpell {
                                             " and recovered" +
                                             colorize(String.format(" %d ", recover), Attribute.BOLD(), Colors.GREEN.textApply()) +
                                             "HP.", gameState.getPlayer().getName()));
+                    return true;
                 })
         );
     }

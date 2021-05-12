@@ -5,16 +5,21 @@ import game.entity.living.player.spell.Range;
 import utils.Direction;
 import utils.Position;
 
-public class BasicAttackRanger extends AbstractSpell {
-    public BasicAttackRanger() {
-        super("Attack",
+public class Sniper extends AbstractSpell {
+    public Sniper() {
+        super("Sniper",
                 1.0,
-                11,
+                12,
                 new Range(),
-                0,
+                25,
                 true,
-                3,
+                20,
                 null
         );
+    }
+
+    @Override
+    public boolean isZoning() {
+        return true;
     }
 }
