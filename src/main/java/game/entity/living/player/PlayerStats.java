@@ -46,7 +46,7 @@ public class PlayerStats extends AbstractStats {
         getRewardForLevelForClass(classe, level);
         selectedSpell = spellList.get(0);
          //Default selected attack is the BasicAttack
-        switch (classe.ordinal()){
+        switch (classe.ordinal()) {
             case 0:
                 this.classFactor = new int[] {10, 7, 2, 1, 1};
                 break;

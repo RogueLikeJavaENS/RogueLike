@@ -14,7 +14,7 @@ public class Heal extends AbstractSpell {
                 0,
                 0,
                 new Range(),
-                10,
+                15,
                 false,
                 0,
                 (gameState -> {

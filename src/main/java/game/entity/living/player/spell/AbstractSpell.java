@@ -90,11 +90,12 @@ public abstract class AbstractSpell implements Spell {
                         }
                     }
                 }
-                return true;
+                return doSpecialEffect(gameState);
             }
             else {
                 return doSpecialEffect(gameState);
             }
+            return true;
         } else {
             descriptor.updateDescriptor("Not enough PM !");
             return false;
@@ -103,7 +104,10 @@ public abstract class AbstractSpell implements Spell {
 
 
     public boolean doSpecialEffect(GameState gameState) {
-        return effect.doEffect(gameState);
+        if (effect != null) {
+            return effect.doEffect(gameState);
+        }
+        return true;
     }
 
     public boolean isDamaging() {

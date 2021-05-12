@@ -66,13 +66,13 @@ public class GameState {
         spell.setRange(player.getPosition(), player.getDirection());
         range = spell.getRange();
         gridMap.updateRangeList(range);
+        sortRangeList(gridMap.getRangeList());
         if (!spell.isZoning()) {
             noZoningRange(gridMap.getRangeList());
         }
     }
 
     private void noZoningRange(List<Position> rangeList) {
-        sortRangeList(rangeList);
         List<Position> newRangeList = new ArrayList<>();
         for (Position pos : rangeList) {
             List<Entity> entities = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());

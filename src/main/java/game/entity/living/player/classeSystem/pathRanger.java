@@ -11,7 +11,7 @@ public enum pathRanger {
     REWARD_0("Skill", 1, "BasicAttackRanger"),
     REWARD_1("Skill", 1, "Trap"),
     REWARD_2("Skill", 2, "FireArrow"),
-    //REWARD_3("Skill", 3, "Dash"),
+    REWARD_3("Skill", 3, "Dash"),
     REWARD_4("Skill", 4, "Heal"),
     REWARD_5("Skill", 5, "Sniper"),
     REWARD_6("Skill", 6,"Multishot");
