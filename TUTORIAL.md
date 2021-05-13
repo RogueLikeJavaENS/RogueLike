@@ -41,7 +41,7 @@ A **fight** start whenever the player is in a room with a monster. The fight is 
 When a monster is playing, you can skip the description by pressing any key.<br>
 During the player turn, he has 1 action.<br>
 `move`, `attack` and `use potion` are consuming the player turn.<br> 
-You can open the minimap, turn yourself with **Caps. lock**, select sorts, and open the playerInventory without consuming your action.<br>
+You can open the minimap, turn yourself with **Caps. lock**, select sorts, and open your inventory without consuming your action.<br>
 When a monster is killed, the hero gain **XP**, [BTC](#btc) and [Potions](#potions).
 
 
@@ -80,8 +80,10 @@ You can gain spell by gaining level.<br>
 
 ## Merchant
 ![merchant](https://user-images.githubusercontent.com/57185748/115144943-96ee6b00-a04f-11eb-8c06-6c8837ba9554.png)<br>
-![menuMerchant](https://user-images.githubusercontent.com/71182082/118045032-b0958080-b377-11eb-9592-948f35a71793.png)
-You can encounter Potion Merchant in the dungeon.<br>
+You can encounter Potion Merchant in the dungeon and interact with him with **E**<br>
+![menuMerchant](https://user-images.githubusercontent.com/71182082/118045032-b0958080-b377-11eb-9592-948f35a71793.png)<br>
+You can choose to buy him or sell him potions, equipments. Of course <br>
+Or to attack him, but be ready to face the consequences.<br>
 
 ## Map
 <img src="https://user-images.githubusercontent.com/57185748/115144962-aa013b00-a04f-11eb-8e2e-3c7c51660b85.png" width="350"><br>
