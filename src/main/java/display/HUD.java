@@ -114,6 +114,4 @@ public class HUD {
     public String getSpellBar() {
         return spellBar;
     }
-
-
 }
