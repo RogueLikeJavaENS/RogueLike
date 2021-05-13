@@ -30,6 +30,7 @@ public class Button extends ObjectEntity {
     @Override
     public void doInteraction(GameState gameState) {
         if (!pressed) {
+            gameState.getMusicStuff().playButtonFX();
             pressed = true;
             setUpSprites(
                     colorize("#", Colors.DARK_GREY.textApply()) +

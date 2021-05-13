@@ -20,6 +20,7 @@ public class GeneralMerchant extends AbstractMerchant {
 
     @Override
     public void doInteraction(GameState gameState) {
+        gameState.getMusicStuff().playMerchantFX();
         gameState.setState(State.SHOP_MENU);
         gameState.setMerchant(this);
         new InGameMenu(gameState);

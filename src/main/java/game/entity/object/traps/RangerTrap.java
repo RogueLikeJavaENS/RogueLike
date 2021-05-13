@@ -21,6 +21,7 @@ public class RangerTrap extends ObjectEntity {
 
     @Override
     public void doAction(GameState gameState) {
+        gameState.getMusicStuff().playStabsFX();
         Random gen = new Random();
         int damage = gameState.getPlayer().getPlayerStats().getDamageTotal() + gen.nextInt(20);
         LivingEntity entity = (LivingEntity) gameState.getGridMap().getEntitiesAt(this.getPosition().getAbs(), this.getPosition().getOrd()).get(0);

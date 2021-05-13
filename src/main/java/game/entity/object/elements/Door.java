@@ -111,6 +111,7 @@ public class Door extends ObjectEntity {
     @Override
     public void doAction(GameState gameState) {
         if (isOpen) {
+            gameState.getMusicStuff().playDoorFX();
             Player player = gameState.getPlayer();
             int abs = next.getPosition().getAbs();
             int ord = next.getPosition().getOrd();
@@ -144,6 +145,7 @@ public class Door extends ObjectEntity {
         } else {
             if (isBossDoor) {
                 if (gameState.getDungeon().isAllButtonsPressed(gameState)) {
+                    gameState.getMusicStuff().playButtonFX();
                     openRelyDoor();
                 }
             }
@@ -153,6 +155,7 @@ public class Door extends ObjectEntity {
                     player.getInventory().useItem(ItemType.FLOORKEY, gameState);
                     player.getInventory().addItem(new FloorKey());
                     openRelyDoor();
+                    gameState.getMusicStuff().playButtonFX();
                     gameState.getDescriptor().updateDescriptor("The door is open now.");
                 } else {
                     gameState.getDescriptor().updateDescriptor("You can't open the door without the key. ");

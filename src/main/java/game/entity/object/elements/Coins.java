@@ -30,6 +30,7 @@ public class Coins extends ObjectEntity {
 
     @Override
     public void doAction(GameState gameState) {
+        gameState.getMusicStuff().playCoinFx();
         Player player = gameState.getPlayer();
         GridMap gridMap = gameState.getGridMap();
         player.getStats().gainMoney(value);

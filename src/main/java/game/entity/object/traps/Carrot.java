@@ -18,6 +18,7 @@ public class Carrot extends ObjectEntity {
 
     @Override
     public void doAction(GameState gameState) {
+        gameState.getMusicStuff().playStabsFX();
         Random gen = new Random();
         int damage = 50 + gen.nextInt(70);
         Player player = gameState.getPlayer();

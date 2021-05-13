@@ -19,6 +19,7 @@ public class Spike extends ObjectEntity {
 
     @Override
     public void doAction(GameState gameState) {
+        gameState.getMusicStuff().playStabsFX();
         int damage = gameState.getDungeon().getFloor()*2;
         Player player = gameState.getPlayer();
         damage = player.getPlayerStats().sufferDamage(damage);
