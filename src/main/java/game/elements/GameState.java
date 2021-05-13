@@ -125,6 +125,7 @@ public class GameState {
             room.setNearRoomBossEndVisited();
             miniMap.updateMap();
         }
+        setState(State.NORMAL);
         gridMap.update(player, false);      // remove the player from the previous room
         setCurrentRoom(room);                   // set the current room with the new room
         setGridMap(dungeon.getGridMap(room));   // take the gridmap that represent the new room
@@ -241,6 +242,7 @@ public class GameState {
      */
     public void isPlayerAlive() {
         if (player.getPlayerStats().getLifePointActual() == 0) {
+            getMusicStuff().playDieFX();
             setState(State.LOSE);
         }
     }
@@ -251,6 +253,7 @@ public class GameState {
      */
     public void isMonsterAlive(Monster monster) {
         if (monster.getMonsterStats().getLifePointActual() == 0) {
+            musicStuff.playDieFX();
             currentFightExp += monster.getMonsterStats().getXpWorth();
             fighting.removeMonster((LivingEntity) monster);
             gridMap.update(monster, false);
@@ -279,7 +282,6 @@ public class GameState {
     public void changeRoomFight() {
         isThereMonsters();
         if (state == State.NORMAL) {
-            System.out.println("coucou");
             musicStuff.playNormalMusic();
         }
     }

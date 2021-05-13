@@ -10,55 +10,102 @@ import javax.sound.sampled.AudioSystem;
 
 public class MusicStuff {
 
-    private Clip fightingClip;
-    private Clip normalClip;
+    private Clip musicClip;
+    private Clip fxClip;
+    private Clip fxClip1;
 
     public MusicStuff() {
         try {
-            fightingClip = AudioSystem.getClip();
-            normalClip = AudioSystem.getClip();
+            musicClip = AudioSystem.getClip();
+            fxClip = AudioSystem.getClip();
+            fxClip1 = AudioSystem.getClip();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void playNormalMusic() {
-        initInputStream("/Music/NormalMusic.wav", fightingClip, normalClip);
+        initInputStream("/Music/NormalMusic.wav");
     }
 
     public void playFightMusic() {
-        initInputStream("/Music/FightMusic.wav", normalClip, fightingClip);
+        initInputStream("/Music/FightMusic.wav");
     }
 
-    private void initInputStream(String path, Clip normalClip, Clip fightingClip) {
+    public void playCoinFx() {
+        playFX("/FX/coin.wav");
+    }
+
+    public void playChestFX() {
+        playFX("/FX/chest.wav");
+    }
+
+    public void playButtonFX() {
+        playFX("/FX/button.wav");
+    }
+
+    public void playDieFX() {
+        playFX("/FX/die.wav");
+    }
+
+    public void playDoorFX() {
+        playFX("/FX/door.wav");
+    }
+
+    public void playGraveFX() {
+        playFX("/FX/grave.wav");
+    }
+
+    public void playMerchantFX() {
+        playFX("/FX/merchant.wav");
+    }
+
+    public void playFallFX() {
+        playFX("/FX/fall.wav");
+    }
+
+    public void playStabsFX() {
+        playFX("/FX/stabs.wav");
+    }
+
+
+    public void playFX(String path) {
         try {
+            Clip fxClipToUse = null;
+            if (!fxClip.isActive()) {
+                fxClip.close();
+                fxClipToUse = fxClip;
+            }
+            if (!fxClip1.isActive()) {
+                fxClip1.close();
+                fxClipToUse = fxClip1;
+            }
+            InputStream is = getClass().getResourceAsStream(path);
+            assert is != null;
+            InputStream IsBuffered = new BufferedInputStream(is);
+            AudioInputStream audioInput = AudioSystem.getAudioInputStream(IsBuffered);
+            if (fxClipToUse != null) {
+                fxClipToUse.open(audioInput);
+                fxClipToUse.start();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initInputStream(String path) {
+        try {
+            musicClip.stop();
+            musicClip.close();
             InputStream is = getClass().getResourceAsStream(path);
             assert is != null;
             InputStream IsBuffured = new BufferedInputStream(is);
-            normalClip.stop();
-            normalClip.close();
-            fightingClip.stop();
-            fightingClip.close();
             AudioInputStream audioInput = AudioSystem.getAudioInputStream(IsBuffured);
-            fightingClip.open(audioInput);
+            musicClip.open(audioInput);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fightingClip.start();
-        fightingClip.loop(Clip.LOOP_CONTINUOUSLY);
-    }
-
-    public void playChest() {
-        InputStream is = getClass().getResourceAsStream("/Music/chest_low.wav");
-        assert is != null;
-        InputStream IsBuffured = new BufferedInputStream(is);
-        try {
-            Clip clipTmp = AudioSystem.getClip();
-            AudioInputStream audioInput = AudioSystem.getAudioInputStream(IsBuffured);
-            clipTmp.open(audioInput);
-            clipTmp.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        musicClip.start();
+        musicClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 }

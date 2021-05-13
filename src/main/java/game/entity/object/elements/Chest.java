@@ -145,7 +145,7 @@ public class Chest extends ObjectEntity {
         }
 
         if(!opened){
-            gameState.getMusicStuff().playChest();
+            gameState.getMusicStuff().playChestFX();
             if (isClassic){
                 opened = true;
                 setSprites("/  ", "[¤]", Colors.BROWN);

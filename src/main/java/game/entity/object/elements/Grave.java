@@ -50,6 +50,7 @@ public class Grave extends ObjectEntity {
     }
 
     public void doInteraction(GameState gameState) {
+        gameState.getMusicStuff().playGraveFX();
         StringBuilder dropDescriptor = new StringBuilder("That monster had: ");
         //the if statement is only here for the "and" after the listing of the items
         if (droppedItems.size() > 0) {

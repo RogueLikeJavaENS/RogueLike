@@ -17,6 +17,7 @@ public class Hole extends ObjectEntity {
 
     @Override
     public void doAction(GameState gameState) {
+        gameState.getMusicStuff().playFallFX();
         gameState.getPlayer().setPosition(gameState.getCurrentRoom().getCenter());
         gameState.updateChangingRoom(gameState.getDungeon().getRoom(0));
         gameState.getDescriptor().updateDescriptor(String.format("%s fell in a hole which lead him at the begin of the floor.",gameState.getPlayer().getName()));

@@ -3,6 +3,7 @@ package game.entity.living.player;
 import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.inventory.PlayerInventory;
 import game.entity.living.LivingEntity;
+import game.stuff.item.keys.GoldKey;
 import game.stuff.item.potions.XpBottle;
 import utils.Colors;
 import utils.Direction;
@@ -21,6 +22,7 @@ public class Player extends LivingEntity {
         for (int i = 0; i < 100; i++) {
             playerInventory.addItem(new XpBottle());
         }
+        playerInventory.addItem(new GoldKey());
     }
 
     public PlayerInventory getInventory() { return playerInventory; }
