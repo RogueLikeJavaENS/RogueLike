@@ -10,6 +10,7 @@ import utils.Position;
 public interface Monster extends Entity {
 
     void doAction(GameState gameState);
+    void doActionOnDeath(GameState gameState);
 
     String getName();
     MonsterStats getMonsterStats();

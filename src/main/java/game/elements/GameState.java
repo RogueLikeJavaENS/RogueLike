@@ -235,7 +235,9 @@ public class GameState {
                     gridMap.update(currentPart, false);
                 }
             }
-            //isThereMonster est appelée à chaque déplacement (bug?) donc je dois faire le check à la mort des monstres
+            player.getPlayerStats().incrementeKillCounter();
+            monster.doActionOnDeath(this);
+            //isThereMonster est appelée à chaque déplacement donc je dois faire le check à la mort des monstres
             if (gridMap.getMonsters().size() == 0) {
                 List<String> descriptionLevelUp = player.getPlayerStats().grantXP(currentFightExp,this);
                 descriptor.updateDescriptor(String.format("You took down all the monsters and earned %d exp points!", currentFightExp));
@@ -244,13 +246,9 @@ public class GameState {
                         descriptor.updateDescriptor(String.format("%s"+str,getPlayer().getName()));
                     }
                 }
-
                 currentFightExp = 0;
                 musicStuff.playNormalMusic();
             }
-            player.getPlayerStats().incrementeKillCounter();
-            Grave grave = new Grave(monster, gameRule, this);
-            gridMap.update(grave, true);
         }
     }
 

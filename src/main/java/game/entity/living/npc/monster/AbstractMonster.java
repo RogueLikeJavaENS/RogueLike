@@ -4,6 +4,7 @@ import game.entity.living.*;
 import game.elements.GameState;
 import game.entity.living.npc.NPC;
 import game.entity.living.npc.monster.monsterStrategy.Strategy;
+import game.entity.object.elements.Grave;
 import utils.Position;
 import utils.Colors;
 
@@ -72,6 +73,17 @@ public abstract class AbstractMonster extends NPC implements Monster {
         if (getStrategy().getStrategyDescription() != null) {
             gameState.getDescriptor().updateDescriptor(getStrategy().getStrategyDescription());
         }
+    }
+
+    /**
+     * Defines what happens when the monster dies.
+     * @param gameState overall state of the game
+     *
+     * @author Raphael
+     */
+    public void doActionOnDeath(GameState gameState) {
+        Grave grave = new Grave(this, gameState.getGameRule(), gameState);
+        gameState.getGridMap().update(grave, true);
     }
 
     /**

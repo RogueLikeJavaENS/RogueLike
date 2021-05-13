@@ -3,10 +3,15 @@ package game.entity.living.npc.monster.monsters;
 import game.elements.GameState;
 import game.entity.living.npc.monster.AbstractMonster;
 import game.entity.living.npc.monster.Monster;
+import game.entity.living.npc.monster.MonsterFactory;
 import game.entity.living.npc.monster.MonsterStats;
+import game.entity.living.npc.monster.monsterStrategy.ApproachStrategy;
+import game.entity.living.npc.monster.monsterStrategy.AttackStrategy;
+import game.entity.living.npc.monster.monsterStrategy.IdleStrategy;
 import game.entity.living.npc.monster.monsterStrategy.Strategy;
 import utils.Colors;
 import utils.Position;
+import utils.State;
 
 public class Vampire extends AbstractMonster implements Monster {
     private final static int basicHP = 45;
@@ -43,5 +48,14 @@ public class Vampire extends AbstractMonster implements Monster {
         if (getStrategy().getStrategyDescription() != null) {
             gameState.getDescriptor().updateDescriptor(getStrategy().getStrategyDescription());
         }
+    }
+
+    @Override
+    public void doActionOnDeath(GameState gameState) {
+        MonsterFactory monsterFactory = new MonsterFactory(gameState.getDungeon().getFloor());
+        Monster bat = monsterFactory.getMonster(2, getPosition());
+        gameState.getGridMap().update(bat, true);
+        gameState.setState(State.NORMAL);
+        gameState.changeRoomFight();
     }
 }
