@@ -75,52 +75,12 @@ public class GameState {
         }
     }
 
-    private void noZoningRange(List<Position> rangeList) {
-        List<Position> newRangeList = new ArrayList<>();
-        for (Position pos : rangeList) {
-            List<Entity> entities = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());
-            for (Entity entity: entities) {
-                if (entity.isMonster()) {
-                    newRangeList.add(pos);
-                    rangeList.clear();
-                    rangeList.addAll(newRangeList);
-                    return;
-                }
-            }
-            newRangeList.add(pos);
-        }
-        rangeList.clear();
-        rangeList.addAll(newRangeList);
-    }
-
-    private void sortRangeList(List<Position> rangeList) {
-        HashMap<Double, Position> ranges = new HashMap<>();
-        List<Position> rangeSorted = new ArrayList<>();
-        Position playerPos = player.getPosition();
-
-        for (Position position : rangeList) {
-            if (!position.equals(playerPos)) {
-                double distance = StrategyUtils.getDistance(playerPos, position);
-                ranges.put(distance, position);
-            }
-        }
-
-        TreeMap<Double, Position> treeSorted = new TreeMap<>(ranges);
-
-        for (Double key : treeSorted.keySet()) {
-            rangeSorted.add(treeSorted.get(key));
-        }
-
-        rangeList.clear();
-        rangeList.addAll(rangeSorted);
-    }
-
     /**
      * Use to change the current room.
      * @param room The new room
      */
     public void updateChangingRoom(Room room) {
-        if (!room.getWasVisited()){
+        if (room.getWasVisited()){
             room.setWasVisited(true);
             room.setNearRoomBossEndVisited();
             miniMap.updateMap();
@@ -304,18 +264,7 @@ public class GameState {
         }
     }
 
-    /**
-     * Create the fight with the monsters encountered by the player.
-     * @param monsters the monsters present in the current room.
-     */
-    private void initFight(List<LivingEntity> monsters) {
-        musicStuff.playFightMusic();
-        List<LivingEntity> fightList = new ArrayList<>(monsters);
-        fightList.add(player);
-        player.getPlayerStats().setSelectedSpell(player.getPlayerStats().getSpells().get(0));
-        hud.spellSelectionString(0);
-        fighting = new Fighting(fightList);
-    }
+
 
     /**
      * Uses the player's selected spell and applies its effects to the area within its range.
@@ -378,9 +327,56 @@ public class GameState {
         setHud(new HUD(player));
     }
 
-    public static void main(String[] args) {
-        int a = 2;
-        int b = a+2;
-        System.out.println(b%3);
+    private void noZoningRange(List<Position> rangeList) {
+        List<Position> newRangeList = new ArrayList<>();
+        for (Position pos : rangeList) {
+            List<Entity> entities = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());
+            for (Entity entity: entities) {
+                if (entity.isMonster()) {
+                    newRangeList.add(pos);
+                    rangeList.clear();
+                    rangeList.addAll(newRangeList);
+                    return;
+                }
+            }
+            newRangeList.add(pos);
+        }
+        rangeList.clear();
+        rangeList.addAll(newRangeList);
+    }
+
+    private void sortRangeList(List<Position> rangeList) {
+        HashMap<Double, Position> ranges = new HashMap<>();
+        List<Position> rangeSorted = new ArrayList<>();
+        Position playerPos = player.getPosition();
+
+        for (Position position : rangeList) {
+            if (!position.equals(playerPos)) {
+                double distance = StrategyUtils.getDistance(playerPos, position);
+                ranges.put(distance, position);
+            }
+        }
+
+        TreeMap<Double, Position> treeSorted = new TreeMap<>(ranges);
+
+        for (Double key : treeSorted.keySet()) {
+            rangeSorted.add(treeSorted.get(key));
+        }
+
+        rangeList.clear();
+        rangeList.addAll(rangeSorted);
+    }
+
+    /**
+     * Create the fight with the monsters encountered by the player.
+     * @param monsters the monsters present in the current room.
+     */
+    private void initFight(List<LivingEntity> monsters) {
+        musicStuff.playFightMusic();
+        List<LivingEntity> fightList = new ArrayList<>(monsters);
+        fightList.add(player);
+        player.getPlayerStats().setSelectedSpell(player.getPlayerStats().getSpells().get(0));
+        hud.spellSelectionString(0);
+        fighting = new Fighting(fightList);
     }
 }

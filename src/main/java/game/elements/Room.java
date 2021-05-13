@@ -47,12 +47,7 @@ public class Room {
         this.position = position;
         this.entities = new ArrayList<>();
         this.roomType = roomType;
-        if (roomType == RoomType.START){
-            wasVisited = true;
-        }
-        else {
-            wasVisited = false;
-        }
+        wasVisited = roomType == RoomType.START;
     }
 
     /**
@@ -73,7 +68,7 @@ public class Room {
     public int getHeight() { return height; }
     public RoomType getRoomType() { return roomType; }
     public List<Entity> getEntities() { return new ArrayList<>(entities); }
-    public boolean getWasVisited(){ return wasVisited;}
+    public boolean getWasVisited(){ return !wasVisited;}
     public void setWasVisited(boolean wasVisited){ this.wasVisited = wasVisited;}
 
 
@@ -162,20 +157,6 @@ public class Room {
         return positionList;
     }
 
-    private boolean isCorner(int abs, int ord) {
-        if (abs > 1 && abs < width-1) {
-            int l = contents[ord][abs-1];
-            int r = contents[ord][abs+1];
-            return l != r;
-        }
-        if (ord > 1 && ord < height-1) {
-            int u = contents[ord-1][abs];
-            int d = contents[ord+1][abs];
-            return u != d;
-        }
-        return false;
-    }
-
     /**
      * Return the list of doors of the room
      *
@@ -200,5 +181,17 @@ public class Room {
         }
     }
 
-
+    private boolean isCorner(int abs, int ord) {
+        if (abs > 1 && abs < width-1) {
+            int l = contents[ord][abs-1];
+            int r = contents[ord][abs+1];
+            return l != r;
+        }
+        if (ord > 1 && ord < height-1) {
+            int u = contents[ord-1][abs];
+            int d = contents[ord+1][abs];
+            return u != d;
+        }
+        return false;
+    }
 }

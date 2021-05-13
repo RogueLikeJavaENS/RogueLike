@@ -20,7 +20,8 @@ public abstract class DecoratorStrategy implements Strategy{
     }
 
     public abstract boolean act(Monster monster, Player player, GridMap gridMap);
-    protected void updateStrategyDescription(String strategyDescription){ this.strategyDescription = strategyDescription;}
 
     public String getStrategyDescription() { return strategyDescription; }
+
+    protected void updateStrategyDescription(String strategyDescription){ this.strategyDescription = strategyDescription;}
 }

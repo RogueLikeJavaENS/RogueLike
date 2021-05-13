@@ -16,6 +16,4 @@ public class EscapeStrategy extends MoveAwayStrategy {
         boolean isVerified = condition.isVerified(monster,player);
         return isVerified && super.act(monster, player, gridMap);
     }
-
-
 }

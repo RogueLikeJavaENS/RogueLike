@@ -43,29 +43,6 @@ public class GridMap {
     }
 
 
-    /**
-     * Fill the array tiles with all the map of the room
-     */
-    private void fillRoomContent() {
-        int[][] contents = room.getContents();
-        int width = room.getWidth();
-        int height = room.getHeight();
-        TileFactory tileFactory = new TileFactory();
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int contentId = contents[y][x];
-                Tile tile = tileFactory.getTile(contentId);
-                tiles[y][x] = tile;
-            }
-        }
-    }
-
-    /**
-     * Fill the list entities with the entities of the room
-     */
-    private void fillEntityContent() { entities = room.getEntities(); }
-
     public void update(List<Entity> entitiesToAdd, List<Entity> entitiesToRemove) {
         for(Entity entity : entitiesToRemove) {
             removeEntity(entity);
@@ -157,28 +134,6 @@ public class GridMap {
         strByLine = strLine;
     }
 
-    private Entity getPrimaryEntity(List<Entity> entityList){
-        Entity primaryEntity = entityList.get(0);
-        if (entityList.size() == 1){
-            return primaryEntity;
-        }
-        for (int i = 1; i<entityList.size();i++ ){
-            if (primaryEntity instanceof Player) break;
-            else if (primaryEntity instanceof Monster){
-                if (entityList.get(i) instanceof Player){
-                    primaryEntity = entityList.get(i);
-                }
-            }
-            else {
-                if (entityList.get(i) instanceof Player || entityList.get(i) instanceof  Monster){
-                    primaryEntity = entityList.get(i);
-                }
-            }
-        }
-
-        return primaryEntity;
-    }
-
     public void updateRangeList(Range range) {
         rangeList.clear();
         if (range.getBottomRightCorner() != null) {
@@ -250,9 +205,11 @@ public class GridMap {
     public Tile getTileAt(int x, int y) {
         return tiles[y][x]; //Needs to be tested, coordinates might be inverted.
     }
+
     public List<Entity> getEntities() {
         return entities;
     }
+
     public List<LivingEntity> getLivingEntities() {
         List<LivingEntity> livingEntities = new ArrayList<>();
         for(Entity entity : entities) {
@@ -262,6 +219,7 @@ public class GridMap {
         }
         return livingEntities;
     }
+
     public List<LivingEntity> getMonsters() {
         List<LivingEntity> monsters = new ArrayList<>();
         for (Entity entity : entities) {
@@ -279,4 +237,49 @@ public class GridMap {
     public Room getRoom() {
         return room;
     }
+
+    private Entity getPrimaryEntity(List<Entity> entityList){
+        Entity primaryEntity = entityList.get(0);
+        if (entityList.size() == 1){
+            return primaryEntity;
+        }
+        for (int i = 1; i<entityList.size();i++ ){
+            if (primaryEntity instanceof Player) break;
+            else if (primaryEntity instanceof Monster){
+                if (entityList.get(i) instanceof Player){
+                    primaryEntity = entityList.get(i);
+                }
+            }
+            else {
+                if (entityList.get(i) instanceof Player || entityList.get(i) instanceof  Monster){
+                    primaryEntity = entityList.get(i);
+                }
+            }
+        }
+
+        return primaryEntity;
+    }
+
+    /**
+     * Fill the array tiles with all the map of the room
+     */
+    private void fillRoomContent() {
+        int[][] contents = room.getContents();
+        int width = room.getWidth();
+        int height = room.getHeight();
+        TileFactory tileFactory = new TileFactory();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int contentId = contents[y][x];
+                Tile tile = tileFactory.getTile(contentId);
+                tiles[y][x] = tile;
+            }
+        }
+    }
+
+    /**
+     * Fill the list entities with the entities of the room
+     */
+    private void fillEntityContent() { entities = room.getEntities(); }
 }
