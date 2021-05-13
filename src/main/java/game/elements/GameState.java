@@ -130,7 +130,7 @@ public class GameState {
         setGridMap(dungeon.getGridMap(room));   // take the gridmap that represent the new room
         gridMap.update(player, true);       // add the ^player to the new room
         changeRoomFight();                       // check if the Room contains monster
-        isOnEntity(player);
+        isOnEntity();
     }
 
     /**
@@ -187,12 +187,24 @@ public class GameState {
      * Check if the player moved on Entity.
      * The methods throw the action related to the entity.
      */
-    public void isOnEntity(LivingEntity livingEntity) {
-        int livingEntityAbs = livingEntity.getPosition().getAbs();
-        int livingEntityOrd = livingEntity.getPosition().getOrd();
+    public void isOnEntity() {
+        int livingEntityAbs = player.getPosition().getAbs();
+        int livingEntityOrd = player.getPosition().getOrd();
         List<Entity> entitiesAt = gridMap.getEntitiesAt(livingEntityAbs, livingEntityOrd);
         for(Entity entity : entitiesAt) {
-            if (entity != livingEntity) {
+            if (entity != player) {
+                entity.doAction(this);
+            }
+        }
+        isThereMonsters();
+    }
+
+    public void isMonsterOnEntity(LivingEntity monster) {
+        int livingEntityAbs = monster.getPosition().getAbs();
+        int livingEntityOrd = monster.getPosition().getOrd();
+        List<Entity> entitiesAt = gridMap.getEntitiesAt(livingEntityAbs, livingEntityOrd);
+        for(Entity entity : entitiesAt) {
+            if (entity != monster && entity.isTrap()) {
                 entity.doAction(this);
             }
         }
@@ -335,7 +347,12 @@ public class GameState {
     public MusicStuff getMusicStuff() { return musicStuff; }
 
     /* SETTERS */
-    public void setState(State newState) {this.state = newState; }
+    public void setState(State newState) {
+        if (newState.equals(State.END)) {
+            System.exit(0);
+        }
+        this.state = newState;
+    }
     public void setCurrentRoom(Room currentRoom) { this.currentRoom = currentRoom; }
     public void setGridMap(GridMap gridMap) { this.gridMap = gridMap; }
     public boolean getHelp(){ return help;}

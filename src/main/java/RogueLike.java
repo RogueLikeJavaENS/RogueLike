@@ -45,31 +45,7 @@ public class RogueLike {
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1, start.getClasse());
         Position initialPosition = dungeon.getRoom(0).getCenter();
         Player player = new Player(initialPosition, start.getName(), start.getClasse());
-        XpBottle xp = new XpBottle();
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
+
 
         gs = new GameState(player, dungeon, new HUD(player), sp, musicStuff);
         rendererUI = new RendererUI(gs);
@@ -120,7 +96,7 @@ public class RogueLike {
                         rendererUI.display();
                     }
                 } else {
-                    gs.isOnEntity(gs.getPlayer());
+                    gs.isOnEntity();
                     rendererUI.updateAll(gs);
                     rendererUI.display();
                 }
@@ -144,7 +120,7 @@ public class RogueLike {
         } else {
             entity.doAction(gs);
             inactiveStateInput("Monster's turn, press any key ...");
-            gs.isOnEntity(entity);
+            gs.isMonsterOnEntity(entity);
         }
         if (acted || monsterPlayed) { // if a monster or the Player played, go to the next turn.
             if (acted){
@@ -217,9 +193,9 @@ public class RogueLike {
                 break;
             case KeyEvent.VK_A:
                 if (state == State.FIGHT) {
-                    acted = gs.useSpell(); //true if the game.entity.living.player.spell was casted, false if not enough pm
+                    acted = gs.useSpell(); //true if the spell was casted, false if not enough pm
                     modifiedMenu = true;
-                    gs.getHud().spellListString(); //remove the highlightning of the selected game.entity.living.player.spell
+                    gs.getHud().spellListString(); //remove the highlightning of the selected spell
                 }
                 break;
             case KeyEvent.VK_RIGHT:
@@ -305,8 +281,8 @@ public class RogueLike {
                     acted = gs.interact();
                 }
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 

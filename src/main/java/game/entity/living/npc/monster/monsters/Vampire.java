@@ -1,45 +1,40 @@
 package game.entity.living.npc.monster.monsters;
 
+import game.elements.GameState;
 import game.entity.living.npc.monster.AbstractMonster;
 import game.entity.living.npc.monster.Monster;
 import game.entity.living.npc.monster.MonsterStats;
-import game.elements.GameState;
 import game.entity.living.npc.monster.monsterStrategy.Strategy;
 import utils.Colors;
 import utils.Position;
 
-/**
- * This class describe the monster Goblin
- * He has some basic statistic
- *
- */
-public class Goblin extends AbstractMonster implements Monster {
-    private final static int basicHP = 40;
-    private final static int basicMP = 20;
-    private final static int hpModifier = 4;
-    private final static int mpModifier = 2;
+public class Vampire extends AbstractMonster implements Monster {
+    private final static int basicHP = 45;
+    private final static int basicMP = 15;
+    private final static int hpModifier = 2;
+    private final static int mpModifier = 1;
 
     /**
-     * Create a new Goblin
+     * Create a new Vampire
      *
      * @param position his position in the room
      * @param name his name
      * @param level his level
      * @param strategy his strategy to apply
      */
-    public Goblin(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.GREEN, strategy,
+    public Vampire(Position position, String name, int level, Strategy strategy) {
+        super(position, name, Colors.WHITE, strategy,
                 new MonsterStats(basicHP+(hpModifier*level),
                         basicMP+(mpModifier*level),
                         1,
-                        3+level,
+                        2+level,
                         2+level,
                         level,
                         level,
                         level,
                         5*level));
-        setSprites("_o_", "| |", Colors.GREEN);
-        setBasicSprites("_o_", "| |");
+        setSprites("\\o/", "/_\\", Colors.WHITE, Colors.RED);
+        setBasicSprites("\\o/", "/_\\");
     }
 
     @Override
@@ -48,6 +43,5 @@ public class Goblin extends AbstractMonster implements Monster {
         if (getStrategy().getStrategyDescription() != null) {
             gameState.getDescriptor().updateDescriptor(getStrategy().getStrategyDescription());
         }
-        getMonsterStats().recoverHp(getMonsterStats().getLevel());
     }
 }
