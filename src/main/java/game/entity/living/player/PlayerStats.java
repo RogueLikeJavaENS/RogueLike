@@ -1,12 +1,16 @@
 package game.entity.living.player;
 
 import com.sun.jna.platform.mac.Carbon;
+import game.elements.GameState;
 import game.entity.living.player.classeSystem.*;
 import game.entity.living.AbstractStats;
 import game.entity.living.player.spell.Spell;
+import utils.Colors;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
  * class adding to AbstractStats (by extending it) the stats necessary to a player.
@@ -111,44 +115,55 @@ public class PlayerStats extends AbstractStats {
      * Then check if that was enough xp to allow him to up is level.
      * @param xpAmount xp to be added
      */
-    public void grantXP(int xpAmount) {
+    public List<String> grantXP(int xpAmount, GameState gs) {
         utils.Check.checkPositivity(xpAmount);
         xp += xpAmount;
-        checkCurrentXP();
+        List<String> descriptionLevelUp = checkCurrentXP();
+        return descriptionLevelUp;
     }
 
-    private void checkCurrentXP() {
+    private List<String> checkCurrentXP() {
+        List<String> descriptionLevelUp = new ArrayList<>();
         setXpRequired(levelCap.get(getLevel()));
         int MAX_LEVEL = 100;
         while (getXp() >= getXpRequired() && getLevel()< MAX_LEVEL) {
-            levelUp();
+            descriptionLevelUp = levelUp();
             setXp(getXp() - getXpRequired());
             setXpRequired(levelCap.get(getLevel()));
         }
         if (getLevel()== MAX_LEVEL){
             setXp(0);
         }
+        return descriptionLevelUp;
     }
 
-    private void levelUp(){
+    private List<String> levelUp(){
         upgradeLifePointNatural(classFactor[0]);
         upgradeManaPointNatural(classFactor[1]);
         upAgilityNatural(classFactor[2]);
         changeDamageNatural(classFactor[3]);
         changeArmorNatural(classFactor[4]);
         setLevel(getLevel()+1);
-        getRewardForLevelForClass(getClasse(), getLevel());
+        Spell newSpell = getRewardForLevelForClass(getClasse(), getLevel());
+
+        List<String> description = new ArrayList<>();
+        description.add(String.format(" gained a %s, congratulations !",colorize("level",Colors.GREEN.textApply())));
+        if (newSpell != null) {
+            description.add(String.format(" learned a new Spell : %s which cost"+ colorize(" %d mana ", Colors.BLUE.textApply()) +"to use.", newSpell.getName(), newSpell.getManaCost()));
+        }
+        return description;
     }
 
     //extract what gain each class depending on their level
-    private void getRewardForLevelForClass(InGameClasses classe, int level){
+    private Spell getRewardForLevelForClass(InGameClasses classe, int level){
+        Spell spellToAdd = null;
         switch (classe){
             case DUMMY:
             case RANGER:
                 for (pathRanger reward:
                         pathRanger.values()) {
                     if (reward.getLevel() == level){
-                        addSpell(reward.getReward());
+                        spellToAdd = addSpell(reward.getReward());
                     }
                 }
                 break;
@@ -156,7 +171,7 @@ public class PlayerStats extends AbstractStats {
                 for (pathWarrior reward:
                         pathWarrior.values()) {
                     if (reward.getLevel() == level){
-                        addSpell(reward.getReward());
+                       spellToAdd = addSpell(reward.getReward());
                     }
                 }
                 break;
@@ -164,23 +179,27 @@ public class PlayerStats extends AbstractStats {
                 for (pathMage reward:
                      pathMage.values()) {
                     if (reward.getLevel() == level){
-                        addSpell(reward.getReward());
+                        spellToAdd = addSpell(reward.getReward());
                     }
                 }
                 break;
         }
+        return spellToAdd;
     }
     /**
      * add a Spell to the Player spellList using reflection.
      * @param spellname Name of the Spell being added.
      **/
-    public void addSpell(String spellname){
+    public Spell addSpell(String spellname){
         try {
             Class<?> spellLookUp = Class.forName("game.entity.living.player.spell.spells."+spellname);
-            spellList.add((Spell) spellLookUp.getDeclaredConstructor().newInstance());
+            Spell spellToAdd = (Spell) spellLookUp.getDeclaredConstructor().newInstance();
+            spellList.add(spellToAdd);
+            return spellToAdd;
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public void incrementeKillCounter() {

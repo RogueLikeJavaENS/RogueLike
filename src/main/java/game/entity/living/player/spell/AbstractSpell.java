@@ -145,6 +145,9 @@ public abstract class AbstractSpell implements Spell {
         setBottomRightCorner(entityPos, direction);
         setTopLeftCorner(entityPos, direction);
     }
+    public String getName(){
+        return name;
+    }
 
     @Override
     public boolean isZoning() {

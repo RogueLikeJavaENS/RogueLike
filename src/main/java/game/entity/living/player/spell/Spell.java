@@ -22,4 +22,6 @@ public interface Spell {
     boolean isZoning();
 
     boolean isMovement();
+
+    String getName();
 }

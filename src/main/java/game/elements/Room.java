@@ -73,8 +73,8 @@ public class Room {
     public int getHeight() { return height; }
     public RoomType getRoomType() { return roomType; }
     public List<Entity> getEntities() { return new ArrayList<>(entities); }
-    boolean getWasVisited(){ return wasVisited;}
-    void setWasVisited(boolean wasVisited){ this.wasVisited = wasVisited;}
+    public boolean getWasVisited(){ return wasVisited;}
+    public void setWasVisited(boolean wasVisited){ this.wasVisited = wasVisited;}
 
 
     /**

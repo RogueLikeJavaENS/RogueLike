@@ -27,6 +27,9 @@ public class ItemFactory {
             case GOLD_KEY:
                 item = new GoldKey();
                 break;
+            case DUNGEON_MAP:
+                item = new MapDungeon();
+                break;
             default:
                 item = new EmptyBottle();
                 break;

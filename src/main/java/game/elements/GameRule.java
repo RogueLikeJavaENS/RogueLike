@@ -127,8 +127,9 @@ public class GameRule {
      * - 40% health
      * - 40% mana
      * - 20% XP
+     * - 5% map of the floor
      */
-    public ItemType getPotionType(){
+    public ItemType getItemType(){
         int nb = GEN.nextInt(100);
         if (nb < 40){
             return ItemType.HEALTH_POTION;
@@ -136,8 +137,11 @@ public class GameRule {
         else if(nb < 80){
             return ItemType.ELIXIR;
         }
-        else{
+        else if (nb < 95){
             return ItemType.XP_BOTTLE;
+        }
+        else {
+            return ItemType.DUNGEON_MAP;
         }
     }
 
@@ -246,6 +250,8 @@ public class GameRule {
                 return Math.max(15, (int) Math.floor(Math.log(level*level*2) *15));
             case GOLD_KEY:
                 return (int) Math.floor(Math.log(level*level*2) *300);
+            case DUNGEON_MAP:
+                return Math.max(17, (int) Math.floor(Math.log(level*level*2) *20));
             default:
                 return (int) Math.floor(Math.log(level*level*2) *999);
         }

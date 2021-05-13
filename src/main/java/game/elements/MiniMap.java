@@ -159,7 +159,7 @@ public class MiniMap {
     private String buildRoom(Room room, int line) {
         String strLine = "";
 
-        if (room == null || room.getWasVisited() == false){
+        if (room == null || !room.getWasVisited()){
             strLine = "       ";
         }
         else {
@@ -191,7 +191,7 @@ public class MiniMap {
                                 sb.append(colorize("^",Colors.BROWN.textApply()));
                                 break;
                             case BOSS:
-                                sb.append(colorize("B",Colors.RED.textApply()));
+                                sb.append(colorize("B",Colors.ORANGE.textApply()));
                                 break;
                             case REST:
                                 sb.append(colorize("~",Colors.CYAN.textApply()));

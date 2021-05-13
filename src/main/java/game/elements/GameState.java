@@ -128,8 +128,8 @@ public class GameState {
         setState(State.NORMAL);
         gridMap.update(player, false);      // remove the player from the previous room
         setCurrentRoom(room);                   // set the current room with the new room
-        setGridMap(dungeon.getGridMap(room));   // take the gridmap that represent the new room
-        gridMap.update(player, true);       // add the ^player to the new room
+        setGridMap(dungeon.getGridMap(room));   // take the gridMap that represent the new room
+        gridMap.update(player, true);       // add the player to the new room
         changeRoomFight();                       // check if the Room contains monster
         isOnEntity();
     }
@@ -277,8 +277,14 @@ public class GameState {
             }
             //isThereMonster est appelée à chaque déplacement (bug?) donc je dois faire le check à la mort des monstres
             if (gridMap.getMonsters().size() == 0) {
-                player.getPlayerStats().grantXP(currentFightExp);
+                List<String> descriptionLevelUp = player.getPlayerStats().grantXP(currentFightExp,this);
                 descriptor.updateDescriptor(String.format("You took down all the monsters and earned %d exp points!", currentFightExp));
+                if (descriptionLevelUp.size() != 0){
+                    for (String str : descriptionLevelUp){
+                        descriptor.updateDescriptor(String.format("%s"+str,getPlayer().getName()));
+                    }
+                }
+
                 currentFightExp = 0;
                 musicStuff.playNormalMusic();
             }
