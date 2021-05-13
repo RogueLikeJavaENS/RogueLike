@@ -1,5 +1,6 @@
 package display;
 
+import com.diogonunes.jcolor.Attribute;
 import game.entity.living.player.Player;
 import game.entity.living.player.spell.Spell;
 import game.stuff.item.ItemType;
@@ -62,9 +63,6 @@ public class HUD {
                 "Health Potion: " + colorize(String.valueOf(player.getInventory().getItemNumber(ItemType.HEALTH_POTION)), Colors.RED.textApply()) +
                 " Elixir: " + colorize(String.valueOf(player.getInventory().getItemNumber(ItemType.ELIXIR)), Colors.BLUE.textApply()) +
                 " Xp Bottle: " + colorize(String.valueOf(player.getInventory().getItemNumber(ItemType.XP_BOTTLE)), Colors.GREEN.textApply()) +
-                "\n" +
-                "A : " +
-                player.getPlayerStats().getSelectedSpell().toString() +
                 "\n";
         listStrHud.add(finalString);
         return listStrHud; //"Name:    Lvl: 42    HP: 69/420    MP: 42/56" (example)
@@ -87,6 +85,11 @@ public class HUD {
         StringBuilder currentSpellString = new StringBuilder();
         List<Spell> playerSpells = player.getPlayerStats().getSpells();
         Spell currentSpell;
+        spellsString.append("A : ")
+                .append(player.getPlayerStats().getSelectedSpell().toString())
+                .append(colorize(String.format(" (%d MP)\n", player.getPlayerStats().getSelectedSpell().getManaCost()), Attribute.BOLD(), Colors.BLUE.textApply()));
+        spellsString.append("#----------------------------------------#\n");
+
         for (int i = 0; i < playerSpells.size(); i++) {
             currentSpell = playerSpells.get(i);
             spellsString.append("| ");
