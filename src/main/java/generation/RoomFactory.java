@@ -92,6 +92,50 @@ public class RoomFactory {
         return room;
     }
 
+
+
+    public static void addMerchant(Dungeon dungeon, InGameClasses playerClasse) {
+        for (Room room : dungeon.getRoomList()) {
+            if (room.getRoomType() == RoomType.REST) {
+                List<Position> availablePositions = room.getAvailablePositions();
+                GeneralMerchant generalMerchant = new GeneralMerchant(availablePositions.remove(0));
+                EquipmentFactory equipmentFactory = new EquipmentFactory(playerClasse);
+                GameRule gm = new GameRule();
+
+                Inventory merchantInventory = generalMerchant.getMerchantInventory();
+
+                for (int i = 0; i < gm.getNumberOfEquipMerchantShop(); i++) {
+                    int level = 1;
+                    EquipmentRarity equipmentRarity = gm.getRarityEquipmentInMerchantShop();
+                    EquipmentType equipmentType = gm.getEquipmentTypeInMerchantShop();
+                    merchantInventory.addItem(equipmentFactory.getEquipment(level, equipmentType, equipmentRarity));
+                }
+
+                for (int i = 0; i < 5; i++) {
+                    merchantInventory.addItem(new PotionHealth());
+                    merchantInventory.addItem(new Elixir());
+                    if (i < 2) {
+                        merchantInventory.addItem(new XpBottle());
+                    }
+                }
+                merchantInventory.addItem(new GoldKey());
+                merchantInventory.addItem(new MapDungeon());
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.ARMOR, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.HELMET, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.BOOT, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.PANT, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.GLOVE, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.SHIELD, EquipmentRarity.E));
+                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.WEAPON, EquipmentRarity.E));
+
+
+                Position position =  availablePositions.remove(0);
+                room.addEntity(new GeneralMerchant(position));
+                dungeon.getGridMap(room).update(generalMerchant, true);
+            }
+        }
+    }
+
     /**
      * Add a stair at the middle of the room
      *
@@ -181,51 +225,6 @@ public class RoomFactory {
 
         }
     }
-
-    public static void addMerchant(Dungeon dungeon, InGameClasses playerClasse) {
-        for (Room room : dungeon.getRoomList()) {
-            if (room.getRoomType() == RoomType.REST) {
-                List<Position> availablePositions = room.getAvailablePositions();
-                GeneralMerchant generalMerchant = new GeneralMerchant(availablePositions.remove(0));
-                EquipmentFactory equipmentFactory = new EquipmentFactory(playerClasse);
-                GameRule gm = new GameRule();
-
-                Inventory merchantInventory = generalMerchant.getMerchantInventory();
-
-                for (int i = 0; i < gm.getNumberOfEquipMerchantShop(); i++) {
-                    int level = 1;
-                    EquipmentRarity equipmentRarity = gm.getRarityEquipmentInMerchantShop();
-                    EquipmentType equipmentType = gm.getEquipmentTypeInMerchantShop();
-                    merchantInventory.addItem(equipmentFactory.getEquipment(level, equipmentType, equipmentRarity));
-                }
-
-                for (int i = 0; i < 5; i++) {
-                    merchantInventory.addItem(new PotionHealth());
-                    merchantInventory.addItem(new Elixir());
-                    if (i < 2) {
-                        merchantInventory.addItem(new XpBottle());
-                    }
-                }
-                merchantInventory.addItem(new GoldKey());
-                merchantInventory.addItem(new MapDungeon());
-                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.ARMOR, EquipmentRarity.E));
-                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.HELMET, EquipmentRarity.E));
-                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.BOOT, EquipmentRarity.E));
-                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.PANT, EquipmentRarity.E));
-                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.GLOVE, EquipmentRarity.E));
-                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.SHIELD, EquipmentRarity.E));
-                merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.WEAPON, EquipmentRarity.E));
-
-
-                Position position =  availablePositions.remove(0);
-                room.addEntity(new GeneralMerchant(position));
-                dungeon.getGridMap(room).update(generalMerchant, true);
-            }
-        }
-    }
-//    private void addMerchant(Room room) {
-//        room.addEntity(new PotionMerchant(currentAvailablePositions.remove(0)));
-//    }
 
     /**
      * Add holes and spikes in the room (number of holes and spikes according to the GameRule)

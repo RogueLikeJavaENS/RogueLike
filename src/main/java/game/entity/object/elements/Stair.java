@@ -10,16 +10,12 @@ import game.stuff.item.ItemType;
 import utils.Colors;
 import utils.Position;
 
-import static com.diogonunes.jcolor.Ansi.colorize;
-
 public class Stair extends ObjectEntity {
 
     public Stair(Position position) {
         super(position,Colors.BROWN, true, false);
         setSprites("  _", "_=|", Colors.BROWN);
     }
-
-
 
     @Override
     public void doAction(GameState gameState){

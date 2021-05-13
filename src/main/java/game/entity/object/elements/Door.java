@@ -58,40 +58,11 @@ public class Door extends ObjectEntity {
     }
 
     /**
-     * Open the door
-     */
-    private void openDoor(){
-        this.isOpen = true;
-        this.setIsPlayerAccessible(true);
-        if (isBossDoor) {
-            setSprites("[ ]", "[ ]", Colors.GREEN);
-        }
-        else {
-            setSprites("[ ]", "[ ]", Colors.BROWN);
-        }
-
-    }
-
-    /**
      * Open the door and his associate door
      */
     public void openRelyDoor(){
         openDoor();
         this.next.openDoor();
-    }
-
-    /**
-     * Close the door
-     */
-    private void closeDoor(){
-        this.isOpen = false;
-        this.setIsPlayerAccessible(false);
-        if (isBossDoor) {
-            setSprites("[X]", "[X]", Colors.RED);
-        }
-        else {
-            setSprites("[X]", "[X]", Colors.BROWN);
-        }
     }
 
     /**
@@ -164,9 +135,37 @@ public class Door extends ObjectEntity {
         }
     }
 
-
     @Override
     public String toString() {
         return colorize("[ ]", Colors.BROWN.textApply());
+    }
+
+    /**
+     * Open the door
+     */
+    private void openDoor(){
+        this.isOpen = true;
+        this.setIsPlayerAccessible(true);
+        if (isBossDoor) {
+            setSprites("[ ]", "[ ]", Colors.GREEN);
+        }
+        else {
+            setSprites("[ ]", "[ ]", Colors.BROWN);
+        }
+
+    }
+
+    /**
+     * Close the door
+     */
+    private void closeDoor(){
+        this.isOpen = false;
+        this.setIsPlayerAccessible(false);
+        if (isBossDoor) {
+            setSprites("[X]", "[X]", Colors.RED);
+        }
+        else {
+            setSprites("[X]", "[X]", Colors.BROWN);
+        }
     }
 }

@@ -84,11 +84,4 @@ public class MonsterFactory {
         Random GEN = new Random();
         return GEN.nextInt(3) + (3*floor)-2;
     }
-
-    public static void main(String[] args) {
-        Random GEN = new Random();
-        for (int i = 0; i < 100; i++) {
-            System.out.printf("%d ", GEN.nextInt(3) + (3*3)-2);
-        }
-    }
 }

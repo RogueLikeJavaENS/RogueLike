@@ -174,16 +174,6 @@ public final class StrategyUtils {
         }
     }
 
-    private static boolean isNextTo(Position from, Position to){
-        if (from.getAbs() == to.getAbs()){
-            return Math.abs(from.getOrd() - to.getOrd()) == 1;
-        }
-        else if (from.getOrd() == to.getOrd()){
-            return Math.abs(from.getAbs() - to.getAbs()) == 1;
-        }
-        return false;
-    }
-
     public static void moveRandomly(Monster monster, GridMap gridMap){
         Position monsterPos = monster.getPosition();
         Random gen = new Random();
@@ -208,15 +198,6 @@ public final class StrategyUtils {
             }
             monster.setPosition(monsterPos);
         }
-    }
-
-
-    private static int absDistance(Position pos1, Position pos2){
-        return Math.abs(pos1.getAbs()-pos2.getAbs());
-    }
-
-    private static int ordDistance(Position pos1, Position pos2){
-        return Math.abs(pos1.getOrd()-pos2.getOrd());
     }
 
     public static List<Direction> foundAccessibleDirection(Position position,GridMap gridMap){
@@ -293,6 +274,24 @@ public final class StrategyUtils {
         }
 
         return inaccessibleDirection;
+    }
+
+    private static boolean isNextTo(Position from, Position to){
+        if (from.getAbs() == to.getAbs()){
+            return Math.abs(from.getOrd() - to.getOrd()) == 1;
+        }
+        else if (from.getOrd() == to.getOrd()){
+            return Math.abs(from.getAbs() - to.getAbs()) == 1;
+        }
+        return false;
+    }
+
+    private static int absDistance(Position pos1, Position pos2){
+        return Math.abs(pos1.getAbs()-pos2.getAbs());
+    }
+
+    private static int ordDistance(Position pos1, Position pos2){
+        return Math.abs(pos1.getOrd()-pos2.getOrd());
     }
 
     private static Node getMostRelevantNode(List<Node> list) {

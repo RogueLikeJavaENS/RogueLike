@@ -28,7 +28,6 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
         this.bonusInitiative = 0;
         this.bonusLife = 0;
         this.bonusMana = 0;
-        setRarityName();
     }
 
     public boolean isEquiped() {
@@ -41,10 +40,6 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
 
     public void unequip() {
         this.isEquiped = false;
-    }
-
-    protected void setRarityName() {
-        super.setName("test");
     }
 
     public void setLevel(int level) {

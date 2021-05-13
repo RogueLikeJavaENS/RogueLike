@@ -30,22 +30,6 @@ public class PlayerStats extends AbstractStats {
     private int turnPassed;
     private int bonusArmorTemporary;
 
-    public int getXpRequired() {
-        return xpRequired;
-    }
-
-    public void setXpRequired(int xpRequired) {
-        this.xpRequired = xpRequired;
-    }
-
-    public void setXp(int xp) {
-        this.xp = xp;
-    }
-
-    public int getXp() {
-        return xp;
-    }
-
     public PlayerStats(InGameClasses classe, int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int money, int level) {
         super(lifePoint, manaPoint, range, initiative, damage, armor, money, level);
         turnPassed = -1;
@@ -100,16 +84,6 @@ public class PlayerStats extends AbstractStats {
         changeArmorTotal(bonus);
     }
 
-    private Map<Integer, Integer> loadXpPerLevel(){
-        int baseXPneeded = 100;
-        int xpGivenByAMonster = 25;
-        Map<Integer, Integer> xpPerLevel = new LinkedHashMap<>();
-        for (int i = 1; i <= 100; i++) {
-            xpPerLevel.put(i, baseXPneeded+(xpGivenByAMonster*i));
-        }
-        return xpPerLevel;
-    }
-
     /**
      * check if xp amount is not inferior to zero, grant the xpAmount awarded to the player.
      * Then check if that was enough xp to allow him to up is level.
@@ -120,6 +94,93 @@ public class PlayerStats extends AbstractStats {
         xp += xpAmount;
         List<String> descriptionLevelUp = checkCurrentXP();
         return descriptionLevelUp;
+    }
+
+    /**
+     * add a Spell to the Player spellList using reflection.
+     * @param spellname Name of the Spell being added.
+     **/
+    public Spell addSpell(String spellname){
+        try {
+            Class<?> spellLookUp = Class.forName("game.entity.living.player.spell.spells."+spellname);
+            Spell spellToAdd = (Spell) spellLookUp.getDeclaredConstructor().newInstance();
+            spellList.add(spellToAdd);
+            return spellToAdd;
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void incrementeKillCounter() {
+        this.killCounter += 1;
+    }
+    public void resetTurnPassed() {
+        turnPassed = -1;
+    }
+
+    public void setSelectedSpell(Spell selectedSpell) { this.selectedSpell = selectedSpell; }
+    public void setXpRequired(int xpRequired) { this.xpRequired = xpRequired; }
+    public void setXp(int xp) { this.xp = xp; }
+
+
+    public int getKillCounter() {
+        return killCounter;
+    }
+    public List<Spell> getSpells() { return spellList; }
+    public Spell getSelectedSpell() { return selectedSpell; }
+    public  InGameClasses getClasse() {return classe;}
+    public int getTurnPassed() {
+        return turnPassed;
+    }
+    public int getXpRequired() {
+        return xpRequired;
+    }
+    public int getXp() {
+        return xp;
+    }
+
+    private Map<Integer, Integer> loadXpPerLevel(){
+        int baseXPneeded = 100;
+        int xpGivenByAMonster = 25;
+        Map<Integer, Integer> xpPerLevel = new LinkedHashMap<>();
+        for (int i = 1; i <= 100; i++) {
+            xpPerLevel.put(i, baseXPneeded+(xpGivenByAMonster*i));
+        }
+        return xpPerLevel;
+    }
+
+    //extract what gain each class depending on their level
+    private Spell getRewardForLevelForClass(InGameClasses classe, int level){
+        Spell spellToAdd = null;
+        switch (classe){
+            case DUMMY:
+            case RANGER:
+                for (pathRanger reward:
+                        pathRanger.values()) {
+                    if (reward.getLevel() == level){
+                        spellToAdd = addSpell(reward.getReward());
+                    }
+                }
+                break;
+            case WARRIOR:
+                for (pathWarrior reward:
+                        pathWarrior.values()) {
+                    if (reward.getLevel() == level){
+                        spellToAdd = addSpell(reward.getReward());
+                    }
+                }
+                break;
+            case MAGE:
+                for (pathMage reward:
+                        pathMage.values()) {
+                    if (reward.getLevel() == level){
+                        spellToAdd = addSpell(reward.getReward());
+                    }
+                }
+                break;
+        }
+        return spellToAdd;
     }
 
     private List<String> checkCurrentXP() {
@@ -152,72 +213,5 @@ public class PlayerStats extends AbstractStats {
             description.add(String.format(" learned a new Spell : %s which cost"+ colorize(" %d mana ", Colors.BLUE.textApply()) +"to use.", newSpell.getName(), newSpell.getManaCost()));
         }
         return description;
-    }
-
-    //extract what gain each class depending on their level
-    private Spell getRewardForLevelForClass(InGameClasses classe, int level){
-        Spell spellToAdd = null;
-        switch (classe){
-            case DUMMY:
-            case RANGER:
-                for (pathRanger reward:
-                        pathRanger.values()) {
-                    if (reward.getLevel() == level){
-                        spellToAdd = addSpell(reward.getReward());
-                    }
-                }
-                break;
-            case WARRIOR:
-                for (pathWarrior reward:
-                        pathWarrior.values()) {
-                    if (reward.getLevel() == level){
-                       spellToAdd = addSpell(reward.getReward());
-                    }
-                }
-                break;
-            case MAGE:
-                for (pathMage reward:
-                     pathMage.values()) {
-                    if (reward.getLevel() == level){
-                        spellToAdd = addSpell(reward.getReward());
-                    }
-                }
-                break;
-        }
-        return spellToAdd;
-    }
-    /**
-     * add a Spell to the Player spellList using reflection.
-     * @param spellname Name of the Spell being added.
-     **/
-    public Spell addSpell(String spellname){
-        try {
-            Class<?> spellLookUp = Class.forName("game.entity.living.player.spell.spells."+spellname);
-            Spell spellToAdd = (Spell) spellLookUp.getDeclaredConstructor().newInstance();
-            spellList.add(spellToAdd);
-            return spellToAdd;
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public void incrementeKillCounter() {
-        this.killCounter += 1;
-    }
-    public void setSelectedSpell(Spell selectedSpell) { this.selectedSpell = selectedSpell; }
-    public void resetTurnPassed() {
-        turnPassed = -1;
-    }
-
-    public int getKillCounter() {
-        return killCounter;
-    }
-
-    public List<Spell> getSpells() { return spellList; }
-    public Spell getSelectedSpell() { return selectedSpell; }
-    public  InGameClasses getClasse() {return classe;}
-    public int getTurnPassed() {
-        return turnPassed;
     }
 }
