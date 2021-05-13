@@ -6,7 +6,7 @@ import game.entity.living.npc.monster.Monster;
 import utils.Colors;
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-public class AttackStrategy extends DecoratorStrategy{
+public class AttackStrategy extends DecoratorStrategy {
 
     public AttackStrategy(Strategy strategy){
         super(strategy);

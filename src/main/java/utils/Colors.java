@@ -17,11 +17,12 @@ public enum Colors {
     WHITE(15),
     BROWN(94),
     ORANGE(131), //for the monster agro
+    YELLOW_GREEN(190), //for the RangerTrap
+    PINK(200), // KillerRabbit
+    SOFT_DARK(234),
     DEEP_GREY(237), //for the spell range
     DARK_GREY(238), //for the walls
-    LIGHT_GREY(244), //for the graves
-    PINK(200), // KillerRabbit
-    SOFT_DARK(234);
+    LIGHT_GREY(244); //for the graves;
 
     private final int value;
 

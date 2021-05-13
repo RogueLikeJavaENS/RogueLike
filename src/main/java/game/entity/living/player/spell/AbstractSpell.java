@@ -91,7 +91,12 @@ public abstract class AbstractSpell implements Spell {
                     }
                 }
             }
-            return doSpecialEffect(gameState);
+            boolean didItWork = doSpecialEffect(gameState);
+            if (!didItWork) {
+                descriptor.updateDescriptor("You cannot do that here...");
+                player.getPlayerStats().recoverMp(getManaCost());
+            }
+            return didItWork;
         } else {
             descriptor.updateDescriptor("Not enough PM !");
             return false;

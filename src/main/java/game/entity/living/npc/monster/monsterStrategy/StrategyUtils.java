@@ -134,7 +134,7 @@ public final class StrategyUtils {
             //on récupère les directions possibles depuis la Node courante, donc les non-accessibles ne seront pas un problème
             List<Direction> possibleDir = foundAccessibleDirection(currentNode.getNodePos(), gridMap);
 
-            Position newNodePos; //je vais peut-être devoir le mettre dans le for ça
+            Position newNodePos;
             for (Direction direction : possibleDir) {
                 switch (direction) {
                     case NORTH:

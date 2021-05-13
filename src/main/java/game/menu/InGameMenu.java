@@ -168,13 +168,12 @@ public class InGameMenu {
                     keyCode = sp.getKeyPressed();
                     try {
                         Thread.sleep(1);  // Without that, Java deletes the loop
-                    }catch(Exception e){}
+                    }catch(Exception ignored){}
                 }
                 sp.reset();
                 state.setState(State.PAUSE_MENU);
             }));
             actions.add(new InGameAction("Exit game", state -> state.setState(State.END)));
-
         }
         selectedAction = actions.get(0);
     }

@@ -2,8 +2,6 @@ package game.entity.object.traps;
 
 import game.elements.GameState;
 import game.entity.living.LivingEntity;
-import game.entity.living.npc.monster.Monster;
-import game.entity.living.player.Player;
 import game.entity.object.ObjectEntity;
 import utils.Colors;
 import utils.Position;
@@ -16,7 +14,7 @@ public class RangerTrap extends ObjectEntity {
 
     public RangerTrap(Position position, Colors color, boolean isPlayerAccessible, boolean isNPCAccessible) {
         super(position, color, isPlayerAccessible, isNPCAccessible);
-        setSprites("   ", colorize("\\w/", Colors.GREY.textApply()));
+        setSprites("   ", colorize("\\w/", Colors.YELLOW_GREEN.textApply()));
     }
 
     @Override
@@ -40,4 +38,8 @@ public class RangerTrap extends ObjectEntity {
         return false;
     }
 
+    @Override
+    public boolean isTrap() {
+        return true;
+    }
 }

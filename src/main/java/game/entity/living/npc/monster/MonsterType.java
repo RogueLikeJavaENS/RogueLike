@@ -4,5 +4,5 @@ package game.entity.living.npc.monster;
  * Enumeration of all type of monster
  */
 public enum MonsterType {
-    GOBLIN, SKELETON, BAT, ZOMBIE, ORC, MIMIC, MERCHANT
+    GOBLIN, SKELETON, BAT, ZOMBIE, ORC, VAMPIRE, MIMIC, MERCHANT
 }

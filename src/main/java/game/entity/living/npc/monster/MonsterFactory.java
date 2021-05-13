@@ -45,16 +45,10 @@ public class MonsterFactory {
     public Monster getMonster(int monsterType, Position position){
 
         if (monsterType == MonsterType.SKELETON.ordinal()){
-
             return new Skeleton(position,"Skeleton", getLevel(), classicAttackStrategy);
         }
         else if (monsterType == MonsterType.GOBLIN.ordinal()){
             return new Goblin(position, "Goblin", getLevel(), goblinStrategy);
-        }
-        else if (monsterType == MonsterType.MIMIC.ordinal()) {
-            return new Mimic(position, "Mimic", getLevel(), classicAttackStrategy);
-        } else if (monsterType == MonsterType.MERCHANT.ordinal()) {
-            return  new MerchantMonster(position, "Angry Merchant", getLevel(), classicAttackStrategy);
         }
         else if (monsterType == MonsterType.BAT.ordinal()){
             return new Bat(position, "Bat", getLevel(), classicAttackStrategy);
@@ -64,6 +58,15 @@ public class MonsterFactory {
         }
         else if(monsterType == MonsterType.ORC.ordinal()){
             return new Orc(position, "Orc", getLevel(), classicAttackStrategy);
+        }
+        else if(monsterType == MonsterType.VAMPIRE.ordinal()) {
+            return new Vampire(position, "Vampire", getLevel(), classicAttackStrategy);
+        }
+        else if (monsterType == MonsterType.MIMIC.ordinal()) {
+            return new Mimic(position, "Mimic", getLevel(), classicAttackStrategy);
+
+        } else if (monsterType == MonsterType.MERCHANT.ordinal()) {
+            return  new MerchantMonster(position, "Angry Merchant", getLevel(), classicAttackStrategy);
         }
 
         ///// in order to create a monster you have to write

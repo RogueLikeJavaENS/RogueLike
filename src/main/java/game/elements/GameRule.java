@@ -64,7 +64,7 @@ public class GameRule {
      *
      */
     public int getMonsterType(){
-        return GEN.nextInt(5);
+        return GEN.nextInt(6);
 
     }
 
