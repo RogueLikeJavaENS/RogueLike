@@ -5,12 +5,20 @@ import game.stuff.equipment.AbstractEquipment;
 import game.stuff.equipment.EquipmentRarity;
 import game.stuff.equipment.EquipmentType;
 
+/**
+ * This class describe the equipment Shield
+ */
 public class Shield extends AbstractEquipment {
 
-    public Shield(int level, EquipmentRarity rarity, EquipmentType type) {
-        super(level, rarity, type);
+    /**
+     * Create a shield
+     * @param level the level of the shield
+     * @param rarity the rarity of the shield
+     */
+    public Shield(int level, EquipmentRarity rarity) {
+        super(level, rarity, EquipmentType.SHIELD);
         GameRule gameRule = new GameRule();
-        super.setBonusArmor(gameRule.getBonusArmor(level+rarity.ordinal()));
+        super.setBonusArmor(gameRule.getBonusArmor(level+rarity.ordinal()));        // Set the bonus of the shield according to gameRule
         super.setName("Shield");
     }
 }

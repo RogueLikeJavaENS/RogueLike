@@ -2,6 +2,9 @@ package game.stuff.equipment;
 
 import utils.Colors;
 
+/**
+ * Enumeration of the rarity if the equipment
+ */
 public enum EquipmentRarity {
     E("Common"), D("Uncommon"), C("Rare"), B("Epic"), A("Heroic"), S("Mythic"), L("Legendary");
 
