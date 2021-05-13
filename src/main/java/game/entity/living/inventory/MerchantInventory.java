@@ -40,21 +40,6 @@ public class MerchantInventory extends AbstractInventory {
         super.openInventory(gameState.getPlayer().getPlayerStats().getLevel());
     }
 
-    private void upgradeEquipmentLevel(GameState gameState) {
-        List<Stuff> newInventory = new ArrayList<>();
-        EquipmentFactory factory = new EquipmentFactory(gameState.getPlayer().getClasse());
-        for (Stuff stuff : merchantInventory) {
-            if (stuff.isEquipable()) {
-                Equipment equipment = (Equipment) stuff;
-                newInventory.add(factory.getCopyOfEquipment(equipment, gameState.getPlayer().getPlayerStats().getLevel()));
-            }
-            else {
-                newInventory.add(stuff);
-            }
-        }
-        this.merchantInventory=newInventory;
-    }
-
     @Override
     public boolean useSelectedStuff(GameState gameState) {
         if (indexOfSelectedStuff == -1) {
@@ -139,5 +124,20 @@ public class MerchantInventory extends AbstractInventory {
         sb.append(stats).append(inventoryList);
 
         return sb.toString();
+    }
+
+    private void upgradeEquipmentLevel(GameState gameState) {
+        List<Stuff> newInventory = new ArrayList<>();
+        EquipmentFactory factory = new EquipmentFactory(gameState.getPlayer().getClasse());
+        for (Stuff stuff : merchantInventory) {
+            if (stuff.isEquipable()) {
+                Equipment equipment = (Equipment) stuff;
+                newInventory.add(factory.getCopyOfEquipment(equipment, gameState.getPlayer().getPlayerStats().getLevel()));
+            }
+            else {
+                newInventory.add(stuff);
+            }
+        }
+        this.merchantInventory=newInventory;
     }
 }

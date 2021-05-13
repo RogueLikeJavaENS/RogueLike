@@ -139,77 +139,6 @@ public class AbstractInventory implements Inventory {
         return true;
     }
 
-    private void updatePlayerStats(Equipment equipment, GameState gameState, boolean equip) {
-        Player player = gameState.getPlayer();
-        int equipModifier;
-        if (equip) {
-            equipModifier = 1;
-        } else {
-            equipModifier = -1;
-        }
-
-        if (equipment.getBonusArmor() != 0) {
-            player.getPlayerStats().changeArmorTotal(equipModifier * equipment.getBonusArmor());
-        }
-        if (equipment.getBonusDamage() != 0) {
-            player.getPlayerStats().changeDamageTotal(equipModifier * equipment.getBonusDamage());
-        }
-        if (equipment.getBonusMana() != 0) {
-            player.getPlayerStats().changeManaPointTotal(equipModifier * equipment.getBonusMana());
-        }
-        if (equipment.getBonusLife() != 0) {
-            player.getPlayerStats().changeLifePointTotal(equipModifier * equipment.getBonusLife());
-        }
-        if (equipment.getBonusAgility() != 0) {
-            player.getPlayerStats().editAgiltyActual(equipModifier * equipment.getBonusAgility());
-        }
-    }
-
-    protected void placeSelectedStuff(boolean first) {
-        if (sortedEquipment.isEmpty() && sortedItem.isEmpty()) {
-            selectedStuff = null;
-            indexOfSelectedStuff = -1;
-        }
-        else {
-            if (first) {
-                indexOfSelectedStuff = 0;
-                onEquipments = false;
-                if (sortedItem.isEmpty()) {
-                    selectedStuff = null;
-                    indexOfSelectedStuff = -1;
-                } else {
-                    selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
-                }
-            }
-            else {
-                if (onEquipments) {
-                    if (sortedEquipment.isEmpty()) {
-                        selectedStuff=null;
-                        indexOfSelectedStuff = -1;
-                    }
-                    else {
-                        if (indexOfSelectedStuff == sortedEquipment.size()) {
-                            indexOfSelectedStuff--;
-                        }
-                        selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();
-                    }
-                }
-                else {
-                    if (sortedItem.isEmpty()) {
-                        selectedStuff=null;
-                        indexOfSelectedStuff = -1;
-                    }
-                    else {
-                        if (indexOfSelectedStuff == sortedItem.size()) {
-                            indexOfSelectedStuff--;
-                        }
-                        selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
-                    }
-                }
-            }
-        }
-    }
-
     public void openSellingShop(GameState gameState) {
         //
     }
@@ -305,6 +234,37 @@ public class AbstractInventory implements Inventory {
         return indexOfSelectedStuff != previous;
     }
 
+    public List<Stuff> getInventory() {
+        return inventory;
+    }
+
+    public void removeItem(ItemType type){
+        Stuff itemToDelete = null;
+        for(Stuff stuff : inventory){
+            if (stuff.isUsable()){
+                Item item = (Item) stuff;
+                if (item.getType() == type){
+                    itemToDelete = item;
+                }
+            }
+        }
+        if (itemToDelete != null) {
+            inventory.remove(itemToDelete);
+        }
+    }
+
+    public boolean containsItem(ItemType type){
+        for (Stuff stuff : inventory){
+            if (stuff.isUsable()){
+                Item item = (Item) stuff;
+                if (item.getType() == type){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public int getItemNumber(ItemType type) {
         int acc = 0;
         for (Stuff stuff : inventory) {
@@ -328,6 +288,51 @@ public class AbstractInventory implements Inventory {
         sb.append(head).append(stats).append(inventoryList);
 
         return sb.toString();
+    }
+
+    protected void placeSelectedStuff(boolean first) {
+        if (sortedEquipment.isEmpty() && sortedItem.isEmpty()) {
+            selectedStuff = null;
+            indexOfSelectedStuff = -1;
+        }
+        else {
+            if (first) {
+                indexOfSelectedStuff = 0;
+                onEquipments = false;
+                if (sortedItem.isEmpty()) {
+                    selectedStuff = null;
+                    indexOfSelectedStuff = -1;
+                } else {
+                    selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
+                }
+            }
+            else {
+                if (onEquipments) {
+                    if (sortedEquipment.isEmpty()) {
+                        selectedStuff=null;
+                        indexOfSelectedStuff = -1;
+                    }
+                    else {
+                        if (indexOfSelectedStuff == sortedEquipment.size()) {
+                            indexOfSelectedStuff--;
+                        }
+                        selectedStuff = sortedEquipment.get(indexOfSelectedStuff).getStuff();
+                    }
+                }
+                else {
+                    if (sortedItem.isEmpty()) {
+                        selectedStuff=null;
+                        indexOfSelectedStuff = -1;
+                    }
+                    else {
+                        if (indexOfSelectedStuff == sortedItem.size()) {
+                            indexOfSelectedStuff--;
+                        }
+                        selectedStuff = sortedItem.get(indexOfSelectedStuff).getStuff();
+                    }
+                }
+            }
+        }
     }
 
     protected static int containsStuff(Stuff stuff, List<CoupleStuff> coupleStuffList) {
@@ -399,6 +404,81 @@ public class AbstractInventory implements Inventory {
         }
         sb.append(" -------------------------------------------------------------------------------------------------------------- \n");
         return sb.toString();
+    }
+
+    protected String toStringStats(GameState gameState) {
+        Player player = gameState.getPlayer();
+        PlayerStats stats = player.getPlayerStats();
+
+        int xp, name, btc, lvl, rge, atk, def, agi, mp, hp;
+        if (onEquipments) {
+            atk = bonusEquipment(false,false, true, false, false, stats);
+            def = bonusEquipment(false,false, false, true, false, stats);
+            agi = bonusEquipment(false,false, false, false, true, stats);
+            mp = bonusEquipment(false,true, false, false, false, stats);
+            hp = bonusEquipment(true,false, false, false, false, stats);
+        } else {
+            atk = Integer.MAX_VALUE;
+            def = Integer.MAX_VALUE;
+            agi = Integer.MAX_VALUE;
+            mp = Integer.MAX_VALUE;
+            hp = Integer.MAX_VALUE;
+        }
+
+
+        String HP_Bonus = colorBonus(hp);
+        String MP_Bonus = colorBonus(mp);
+        String Damage_Bonus = colorBonus(atk);
+        String Armor_Bonus = colorBonus(def);
+        String Agi_Bonus = colorBonus(agi);
+
+        String playerName = player.getName();
+        String XP = "XP : "+stats.getXp()+"/"+stats.getXpRequired();
+        String MP = "MP : "+stats.getManaPointActual()+"/"+stats.getManaPointTotal();
+        String HP = "HP : "+stats.getLifePointActual()+"/"+stats.getLifePointTotal();
+        String BTC = "BTC: "+stats.getMoneyCount();
+        String FLR = "FLR: "+ gameState.getDungeon().getFloor();
+        String LVL = "LVL: " + stats.getLevel();
+        String ATK = "ATK: " + stats.getDamageTotal();
+        String DEF = "DEF: " + stats.getArmorTotal();
+        String AGI = "AGI: " + stats.getAgilityTotal();
+        String RGE = "RGE: " + stats.getRangeTotal();
+        String KIL = "KIL: " + stats.getKillCounter(); //TODO
+
+        atk = bonusLength(atk) + ATK.length();
+        def = bonusLength(def) + DEF.length();
+        agi = bonusLength(agi) + AGI.length();
+        mp = bonusLength(mp) + MP.length();
+        hp = bonusLength(hp) + HP.length();
+        xp = XP.length();
+        name = playerName.length();
+        btc = BTC.length();
+        lvl = LVL.length();
+        rge = RGE.length();
+
+        XP = colorize(XP, Colors.GREEN.textApply());
+        MP = colorize(MP, Colors.BLUE.textApply()) + MP_Bonus;
+        HP = colorize(HP, Colors.RED.textApply()) + HP_Bonus;
+        BTC = colorize(BTC, Colors.YELLOW.textApply());
+        ATK = ATK + Damage_Bonus;
+        DEF = DEF + Armor_Bonus;
+        AGI = AGI + Agi_Bonus;
+
+        // TODO add class
+
+        return " _____________________________________________________________________\n" +
+                "| " + playerName + " ".repeat(29 - name) + "| " +
+                LVL + " ".repeat(37 - lvl) + "|\n" +
+                "| " + XP + " ".repeat(29 - xp) + "| " +
+                ATK + " ".repeat(37 - atk) + "|\n" +
+                "| " + HP + " ".repeat(29 - hp) + "| " +
+                DEF + " ".repeat(37 - def) + "|\n" +
+                "| " + MP + " ".repeat(29 - mp) + "| " +
+                AGI + " ".repeat(37 - agi) + "|\n" +
+                "| " + BTC + " ".repeat(29 - btc) + "| " +
+                RGE + " ".repeat(37 - rge) + "|\n" +
+                "| " + FLR + " ".repeat(29 - FLR.length()) + "| " +
+                KIL + " ".repeat(37 - KIL.length()) + "|\n";
     }
 
     private int containsEquipedType(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean agi, Equipment equipment) {
@@ -504,81 +584,6 @@ public class AbstractInventory implements Inventory {
         return sb.toString();
     }
 
-    protected String toStringStats(GameState gameState) {
-        Player player = gameState.getPlayer();
-        PlayerStats stats = player.getPlayerStats();
-
-        int xp, name, btc, lvl, rge, atk, def, agi, mp, hp;
-        if (onEquipments) {
-            atk = bonusEquipment(false,false, true, false, false, stats);
-            def = bonusEquipment(false,false, false, true, false, stats);
-            agi = bonusEquipment(false,false, false, false, true, stats);
-            mp = bonusEquipment(false,true, false, false, false, stats);
-            hp = bonusEquipment(true,false, false, false, false, stats);
-        } else {
-            atk = Integer.MAX_VALUE;
-            def = Integer.MAX_VALUE;
-            agi = Integer.MAX_VALUE;
-            mp = Integer.MAX_VALUE;
-            hp = Integer.MAX_VALUE;
-        }
-
-
-        String HP_Bonus = colorBonus(hp);
-        String MP_Bonus = colorBonus(mp);
-        String Damage_Bonus = colorBonus(atk);
-        String Armor_Bonus = colorBonus(def);
-        String Agi_Bonus = colorBonus(agi);
-
-        String playerName = player.getName();
-        String XP = "XP : "+stats.getXp()+"/"+stats.getXpRequired();
-        String MP = "MP : "+stats.getManaPointActual()+"/"+stats.getManaPointTotal();
-        String HP = "HP : "+stats.getLifePointActual()+"/"+stats.getLifePointTotal();
-        String BTC = "BTC: "+stats.getMoneyCount();
-        String FLR = "FLR: "+ gameState.getDungeon().getFloor();
-        String LVL = "LVL: " + stats.getLevel();
-        String ATK = "ATK: " + stats.getDamageTotal();
-        String DEF = "DEF: " + stats.getArmorTotal();
-        String AGI = "AGI: " + stats.getAgilityTotal();
-        String RGE = "RGE: " + stats.getRangeTotal();
-        String KIL = "KIL: " + stats.getKillCounter(); //TODO
-
-        atk = bonusLength(atk) + ATK.length();
-        def = bonusLength(def) + DEF.length();
-        agi = bonusLength(agi) + AGI.length();
-        mp = bonusLength(mp) + MP.length();
-        hp = bonusLength(hp) + HP.length();
-        xp = XP.length();
-        name = playerName.length();
-        btc = BTC.length();
-        lvl = LVL.length();
-        rge = RGE.length();
-
-        XP = colorize(XP, Colors.GREEN.textApply());
-        MP = colorize(MP, Colors.BLUE.textApply()) + MP_Bonus;
-        HP = colorize(HP, Colors.RED.textApply()) + HP_Bonus;
-        BTC = colorize(BTC, Colors.YELLOW.textApply());
-        ATK = ATK + Damage_Bonus;
-        DEF = DEF + Armor_Bonus;
-        AGI = AGI + Agi_Bonus;
-
-        // TODO add class
-
-        return " _____________________________________________________________________\n" +
-                "| " + playerName + " ".repeat(29 - name) + "| " +
-                LVL + " ".repeat(37 - lvl) + "|\n" +
-                "| " + XP + " ".repeat(29 - xp) + "| " +
-                ATK + " ".repeat(37 - atk) + "|\n" +
-                "| " + HP + " ".repeat(29 - hp) + "| " +
-                DEF + " ".repeat(37 - def) + "|\n" +
-                "| " + MP + " ".repeat(29 - mp) + "| " +
-                AGI + " ".repeat(37 - agi) + "|\n" +
-                "| " + BTC + " ".repeat(29 - btc) + "| " +
-                RGE + " ".repeat(37 - rge) + "|\n" +
-                "| " + FLR + " ".repeat(29 - FLR.length()) + "| " +
-                KIL + " ".repeat(37 - KIL.length()) + "|\n";
-    }
-
     private int bonusEquipment(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean agi, PlayerStats stats) {
         if (selectedStuff == null) {
             return Integer.MAX_VALUE;
@@ -648,6 +653,32 @@ public class AbstractInventory implements Inventory {
         return Integer.MAX_VALUE;
     }
 
+    private void updatePlayerStats(Equipment equipment, GameState gameState, boolean equip) {
+        Player player = gameState.getPlayer();
+        int equipModifier;
+        if (equip) {
+            equipModifier = 1;
+        } else {
+            equipModifier = -1;
+        }
+
+        if (equipment.getBonusArmor() != 0) {
+            player.getPlayerStats().changeArmorTotal(equipModifier * equipment.getBonusArmor());
+        }
+        if (equipment.getBonusDamage() != 0) {
+            player.getPlayerStats().changeDamageTotal(equipModifier * equipment.getBonusDamage());
+        }
+        if (equipment.getBonusMana() != 0) {
+            player.getPlayerStats().changeManaPointTotal(equipModifier * equipment.getBonusMana());
+        }
+        if (equipment.getBonusLife() != 0) {
+            player.getPlayerStats().changeLifePointTotal(equipModifier * equipment.getBonusLife());
+        }
+        if (equipment.getBonusAgility() != 0) {
+            player.getPlayerStats().editAgiltyActual(equipModifier * equipment.getBonusAgility());
+        }
+    }
+
     private String colorBonus(int bonus) {
         if (bonus == Integer.MAX_VALUE) {
             return "";
@@ -668,36 +699,5 @@ public class AbstractInventory implements Inventory {
             return String.valueOf(bonus).length()+4;
         }
         else return String.valueOf(bonus).length()+4;
-    }
-
-    public List<Stuff> getInventory() {
-        return inventory;
-    }
-
-    public void removeItem(ItemType type){
-        Stuff itemToDelete = null;
-        for(Stuff stuff : inventory){
-            if (stuff.isUsable()){
-                Item item = (Item) stuff;
-                if (item.getType() == type){
-                    itemToDelete = item;
-                }
-            }
-        }
-        if (itemToDelete != null) {
-            inventory.remove(itemToDelete);
-        }
-    }
-
-    public boolean containsItem(ItemType type){
-        for (Stuff stuff : inventory){
-            if (stuff.isUsable()){
-                Item item = (Item) stuff;
-                if (item.getType() == type){
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

@@ -58,22 +58,6 @@ public class RendererUI {
 
 
     /**
-     * Return the string to print the gridMap and the minimap
-     *
-      * @return String
-     */
-    private String midRenderer(){
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < gridAndMapArray.length; i++){           // concatenate the string of gridMapAndArray which represente the gridMap and minimap
-            sb.append(gridAndMapArray[i]);
-            if (i>27 && i%2 !=0 && (!gridAndMapArray[i - 1].equals(""))) {  // put a \n after the uneven line without print of the minimap, "" (the strings of minimap already have a \n)
-                sb.append("\n");
-            }
-        }
-        return sb.toString();
-    }
-
-    /**
      * Return the string to print all the element of the game
      *
      * @return String
@@ -219,5 +203,21 @@ public class RendererUI {
                 } catch (Exception ignored) {}
             }
         } catch (Exception ignored) {}
+    }
+
+    /**
+     * Return the string to print the gridMap and the minimap
+     *
+     * @return String
+     */
+    private String midRenderer(){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < gridAndMapArray.length; i++){           // concatenate the string of gridMapAndArray which represente the gridMap and minimap
+            sb.append(gridAndMapArray[i]);
+            if (i>27 && i%2 !=0 && (!gridAndMapArray[i - 1].equals(""))) {  // put a \n after the uneven line without print of the minimap, "" (the strings of minimap already have a \n)
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
     }
 }

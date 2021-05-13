@@ -60,6 +60,21 @@ public class MiniMap {
         cutMap = stringByLine(structCutMap);
     }
 
+    public void updateMap(){
+        List<String> strByLine = stringByLine(structDungeon);
+
+        StringBuilder sb = new StringBuilder();
+        for (String str : strByLine){
+            sb.append(str);
+        }
+        map = sb.toString();
+    }
+
+    public String toStringMap() { return map; }
+
+    public List<String> getLineCutMap() { return cutMap; }
+
+
     private List<List<Room>> createArray(int height, int width){
         List<List<Room>> roomArray = new ArrayList<>();
         for (int ord = 0; ord<=height; ord++){
@@ -71,20 +86,6 @@ public class MiniMap {
         }
         return roomArray;
     }
-
-    public void updateMap(){
-        List<String> strByLine = stringByLine(structDungeon);
-
-        StringBuilder sb = new StringBuilder();
-        for (String str : strByLine){
-            sb.append(str);
-        }
-        map = sb.toString();
-    }
-
-
-
-
 
     /**
      * With an object dungeon, return an array which contain the room at its good coordinate
@@ -120,34 +121,6 @@ public class MiniMap {
     }
 
     /**
-     * Transform the array of room into a list of String which contains each line to print
-     * in order to see the minimap
-     *
-     * @return List<String>
-     */
-    private List<String> stringByLine (List<List<Room>> struct){
-        List<String> listOfLine= new ArrayList<>();
-        String fstLine = "\t "+"_".repeat(7*struct.size()+2)+" \n";
-        String lastLine = "\t|"+"_".repeat(7*struct.size()+2)+"|\n";
-        listOfLine.add(fstLine);
-        for (List<Room> lineRoom : struct){
-            for (int i=0; i<4; i++){
-                StringBuilder sb2 = new StringBuilder();
-                for (Room room : lineRoom){
-                    sb2.append(buildRoom(room,i));
-                }
-
-                String line = "\t| "+ sb2;
-                line+=" |\n";
-                listOfLine.add(line);
-            }
-        }
-        listOfLine.add(lastLine);
-        return listOfLine;
-    }
-
-
-    /**
      * For a room and a line of the room return the string to use in order to print it.
      * If there is no room it return a string full of blank
      *
@@ -155,7 +128,6 @@ public class MiniMap {
      * @param line the line of the room to print
      * @return String
      */
-
     private String buildRoom(Room room, int line) {
         String strLine = "";
 
@@ -213,7 +185,7 @@ public class MiniMap {
                     } else sb.append("  |");
                     return  sb.toString();
 
-                 //case 2:{ return "|     |"; }
+                //case 2:{ return "|     |"; }
 
                 case 3:{
                     if (room.getRoomAt(Direction.SOUTH) != -1){ return "|__#__|";}
@@ -224,11 +196,31 @@ public class MiniMap {
         return strLine;
     }
 
+    /**
+     * Transform the array of room into a list of String which contains each line to print
+     * in order to see the minimap
+     *
+     * @return List<String>
+     */
+    private List<String> stringByLine (List<List<Room>> struct){
+        List<String> listOfLine= new ArrayList<>();
+        String fstLine = "\t "+"_".repeat(7*struct.size()+2)+" \n";
+        String lastLine = "\t|"+"_".repeat(7*struct.size()+2)+"|\n";
+        listOfLine.add(fstLine);
+        for (List<Room> lineRoom : struct){
+            for (int i=0; i<4; i++){
+                StringBuilder sb2 = new StringBuilder();
+                for (Room room : lineRoom){
+                    sb2.append(buildRoom(room,i));
+                }
 
-    public String toStringMap() { return map; }
-    public List<String> getLineCutMap() { return cutMap; }
-
-
-
+                String line = "\t| "+ sb2;
+                line+=" |\n";
+                listOfLine.add(line);
+            }
+        }
+        listOfLine.add(lastLine);
+        return listOfLine;
+    }
 
 }

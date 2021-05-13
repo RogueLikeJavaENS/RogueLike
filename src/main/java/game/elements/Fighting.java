@@ -47,22 +47,6 @@ public class Fighting {
         round++;
     }
 
-    /**
-     * This methods is used to sort the TurnOrder according to the speed of each game.entity.
-     * If the player has his speed equals with a monster, he plays first.
-     */
-    private void sortTurnOrder() {
-        turnOrder.sort((o1, o2) -> {
-            if (o1.getStats().getAgilityTotal() == o2.getStats().getAgilityTotal()) {   // In case the player is o1 or o2, the player is placed in first.
-                if (o1 instanceof Player) {
-                    return -1;
-                } else if (o2 instanceof Player) {
-                    return 1;
-                } else return 1;
-            } else return o2.getStats().getAgilityTotal() - o1.getStats().getAgilityTotal();
-        });
-    }
-
     public void removeMonster(LivingEntity monster) {
         turnOrder.remove(monster);
         bufferEntity.remove(monster);
@@ -100,4 +84,20 @@ public class Fighting {
         return turnOrder;
     }
 
+
+    /**
+     * This methods is used to sort the TurnOrder according to the speed of each game.entity.
+     * If the player has his speed equals with a monster, he plays first.
+     */
+    private void sortTurnOrder() {
+        turnOrder.sort((o1, o2) -> {
+            if (o1.getStats().getAgilityTotal() == o2.getStats().getAgilityTotal()) {   // In case the player is o1 or o2, the player is placed in first.
+                if (o1 instanceof Player) {
+                    return -1;
+                } else if (o2 instanceof Player) {
+                    return 1;
+                } else return 1;
+            } else return o2.getStats().getAgilityTotal() - o1.getStats().getAgilityTotal();
+        });
+    }
 }

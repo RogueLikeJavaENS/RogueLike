@@ -56,19 +56,6 @@ public class Dungeon {
         verifyALlRoom();
     }
 
-    /**
-     * Verify if all the room are good
-     *
-     */
-    private void verifyALlRoom(){
-        for (GridMap gridMap : gridMapList) {
-            Room room = gridMap.getRoom();
-            if (room.getRoomType() == RoomType.REST || room.getRoomType() == RoomType.MONSTER || room.getRoomType() == RoomType.START || room.getRoomType() == RoomType.NORMAL) {
-                VerificationRoom.verificationGenerationRoom(gridMap);
-            }
-        }
-    }
-
     public boolean isAllButtonsPressed(GameState gameState) {
         int nbButtonsNotClosed = buttons.size();
         for (Button button : buttons) {
@@ -83,6 +70,33 @@ public class Dungeon {
             gameState.getDescriptor().updateDescriptor(String.format("%d button(s) are not pressed yet.", nbButtonsNotClosed));
             return false;
         }
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+    public int getHeight() { return height; }
+    public int getWidth() { return width; }
+    public Room getRoom(int roomNum) { return roomList.get(roomNum); }
+    public GridMap getGridMap(Room room) { return gridMapList.get(room.getRoomNum()); }
+    public int getMaxRoomHeight() { return maxRoomHeight; }
+    public int getMaxRoomWidth() { return maxRoomWidth; }
+    public int getDungeonSize(){ return roomList.size(); }
+    public List<Room> getRoomList() { return roomList; }
+    public GraphDungeon getGraph() { return graph; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dungeon dungeon = (Dungeon) o;
+        return (this.roomList.size() == dungeon.roomList.size()) &&
+                (roomList.equals(dungeon.roomList));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roomList);
     }
 
     private void setBossDoor() {
@@ -250,30 +264,16 @@ public class Dungeon {
         return pos;
     }
 
-    public int getFloor() {
-        return floor;
-    }
-    public int getHeight() { return height; }
-    public int getWidth() { return width; }
-    public Room getRoom(int roomNum) { return roomList.get(roomNum); }
-    public GridMap getGridMap(Room room) { return gridMapList.get(room.getRoomNum()); }
-    public int getMaxRoomHeight() { return maxRoomHeight; }
-    public int getMaxRoomWidth() { return maxRoomWidth; }
-    public int getDungeonSize(){ return roomList.size(); }
-    public List<Room> getRoomList() { return roomList; }
-    public GraphDungeon getGraph() { return graph; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Dungeon dungeon = (Dungeon) o;
-        return (this.roomList.size() == dungeon.roomList.size()) &&
-                (roomList.equals(dungeon.roomList));
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(roomList);
+    /**
+     * Verify if all the room are good
+     *
+     */
+    private void verifyALlRoom(){
+        for (GridMap gridMap : gridMapList) {
+            Room room = gridMap.getRoom();
+            if (room.getRoomType() == RoomType.REST || room.getRoomType() == RoomType.MONSTER || room.getRoomType() == RoomType.START || room.getRoomType() == RoomType.NORMAL) {
+                VerificationRoom.verificationGenerationRoom(gridMap);
+            }
+        }
     }
 }

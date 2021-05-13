@@ -14,13 +14,13 @@ public abstract class AbstractMerchant extends NPC implements Merchant {
         super(position, name, color, stats);
     }
 
-    protected void setShop(HashMap<Stuff, Integer> shop) {
-        this.shop = shop;
-    }
-
     @Override
     public HashMap<Stuff, Integer> getShops() {
         return null;
+    }
+
+    protected void setShop(HashMap<Stuff, Integer> shop) {
+        this.shop = shop;
     }
 
 }
