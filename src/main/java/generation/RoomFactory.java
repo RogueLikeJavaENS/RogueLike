@@ -1,6 +1,7 @@
 package generation;
 
 import game.entity.living.player.classeSystem.InGameClasses;
+import game.stuff.item.MapDungeon;
 import game.tile.TileEnum;
 import game.elements.Dungeon;
 import game.elements.GameRule;
@@ -141,7 +142,7 @@ public class RoomFactory {
         PotionEntityFactory potionFactory = new PotionEntityFactory();
         for (int i = 0; i < numberOfPotion; i++) {
             if (currentAvailablePositions.size() != 0) {
-                room.addEntity((Entity) potionFactory.getPotionEntity(gameRule.getPotionType(), currentAvailablePositions.get(0)));
+                room.addEntity((Entity) potionFactory.getPotionEntity(gameRule.getItemType(), currentAvailablePositions.get(0)));
                 currentAvailablePositions.remove(0);
             }
         }
@@ -206,7 +207,7 @@ public class RoomFactory {
                     }
                 }
                 merchantInventory.addItem(new GoldKey());
-
+                merchantInventory.addItem(new MapDungeon());
                 merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.ARMOR, EquipmentRarity.E));
                 merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.HELMET, EquipmentRarity.E));
                 merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.BOOT, EquipmentRarity.E));

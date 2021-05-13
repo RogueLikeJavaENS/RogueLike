@@ -2,7 +2,6 @@ package game.entity.object.elements;
 
 import com.diogonunes.jcolor.Attribute;
 import game.entity.living.npc.monster.Monster;
-import game.entity.living.npc.monster.boss.Boss;
 import game.entity.object.ObjectEntity;
 import game.elements.GameRule;
 import game.elements.GameState;
@@ -34,9 +33,9 @@ public class Grave extends ObjectEntity {
         EquipmentFactory equipmentFactory = new EquipmentFactory(gameState.getPlayer().getClasse());
 
         for (int i = 0; i < gameRule.getNumberOfPotionsOnCorpse(); i++) {
-            droppedItems.add(itemFactory.getItem(gameRule.getPotionType(), level));
+            droppedItems.add(itemFactory.getItem(gameRule.getItemType(), level));
         }
-        if (monster instanceof Boss) {
+        if (monster.isBoss()) {
             for (int i = 0; i < gameRule.getNumberOfEquipmentsOnBossCorpse(); i++) {
                 droppedItems.add(equipmentFactory.getEquipment(level, gameRule.getEquipmentTypeInMerchantShop(), gameRule.getRarityOnBossCorpse()));
             }

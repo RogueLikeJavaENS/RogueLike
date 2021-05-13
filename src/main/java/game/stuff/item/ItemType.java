@@ -8,7 +8,8 @@ public enum ItemType {
     XP_BOTTLE,
     EMPTY_BOTTLE,
     FLOORKEY,
-    GOLD_KEY;
+    GOLD_KEY,
+    DUNGEON_MAP;
 
     public static Colors getColor(ItemType type) {
         switch (type) {
@@ -22,6 +23,8 @@ public enum ItemType {
                 return Colors.MAGENTA;
             case GOLD_KEY:
                 return Colors.YELLOW;
+            case DUNGEON_MAP:
+                return Colors.ORANGE;
         }
         return Colors.WHITE;
     }

@@ -69,8 +69,7 @@ public class Chest extends ObjectEntity {
         int nbXPBottle = 0;
         ItemFactory itemFactory = new ItemFactory();
         for (int i=0; i<nbPotion; i++){
-            System.out.println("in CHEST : " + gr.getPotionType());
-            Item itemToAdd = itemFactory.getItem(gr.getPotionType(), player.getPlayerStats().getLevel());
+            Item itemToAdd = itemFactory.getItem(gr.getItemType(), player.getPlayerStats().getLevel());
             if (itemToAdd.getType() == ItemType.ELIXIR){
                 nbElixir++;
             }

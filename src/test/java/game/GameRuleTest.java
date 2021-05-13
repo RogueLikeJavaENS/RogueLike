@@ -24,7 +24,7 @@ class GameRuleTest {
 
     @Test
     void getPotionType() {
-        ItemType itemType = gameRule.getPotionType();
+        ItemType itemType = gameRule.getItemType();
         //assertTrue(a==0 || a == 1 || a == 2 || a == 3);
     }
 

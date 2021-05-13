@@ -45,31 +45,7 @@ public class RogueLike {
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1, start.getClasse());
         Position initialPosition = dungeon.getRoom(0).getCenter();
         Player player = new Player(initialPosition, start.getName(), start.getClasse());
-        XpBottle xp = new XpBottle();
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
-        player.getInventory().addItem(xp);
+
 
         gs = new GameState(player, dungeon, new HUD(player), sp, musicStuff);
         rendererUI = new RendererUI(gs);
