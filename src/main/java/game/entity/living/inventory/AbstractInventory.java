@@ -443,7 +443,7 @@ public class AbstractInventory implements Inventory {
         String DEF = "DEF: " + stats.getArmorTotal();
         String AGI = "AGI: " + stats.getAgilityTotal();
         String RGE = "RGE: " + stats.getRangeTotal();
-        String KIL = "KIL: " + stats.getKillCounter(); //TODO
+        String KIL = "KIL: " + stats.getKillCounter();
 
         atk = bonusLength(atk) + ATK.length();
         def = bonusLength(def) + DEF.length();
@@ -463,8 +463,6 @@ public class AbstractInventory implements Inventory {
         ATK = ATK + Damage_Bonus;
         DEF = DEF + Armor_Bonus;
         AGI = AGI + Agi_Bonus;
-
-        // TODO add class
 
         return " _____________________________________________________________________\n" +
                 "| " + playerName + " ".repeat(29 - name) + "| " +
