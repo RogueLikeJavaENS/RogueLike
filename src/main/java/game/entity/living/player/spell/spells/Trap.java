@@ -1,5 +1,6 @@
 package game.entity.living.player.spell.spells;
 
+import com.diogonunes.jcolor.Attribute;
 import display.GridMap;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
@@ -10,9 +11,12 @@ import utils.Position;
 import java.util.List;
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * The Ranger sets a Trap in front of him if he can, so the monsters stepping on it will suffer damages.
+ */
 public class Trap extends AbstractSpell {
     public Trap() {
-        super("Trap",
+        super(colorize("Trap", Attribute.BOLD(), Colors.GREEN.textApply()),
                 0.0,
                 0,
                 new Range(),

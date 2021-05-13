@@ -8,13 +8,28 @@ import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * class handling the elixir items
+ * @author luca
+ */
 public class Elixir extends AbstractItem {
 
+    /**
+     * create an elixir, using the AbstractItem constructor &
+     * just setting the correct descriptor.
+     */
     public Elixir(){
         super("Elixir", ItemType.ELIXIR);
         setDescription("Recovers Mana points to the player.");
     }
 
+    /**
+     * useItem handle what to do when you use an Elixir (recharge your mp).
+     * @param gameState state of the game when called.
+     * @return a boolean checking if they're was a possibility to consume the item and
+     * use is effect.
+     */
+    @Override
     public boolean useItem(GameState gameState) {
         Player player = gameState.getPlayer();
         int mpAmount = 10+(5*player.getStats().getLevel());

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class represent an game.entity, which is an object or something alive who/which can be on the map
- * The game.entity has a position on the space, could be accessible or not and has sprites and color
+ * This class represents an entity, which is an object or a living being which can be on the map.
+ * The entity has a position, can be either accessible or not and has sprites and (a) color(s)
  *
  * @author Juliette
  * */
@@ -20,15 +20,15 @@ public abstract class AbstractEntity implements Entity {
     private boolean isPlayerAccessible;
     private boolean isNPCAccessible;
     private List<String> basicSprites; // sprite without color
-    private Colors basicColor; // color of the Entity if it's not in a specific state
+    private final Colors basicColor; // color of the Entity if it's not in a specific state
     private List<String> spritesToPrint; // the sprite to print on the console
 
     /**
-     * Create an abstractEntity
+     * Creates an abstractEntity
      *
-     * @param position of the abstractEntity
-     * @param color of the abstractEntity
-     * @param isPlayerAccessible true if another game.entity could be on the same tile else false
+     * @param position position of the abstractEntity
+     * @param color color of the abstractEntity
+     * @param isPlayerAccessible true if another entity can be on the same position, false otherwise
      */
     public AbstractEntity(Position position, Colors color, boolean isPlayerAccessible, boolean isNPCAccessible){
         this.position = position;
@@ -69,31 +69,20 @@ public abstract class AbstractEntity implements Entity {
         return false;
     }
 
-    /**
-     * Return the position of the game.entity
-     * @return the position
-     */
     @Override
     public Position getPosition() { return position; }
 
-    /***
-     *Return the boolean which describe the accessibility of the game.entity
-     * @return true or false
-     */
     @Override
     public boolean getIsPlayerAccessible() { return isPlayerAccessible; }
 
     /**
-     * Set the boolean which describe the accessibility of the game.entity
-     * @param isPlayerAccessible true or false
+     * Sets the boolean which determines the accessibility of the entity.
+     *
+     * @param isPlayerAccessible True if you want it to become accessible, false otherwise.
      */
     public void setIsPlayerAccessible(boolean isPlayerAccessible){
         this.isPlayerAccessible = isPlayerAccessible;
     }
-    /**
-     *Return the basic color of the game.entity
-     * @return a color
-     */
 
     public boolean getIsNPCAccessible(){
         return isNPCAccessible;
@@ -102,35 +91,37 @@ public abstract class AbstractEntity implements Entity {
         this.isNPCAccessible = isNPCAccessible;
     }
 
+    /**
+     * Returns the entity's basic color.
+     *
+     * @return the original entity's color
+     */
     public Colors getBasicColor() { return basicColor; }
 
     /**
-     *Return the sprite tp print of the game.entity
-     * @param i 0 for the up sprites and 1 for the down sprites
-     * @return a String
+     * Returns the entity's sprite to print.
+     *
+     * @param i 0 for the upper sprites and 1 for the bottom sprites
+     * @return the corresponding part of the sprite
      *
      */
     public String getSprites(int i) { return spritesToPrint.get(i); }
 
     /**
-     *Return the basic sprite of the game.entity
-     * @param i 0 for the up sprites and 1 for the down sprites
-     * @return a String
+     * Returns a part of the entity's basic sprite.
+     *
+     * @param i 0 for the upper sprites and 1 for the bottom sprites
+     * @return the corresponding part of the entity's original sprite
      */
     public String getBasicSprites(int i) { return basicSprites.get(i); }
 
     /**
-     *Set the basic color of the game.entity
-     * @param basicColor the new color
-     */
-    public void setBasicColor(Colors basicColor) { this.basicColor = basicColor; }
-
-    /**
-     * Set the sprites to print
-     * @param color1 color of the Up sprite
-     * @param color2 color of the Down Sprite
-     * @param sprite1 Up sprite
-     * @param sprite2 Down Sprite
+     * Sets the entity's sprites with different colors (or not, but a method exists if you only have one color).
+     *
+     * @param color1 color of the upper sprite
+     * @param color2 color of the bottom Sprite
+     * @param sprite1 Upper sprite
+     * @param sprite2 Bottom Sprite
      */
     public void setSprites(String sprite1, String sprite2, Colors color1, Colors color2) {
         ArrayList<String> sprites = new ArrayList<>();
@@ -140,19 +131,21 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * Set the sprites to print with a unique color
-     * @param sprite1 Up sprite
-     * @param sprite2 Down Sprite
-     * @param color Color of both up and down Sprite
+     * Sets the entity's sprites with a unique color.
+     *
+     * @param sprite1 Upper sprite
+     * @param sprite2 Bottom Sprite
+     * @param color Color of both sprites.
      */
     public void setSprites(String sprite1, String sprite2, Colors color) {
         setSprites(sprite1, sprite2, color, color);
     }
 
     /**
-     * Set the sprites to print already colored.
-     * @param sprite1 Up sprite
-     * @param sprite2 Down sprite
+     * Sets the entity's sprites.
+     *
+     * @param sprite1 Upper sprite
+     * @param sprite2 Bottom sprite
      */
     public void setSprites(String sprite1, String sprite2) {
         ArrayList<String> sprites = new ArrayList<>();
@@ -162,9 +155,9 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * Set the basic sprites
-     * @param sprite1 Up sprite
-     * @param sprite2 Down sprite
+     * Sets the entity's basic sprites.
+     * @param sprite1 Upper sprite
+     * @param sprite2 Bottom sprite
      */
     public void setBasicSprites(String sprite1, String sprite2){
         ArrayList<String> sprites = new ArrayList<>();
@@ -174,8 +167,9 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     *Set only the up sprites of the sprites to print
-     * @param s the new String (3 char max)
+     * Sets the entity's upper sprites only.
+     *
+     * @param s the new upper sprite (3 char max)
      */
     public void setUpSprites(String s) {
         spritesToPrint.remove(0);
@@ -183,8 +177,9 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     *Set only the bottom sprites of the sprites to print
-     * @param s the new String (3 char max)
+     * Sets the entity's bottom sprites only.
+     *
+     * @param s the new bottom sprite (3 char max)
      */
     public void setBottomSprites(String s) {
         spritesToPrint.remove(1);
@@ -192,8 +187,9 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * Set the position of the game.entity
-     * @param position new Position
+     * Sets the position of the entity.
+     *
+     * @param position the entity's new Position
      */
     public void setPosition(Position position) { this.position = position; }
 

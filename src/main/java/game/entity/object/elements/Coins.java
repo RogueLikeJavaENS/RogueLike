@@ -16,18 +16,22 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class Coins extends ObjectEntity {
 
-    public int getValue() {
-        return value;
-    }
-
     private final int value;
 
+    /**
+     * Create a coin entity, at a given position, with a value of 1, and the correct sprite.
+     * @param position the position of the coins
+     **/
     public Coins(Position position) {
         super(position,Colors.YELLOW, true,true);
         this.value = 1;
         setSprites(" O ", "   ", Colors.YELLOW);
     }
 
+    /**
+     * Handle what to do when the doAction is triggered (in this case only when a player walk on it).
+     * @param gameState the state of the game at the instant of the doAction.
+     */
     @Override
     public void doAction(GameState gameState) {
         gameState.getMusicStuff().playCoinFx();
@@ -38,8 +42,16 @@ public class Coins extends ObjectEntity {
         gridMap.update(this, false);
     }
 
+    /**
+     * override the toString with the correct sprite of the correct color.
+     * @return the colorized sprite.
+     */
     @Override
     public String toString() {
         return colorize(" O ", Colors.YELLOW.textApply());
+    }
+
+    public int getValue() {
+        return value;
     }
 }

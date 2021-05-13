@@ -35,7 +35,7 @@ public class ItemFactory {
                 break;
         }
         GameRule gm = new GameRule();
-        item.setPrice(gm.getPotionPrice(level, itemType));
+        item.setPrice(gm.getItemPrice(level, itemType));
         return item;
     }
 }

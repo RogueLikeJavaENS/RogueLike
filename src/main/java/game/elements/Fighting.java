@@ -47,6 +47,11 @@ public class Fighting {
         round++;
     }
 
+    /**
+     * Remove a monster from the fighting buffer.
+     * Update the
+     * @param monster The Monster to remove.
+     */
     public void removeMonster(LivingEntity monster) {
         turnOrder.remove(monster);
         bufferEntity.remove(monster);

@@ -6,8 +6,10 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
-
-
+/**
+ * Used to load the WAV files.
+ * You can play songs from the gameStat by using this class.
+ */
 public class MusicStuff {
 
     private Clip musicClip;
@@ -69,6 +71,10 @@ public class MusicStuff {
     }
 
 
+    /**
+     * Check if the fxClip and fxClip1 is active. If not close it and use it to play songs.
+     * @param path from the selected File.
+     */
     public void playFX(String path) {
         try {
             Clip fxClipToUse = null;
@@ -93,6 +99,10 @@ public class MusicStuff {
         }
     }
 
+    /**
+     * Launch the normal or the Fighting music.
+     * @param path the path of the WAV file.
+     */
     private void initInputStream(String path) {
         try {
             musicClip.stop();

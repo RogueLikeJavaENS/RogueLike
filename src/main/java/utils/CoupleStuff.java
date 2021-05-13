@@ -4,6 +4,9 @@ import game.stuff.Stuff;
 
 import java.util.Objects;
 
+/**
+ * Couple of a stuff and a count of the stuff.
+ */
 public class CoupleStuff {
     private int count;
     private Stuff stuff;
@@ -13,10 +16,17 @@ public class CoupleStuff {
         count = 1;
     }
 
+    /**
+     * Adds to the couple stuff the count of the stuff.
+     */
     public void addStuff() {
         count++;
     }
 
+    /**
+     * Decrements the count of the stuff in the Couple.
+     * @return if the stuff count equals 0 return false, and the CoupleStuff has to be destroyed
+     */
     public boolean removeStuff() {
         count --;
         return !(count > 0);

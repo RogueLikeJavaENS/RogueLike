@@ -3,16 +3,18 @@ package display;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class allow message to be display in the message box under the player, each
+ * time an action take place.
+ * @author antoine
+ */
+
 public class Descriptor {
     private List<String> buffer;
     private final static int LINE = 8;
 
     public Descriptor(){
         this.buffer = new ArrayList<>();
-    }
-
-    public void flushDescriptor() {
-        buffer.clear();
     }
 
     public void updateDescriptor(String str){

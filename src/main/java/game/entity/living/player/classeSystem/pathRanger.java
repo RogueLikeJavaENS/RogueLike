@@ -1,7 +1,7 @@
 package game.entity.living.player.classeSystem;
 
 /**
- * enumerator handling all reward by level for the rangerClass.
+ * Enumerator handling every reward for each level for the Ranger Class.
  * @author luca
  */
 
@@ -26,14 +26,6 @@ public enum pathRanger {
         this.reward = reward;
     }
 
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
     public Integer getLevel() {
         return level;
     }
@@ -44,9 +36,5 @@ public enum pathRanger {
 
     public String getReward() {
         return reward;
-    }
-
-    public void setReward(String reward) {
-        this.reward = reward;
     }
 }

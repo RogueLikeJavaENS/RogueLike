@@ -7,10 +7,13 @@ import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * Heals the Player.
+ */
 public class Heal extends AbstractSpell {
 
     public Heal() {
-        super(colorize("Heal", Colors.GREEN.textApply()),
+        super(colorize("Heal", Attribute.BOLD(), Colors.GREEN.textApply()),
                 0,
                 0,
                 new Range(),

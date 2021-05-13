@@ -10,6 +10,9 @@ import java.util.Random;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * Trap a Ranger can place to deal some damages to the Monsters they're fighting.
+ */
 public class RangerTrap extends ObjectEntity {
 
     public RangerTrap(Position position, Colors color, boolean isPlayerAccessible, boolean isNPCAccessible) {

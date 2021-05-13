@@ -1,5 +1,6 @@
 package game.entity.living.player.spell.spells;
 
+import com.diogonunes.jcolor.Attribute;
 import display.GridMap;
 import game.elements.GameState;
 import game.entity.Entity;
@@ -14,9 +15,12 @@ import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * Charges the enemies on 3 ranges. Get through the enemy. Deals damage to all enemies in the range.
+ */
 public class Charge extends AbstractSpell {
     public Charge() {
-        super(colorize("Charge", Colors.RED.textApply()),
+        super(colorize("Charge", Attribute.BOLD(),Colors.RED.textApply()),
                 0,
                 15,
                 new Range(),

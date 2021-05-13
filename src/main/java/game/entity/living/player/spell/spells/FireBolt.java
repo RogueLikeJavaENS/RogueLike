@@ -9,17 +9,19 @@ import utils.Colors;
 import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
- * The Warrior throw his axe to touch an enemy.
+ * this class implement the Firebolt Spell by extending AbstractSpell
+ * its a 5 range attack stopping at the first mob encountered, and do a bit more damage than
+ * for example a Fireball.
  */
-public class ThrowAxe extends AbstractSpell {
-    public ThrowAxe() {
-        super(colorize("Throw Axe", Attribute.BOLD(), Colors.RED.textApply()),
+public class FireBolt extends AbstractSpell {
+    public FireBolt() {
+        super(colorize("Fire Bolt", Attribute.BOLD(), Colors.RED.textApply()),
                 1.5,
-                30,
+                60,
                 new Range(),
-                20,
+                40,
                 true,
-                3,
+                5,
                 null);
     }
 }

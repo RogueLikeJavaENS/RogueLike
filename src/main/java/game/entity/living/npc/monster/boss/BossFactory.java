@@ -7,6 +7,9 @@ import game.entity.living.npc.monster.monsterStrategy.bossStrategy.BossAttackStr
 import utils.Colors;
 import utils.Position;
 
+/**
+ * Factory to generate bosses.
+ */
 public class BossFactory {
 
     private final int floor;

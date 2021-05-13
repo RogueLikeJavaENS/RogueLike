@@ -6,6 +6,11 @@ import game.entity.living.LivingEntity;
 import utils.Colors;
 import utils.Position;
 
+
+/**
+ * A Boss Part represent an entity under control of the Boss entity.
+ * It shares the same Boss, life and strategy. Each of the boss part has a specific sprite.
+ */
 public class BossPart extends LivingEntity {
     private final Boss myBoss;
 
@@ -15,6 +20,11 @@ public class BossPart extends LivingEntity {
         myBoss = boss;
     }
 
+    /**
+     * Deals damage to the boss when a part of the boss is hit.
+     * @param damage the damage to deal.
+     * @return the dealt damages.
+     */
     public int dealDamageBoss(int damage) {
         damage = myBoss.getMonsterStats().sufferDamage(damage);
         return damage;

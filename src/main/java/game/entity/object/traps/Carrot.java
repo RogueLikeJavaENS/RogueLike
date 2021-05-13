@@ -10,7 +10,11 @@ import java.util.Random;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * A Carrot is a trap the KillerRabbit puts when it's fighting.
+ */
 public class Carrot extends ObjectEntity {
+
     public Carrot(Position position, Colors color, boolean isPlayerAccessible, boolean isNPCAccessible) {
         super(position, color, isPlayerAccessible, isNPCAccessible);
         setSprites("   ", colorize("<=", Colors.ORANGE.textApply()) + colorize("#", Colors.GREEN.textApply()));

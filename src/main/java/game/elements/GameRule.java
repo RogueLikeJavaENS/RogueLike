@@ -16,44 +16,28 @@ import java.util.Random;
 public class GameRule {
     private final static Random GEN = new Random();
 
-    /////////// Hole and Spike /////////
-
+    /////////////////// All Room /////////////////////
     /**
+     * Get the number of hole when generating a room.
      * 5 to 10 hole in a room
      */
-    public int numberOfHole(){
+    public int numberOfHoleAtGeneration(){
         return GEN.nextInt(5)+5;
     }
 
     /**
-     * 1 to 3 tiles of hole
-     */
-    public int sizeOfPathHole(){
-        return GEN.nextInt(3)+1;
-    }
-
-
-
-    /**
+     * Get the number of spike when generating a room.
      * 10 to 15 spike in a room
      */
-    public int numberOfSpike(){
+    public int numberOfSpikeAtGeneration(){
         return GEN.nextInt(5)+10;
     }
-
-    /**
-     * 1 to 7 tiles of spike
-     */
-    public int sizeOfPathSpike(){
-        return GEN.nextInt(7)+1;
-    }
-
-
 
     /////////////// Monster Room //////////////
 
     /**
-     * 30% of chance to have a chest in a monster room
+     * When generating get if there is a chest in the room.
+     * 30% of chance to have a chest in a monster room.
      */
     public boolean presenceOfClassicChestOnMonsterRoom(){
         int nb = GEN.nextInt(100);
@@ -61,14 +45,12 @@ public class GameRule {
     }
 
     /**
-     *
+     * Get the the monster type to add when generating the room.
+     * Equal chance of every mobs.
      */
     public int getMonsterType(){
         return GEN.nextInt(6);
-
     }
-
-
 
     //////////// Treasure Room //////////
     /**
@@ -90,36 +72,6 @@ public class GameRule {
         return GEN.nextInt(8)+8;
         }
     }
-
-
-    ////////// Monster Loot //////////
-    /**
-     * Monster
-     * - 50% 1 potion
-     * - 20% 2 potions
-     * - 20% nothing
-     * - 9% 3 potions
-     * - 1% 4 potions
-     */
-    public int getNumberOfPotionOnMonster(){
-        int nb = GEN.nextInt(100);
-        if (nb < 50){
-            return 1;
-        }
-        else if (nb < 70){
-            return 2;
-        }
-        else if (nb < 90){
-            return 0;
-        }
-        else if (nb < 99){
-            return 3;
-        }
-        else{
-            return 4;
-        }
-    }
-
 
     ///////////// Type of game.stuff //////////////
     /**
@@ -155,7 +107,7 @@ public class GameRule {
      * - HELMET 11%
      * - PANT 11%
      */
-    public EquipmentType getEquipmentType(){
+    public EquipmentType getEquipmentTypeInChest(){
         int nb = GEN.nextInt(100);
         if (nb < 34){ return EquipmentType.WEAPON; }
         else if (nb < 45) { return EquipmentType.SHIELD; }
@@ -180,7 +132,7 @@ public class GameRule {
      * - L classic 0% / gold 25%
      *
      */
-    public EquipmentRarity getEquipmentRarity(boolean isClassic){
+    public EquipmentRarity getEquipmentRarityDroped(boolean isClassic){
         int nb = GEN.nextInt(100);
         if (isClassic){
             if (nb < 39){ return EquipmentRarity.E; }
@@ -198,7 +150,7 @@ public class GameRule {
         }
     }
 
-    ////////////  Chest  =   true : classic / false : golden
+    ////////////  Chest = true : classic / false : golden
     /**
      * Between 1 and 3 potion in a classic chest
      * Between 10 and 15 potion in a golden chest
@@ -211,6 +163,7 @@ public class GameRule {
             return GEN.nextInt(6)+10;
         }
     }
+
     /**
      * Between 0 and 5 gold in a classic chest
      * Between 30 and 50 gold in a golden chest
@@ -223,25 +176,32 @@ public class GameRule {
             return GEN.nextInt(21)+30;
         }
     }
+
     /**
-     * Between 1 and 3 equipment in a classic chest
+     * Between 1 and 3 equipment(s) in a classic chest
      */
     public int getNumberOfEquipmentInChest(){
         return GEN.nextInt(3)+1;
     }
 
     /**
-     * 5% of luck to have a golden key
+     * 5% of luck to have a golden key in a classic chest.
      */
     public boolean presenceOfGoldenKeyInClassicChest(){
         return (GEN.nextInt(100) < 5);
     }
 
+    /**
+     * Get the Equipment price in the merchant shop.
+     */
     public int getEquipmentPrice(int level, EquipmentRarity rarity) {
         return level * (rarity.ordinal()*2+2) * 5;
     }
 
-    public int getPotionPrice(int level, ItemType type) {
+    /**
+     * Get the item price int the merchant shop.
+     */
+    public int getItemPrice(int level, ItemType type) {
         switch (type) {
             case HEALTH_POTION:
             case ELIXIR:
@@ -258,19 +218,22 @@ public class GameRule {
     }
 
     /**
-     *  Between 2 and 5 Equipments in Merchant Shop
-     * @return number of Equipments.
+     *  Between 2 and 5 Equipments in the merchant shop.
      */
     public int getNumberOfEquipMerchantShop() {
         return GEN.nextInt(4)+2;
     }
 
+    /**
+     *  Get the equipment type in the merchant shop.
+     */
     public EquipmentType getEquipmentTypeInMerchantShop() {
         int type = GEN.nextInt(7);
         return EquipmentType.values()[type];
     }
 
     /**
+     *  Get the Rarity of the Equipment in the merchant shop.
      *  D 40%
      *  C 24%
      *  B 16%
@@ -294,6 +257,7 @@ public class GameRule {
     }
 
     /*
+    * Get the rarity of an equipment on a Boss Corpse.
     * L 15 %
     * S 35 %
     * A 50 %
@@ -307,20 +271,37 @@ public class GameRule {
         } else return EquipmentRarity.L;
     }
 
-    public int getNumberOfPotionsOnCorpse() {
+    /**
+     * Between 2 and 3 items on corpse.
+     * @return the number of items dropped on monster's corpse.
+     */
+    public int getNumberOfItemsOnCorpse() {
         return GEN.nextInt(2)+2;
     }
 
+    /**
+     * Between 0 and 2 equipments on corpse.
+     * @return the number of equipments dropped on monster's corpse.
+     */
     public int getNumberOfEquipmentsOnCorpse() {
         return GEN.nextInt(3);
     }
 
+    /**
+     * Between 1 and 2 equipments on Bosses' corpse
+     * @return the number of items dropped on monster's corpse.
+     */
     public int getNumberOfEquipmentsOnBossCorpse() {
         return GEN.nextInt(2)+1;
     }
 
+    /**
+     * Set a bonus according to the equipment and the classes of the player.
+     *
+     * @param equipement the equipment to set the bonus.
+     * @param classe the player classes.
+     */
     public void SetBonusEquipement(Equipment equipement, InGameClasses classe){
-        GameRule gamerule = new GameRule();
         int value = equipement.getLevel()+equipement.getRarity().ordinal()+1;
         switch (equipement.getType()){
             case WEAPON:
@@ -430,31 +411,57 @@ public class GameRule {
 
     ///////////// Bonus of equipment //////////////
 
+    /**
+     * Get the Bonus Damage According to the level of the player.
+     * @param level level of the player
+     * @return the bonus to add
+     */
     public int getBonusDamage(int level) {
         return level;
     }
+
+    /**
+     * Get the Bonus Damage According to the level of the player.
+     * @param level level of the player
+     * @return the bonus to add
+     */
     public int getBonusMana(int level) {
         return level;
     }
-    public int getBonusInitiative(int level) {
+
+    /**
+     * Get the Bonus Damage According to the level of the player.
+     * @param level level of the player
+     * @return the bonus to add
+     */
+    public int getBonusAgility(int level) {
         return level;
     }
+
+    /**
+     * Get the Bonus Damage According to the level of the player.
+     * @param level level of the player
+     * @return the bonus to add
+     */
     public int getBonusLife(int level) {
         return level;
     }
+
+    /**
+     * Get the Bonus Damage According to the level of the player.
+     * @param level level of the player
+     * @return the bonus to add
+     */
     public int getBonusArmor(int level) {
         return level;
     }
 
     /**
+     * Get if a chest is a mimic or not when generating the room.
      * 5% of chance that a chest is a mimic
      */
     public boolean isChestMimic() {
         int nb = GEN.nextInt(100);
         return nb < 5;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new GameRule().getEquipmentPrice(1, EquipmentRarity.L));
     }
 }

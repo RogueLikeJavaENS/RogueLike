@@ -1,16 +1,23 @@
 package game.entity.living.player.spell.spells;
 
+import com.diogonunes.jcolor.Attribute;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
+import utils.Colors;
 import utils.Direction;
 import utils.Position;
 
+import static com.diogonunes.jcolor.Ansi.colorize;
+
+/**
+ * Ultimate of the Warrior. Hit the ground and deal damage to every mobs within the range.
+ */
 public class Earthquake extends AbstractSpell {
 
     public Earthquake() {
-        super("Earthquake",
+        super(colorize("Earthquake", Attribute.BOLD() , Colors.BROWN.textApply()),
                 1.5,
-                100,
+                50,
                 new Range(),
                 50,
                 true,

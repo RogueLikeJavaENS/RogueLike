@@ -30,6 +30,18 @@ public class PlayerStats extends AbstractStats {
     private int turnPassed;
     private int bonusArmorTemporary;
 
+    /**
+     * Create a PlayerStats using :
+     * @param classe the class of said player
+     * @param lifePoint the life point the player is starting with
+     * @param manaPoint the mana point the player is starting with
+     * @param range the range the player is starting with
+     * @param initiative the player starting initiative
+     * @param damage the player starting damage
+     * @param armor the player starting armor
+     * @param money the player starting BTC count
+     * @param level the player starting level
+     */
     public PlayerStats(InGameClasses classe, int lifePoint, int manaPoint, int range, int initiative, int damage, int armor, int money, int level) {
         super(lifePoint, manaPoint, range, initiative, damage, armor, money, level);
         turnPassed = -1;
@@ -112,9 +124,16 @@ public class PlayerStats extends AbstractStats {
         return null;
     }
 
+    /**
+     * method allowing the player to remember how much monster did he kill.
+     */
     public void incrementeKillCounter() {
         this.killCounter += 1;
     }
+
+    /**
+     * method allowing the reset of the timer on the temporary bonuses.
+     */
     public void resetTurnPassed() {
         turnPassed = -1;
     }

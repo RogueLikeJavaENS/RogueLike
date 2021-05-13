@@ -1,6 +1,9 @@
 package game.stuff.equipment;
 import game.stuff.Stuff;
 
+/**
+ * The interface of the equipment
+ */
 public interface Equipment extends Stuff {
     boolean isEquiped();
     boolean equals(Object o);

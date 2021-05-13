@@ -4,9 +4,7 @@ import com.diogonunes.jcolor.Attribute;
 import display.RendererUI;
 import game.entity.Entity;
 import game.entity.living.inventory.OpenInventory;
-import game.entity.living.npc.monster.Monster;
-import game.entity.living.npc.monster.MonsterFactory;
-import game.entity.living.npc.monster.MonsterType;
+import game.entity.living.npc.monster.*;
 import game.entity.living.player.Player;
 import game.elements.GameState;
 import game.entity.living.player.spell.Spell;
@@ -21,7 +19,10 @@ import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-
+/**
+ * Used to display the InGameMenu as the PauseMenu, the Shop...
+ * set the gameLoops in pause during the menuLoop.
+ */
 public class InGameMenu {
 
     private final String pauseHead =
@@ -69,57 +70,15 @@ public class InGameMenu {
         }
     }
 
-    private void loopMenu(GameState gameState) throws InterruptedException {
-        boolean display = true;
-        while (!endMenu) {
-            if (display) {
-                RendererUI.clearConsole();
-                displayMenu();
-            }
-            sp.reset();
-            int keyCode = 0;
-            while(keyCode == 0) {
-                keyCode = sp.getKeyPressed();
-                Thread.sleep(1);  // Without that, Java deletes the loop
-            }
-            display = true;
-            switch (keyCode) {
-                case KeyEvent.VK_Z:
-                case KeyEvent.VK_UP:
-                    previousSelection();
-                    break;
-                case KeyEvent.VK_S:
-                case KeyEvent.VK_DOWN:
-                    nextSelection();
-                    break;
-                case KeyEvent.VK_E:
-                case KeyEvent.VK_ENTER:
-                    selectedAction.doAction(gameState);
-                    if (gameState.getState() != State.PAUSE_MENU) {
-                        endMenu = true;
-                    }
-                    break;
-                case KeyEvent.VK_ESCAPE:
-                    gameState.setState(State.NORMAL);
-                    gameState.isThereMonstersInventory();
-                    endMenu = true;
-                    break;
-                default:
-                    display = false;
-                    break;
-            }
-        }
-    }
-
-    public void initMenu(State stateMenu) {
+    /**
+     * Initializes the menu according to the State given in parameter.
+     * @param stateMenu the state of the menu.
+     */
+    private void initMenu(State stateMenu) {
         if (stateMenu.equals(State.SHOP_MENU)) {
             headMenu = shopHead;
-            actions.add(new InGameAction("Buy", state -> {
-                new OpenInventory(state, state.getMerchant().getMerchantInventory(), true);
-            }));
-            actions.add(new InGameAction("Sell", state -> {
-                new OpenInventory(state, state.getMerchant().getMerchantInventory(), false);
-            }));
+            actions.add(new InGameAction("Buy", state -> new OpenInventory(state, state.getMerchant().getMerchantInventory(), true)));
+            actions.add(new InGameAction("Sell", state -> new OpenInventory(state, state.getMerchant().getMerchantInventory(), false)));
             actions.add(new InGameAction("Attack the Merchant", state -> {
                 Position pos = state.getMerchant().getPosition();
                 state.getGridMap().update((Entity) state.getMerchant(), false);
@@ -178,18 +137,28 @@ public class InGameMenu {
         selectedAction = actions.get(0);
     }
 
-    public void nextSelection() {
+    /**
+     * Selects the Next action in the Action Menu List.
+     */
+    private void nextSelection() {
         int index = actions.indexOf(selectedAction);
         int size = actions.size();
         selectedAction = actions.get((index+1)% size);
     }
-    public void previousSelection() {
+
+    /**
+     * Selects the previous action in the Action Menu List.
+     */
+    private void previousSelection() {
         int index = actions.indexOf(selectedAction);
         int size = actions.size();
         selectedAction = actions.get((index + size -1)% size);
     }
 
-    public void displayMenu() {
+    /**
+     * Display the menu with the related headMenu and the selected action.
+     */
+    private void displayMenu() {
         StringBuilder sb = new StringBuilder();
         sb.append(headMenu);
         for (InGameAction action : actions) {
@@ -204,5 +173,52 @@ public class InGameMenu {
         }
         sb.append(" =============================================================== \n");
         System.out.println(sb);
+    }
+
+    /**
+     * Launch the loopMenu. The loop continue while the ending menu boolean isn't set at false;
+     * @param gameState the gameState used to launch the actions.
+     * @throws InterruptedException if the scanPanel is closed during the loop.
+     */
+    private void loopMenu(GameState gameState) throws InterruptedException {
+        boolean display = true;
+        while (!endMenu) {
+            if (display) {
+                RendererUI.clearConsole();
+                displayMenu();
+            }
+            sp.reset();
+            int keyCode = 0;
+            while(keyCode == 0) {
+                keyCode = sp.getKeyPressed();
+                Thread.sleep(1);  // Without that, Java deletes the loop
+            }
+            display = true;
+            switch (keyCode) {
+                case KeyEvent.VK_Z:
+                case KeyEvent.VK_UP:
+                    previousSelection();
+                    break;
+                case KeyEvent.VK_S:
+                case KeyEvent.VK_DOWN:
+                    nextSelection();
+                    break;
+                case KeyEvent.VK_E:
+                case KeyEvent.VK_ENTER:
+                    selectedAction.doAction(gameState);
+                    if (gameState.getState() != State.PAUSE_MENU) {
+                        endMenu = true;
+                    }
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    gameState.setState(State.NORMAL);
+                    gameState.isThereMonstersInventory();
+                    endMenu = true;
+                    break;
+                default:
+                    display = false;
+                    break;
+            }
+        }
     }
 }

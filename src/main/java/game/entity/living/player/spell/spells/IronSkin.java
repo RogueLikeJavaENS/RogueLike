@@ -15,7 +15,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class IronSkin extends AbstractSpell {
     public IronSkin() {
-        super("IronSkin",
+        super(colorize("Iron Skin", Attribute.BOLD(), Colors.MAGENTA.textApply()),
                 0,
                 0,
                 new Range(),

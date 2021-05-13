@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * Used to display the StartMenu as the Selection of the class, the startMenu...
+ */
 public class StartMenu {
     private final String title =
            colorize("             ,-=.\n" +
@@ -90,6 +93,10 @@ public class StartMenu {
         }
     }
 
+    /**
+     * Initializes the menu according to the first boolean.
+     * @param first if it's the first menu or the second one.
+     */
     private void initMenu(boolean first) {
         actions.clear();
         if (first) {
@@ -106,7 +113,7 @@ public class StartMenu {
                     keyCode = sp.getKeyPressed();
                     try {
                         Thread.sleep(1);  // Without that, Java deletes the loop
-                    }catch(Exception e){}
+                    }catch(Exception ignored){}
                 }
                 sp.reset();
             }));
@@ -130,6 +137,10 @@ public class StartMenu {
         selectedAction = actions.get(0);
     }
 
+    /**
+     * Launch the loopMenu. The loop continue while the ending menu boolean isn't set at false;
+     * @throws InterruptedException if the scanPanel is closed during the loop.
+     */
     private void loopMenu() throws InterruptedException {
         while (!classSelected) {
             RendererUI.clearConsole();

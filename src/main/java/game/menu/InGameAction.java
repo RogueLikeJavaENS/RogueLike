@@ -3,10 +3,9 @@ package game.menu;
 import game.elements.GameState;
 
 /**
- *
+ * An InGameAction takes the GameState to perform the functional action.
  * @author Antoine
  */
-
 public class InGameAction {
     private String name;
     private Action action;

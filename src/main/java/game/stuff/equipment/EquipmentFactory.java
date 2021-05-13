@@ -24,25 +24,25 @@ public class EquipmentFactory {
 
         switch (type) {
             case WEAPON:
-                equipment = new Weapon(level, rarity, type);
+                equipment = new Weapon(level, rarity);
                 break;
             case SHIELD:
-                equipment = new Shield(level, rarity, type);
+                equipment = new Shield(level, rarity);
                 break;
             case ARMOR:
-                equipment = new Armor(level, rarity, type);
+                equipment = new Armor(level, rarity);
                 break;
             case BOOT:
-                equipment = new Boot(level, rarity, type);
+                equipment = new Boot(level, rarity);
                 break;
             case GLOVE:
-                equipment = new Glove(level, rarity, type);
+                equipment = new Glove(level, rarity);
                 break;
             case HELMET:
-                equipment = new Helmet(level, rarity, type);
+                equipment = new Helmet(level, rarity);
                 break;
             case PANT:
-                equipment = new Pants(level, rarity, type);
+                equipment = new Pants(level, rarity);
                 break;
             default:
                 equipment = null;

@@ -36,14 +36,14 @@ public class RoomFactory {
     private final int floor;
     private final static GameRule gameRule = new GameRule();
     private final static Random GEN = new Random();
-    private List<Position> currentAvailablePositions;
+    private List<Position> currentAvailablePositions;       // list of the position where we can put entities
 
     /**
      * Create a room factory
      * @param width the width of a room
      * @param height the height of a room
-     * @param empty empty ??
-     * @param floor floor ??
+     * @param empty the space to remove on the border is there is no door
+     * @param floor the number of the floor
      */
     public RoomFactory(int width, int height, int empty, int floor) {
         this.width = width;
@@ -52,18 +52,26 @@ public class RoomFactory {
         this.floor = floor;
     }
 
-
+    /**
+     * Create a room with the information given on parameters
+     *
+     * @param seed the seed used to generate the dungeon
+     * @param roomType the type of the room we want
+     * @param current the current number of the room
+     * @param nextList list of the number of the neighbour room
+     * @return the room created
+     */
     public Room getRoom(Seed seed, RoomType roomType, int current, int[] nextList) {
-        Room room = createRoom(current, nextList, roomType);
+        Room room = createRoom(current, nextList, roomType); // create the room
         this.currentAvailablePositions = room.getAvailablePositions();
-        switch (roomType) {
+        switch (roomType) { // put the needed entity in each type of room
             case START:
-                currentAvailablePositions.remove(room.getCenter());
+                currentAvailablePositions.remove(room.getCenter()); // remove the center for the available position because it's where the player spawn
                 addHoleAndSpike(room);
                 addChest(room,true);
                 break;
             case BOSS:
-                addBoss(room);
+                addBoss(room);      // put a boss
                 break;
             case END:
                 addStairs(room);    // Go to the next floor
@@ -75,7 +83,7 @@ public class RoomFactory {
             case MONSTER:
                 addHoleAndSpike(room);
                 addMonsters(room);
-                if (gameRule.presenceOfClassicChestOnMonsterRoom()){
+                if (gameRule.presenceOfClassicChestOnMonsterRoom()){    // accordint to the GameRule put a chest or not
                     addChest(room,true);
                 }
                 break;
@@ -93,17 +101,23 @@ public class RoomFactory {
     }
 
 
-
+    /**
+     * Adding a merchant in the room
+     *
+     * @param dungeon the dungeon of the room
+     * @param playerClasse the class of the player
+     */
     public static void addMerchant(Dungeon dungeon, InGameClasses playerClasse) {
         for (Room room : dungeon.getRoomList()) {
-            if (room.getRoomType() == RoomType.REST) {
+            if (room.getRoomType() == RoomType.REST) { // if the room is of type REST
                 List<Position> availablePositions = room.getAvailablePositions();
-                GeneralMerchant generalMerchant = new GeneralMerchant(availablePositions.remove(0));
+                GeneralMerchant generalMerchant = new GeneralMerchant(availablePositions.remove(0)); // create the merchant
                 EquipmentFactory equipmentFactory = new EquipmentFactory(playerClasse);
                 GameRule gm = new GameRule();
 
                 Inventory merchantInventory = generalMerchant.getMerchantInventory();
 
+                // Add a number of equipment in the merchant inventory (according to the GameRule)
                 for (int i = 0; i < gm.getNumberOfEquipMerchantShop(); i++) {
                     int level = 1;
                     EquipmentRarity equipmentRarity = gm.getRarityEquipmentInMerchantShop();
@@ -111,6 +125,7 @@ public class RoomFactory {
                     merchantInventory.addItem(equipmentFactory.getEquipment(level, equipmentType, equipmentRarity));
                 }
 
+                // Add 5 PotionHealth, 5 Elixir and 2 XpBottle in the merchant inventory
                 for (int i = 0; i < 5; i++) {
                     merchantInventory.addItem(new PotionHealth());
                     merchantInventory.addItem(new Elixir());
@@ -118,8 +133,11 @@ public class RoomFactory {
                         merchantInventory.addItem(new XpBottle());
                     }
                 }
+                // Add a Map of the dungeon and a GoldKey in the merchant inventory
                 merchantInventory.addItem(new GoldKey());
                 merchantInventory.addItem(new MapDungeon());
+
+                // Add some Basic equipment in the merchant inventory
                 merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.ARMOR, EquipmentRarity.E));
                 merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.HELMET, EquipmentRarity.E));
                 merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.BOOT, EquipmentRarity.E));
@@ -128,7 +146,7 @@ public class RoomFactory {
                 merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.SHIELD, EquipmentRarity.E));
                 merchantInventory.addItem(equipmentFactory.getEquipment(1, EquipmentType.WEAPON, EquipmentRarity.E));
 
-
+                // Put the merchant in the room and update the gridmap
                 Position position =  availablePositions.remove(0);
                 room.addEntity(new GeneralMerchant(position));
                 dungeon.getGridMap(room).update(generalMerchant, true);
@@ -155,17 +173,22 @@ public class RoomFactory {
         MonsterFactory monsterFactory = new MonsterFactory(floor);
         int monsterCount = GEN.nextInt(10) % 2 + 2;
         int type;
-        for (int i = 0; i < monsterCount; i++) {
+        for (int i = 0; i < monsterCount; i++) {        // create monsterCount monster with a type chosen by the gameRule and put it in the list of entity of the room
             type = gameRule.getMonsterType();
             room.addEntity(monsterFactory.getMonster(type, currentAvailablePositions.get(0)));
             currentAvailablePositions.remove(0);
         }
-        for (int i = 0; i < monsterCount; i++) {
+        for (int i = 0; i < monsterCount; i++) {          // also adding the same number of coins in the room
             room.addEntity(new Coins(currentAvailablePositions.get(0)));
             currentAvailablePositions.remove(0);
         }
     }
 
+    /**
+     * Add a boss in the room
+     *
+     * @param room the room
+     */
     private void addBoss(Room room) {
         BossFactory bossFactory = new BossFactory(floor);
         Boss boss = bossFactory.getBoss(Bosses.KILLER_RABBIT, room.getCenter());
@@ -231,12 +254,13 @@ public class RoomFactory {
      * @param room the room
      */
     private void addHoleAndSpike(Room room){
-        int nbHole = gameRule.numberOfHole();
-        int nbSpike = gameRule.numberOfSpike();
+        int nbHole = gameRule.numberOfHoleAtGeneration();
+        int nbSpike = gameRule.numberOfSpikeAtGeneration();
 
         for(int i = 0; i< nbSpike; i++){
             room.addEntity(new Spike(currentAvailablePositions.remove(0)));
         }
+        // Add the holes after
         for(int i = 0; i <nbHole; i++){
             room.addEntity(new Hole(currentAvailablePositions.remove(0)));
         }
@@ -244,56 +268,8 @@ public class RoomFactory {
     }
 
     /**
-     * Create a path of hole
-     * @param room the room
-     */
-    private void createPathOfHole(Room room){
-        int sizeHole = gameRule.sizeOfPathHole();
-        Collections.shuffle(currentAvailablePositions);
-        Position currentPosition = currentAvailablePositions.get(0);
-        currentAvailablePositions.remove(0);
-        room.addEntity(new Hole(currentPosition));
-        sizeHole --;
-        for (int i = 0; i<sizeHole; i++){
-            List<Position> accessiblePos = getAccessibleDirectionFromPosition(currentPosition,room);
-            if (accessiblePos.size() == 0) {
-                break;
-            }
-            else {
-                Collections.shuffle(accessiblePos);
-                currentPosition = accessiblePos.get(0);
-                currentAvailablePositions.remove(currentPosition);
-                room.addEntity(new Hole(currentPosition));
-            }
-        }
-    }
-
-    /**
-     * Create a path of spike
-     * @param room the room
-     */
-    private void createPathOfSpike(Room room){
-        int sizeSpike = gameRule.sizeOfPathSpike();
-        Collections.shuffle(currentAvailablePositions);
-        Position currentPosition = currentAvailablePositions.remove(0);
-        room.addEntity(new Spike(currentPosition));
-        sizeSpike --;
-        for (int i = 0; i<sizeSpike; i++){
-            List<Position> accessiblePos = getAccessibleDirectionFromPosition(currentPosition,room);
-            if (accessiblePos.size() == 0) {
-                break;
-            }
-            else {
-                Collections.shuffle(accessiblePos);
-                currentPosition = accessiblePos.get(0);
-                currentAvailablePositions.remove(currentPosition);
-                room.addEntity(new Spike(currentPosition));
-            }
-        }
-    }
-
-    /**
-     * Return a list of position which are accessible from the position "positio"
+     * Return a list of position which are accessible from the position "position"
+     *
      * @param position the position
      * @param room the room
      * @return the list of accessible position around the position
@@ -315,7 +291,6 @@ public class RoomFactory {
      * @param nextList Array with the position and the number of the next Room
      * @return Room with the correct wall and doors
      */
-
     private Room createRoom(int current, int[] nextList, RoomType roomType) {
 
         Position roomPosition = new Position(nextList[5], nextList[4]); // using y x might need to reverse
@@ -342,13 +317,11 @@ public class RoomFactory {
     }
 
     /**
+     * The method fills the content's array. If hasDoor is true, then the methods creates the correct walls, door..
      *
      * @param hasDoor boolean, true if there are a door, false either
      * @param contents array of tiles' id
-     *
-     * The method fills the content's array. If hasDoor is true, then the methods creates the correct walls, door..
      */
-
     private void fillNorth(boolean hasDoor, int[][] contents) {
         if (hasDoor) {
             fillSquare(space, 0, width -(space +1), space, TileEnum.WALL.getId(), contents); //Northern wall
@@ -361,13 +334,11 @@ public class RoomFactory {
     }
 
     /**
+     * The method fills the content's array. If hasDoor is true, then the methods creates the correct walls, door..
      *
      * @param hasDoor boolean, true if there are a door, false either
      * @param contents array of tiles' id
-     *
-     * The method fills the content's array. If hasDoor is true, then the methods creates the correct walls, door..
      */
-
     private void fillSouth(boolean hasDoor, int[][] contents) {
         if (hasDoor) {
             fillSquare(space, height -(space +1), width -(space +1), height -1,
@@ -384,13 +355,11 @@ public class RoomFactory {
     }
 
     /**
+     * The method fills the content's array. If hasDoor is true, then the methods creates the correct walls, door..
      *
      * @param hasDoor boolean, true if there are a door, false either
      * @param contents array of tiles' id
-     *
-     * The method fills the content's array. If hasDoor is true, then the methods creates the correct walls, door..
      */
-
     private void fillEast(boolean hasDoor, int[][] contents) {
         if (hasDoor) {
             fillSquare(width -(space +1), space, width -1, height -(space +1),
@@ -407,13 +376,11 @@ public class RoomFactory {
     }
 
     /**
+     *The method fills the content's array. If hasDoor is true, then the methods creates the correct walls, door..
      *
      * @param hasDoor boolean, true if there are a door, false either
      * @param contents array of tiles' id
-     *
-     * The method fills the content's array. If hasDoor is true, then the methods creates the correct walls, door..
      */
-
     private void fillWest(boolean hasDoor, int[][] contents) {
         if (hasDoor) {
             fillSquare(0, space, space, height -(space +1),
@@ -430,6 +397,7 @@ public class RoomFactory {
     }
 
     /**
+     *The method fills the contents' array with the given tile id in the square's position
      *
      * @param abs1 int abs position from the upper-left position
      * @param ord1 int ord position from the upper-left position
@@ -437,10 +405,7 @@ public class RoomFactory {
      * @param ord2 int ord position from the up-right position
      * @param tile int id of the tile
      * @param contents array of tiles' id
-     *
-     * The method fills the contents' array with the given tile id in the square's position
      */
-
     private void fillSquare(int abs1, int ord1, int abs2, int ord2, int tile, int[][] contents) {
         if (abs1 > abs2 || ord1 > ord2) {
             int absTmp = abs1;

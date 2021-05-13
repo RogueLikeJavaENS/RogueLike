@@ -17,8 +17,20 @@ import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * class handling the KillerRabit boss by extending the AbstractBoss class.
+ */
 public class KillerRabbit extends AbstractBoss {
 
+    /**
+     * create a Killer rabbit with the super of Abstract bosses then construct the
+     * different boss part, before setting them.
+     * @param name the name of the bosses.
+     * @param position the position we want to put the main boss (each bossPart position will be calculated with it).
+     * @param color the color used to color the main boss part.
+     * @param strategy the bossStrategy we ant to use for this boss.
+     * @param stats the boss main part stats.
+     */
     public KillerRabbit(String name, Position position, Colors color, Strategy strategy, AbstractStats stats) {
         super(name, position, color, strategy, stats);
         List<BossPart> listBossParts = new ArrayList<>();
@@ -73,6 +85,11 @@ public class KillerRabbit extends AbstractBoss {
         super.setActedSpecial(true);
     }
 
+    /**
+     * method handling the specialAction of the KillerRabbit, planting explosive carrot into the ground.
+     * @param player not used here, but present so a boss can use it.
+     * @param gridmap to be able to place the Carrot on the Map.
+     */
     public void doSpecialAction(Player player, GridMap gridmap) {
         gridmap.update(new Carrot(new Position(getPosition().getAbs(), getPosition().getOrd()),
                         Colors.ORANGE,

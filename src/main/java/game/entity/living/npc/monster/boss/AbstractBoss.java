@@ -14,14 +14,25 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ *AbstractClass for the bosses extending AbstractMonster implementing Boss.
+ */
 public abstract class AbstractBoss extends AbstractMonster implements Boss {
 
     List<BossPart> bossParts;
     boolean hasSpecial;
     private Direction previousDirection = null;
-    private List<Direction> bufferPath;
+    private final List<Direction> bufferPath;
     private int turnCounter = 0;
 
+    /**
+     * Create an AbstractBoss (only called as a super for different bosses).
+     * @param name name of the boss.
+     * @param position position of the boss.
+     * @param color color of the boss.
+     * @param strategy bossStrategy attributed to the bosses.
+     * @param stats the boss main part stats.
+     */
     public AbstractBoss(String name, Position position, Colors color, Strategy strategy, AbstractStats stats) {
         super(position, name, color, strategy, stats);
         hasSpecial = true;
@@ -29,6 +40,10 @@ public abstract class AbstractBoss extends AbstractMonster implements Boss {
         bufferInit();
     }
 
+    /**
+     * used to receive the list of boss part from the bosses and linking it to the mainPart of the boss.
+     * @param bossParts List of bossPart, added in one go when a specified boss is created.
+     */
     public void setBossParts(List<BossPart> bossParts) {
         this.bossParts = bossParts;
     }
@@ -45,15 +60,15 @@ public abstract class AbstractBoss extends AbstractMonster implements Boss {
         return bossParts;
     }
 
-    public List<Direction> getBufferPath() {
-        return bufferPath;
-    }
-
     @Override
     public boolean isBoss() {
         return true;
     }
 
+    /**
+     * Handle the movement of the boss part that aren't the main part.
+     * @param gridMap so we can access all the map, and move all part of the bosses at once.
+     */
     public void updatePosBoss(GridMap gridMap) {
         if (turnCounter == 20) {
             bufferPath.clear();
