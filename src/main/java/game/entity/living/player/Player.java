@@ -1,5 +1,6 @@
 package game.entity.living.player;
 
+import game.elements.GameState;
 import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.inventory.PlayerInventory;
 import game.entity.living.LivingEntity;
