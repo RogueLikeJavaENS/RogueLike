@@ -651,32 +651,6 @@ public class AbstractInventory implements Inventory {
         return Integer.MAX_VALUE;
     }
 
-    private void updatePlayerStats(Equipment equipment, GameState gameState, boolean equip) {
-        Player player = gameState.getPlayer();
-        int equipModifier;
-        if (equip) {
-            equipModifier = 1;
-        } else {
-            equipModifier = -1;
-        }
-
-        if (equipment.getBonusArmor() != 0) {
-            player.getPlayerStats().changeArmorTotal(equipModifier * equipment.getBonusArmor());
-        }
-        if (equipment.getBonusDamage() != 0) {
-            player.getPlayerStats().changeDamageTotal(equipModifier * equipment.getBonusDamage());
-        }
-        if (equipment.getBonusMana() != 0) {
-            player.getPlayerStats().changeManaPointTotal(equipModifier * equipment.getBonusMana());
-        }
-        if (equipment.getBonusLife() != 0) {
-            player.getPlayerStats().changeLifePointTotal(equipModifier * equipment.getBonusLife());
-        }
-        if (equipment.getBonusAgility() != 0) {
-            player.getPlayerStats().editAgiltyActual(equipModifier * equipment.getBonusAgility());
-        }
-    }
-
     private String colorBonus(int bonus) {
         if (bonus == Integer.MAX_VALUE) {
             return "";
@@ -697,5 +671,36 @@ public class AbstractInventory implements Inventory {
             return String.valueOf(bonus).length()+4;
         }
         else return String.valueOf(bonus).length()+4;
+    }
+
+    public List<Stuff> getInventory() {
+        return inventory;
+    }
+
+    public void removeItem(ItemType type){
+        Stuff itemToDelete = null;
+        for(Stuff stuff : inventory){
+            if (stuff.isUsable()){
+                Item item = (Item) stuff;
+                if (item.getType() == type){
+                    itemToDelete = item;
+                }
+            }
+        }
+        if (itemToDelete != null) {
+            inventory.remove(itemToDelete);
+        }
+    }
+
+    public boolean containsItem(ItemType type){
+        for (Stuff stuff : inventory){
+            if (stuff.isUsable()){
+                Item item = (Item) stuff;
+                if (item.getType() == type){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
