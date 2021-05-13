@@ -48,7 +48,9 @@ public class RogueLike {
         gs = new GameState(player, dungeon, new HUD(player), sp, musicStuff);
         rendererUI = new RendererUI(gs);
         rendererUI.display();
+
         gameLoop(); // until state equals WIN or LOSE or END
+
         RendererUI.clearConsole();
         if (gs.getState() == State.WIN) {
             rendererUI.winEnd();

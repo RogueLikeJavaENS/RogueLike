@@ -95,8 +95,8 @@ public class Chest extends ObjectEntity {
             StringBuilder description = new StringBuilder();
             description.append("You found : ");
             for(int i=0; i<nbEquipment; i++){
-                EquipmentType equipmentType = gr.getEquipmentType();
-                EquipmentRarity equipmentRarity = gr.getEquipmentRarity(isClassic);
+                EquipmentType equipmentType = gr.getEquipmentTypeInChest();
+                EquipmentRarity equipmentRarity = gr.getEquipmentRarityDroped(isClassic);
                 Equipment equipment = equipmentFactory.getEquipment(player.getPlayerStats().getLevel(),equipmentType,equipmentRarity);
                 player.getInventory().addItem(equipment);
                 description.append(String.format(

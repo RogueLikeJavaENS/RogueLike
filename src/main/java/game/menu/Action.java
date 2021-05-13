@@ -3,7 +3,7 @@ package game.menu;
 import game.elements.GameState;
 
 /**
- *
+ * An action takes the gameState. Functional Interface.
  * @author Antoine
  */
 

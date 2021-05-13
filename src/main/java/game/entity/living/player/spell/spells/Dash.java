@@ -16,7 +16,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class Dash extends AbstractSpell {
     public Dash() {
-        super(colorize("Dash", Colors.GREEN.textApply()),
+        super(colorize("Dash",Attribute.BOLD() ,Colors.GREEN.textApply()),
                 0,
                 0,
                 new Range(),

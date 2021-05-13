@@ -6,12 +6,20 @@ import utils.State;
 
 import java.awt.event.KeyEvent;
 
+/**
+ * Used to get the inputs from the player to navigate in the inventory.
+ */
 public class OpenInventory {
     private final GameState gs;
     private Inventory inventory;
     private boolean acted;
     private boolean exitInventory;
 
+    /**
+     * Constructor use to open the Player inventory.
+     * @param gs the GameState used to get the level og the player.
+     * @param inventory the inventory to open.
+     */
     public OpenInventory(GameState gs, Inventory inventory) {
         this.gs = gs;
         this.inventory = inventory;
@@ -25,6 +33,13 @@ public class OpenInventory {
         }
     }
 
+    /**
+     * Constructor used to open the inventory on the merchant if the player is buying stuffs. Or on the player inventory
+     * if the player is selling stuffs.
+     * @param gs GameState used to get the player inventory.
+     * @param inventory the merchant inventory.
+     * @param selling if the player is buying or selling.
+     */
     public OpenInventory(GameState gs, Inventory inventory, boolean selling) {
         this.gs = gs;
         this.inventory = inventory;
@@ -49,6 +64,18 @@ public class OpenInventory {
         }
     }
 
+    /**
+     * Used to know if the player consumes his turn during fight.
+     * @return a boolean if the player acted ord not.
+     */
+    public boolean hasActed() {
+        return acted;
+    }
+
+    /**
+     * The loop of the inventory.
+     * @throws InterruptedException if the scanPanel is closed
+     */
     private void inventoryLoop() throws InterruptedException {
         boolean display = true;
         while(!exitInventory) {
@@ -104,10 +131,9 @@ public class OpenInventory {
         }
     }
 
-    public boolean hasActed() {
-        return acted;
-    }
-
+    /**
+     * Display the inventory in the loop.
+     */
     private void displayInventory() {
         System.out.println(inventory.toStringInventory(gs));
         System.out.println(gs.getDescriptor());

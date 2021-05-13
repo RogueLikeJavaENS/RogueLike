@@ -54,9 +54,6 @@ public class ScanPanel extends JFrame implements KeyListener{
     public void reset() {
         pressed = 0;
     }
-
-    public static void main(String[] args) throws IOException, InterruptedException {
-    }
 }
 
 

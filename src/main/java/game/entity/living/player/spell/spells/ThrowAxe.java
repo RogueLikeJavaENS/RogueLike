@@ -1,12 +1,19 @@
 package game.entity.living.player.spell.spells;
 
+import com.diogonunes.jcolor.Attribute;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import game.entity.living.player.spell.SpecialEffect;
+import utils.Colors;
 
+import static com.diogonunes.jcolor.Ansi.colorize;
+
+/**
+ * The Warrior throw his axe to touch an enemy.
+ */
 public class ThrowAxe extends AbstractSpell {
     public ThrowAxe() {
-        super("Throw Axe",
+        super(colorize("Throw Axe", Attribute.BOLD(), Colors.RED.textApply()),
                 1.5,
                 30,
                 new Range(),
@@ -14,10 +21,5 @@ public class ThrowAxe extends AbstractSpell {
                 true,
                 3,
                 null);
-    }
-
-    @Override
-    public boolean isZoning() {
-        return true;
     }
 }

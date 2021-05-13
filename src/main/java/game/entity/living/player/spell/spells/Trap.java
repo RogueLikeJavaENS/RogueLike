@@ -1,5 +1,6 @@
 package game.entity.living.player.spell.spells;
 
+import com.diogonunes.jcolor.Attribute;
 import display.GridMap;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
@@ -12,7 +13,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class Trap extends AbstractSpell {
     public Trap() {
-        super("Trap",
+        super(colorize("Trap", Attribute.BOLD(), Colors.GREEN.textApply()),
                 0.0,
                 0,
                 new Range(),

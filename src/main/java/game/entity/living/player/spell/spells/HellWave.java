@@ -1,14 +1,18 @@
 package game.entity.living.player.spell.spells;
 
+import com.diogonunes.jcolor.Attribute;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
+import utils.Colors;
 import utils.Direction;
 import utils.Position;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class HellWave extends AbstractSpell {
 
     public HellWave() {
-        super("Hell Wave",
+        super(colorize("HellWave", Attribute.BOLD(), Colors.RED.textApply()),
                 2.0,
                 420,
                 new Range(),

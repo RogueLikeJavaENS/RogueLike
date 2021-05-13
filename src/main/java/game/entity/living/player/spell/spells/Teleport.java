@@ -19,7 +19,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class Teleport extends AbstractSpell {
 
     public Teleport() {
-        super(colorize("Teleport", Colors.BLUE.textApply()),
+        super(colorize("Teleport", Attribute.BOLD(), Colors.BLUE.textApply()),
                 0,
                 0,
                 new Range(),

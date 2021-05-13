@@ -1,5 +1,6 @@
 package game.entity.living.player.spell.spells;
 
+import com.diogonunes.jcolor.Attribute;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import utils.Colors;
@@ -15,7 +16,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class FireBall extends AbstractSpell {
 
     public FireBall() {
-        super(colorize("Fire Ball", Colors.RED.textApply()),
+        super(colorize("Fire Ball", Attribute.BOLD(), Colors.RED.textApply()),
                 1.6,
                 16,
                 new Range(),

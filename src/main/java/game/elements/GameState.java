@@ -32,7 +32,6 @@ public class GameState {
     private Fighting fighting;
     private boolean help;
     private MiniMap miniMap;
-    private Range range;
     private final GameRule gameRule;
     private final Descriptor descriptor;
     private HUD hud;
@@ -60,11 +59,14 @@ public class GameState {
         isThereMonsters();
     }
 
-
+    /**
+     * Get the selected spell, update the range according to the spell's range.
+     * If the spell is not zoning, the rangeList in the GridMap is updated.
+     */
     public void updateRange() {
         Spell spell = player.getPlayerStats().getSelectedSpell();
         spell.setRange(player.getPosition(), player.getDirection());
-        range = spell.getRange();
+        Range range = spell.getRange();
         gridMap.updateRangeList(range);
          if (spell.isMovement()) {
              sortRangeList(gridMap.getRangeList());
@@ -160,6 +162,12 @@ public class GameState {
         isThereMonsters();
     }
 
+    /**
+     * If the monster is on an entity, check if the entity is a trap. If it is a trap,
+     * do the entity action on the monster.
+     *
+     * @param monster the monster to check
+     */
     public void isMonsterOnEntity(LivingEntity monster) {
         int livingEntityAbs = monster.getPosition().getAbs();
         int livingEntityOrd = monster.getPosition().getOrd();
@@ -255,7 +263,7 @@ public class GameState {
     }
 
     /**
-     *
+     * Initialize or not the Fight when the player change the room.
      */
     public void changeRoomFight() {
         isThereMonsters();
@@ -264,26 +272,17 @@ public class GameState {
         }
     }
 
-
-
     /**
      * Uses the player's selected spell and applies its effects to the area within its range.
      * If the player doesn't have enough mana, the spell fails.
      *
-     * @return weither spell has been successfully used or not.
+     * @return either spell has been successfully used or not.
      *
      * @author Raphael and Antoine
      */
     public boolean useSpell() {
         Spell spell = player.getPlayerStats().getSelectedSpell();
         return spell.useSpell(this);
-    }
-
-    /**
-     * Exit the games by setting the state at END.
-     */
-    public void exitGame() {
-        state = State.END;
     }
 
     /* GETTERS */
@@ -320,13 +319,13 @@ public class GameState {
     public void setMerchant(Merchant merchant) {
         this.merchant = merchant;
     }
-    public void setPlayer(Player player) {
-        gridMap.update(getPlayer(), false);
-        this.player = player;
-        gridMap.update(getPlayer(), true);
-        setHud(new HUD(player));
-    }
 
+    /**
+     * Update the range list according to the entity around the player.
+     * The range list must be sorted before to call noZoningRange method.
+     *
+     * @param rangeList the rangelist to update
+     */
     private void noZoningRange(List<Position> rangeList) {
         List<Position> newRangeList = new ArrayList<>();
         for (Position pos : rangeList) {
@@ -345,6 +344,13 @@ public class GameState {
         rangeList.addAll(newRangeList);
     }
 
+    /**
+     * Sort the rangeList.
+     * A TreeMap is created with Distance key and Position value.
+     * The TreeMap is sorted according to the distance. Then the rangeList with a new ArrayList.
+     *
+     * @param rangeList to sort.
+     */
     private void sortRangeList(List<Position> rangeList) {
         HashMap<Double, Position> ranges = new HashMap<>();
         List<Position> rangeSorted = new ArrayList<>();

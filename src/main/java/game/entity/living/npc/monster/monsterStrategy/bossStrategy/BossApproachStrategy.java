@@ -7,6 +7,10 @@ import game.entity.living.player.Player;
 import game.entity.living.npc.monster.monsterStrategy.DecoratorStrategy;
 import game.entity.living.npc.monster.monsterStrategy.Strategy;
 
+/**
+ * The Bosses is moving by himself. It didn't focus the player and move freely.
+ * The Boss moves every 2 rounds. One round he do his special action and one other moves.
+ */
 public class BossApproachStrategy extends DecoratorStrategy {
 
     public BossApproachStrategy(Strategy strategy) {

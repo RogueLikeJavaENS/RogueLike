@@ -32,7 +32,7 @@ public class Grave extends ObjectEntity {
         ItemFactory itemFactory = new ItemFactory();
         EquipmentFactory equipmentFactory = new EquipmentFactory(gameState.getPlayer().getClasse());
 
-        for (int i = 0; i < gameRule.getNumberOfPotionsOnCorpse(); i++) {
+        for (int i = 0; i < gameRule.getNumberOfItemsOnCorpse(); i++) {
             droppedItems.add(itemFactory.getItem(gameRule.getItemType(), level));
         }
         if (monster.isBoss()) {
@@ -42,7 +42,7 @@ public class Grave extends ObjectEntity {
             droppedItems.add(itemFactory.getItem(ItemType.FLOORKEY, level));
         } else {
             for (int i = 0; i < gameRule.getNumberOfEquipmentsOnCorpse(); i++) {
-                droppedItems.add(equipmentFactory.getEquipment(level, gameRule.getEquipmentTypeInMerchantShop(), gameRule.getEquipmentRarity(true)));
+                droppedItems.add(equipmentFactory.getEquipment(level, gameRule.getEquipmentTypeInMerchantShop(), gameRule.getEquipmentRarityDroped(true)));
             }
         }
         droppedMoney = monster.getMonsterStats().getMoneyCount();

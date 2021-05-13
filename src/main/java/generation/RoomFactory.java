@@ -231,8 +231,8 @@ public class RoomFactory {
      * @param room the room
      */
     private void addHoleAndSpike(Room room){
-        int nbHole = gameRule.numberOfHole();
-        int nbSpike = gameRule.numberOfSpike();
+        int nbHole = gameRule.numberOfHoleAtGeneration();
+        int nbSpike = gameRule.numberOfSpikeAtGeneration();
 
         for(int i = 0; i< nbSpike; i++){
             room.addEntity(new Spike(currentAvailablePositions.remove(0)));
@@ -241,55 +241,6 @@ public class RoomFactory {
             room.addEntity(new Hole(currentAvailablePositions.remove(0)));
         }
 
-    }
-
-    /**
-     * Create a path of hole
-     * @param room the room
-     */
-    private void createPathOfHole(Room room){
-        int sizeHole = gameRule.sizeOfPathHole();
-        Collections.shuffle(currentAvailablePositions);
-        Position currentPosition = currentAvailablePositions.get(0);
-        currentAvailablePositions.remove(0);
-        room.addEntity(new Hole(currentPosition));
-        sizeHole --;
-        for (int i = 0; i<sizeHole; i++){
-            List<Position> accessiblePos = getAccessibleDirectionFromPosition(currentPosition,room);
-            if (accessiblePos.size() == 0) {
-                break;
-            }
-            else {
-                Collections.shuffle(accessiblePos);
-                currentPosition = accessiblePos.get(0);
-                currentAvailablePositions.remove(currentPosition);
-                room.addEntity(new Hole(currentPosition));
-            }
-        }
-    }
-
-    /**
-     * Create a path of spike
-     * @param room the room
-     */
-    private void createPathOfSpike(Room room){
-        int sizeSpike = gameRule.sizeOfPathSpike();
-        Collections.shuffle(currentAvailablePositions);
-        Position currentPosition = currentAvailablePositions.remove(0);
-        room.addEntity(new Spike(currentPosition));
-        sizeSpike --;
-        for (int i = 0; i<sizeSpike; i++){
-            List<Position> accessiblePos = getAccessibleDirectionFromPosition(currentPosition,room);
-            if (accessiblePos.size() == 0) {
-                break;
-            }
-            else {
-                Collections.shuffle(accessiblePos);
-                currentPosition = accessiblePos.get(0);
-                currentAvailablePositions.remove(currentPosition);
-                room.addEntity(new Spike(currentPosition));
-            }
-        }
     }
 
     /**

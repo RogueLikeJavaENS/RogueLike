@@ -1,15 +1,12 @@
 package game.entity.living.inventory;
 
 import com.diogonunes.jcolor.Attribute;
-import game.entity.living.player.Player;
-import game.entity.living.player.PlayerStats;
+import game.entity.living.player.*;
 import game.elements.GameRule;
 import game.elements.GameState;
 import game.stuff.Stuff;
-import game.stuff.equipment.Equipment;
-import game.stuff.equipment.EquipmentRarity;
-import game.stuff.item.Item;
-import game.stuff.item.ItemType;
+import game.stuff.equipment.*;
+import game.stuff.item.*;
 import utils.Colors;
 import utils.CoupleStuff;
 
@@ -18,9 +15,12 @@ import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-public class AbstractInventory implements Inventory {
+/**
+ * The Class is used To store all the Stuffs. The Structure of the class is shared with the player and the merchants.
+ */
+public abstract class AbstractInventory implements Inventory {
     protected List<Stuff> inventory;
-    protected List<Stuff> equiped;
+    protected List<Stuff> equipped;
     protected Stuff selectedStuff;
 
     protected boolean onEquipments;
@@ -33,16 +33,27 @@ public class AbstractInventory implements Inventory {
 
     public AbstractInventory() {
         inventory = new ArrayList<>();
-        equiped = new ArrayList<>();
+        equipped = new ArrayList<>();
         sortedItem = new ArrayList<>();
         sortedEquipment = new ArrayList<>();
         selling = false;
     }
 
+    /**
+     * Uses to add Stuff to the merchant or the player.
+     * @param stuff the stuff to add.
+     */
     public void addItem(Stuff stuff) {
         inventory.add(stuff);
     }
 
+    /**
+     * When removing the stuff. The method has to check if the stuff is an equipment.
+     * If it is, the equipment must be removed from both Global Inventory and Sorted inventory.
+     * If the Equipment is equipped, then return false.
+     * @param stuff the stuff to remove.
+     * @return a boolean if the stuff has been removed or not.
+     */
     public boolean removeStuff(Stuff stuff) {
         boolean removed = false;
         List<CoupleStuff> listToDelete;
@@ -68,6 +79,13 @@ public class AbstractInventory implements Inventory {
         return removed;
     }
 
+    /**
+     * Uses the selectedStuff in the inventory. If the selectedStuff is An Equipment,
+     * Equipping or un-equipping it, if it's an item, use it.
+     *
+     * @param gameState to update the player or action when using an item.
+     * @return if the selectedStuff has been used or not.
+     */
     public boolean useSelectedStuff(GameState gameState) {
         boolean used = false;
         if (indexOfSelectedStuff != -1) {
@@ -90,6 +108,12 @@ public class AbstractInventory implements Inventory {
         return used;
     }
 
+    /**
+     * Uses the items if it's possible to use. You can't use a floor key, but you can use a potion.
+     * @param type the type of the item to use.
+     * @param gameState the GameState to update the game by using it.
+     * @return a boolean if the item has been used or not.
+     */
     public boolean useItem(ItemType type, GameState gameState) {
         boolean used = false;
         Item itemToDelete = null;
@@ -109,19 +133,26 @@ public class AbstractInventory implements Inventory {
         return used;
     }
 
+    /**
+     * If the equipment is already equipped, unequip it. Analog to equip it.
+     *
+     * @param equipment to equip or unequip.
+     * @param gameState to change the state if the equipment has special effect.
+     * @return a boolean if the equipment has been equipped or unequipped.
+     */
     public boolean useEquipment(Equipment equipment, GameState gameState) {
         if (indexOfSelectedStuff == -1) {
             return false;
         }
         if (equipment.isEquiped()) {
             equipment.unequip();
-            equiped.remove(equipment);
+            equipped.remove(equipment);
             updatePlayerStats(equipment, gameState, false);
             gameState.getDescriptor().updateDescriptor(String.format("%s unequipped the %s.", gameState.getPlayer().getName(), equipment.getName()));
         } else  {
             equipment.equip();
             Equipment equipmentToUnequip = null;
-            for (Stuff s : equiped) {
+            for (Stuff s : equipped) {
                 Equipment e = (Equipment) s;
                 if (e.getType().equals(equipment.getType())) {
                     equipmentToUnequip = e;
@@ -129,24 +160,20 @@ public class AbstractInventory implements Inventory {
             }
             if (equipmentToUnequip != null) {
                 equipmentToUnequip.unequip();
-                equiped.remove(equipmentToUnequip);
+                equipped.remove(equipmentToUnequip);
                 updatePlayerStats(equipmentToUnequip, gameState, false);
             }
-            equiped.add(equipment);
+            equipped.add(equipment);
             updatePlayerStats(equipment, gameState, true);
             gameState.getDescriptor().updateDescriptor(String.format("%s equipped the %s.", gameState.getPlayer().getName(), equipment.getName()));
         }
         return true;
     }
 
-    public void openSellingShop(GameState gameState) {
-        //
-    }
-
-    public void openBuyingSHop(GameState gameState) {
-        //
-    }
-
+    /**
+     * Opens the inventory. The inventory is sorted by equipment and items.
+     * @param level the level of the player to set the price according to the player level.
+     */
     public void openInventory(int level) {
         GameRule gameRule = new GameRule();
         indexOfSelectedStuff = -1;
@@ -160,7 +187,7 @@ public class AbstractInventory implements Inventory {
                         sortedItem.get(index).addStuff();
                     } else {
                         Item item = (Item) stuff;
-                        stuff.setPrice(gameRule.getPotionPrice(level, item.getType()));
+                        stuff.setPrice(gameRule.getItemPrice(level, item.getType()));
                         sortedItem.add(new CoupleStuff(stuff));
                     }
                 }
@@ -177,11 +204,22 @@ public class AbstractInventory implements Inventory {
         }
     }
 
+    /**
+     * Closes the inventory. Clear the sortedItem list and the sortedEquipment list.
+     * The selected stuff is null as the index is -1.
+     * When the indexOfSelectedStuff is -1, provide to use an none existing equipment.
+     */
     public void closeInventory() {
         selectedStuff = null;
+        sortedEquipment.clear();
+        sortedItem.clear();
         indexOfSelectedStuff = -1;
     }
 
+    /**
+     * Switchs the display to the Items or Equipments.
+     * If the sortedList to switch isn't empty. Places the index of the selected stuff at the first element.
+     */
     public void switchCategory() {
         if (onEquipments) {
             onEquipments = false;
@@ -204,6 +242,11 @@ public class AbstractInventory implements Inventory {
         }
     }
 
+    /**
+     * Selects the next element in the inventory list. If the next element is the last one, places the index
+     * of the selected stuff at the first stuff in the list.
+     * @return a boolean if there was a next stuff. Provides unnecessary refresh.
+     */
     public boolean nextSelectedStuff() {
         int previous = indexOfSelectedStuff;
         if (indexOfSelectedStuff != -1) {
@@ -219,6 +262,10 @@ public class AbstractInventory implements Inventory {
         return indexOfSelectedStuff != previous;
     }
 
+    /**
+     * Selects the previous element in the inventory list.
+     * @return a boolean if there was a next stuff. Provides unnecessary refresh.
+     */
     public boolean previousSelectedStuff() {
         int previous = indexOfSelectedStuff;
         if (indexOfSelectedStuff != -1) {
@@ -234,10 +281,18 @@ public class AbstractInventory implements Inventory {
         return indexOfSelectedStuff != previous;
     }
 
+    /**
+     * Get the Inventory list.
+     * @return the List of Stuff.
+     */
     public List<Stuff> getInventory() {
         return inventory;
     }
 
+    /**
+     * Removes an item by type.
+     * @param type the type of the element to remove.
+     */
     public void removeItem(ItemType type){
         Stuff itemToDelete = null;
         for(Stuff stuff : inventory){
@@ -253,6 +308,11 @@ public class AbstractInventory implements Inventory {
         }
     }
 
+    /**
+     * Checks if the itemType is contained in the inventory.
+     * @param type the type of the item to check.
+     * @return a boolean if the item is contained or not.
+     */
     public boolean containsItem(ItemType type){
         for (Stuff stuff : inventory){
             if (stuff.isUsable()){
@@ -265,6 +325,11 @@ public class AbstractInventory implements Inventory {
         return false;
     }
 
+    /**
+     * Counts the number of the given type in the inventory.
+     * @param type the type of the element to count.
+     * @return the number the item's type.
+     */
     public int getItemNumber(ItemType type) {
         int acc = 0;
         for (Stuff stuff : inventory) {
@@ -278,6 +343,11 @@ public class AbstractInventory implements Inventory {
         return acc;
     }
 
+    /**
+     * Get the String inventory.
+     * @param gameState gameState used to check the floor and things like that.
+     * @return the String of the inventory.
+     */
     public String toStringInventory(GameState gameState) {
         StringBuilder sb = new StringBuilder();
         String head = "################################ | Q, D : Switch categories.\n" +
@@ -290,6 +360,11 @@ public class AbstractInventory implements Inventory {
         return sb.toString();
     }
 
+    /**
+     * Places the selected stuff at the right index. If the SortedList is empty, the index is -1.
+     * Provided to use a none existing equipment.
+     * @param first if the inventory is opened for the first time or not.
+     */
     protected void placeSelectedStuff(boolean first) {
         if (sortedEquipment.isEmpty() && sortedItem.isEmpty()) {
             selectedStuff = null;
@@ -335,6 +410,14 @@ public class AbstractInventory implements Inventory {
         }
     }
 
+    /**
+     * Counts the number of stuffs in the inventory. Stack the elements in a CoupleStuff.
+     * Avoids to display 99 Potions line by line in the inventory.
+     *
+     * @param stuff the stuff to stack.
+     * @param coupleStuffList the list of the items or the Equipment.
+     * @return the number of the the given stuff.
+     */
     protected static int containsStuff(Stuff stuff, List<CoupleStuff> coupleStuffList) {
         for (int i = 0; i < coupleStuffList.size(); i++) {
             if (coupleStuffList.get(i).getStuff().isEquipable() && stuff.isEquipable()) {
@@ -355,6 +438,10 @@ public class AbstractInventory implements Inventory {
         return -1;
     }
 
+    /**
+     * Sets the string of the inventory.
+     * @return the string of the inventory.
+     */
     protected String toStringInventoryList() {
         int MAX_HEIGHT = 6;
         StringBuilder sb = new StringBuilder();
@@ -406,6 +493,11 @@ public class AbstractInventory implements Inventory {
         return sb.toString();
     }
 
+    /**
+     * Sets the string of the player stats.
+     * @param gameState used to count some elements as the floor.
+     * @return the string of the player stats.
+     */
     protected String toStringStats(GameState gameState) {
         Player player = gameState.getPlayer();
         PlayerStats stats = player.getPlayerStats();
@@ -479,8 +571,19 @@ public class AbstractInventory implements Inventory {
                 KIL + " ".repeat(37 - KIL.length()) + "|\n";
     }
 
+    /**
+     * Checks the actual wanted Bonus.
+     *
+     * @param hp boolean if the type is wanted
+     * @param mp boolean if the type is wanted
+     * @param dmg boolean if the type is wanted
+     * @param armor boolean if the type is wanted
+     * @param agi boolean if the type is wanted
+     * @param equipment the equipment to count the bonus.
+     * @return the actual Bonus.
+     */
     private int containsEquipedType(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean agi, Equipment equipment) {
-        for (Stuff stuff : equiped) {
+        for (Stuff stuff : equipped) {
             Equipment e = (Equipment) stuff;
             if (e.getType().equals(equipment.getType())) {
                 if (hp) {
@@ -499,6 +602,90 @@ public class AbstractInventory implements Inventory {
         return -1;
     }
 
+    /**
+     * Counts the bonus to add with the selected stuff.
+     * @param hp boolean if the type is wanted
+     * @param mp boolean if the type is wanted
+     * @param dmg boolean if the type is wanted
+     * @param armor boolean if the type is wanted
+     * @param agi boolean if the type is wanted
+     * @param stats use to check the player actual stats.
+     * @return the Bonus given by the selected stuff according to the actual bonuses.
+     */
+    private int bonusEquipment(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean agi, PlayerStats stats) {
+        if (selectedStuff == null) {
+            return Integer.MAX_VALUE;
+        }
+        if (selectedStuff.isEquipable()) {
+            Equipment equipment = (Equipment) selectedStuff;
+            int natural = 0;
+            int total = 0;
+            int bonus = -1;
+
+            if (hp && equipment.getBonusLife() != 0) {
+                natural = stats.getLifePointNatural();
+                total = stats.getLifePointTotal();
+                bonus = equipment.getBonusLife();
+            }
+            else if (mp && equipment.getBonusMana() != 0) {
+                natural = stats.getManaPointNatural();
+                total = stats.getManaPointTotal();
+                bonus = equipment.getBonusMana();
+            }
+            else if (dmg && equipment.getBonusDamage() != 0) {
+                natural = stats.getDamageNatural();
+                total = stats.getDamageTotal();
+                bonus = equipment.getBonusDamage();
+            }
+            else if (armor && equipment.getBonusArmor() != 0) {
+                natural = stats.getArmorNatural();
+                total = stats.getArmorTotal();
+                bonus = equipment.getBonusArmor();
+            }
+            else if (agi && equipment.getBonusAgility() != 0) {
+                natural = stats.getAgilityNatural();
+                total = stats.getAgilityTotal();
+                bonus = equipment.getBonusAgility();
+            }
+            if (bonus == -1) {
+                return 0;
+            }
+            else {
+                if (equipment.isEquiped()) {
+                    return -bonus;
+                }
+                else if (!equipment.isEquiped()) {
+                    int current_bonus = containsEquipedType(hp, mp, dmg, armor, agi, equipment);
+
+                    if (natural + bonus == total) {
+                        return 0;
+                    }
+                    else if (current_bonus == -1) {
+                        return bonus;
+                    }
+                    else {
+                        int dif = bonus - current_bonus;
+                        if (dif > 0) {
+                            return dif;
+                        }
+                        else if (dif < 0) {
+                            return dif;
+                        }
+                        else {
+                            return dif;
+                        }
+                    }
+                }
+            }
+        }
+        return Integer.MAX_VALUE;
+    }
+
+    /**
+     * The line of the stuff.
+     * @param coupleStuff the stuff to display.
+     * @return the string of the line of the stuff, contains the description, the rarity, the price etc...
+     */
     private String stuffLineToString(CoupleStuff coupleStuff) {
         StringBuilder sb = new StringBuilder();
         sb.append("|");
@@ -582,75 +769,12 @@ public class AbstractInventory implements Inventory {
         return sb.toString();
     }
 
-    private int bonusEquipment(Boolean hp, Boolean mp, Boolean dmg, Boolean armor, Boolean agi, PlayerStats stats) {
-        if (selectedStuff == null) {
-            return Integer.MAX_VALUE;
-        }
-        if (selectedStuff.isEquipable()) {
-            Equipment equipment = (Equipment) selectedStuff;
-            int natural = 0;
-            int total = 0;
-            int bonus = -1;
-
-            if (hp && equipment.getBonusLife() != 0) {
-                natural = stats.getLifePointNatural();
-                total = stats.getLifePointTotal();
-                bonus = equipment.getBonusLife();
-            }
-            else if (mp && equipment.getBonusMana() != 0) {
-                natural = stats.getManaPointNatural();
-                total = stats.getManaPointTotal();
-                bonus = equipment.getBonusMana();
-            }
-            else if (dmg && equipment.getBonusDamage() != 0) {
-                natural = stats.getDamageNatural();
-                total = stats.getDamageTotal();
-                bonus = equipment.getBonusDamage();
-            }
-            else if (armor && equipment.getBonusArmor() != 0) {
-                natural = stats.getArmorNatural();
-                total = stats.getArmorTotal();
-                bonus = equipment.getBonusArmor();
-            }
-            else if (agi && equipment.getBonusAgility() != 0) {
-                natural = stats.getAgilityNatural();
-                total = stats.getAgilityTotal();
-                bonus = equipment.getBonusAgility();
-            }
-            if (bonus == -1) {
-                return 0;
-            }
-            else {
-                if (equipment.isEquiped()) {
-                    return -bonus;
-                }
-                else if (!equipment.isEquiped()) {
-                    int current_bonus = containsEquipedType(hp, mp, dmg, armor, agi, equipment);
-
-                    if (natural + bonus == total) {
-                        return 0;
-                    }
-                    else if (current_bonus == -1) {
-                        return bonus;
-                    }
-                    else {
-                        int dif = bonus - current_bonus;
-                        if (dif > 0) {
-                            return dif;
-                        }
-                        else if (dif < 0) {
-                            return dif;
-                        }
-                        else {
-                            return dif;
-                        }
-                    }
-                }
-            }
-        }
-        return Integer.MAX_VALUE;
-    }
-
+    /**
+     * Visits the playerStats to add or remove the bonus, depending on the boolean equip.
+     * @param equipment the equipment to get the bonuses.
+     * @param gameState to get the player.
+     * @param equip if the equipment is equipped or un-equipped.
+     */
     private void updatePlayerStats(Equipment equipment, GameState gameState, boolean equip) {
         Player player = gameState.getPlayer();
         int equipModifier;
@@ -677,6 +801,11 @@ public class AbstractInventory implements Inventory {
         }
     }
 
+    /**
+     * Colors the bonus according to the bonus. Grey for 0, Red for negative and Green for positive bonus.
+     * @param bonus the bonus to color.
+     * @return the string with the colored bonus.
+     */
     private String colorBonus(int bonus) {
         if (bonus == Integer.MAX_VALUE) {
             return "";
@@ -688,6 +817,11 @@ public class AbstractInventory implements Inventory {
         else return colorize(" (+"+bonus+")", Colors.GREEN.textApply());
     }
 
+    /**
+     * Counts the length of the bonus without the coloring characters.
+     * @param bonus the bonus to count.
+     * @return the length.
+     */
     private int bonusLength(int bonus) {
         if (bonus == Integer.MAX_VALUE) {
             return 0;
