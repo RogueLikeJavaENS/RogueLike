@@ -94,9 +94,12 @@ public abstract class AbstractStats{
     }
 
     public boolean consumeMp(int cost) {
-        cost = Check.checkPositivity(cost);
-        manaPointActual = Check.checkPositivity(manaPointActual - cost);
-        return manaPointActual >= 0;
+       //cost = Check.checkPositivity(cost);
+        if (cost <= manaPointActual){
+            manaPointActual = manaPointActual - cost;
+            return true;
+        }
+        return false;
     }
 
     public void recoverMp(int recover) {
