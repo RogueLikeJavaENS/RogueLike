@@ -124,9 +124,16 @@ public class PlayerStats extends AbstractStats {
         return null;
     }
 
+    /**
+     * method allowing the player to remember how much monster did he kill.
+     */
     public void incrementeKillCounter() {
         this.killCounter += 1;
     }
+
+    /**
+     * method allowing the reset of the timer on the temporary bonuses.
+     */
     public void resetTurnPassed() {
         turnPassed = -1;
     }

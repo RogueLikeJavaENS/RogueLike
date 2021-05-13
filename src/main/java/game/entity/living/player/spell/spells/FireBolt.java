@@ -8,9 +8,14 @@ import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-public class FireStroke extends AbstractSpell {
-    public FireStroke() {
-        super(colorize("Fire Stroke", Attribute.BOLD(), Colors.RED.textApply()),
+/**
+ * this class implement the Firebolt Spell by extending AbstractSpell
+ * its a 5 range attack stopping at the first mob encountered, and do a bit more damage than
+ * for example a Fireball.
+ */
+public class FireBolt extends AbstractSpell {
+    public FireBolt() {
+        super(colorize("Fire Bolt", Attribute.BOLD(), Colors.RED.textApply()),
                 1.5,
                 60,
                 new Range(),

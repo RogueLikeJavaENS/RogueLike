@@ -16,6 +16,10 @@ import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * this class implement the Teleport by extending AbstractSpell
+ * it's a movement spell with a good range (4) that avoid traps.
+ */
 public class Teleport extends AbstractSpell {
 
     public Teleport() {
@@ -47,6 +51,8 @@ public class Teleport extends AbstractSpell {
                 }));
     }
 
+    /*change the position of the player without him moving on the map, take a Gamestate to know the state of the game,
+    and the new position we want to put him at. */
     private static void teleportPlayer(GameState gameState, Position position) {
         GridMap gridMap = gameState.getGridMap();
         Player player = gameState.getPlayer();

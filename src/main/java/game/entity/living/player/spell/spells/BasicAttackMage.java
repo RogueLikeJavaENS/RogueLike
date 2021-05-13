@@ -9,6 +9,10 @@ import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * this class implement the basicAttackMage by extending AbstractSpell
+ * its a basic attack with a medium range (2) and bit more damage.
+ */
 public class BasicAttackMage extends AbstractSpell {
     public BasicAttackMage() {
         super(colorize("Attack", Attribute.BOLD()),

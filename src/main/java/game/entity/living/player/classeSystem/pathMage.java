@@ -13,7 +13,7 @@ public enum pathMage {
     REWARD_2("Skill", 2, "FireBall"),
     REWARD_3("Skill", 3, "Teleport"),
     REWARD_4("Skill", 4, "Heal"),
-    REWARD_5("Skill", 5, "FireStroke"),
+    REWARD_5("Skill", 5, "FireBolt"),
     REWARD_6("Skill", 6, "HellWave");
 
     private String info;
