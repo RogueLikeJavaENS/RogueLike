@@ -10,6 +10,9 @@ import game.stuff.item.ItemType;
 import utils.Colors;
 import utils.Position;
 
+/**
+ * Stairs are the only way to access a new floor in the Dungeon.
+ */
 public class Stair extends ObjectEntity {
 
     public Stair(Position position) {
@@ -22,6 +25,11 @@ public class Stair extends ObjectEntity {
         takeStair(gameState);
     }
 
+    /**
+     * Creates a whole new floor and puts the Player inside.
+     *
+     * @param gameState GameState needed to create the new floor.
+     */
     public void takeStair(GameState gameState) {
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, gameState.getDungeon().getFloor()+1, gameState.getPlayer().getClasse());

@@ -11,6 +11,9 @@ import utils.Position;
 import java.util.List;
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * The Ranger sets a Trap in front of him if he can, so the monsters stepping on it will suffer damages.
+ */
 public class Trap extends AbstractSpell {
     public Trap() {
         super(colorize("Trap", Attribute.BOLD(), Colors.GREEN.textApply()),

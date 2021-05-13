@@ -9,6 +9,9 @@ import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * The Ranger shoots several powerful arrows in a large zone if front of him.
+ */
 public class Multishot extends AbstractSpell {
 
     public Multishot() {

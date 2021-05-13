@@ -16,21 +16,32 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Contains different methods used for the strategies.
+ */
 public final class StrategyUtils {
     private StrategyUtils(){}
 
+    /**
+     * Returns the distance bewteen a Monster and the Player.
+     *
+     * @param monster the Monster
+     * @param player the Player
+     * @return the distance between the two parameters.
+     */
     public static double getDistance(Monster monster, Player player){
         Position monsterPos = monster.getPosition();
         Position playerPos = player.getPosition();
         return getDistance(monsterPos, playerPos);
     }
 
-    public static double getDistance(Boss boss, Player player){
-        Position bossPos = boss.getPosition();
-        Position playerPos = player.getPosition();
-        return getDistance(bossPos, playerPos);
-    }
-
+    /**
+     * Returns wether a boss and the player are next to each other on the grid.
+     *
+     * @param boss the Boss
+     * @param player the Player
+     * @return true if the two parameters are next to each other, false otherwise.
+     */
     public static boolean isNextToBoss(Boss boss, Player player) {
         Position bossPos = boss.getPosition();
         Position playerPos = player.getPosition();
@@ -47,12 +58,26 @@ public final class StrategyUtils {
         return false;
     }
 
+    /**
+     * Returns the distance between two given positions, using Math.hypot().
+     *
+     * @param firstPos the first position
+     * @param secondPos the second position.
+     * @return the distance between the two parameters.
+     */
     public static double getDistance(Position firstPos, Position secondPos){
         int dx = firstPos.getAbs() - secondPos.getAbs();
         int dy = firstPos.getOrd() - secondPos.getOrd();
         return Math.hypot(dx,dy);
     }
 
+    /**
+     * Defines where a fleeing will go, and updates its position.
+     *
+     * @param monster the Monster that is running away
+     * @param player the Player from which the Monster is running
+     * @param gridMap the GridMap which contains the needed information to decide where to go
+     */
     public static void moveAwayFromPlayer(Monster monster, Player player, GridMap gridMap){
         Position monsterPos = monster.getPosition();
         Position playerPos = player.getPosition();
@@ -105,6 +130,15 @@ public final class StrategyUtils {
         monster.setPosition(monsterPos);
     }
 
+    /**
+     * Decides where a Monster that is approaching a player must go next.
+     * It calculates the shortest path if it exists using the A* algorithm, going from the Monster's position to the Player's.
+     * If a path exists, updates the Monster's position to the first Node of the deduced path. If not, the monster will not move.
+     *
+     * @param monster the Monster from which the algorithm will start
+     * @param player the Player to which the algorithm will try to go
+     * @param gridMap the GridMap containing the information needed for the different calculations.
+     */
     public static void aStarAlgorithmMonster(Monster monster, Player player, GridMap gridMap) {
         Position monsterPos = monster.getPosition();
         Position playerPos = player.getPosition();
@@ -174,6 +208,12 @@ public final class StrategyUtils {
         }
     }
 
+    /**
+     * Picks a random position among those that are available around a Monster, and update the Monster's position.
+     *
+     * @param monster the Monster
+     * @param gridMap the GridMap containing the information needed for the different calculations.
+     */
     public static void moveRandomly(Monster monster, GridMap gridMap){
         Position monsterPos = monster.getPosition();
         Random gen = new Random();
@@ -200,6 +240,14 @@ public final class StrategyUtils {
         }
     }
 
+    /**
+     * Determines which Directions are available from a given Position.
+     * That means if the Position above the given one on the GridMap is obstructed, the NORTH Direction will not be available.
+     *
+     * @param position the Position from which the Directions are checked.
+     * @param gridMap the GridMap containing the information needed for the different calculations.
+     * @return the List of available Directions from the given Position.
+     */
     public static List<Direction> foundAccessibleDirection(Position position,GridMap gridMap){
         List<Direction> accessibleDirection = new ArrayList<>();
         List<Entity> entityList;
@@ -236,6 +284,13 @@ public final class StrategyUtils {
         return accessibleDirection;
     }
 
+    /**
+     * Opposite to the foundAccessibleDirection method. This one determines Directions that are NOT available from a given Position.
+     *
+     * @param position the Position from which the Directions are checked.
+     * @param gridMap the GridMap containing the information needed for the different calculations.
+     * @return the List of unavailable Directions from the given Position.
+     */
     public static List<Direction> foundInaccessibleDirection(Position position,GridMap gridMap){
         List<Direction> inaccessibleDirection = new ArrayList<>();
         inaccessibleDirection.add(Direction.NORTH);
@@ -276,24 +331,13 @@ public final class StrategyUtils {
         return inaccessibleDirection;
     }
 
-    private static boolean isNextTo(Position from, Position to){
-        if (from.getAbs() == to.getAbs()){
-            return Math.abs(from.getOrd() - to.getOrd()) == 1;
-        }
-        else if (from.getOrd() == to.getOrd()){
-            return Math.abs(from.getAbs() - to.getAbs()) == 1;
-        }
-        return false;
-    }
-
-    private static int absDistance(Position pos1, Position pos2){
-        return Math.abs(pos1.getAbs()-pos2.getAbs());
-    }
-
-    private static int ordDistance(Position pos1, Position pos2){
-        return Math.abs(pos1.getOrd()-pos2.getOrd());
-    }
-
+    /**
+     * Used for the A* algorithm.
+     * Determines which Node is the most relevant to pick to continue the algorithm.
+     *
+     * @param list List of Nodes from which the most relevant Node will be picked
+     * @return the most relevant Node from the given List.
+     */
     private static Node getMostRelevantNode(List<Node> list) {
         Node bestNode = list.get(0);
         for (Node currentNode : list) {
@@ -305,7 +349,8 @@ public final class StrategyUtils {
     }
 
     /**
-     * Checks if the given list contains a node with the same position as the given one
+     * Checks if the given list contains a Node with the same position as the given one.
+     *
      * @param nodeList list of Nodes to check
      * @param position position we're looking at
      * @return the index of the Node in the list if there's one, -1 otherwise

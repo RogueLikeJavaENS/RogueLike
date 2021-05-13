@@ -7,8 +7,10 @@ import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * A simple hole in the map. Watch your step!
+ */
 public class Hole extends ObjectEntity {
-
 
     public Hole(Position position) {
         super(position, Colors.BLACK, true, false);

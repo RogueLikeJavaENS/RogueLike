@@ -16,6 +16,9 @@ import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * This class contains everything that is common to every spell.
+ */
 public abstract class AbstractSpell implements Spell {
     protected String name;
     protected int damage;
@@ -103,7 +106,13 @@ public abstract class AbstractSpell implements Spell {
         }
     }
 
-
+    /**
+     * Execute the Spell's particular effect if it has one, and return wether it worked or not.
+     * If the Spell doesn't have any particular effect, it always returns true.
+     *
+     * @param gameState GameState needed to correctly apply the effect to the game
+     * @return True if the effect worked or if the spell doesn't have any special effect, false otherwise.
+     */
     public boolean doSpecialEffect(GameState gameState) {
         if (effect != null) {
             return effect.doEffect(gameState);
@@ -115,6 +124,11 @@ public abstract class AbstractSpell implements Spell {
         return false;
     }
 
+    /**
+     * Returns wether the Spell can deal damamges or not.
+     *
+     * @return True if the Spell the Spell can deal damamges, false otherwise.
+     */
     public boolean isDamaging() {
         return damaging;
     }
@@ -145,6 +159,7 @@ public abstract class AbstractSpell implements Spell {
         setBottomRightCorner(entityPos, direction);
         setTopLeftCorner(entityPos, direction);
     }
+
     public String getName(){
         return name;
     }
@@ -154,6 +169,12 @@ public abstract class AbstractSpell implements Spell {
         return false;
     }
 
+    /**
+     * Sets the top left corner of the range of the Spell.
+     *
+     * @param entityPos Position of the entity, used as the referential to place the top left corner.
+     * @param direction Direction of the entity to place the top left corner accordingly.
+     */
     public void setTopLeftCorner(Position entityPos, Direction direction) {
         int avalaibleRangeCopy = avalaibleRange;
         switch (direction) {
@@ -180,6 +201,12 @@ public abstract class AbstractSpell implements Spell {
         }
     }
 
+    /**
+     * Sets the bottom right corner of the range of the Spell.
+     *
+     * @param entityPos Position of the entity, used as the referential to place the bottom right corner.
+     * @param direction Direction of the entity to place the bottom right corner accordingly.
+     */
     public void setBottomRightCorner(Position entityPos, Direction direction) {
         switch (direction) {
             case EAST:

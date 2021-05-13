@@ -8,14 +8,15 @@ import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * Spikes are a small trap dealing damage to the Player if they step/stay on it.
+ */
 public class Spike extends ObjectEntity {
 
     public Spike(Position position) {
         super(position, Colors.DARK_GREY, true, false);
         setSprites(colorize("^^^",Colors.GREY.textApply()),colorize("^^^",Colors.GREY.textApply()));
     }
-
-
 
     @Override
     public void doAction(GameState gameState) {

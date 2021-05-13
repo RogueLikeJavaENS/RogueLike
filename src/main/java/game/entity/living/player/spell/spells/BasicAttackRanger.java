@@ -8,6 +8,10 @@ import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * Basic Ranger's attack. The Ranger shoots a simple arrow which hits the first ennemy it meets.
+ * It has a long Range but lower damages.
+ */
 public class BasicAttackRanger extends AbstractSpell {
     public BasicAttackRanger() {
         super(colorize("Attack", Attribute.BOLD()),

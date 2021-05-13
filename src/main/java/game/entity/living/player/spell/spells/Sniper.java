@@ -9,6 +9,9 @@ import utils.Position;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * The Ranger shoots a powerful arrow with an unlimited Range. The arrow is so strong nothing can stop it.
+ */
 public class Sniper extends AbstractSpell {
     public Sniper() {
         super(colorize("Sniper", Attribute.BOLD(), Colors.MAGENTA.textApply()),

@@ -8,6 +8,9 @@ import utils.Colors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * The Ranger shoots an inflamed arrow with a long Range and greater damages. It hits the first ennemy it meets.
+ */
 public class FireArrow extends AbstractSpell {
     public FireArrow() {
         super(colorize("Fire Arrow", Attribute.BOLD(), Colors.RED.textApply()),
@@ -18,10 +21,5 @@ public class FireArrow extends AbstractSpell {
                 true,
                 5,
                 null);
-    }
-
-    @Override
-    public boolean isZoning() {
-        return false;
     }
 }

@@ -14,6 +14,9 @@ import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
+/**
+ * The Ranger dashes 3 cases further (or less if there is something in the way).
+ */
 public class Dash extends AbstractSpell {
     public Dash() {
         super(colorize("Dash",Attribute.BOLD() ,Colors.GREEN.textApply()),

@@ -16,6 +16,11 @@ public interface Monster extends Entity {
     Position getPosition();
     boolean isAgroPlayer();
 
+    /**
+     * Sets the position of the Monster.
+     *
+     * @param position the Monster's new Position
+     */
     void setPosition(Position position);
     void setAgroPlayer(boolean agroPlayer);
     boolean isBoss();
