@@ -5,7 +5,6 @@ import com.diogonunes.jcolor.Attribute;
 import display.RendererUI;
 import utils.Colors;
 import utils.ScanPanel;
-import utils.State;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -82,14 +81,12 @@ public class StartMenu {
         System.out.println(title);
         System.out.println("\nSo, whats you're name hero ? (max 14 characters)\n");
         chooseName();
-        if (!debug()) {
-            initMenu(true);
-            try {
-                loopMenu();
-            }
-            catch(Exception e) {
-                e.printStackTrace();
-            }
+        initMenu(true);
+        try {
+            loopMenu();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -269,27 +266,5 @@ public class StartMenu {
 
     public InGameClasses getClasse(){
         return classe;
-    }
-
-
-    private boolean debug() {
-        /* DEBUG */
-        switch (name) {
-            case "W":
-                this.name = "Warrior";
-                this.classe = InGameClasses.WARRIOR;
-                classSelected = true;
-                return true;
-            case "R":
-                this.name = "Ranger";
-                this.classe = InGameClasses.RANGER;
-                return true;
-            case "M":
-                this.name = "Mage";
-                this.classe = InGameClasses.MAGE;
-                return true;
-            default:
-                return false;
-        }
     }
 }

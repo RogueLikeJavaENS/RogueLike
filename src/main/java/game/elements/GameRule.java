@@ -81,6 +81,26 @@ public class GameRule {
      * - 20% XP
      * - 5% map of the floor
      */
+    public ItemType getPotionType(){
+        int nb = GEN.nextInt(100);
+        if (nb < 40){
+            return ItemType.HEALTH_POTION;
+        }
+        else if(nb < 80){
+            return ItemType.ELIXIR;
+        }
+        else {
+            return ItemType.XP_BOTTLE;
+        }
+    }
+
+    /**
+     * Type of Potion
+     * - 40% health
+     * - 40% mana
+     * - 20% XP
+     * - 5% map of the floor
+     */
     public ItemType getItemType(){
         int nb = GEN.nextInt(100);
         if (nb < 40){

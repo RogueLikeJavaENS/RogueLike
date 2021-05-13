@@ -209,7 +209,7 @@ public class RoomFactory {
         PotionEntityFactory potionFactory = new PotionEntityFactory();
         for (int i = 0; i < numberOfPotion; i++) {
             if (currentAvailablePositions.size() != 0) {
-                room.addEntity((Entity) potionFactory.getPotionEntity(gameRule.getItemType(), currentAvailablePositions.get(0)));
+                room.addEntity((Entity) potionFactory.getPotionEntity(gameRule.getPotionType(), currentAvailablePositions.get(0)));
                 currentAvailablePositions.remove(0);
             }
         }
