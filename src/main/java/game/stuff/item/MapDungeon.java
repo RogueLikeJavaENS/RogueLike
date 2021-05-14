@@ -18,6 +18,7 @@ public class MapDungeon extends AbstractItem{
      */
     public MapDungeon() {
         super("Map of the Floor", ItemType.DUNGEON_MAP);
+        setDescription("Discover all the floor in the map. One Use.");
     }
 
     /**

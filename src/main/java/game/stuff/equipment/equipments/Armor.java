@@ -18,8 +18,5 @@ public class Armor extends AbstractEquipment {
      */
     public Armor(int level, EquipmentRarity rarity) {
         super(level, rarity, EquipmentType.ARMOR);
-        GameRule gameRule = new GameRule();
-        super.setBonusArmor(gameRule.getBonusArmor(level+rarity.ordinal())); // Set the bonus of the armor according to gameRule
-        super.setName("Armor");
     }
 }

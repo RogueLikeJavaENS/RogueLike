@@ -131,7 +131,7 @@ public class MiniMap {
     private String buildRoom(Room room, int line) {
         String strLine = "";
 
-        if (room == null || room.getWasVisited()){
+        if (room == null || !room.getWasVisited()){
             strLine = "       ";
         }
         else {

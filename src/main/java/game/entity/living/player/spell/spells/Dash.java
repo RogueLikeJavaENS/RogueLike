@@ -2,8 +2,10 @@ package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
 import display.GridMap;
+import game.elements.GameRule;
 import game.entity.Entity;
 import game.entity.living.player.Player;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import utils.Colors;
@@ -20,11 +22,8 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class Dash extends AbstractSpell {
     public Dash() {
         super(colorize("Dash",Attribute.BOLD() ,Colors.GREEN.textApply()),
-                0,
-                0,
-                new Range(),
-                10,
                 false,
+                3,
                 3,
                 (gameState -> {
                     GridMap gridMap = gameState.getGridMap();
@@ -61,7 +60,9 @@ public class Dash extends AbstractSpell {
                                     " for "+
                                     colorize(String.format("%d MP.", 20), Attribute.BOLD(), Colors.BLUE.textApply()), player.getName()));
                     return true;
-                }));
+                })
+        );
+        GameRule.setSpellStats(this, InGameClasses.RANGER);
     }
 
     @Override

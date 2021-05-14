@@ -1,7 +1,9 @@
 package game.entity.living.npc.monster.monsters;
 
+import game.elements.GameRule;
 import game.entity.living.npc.monster.AbstractMonster;
 import game.entity.living.npc.monster.MonsterStats;
+import game.entity.living.npc.monster.MonsterType;
 import game.entity.living.npc.monster.monsterStrategy.Strategy;
 import utils.Colors;
 import utils.Position;
@@ -12,10 +14,6 @@ import utils.Position;
  * @author luca
  */
 public class Zombie extends AbstractMonster {
-    private final static int basicHP = 40;
-    private final static int basicMP = 5;
-    private final static int hpModifier = 4;
-    private final static int mpModifier = 1;
 
     /**
      * Create a new Zombie
@@ -27,15 +25,8 @@ public class Zombie extends AbstractMonster {
      */
     public Zombie(Position position, String name, int level, Strategy strategy) {
         super(position, name, Colors.GREEN, strategy,
-                new MonsterStats(basicHP + (hpModifier * level),
-                        basicMP + (mpModifier * level),
-                        1,
-                        1 + level,
-                        2 + level,
-                        level,
-                        level,
-                        level,
-                        5 * level));
+                new MonsterStats(1,1,1,1,1,1,1,level, 1));
+        GameRule.setMonstersStats(this, MonsterType.ZOMBIE);
         setSprites("_#_", "§ §", Colors.GREEN);
         setBasicSprites("_#_", "§ §");
     }

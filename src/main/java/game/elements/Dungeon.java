@@ -23,7 +23,6 @@ import java.util.Objects;
  *
  * @author Antoine
  */
-
 public class Dungeon {
     private final int maxRoomHeight;
     private final int maxRoomWidth;

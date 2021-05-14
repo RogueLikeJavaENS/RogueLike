@@ -18,8 +18,5 @@ public class Helmet extends AbstractEquipment {
      */
     public Helmet(int level, EquipmentRarity rarity) {
         super(level, rarity, EquipmentType.HELMET);
-        GameRule gameRule = new GameRule();
-        super.setBonusArmor(gameRule.getBonusArmor(level+rarity.ordinal()));            // Set the bonus of the helmet according to gameRule
-        super.setName("Helmet");
     }
 }

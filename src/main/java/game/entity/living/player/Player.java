@@ -1,10 +1,8 @@
 package game.entity.living.player;
 
-import game.elements.GameState;
 import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.inventory.PlayerInventory;
 import game.entity.living.LivingEntity;
-import game.stuff.item.keys.GoldKey;
 import game.stuff.item.potions.XpBottle;
 import utils.Colors;
 import utils.Direction;

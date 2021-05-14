@@ -1,9 +1,11 @@
 package game.entity.living.npc.monster.monsters;
 
+import game.elements.GameRule;
 import game.elements.GameState;
 import game.entity.living.npc.monster.AbstractMonster;
 import game.entity.living.npc.monster.Monster;
 import game.entity.living.npc.monster.MonsterStats;
+import game.entity.living.npc.monster.MonsterType;
 import game.entity.living.npc.monster.monsterStrategy.Strategy;
 import utils.Colors;
 import utils.Position;
@@ -14,11 +16,6 @@ import utils.Position;
  * @author luca
  */
 public class Bat extends AbstractMonster implements Monster {
-    private final static int basicHP = 20;
-    private final static int basicMP = 10;
-    private final static int hpModifier = 2;
-    private final static int mpModifier = 1;
-
     /**
      * Create a new Bat
      *
@@ -29,15 +26,8 @@ public class Bat extends AbstractMonster implements Monster {
      */
     public Bat(Position position, String name, int level, Strategy strategy) {
         super(position, name, Colors.BROWN, strategy,
-                new MonsterStats(basicHP+(hpModifier*level),
-                        basicMP+(mpModifier*level),
-                        1,
-                        3+level,
-                        1+(level/2),
-                        level,
-                        level,
-                        level,
-                        5*level));
+                new MonsterStats(1,1,1,1,1,1,1,level, 1));
+        GameRule.setMonstersStats(this, MonsterType.BAT);
         setSprites("\\o/", "   ", Colors.BROWN);
         setBasicSprites("\\o/", "   ");
     }

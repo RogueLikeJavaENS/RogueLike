@@ -71,6 +71,11 @@ public abstract class AbstractStats{
         return damage;
     }
 
+    public int sufferDamageIgnoringArmor(int damage) {
+        this.lifePointActual = Check.checkPositivity(getLifePointActual() - damage);
+        return damage;
+    }
+
     public boolean hasAvoided() {
         Random gen = new Random();
         int hitRoll = gen.nextInt(100);
@@ -172,4 +177,26 @@ public abstract class AbstractStats{
     public int getLifePointTotal() { return lifePointTotal; }
     public int getLifePointNatural() { return lifePointNatural; }
     public int getLifePointActual() { return lifePointActual; }
+
+    public void setLifePoint(int lifePoint) {
+        lifePointNatural = lifePoint;
+        lifePointActual = lifePoint;
+        lifePointTotal = lifePoint;
+    }
+
+    public void setAgility(int agility) {
+        agilityNatural = agility;
+        agilityTotal = agility;
+    }
+    public void setDamage(int damage) {
+        damageNatural = damage;
+        damageTotal = damage;
+    }
+    public void setArmor(int armor) {
+        armorNatural = armor;
+        armorTotal = armor;
+    }
+    public void setMoney(int money) {
+        moneyCount = money;
+    }
 }

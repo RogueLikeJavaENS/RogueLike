@@ -1,6 +1,8 @@
 package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
+import game.elements.GameRule;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import utils.Colors;
@@ -15,14 +17,12 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class Sniper extends AbstractSpell {
     public Sniper() {
         super(colorize("Sniper", Attribute.BOLD(), Colors.MAGENTA.textApply()),
-                1.0,
-                12,
-                new Range(),
-                25,
                 true,
                 20,
+                5,
                 null
         );
+        GameRule.setSpellStats(this, InGameClasses.RANGER);
     }
 
     @Override

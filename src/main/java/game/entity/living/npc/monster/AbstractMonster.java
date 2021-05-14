@@ -82,7 +82,7 @@ public abstract class AbstractMonster extends NPC implements Monster {
      * @author Raphael
      */
     public void doActionOnDeath(GameState gameState) {
-        Grave grave = new Grave(this, gameState.getGameRule(), gameState);
+        Grave grave = new Grave(this, gameState);
         gameState.getGridMap().update(grave, true);
     }
 
@@ -120,4 +120,6 @@ public abstract class AbstractMonster extends NPC implements Monster {
     public boolean isBossPart() {
         return false;
     }
+
+
 }

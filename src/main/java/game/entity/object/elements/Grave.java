@@ -30,10 +30,9 @@ public class Grave extends ObjectEntity {
      * Creates the Grave and initializes the items the Player will get when interacting with it.
      *
      * @param monster Monster from which the Grave is created.
-     * @param gameRule GameRule used to decide which Items the Grave will contain.
      * @param gameState GameState used to decide the level of the Items.
      */
-    public Grave(Monster monster, GameRule gameRule, GameState gameState) {
+    public Grave(Monster monster, GameState gameState) {
         super(monster.getPosition(), Colors.LIGHT_GREY, false, false);
         setSprites("/+\\", "|_|", Colors.LIGHT_GREY);
         droppedItems = new ArrayList<>();
@@ -42,17 +41,17 @@ public class Grave extends ObjectEntity {
         ItemFactory itemFactory = new ItemFactory();
         EquipmentFactory equipmentFactory = new EquipmentFactory(gameState.getPlayer().getClasse());
 
-        for (int i = 0; i < gameRule.getNumberOfItemsOnCorpse(); i++) {
-            droppedItems.add(itemFactory.getItem(gameRule.getItemType(), level));
+        for (int i = 0; i < GameRule.getNumberOfItemsOnCorpse(); i++) {
+            droppedItems.add(itemFactory.getItem(GameRule.getItemType(), level));
         }
         if (monster.isBoss()) {
-            for (int i = 0; i < gameRule.getNumberOfEquipmentsOnBossCorpse(); i++) {
-                droppedItems.add(equipmentFactory.getEquipment(level, gameRule.getEquipmentTypeInMerchantShop(), gameRule.getRarityOnBossCorpse()));
+            for (int i = 0; i < GameRule.getNumberOfEquipmentsOnBossCorpse(); i++) {
+                droppedItems.add(equipmentFactory.getEquipment(level, GameRule.getEquipmentTypeInMerchantShop(), GameRule.getRarityOnBossCorpse()));
             }
             droppedItems.add(itemFactory.getItem(ItemType.FLOORKEY, level));
         } else {
-            for (int i = 0; i < gameRule.getNumberOfEquipmentsOnCorpse(); i++) {
-                droppedItems.add(equipmentFactory.getEquipment(level, gameRule.getEquipmentTypeInMerchantShop(), gameRule.getEquipmentRarityDroped(true)));
+            for (int i = 0; i < GameRule.getNumberOfEquipmentsOnCorpse(); i++) {
+                droppedItems.add(equipmentFactory.getEquipment(level, GameRule.getEquipmentTypeInMerchantShop(), GameRule.getEquipmentRarityDroped(true)));
             }
         }
         droppedMoney = monster.getMonsterStats().getMoneyCount();

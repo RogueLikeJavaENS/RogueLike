@@ -17,8 +17,5 @@ public class Pants extends AbstractEquipment {
      */
     public Pants(int level, EquipmentRarity rarity) {
         super(level, rarity, EquipmentType.PANT);
-        GameRule gameRule = new GameRule();
-        super.setBonusArmor(gameRule.getBonusArmor(level+rarity.ordinal()));            // Set the bonus of the pants according to gameRule
-        super.setName("Pants");
     }
 }

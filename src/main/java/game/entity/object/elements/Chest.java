@@ -32,6 +32,7 @@ public class Chest extends ObjectEntity {
     private final boolean isClassic;
     private boolean opened;
     private final boolean isMimic;
+    private final boolean isStart;
 
     /**
      * Create a new Chest golden or classic
@@ -39,10 +40,11 @@ public class Chest extends ObjectEntity {
      * @param position position of the chest
      * @param isClassic true if the chest is classic false if the chest is golden
      */
-    public Chest(Position position, boolean isClassic, boolean isMimic) {
+    public Chest(Position position, boolean isClassic, boolean isMimic, boolean isStart) {
         super(position, Colors.WHITE, false,false);
         this.isClassic = isClassic;
         this.isMimic = isMimic;
+        this.isStart = isStart;
         if (isClassic) {
             setSprites(" _ ", "[¤]", Colors.BROWN);
         }
@@ -55,48 +57,58 @@ public class Chest extends ObjectEntity {
     /**
      * Give to the player (directly in his inventory) what contains the chest (rule by GameRule)
      *
-     * @param isClassic boolean which indicate if the chest is classic or golden
      * @param gameState gameState of the game
      */
-    private void fillChest(boolean isClassic, GameState gameState){
-        GameRule gr = new GameRule();
+    private void fillChest(GameState gameState){
         Player player = gameState.getPlayer();
-
         /// Fill the potions
-        int nbPotion = gr.getNumberOfPotionInChest(isClassic);
-        int nbElixir = 0;
-        int nbHealthPotion = 0;
-        int nbXPBottle = 0;
-        ItemFactory itemFactory = new ItemFactory();
-        for (int i=0; i<nbPotion; i++){
-            Item itemToAdd = itemFactory.getItem(gr.getItemType(), player.getPlayerStats().getLevel());
-            if (itemToAdd.getType() == ItemType.ELIXIR){
-                nbElixir++;
+        if (!isStart) {
+            int nbPotion = GameRule.getNumberOfPotionInChest(isClassic);
+            int nbElixir = 0;
+            int nbHealthPotion = 0;
+            int nbXPBottle = 0;
+            for (int i=0; i<nbPotion; i++){
+                Item itemToAdd = ItemFactory.getItem(GameRule.getItemType(), player.getPlayerStats().getLevel());
+                if (itemToAdd.getType() == ItemType.ELIXIR){
+                    nbElixir++;
+                }
+                else if (itemToAdd.getType() == ItemType.XP_BOTTLE){
+                    nbXPBottle++;
+                }
+                else if(itemToAdd.getType() == ItemType.HEALTH_POTION){
+                    nbHealthPotion++;
+                }
+                player.getInventory().addItem(itemToAdd);
             }
-            else if (itemToAdd.getType() == ItemType.XP_BOTTLE){
-                nbXPBottle++;
-            }
-            else if(itemToAdd.getType() == ItemType.HEALTH_POTION){
-                nbHealthPotion++;
-            }
-            player.getInventory().addItem(itemToAdd);
+            if (nbElixir > 0){ gameState.getDescriptor().updateDescriptor(String.format(
+                    "You found %d %s in the chest", nbElixir, colorize(ItemType.ELIXIR.toString(), Attribute.BOLD(), Colors.BLUE.textApply()))); }
+            if (nbHealthPotion > 0){ gameState.getDescriptor().updateDescriptor(String.format(
+                    "You found %d %s in the chest", nbHealthPotion, colorize(ItemType.HEALTH_POTION.toString(), Attribute.BOLD(), Colors.RED.textApply()))); }
+            if(nbXPBottle > 0){ gameState.getDescriptor().updateDescriptor(String.format(
+                    "You found %d %s in the chest", nbXPBottle, colorize(ItemType.XP_BOTTLE.toString(), Attribute.BOLD(), Colors.GREEN.textApply()))); }
+
         }
-        if (nbElixir > 0){ gameState.getDescriptor().updateDescriptor(String.format(
-                "You found %d %s in the chest", nbElixir, colorize(ItemType.ELIXIR.toString(), Attribute.BOLD(), Colors.BLUE.textApply()))); }
-        if (nbHealthPotion > 0){ gameState.getDescriptor().updateDescriptor(String.format(
-                "You found %d %s in the chest", nbHealthPotion, colorize(ItemType.HEALTH_POTION.toString(), Attribute.BOLD(), Colors.RED.textApply()))); }
-        if(nbXPBottle > 0){ gameState.getDescriptor().updateDescriptor(String.format(
-                "You found %d %s in the chest", nbXPBottle, colorize(ItemType.XP_BOTTLE.toString(), Attribute.BOLD(), Colors.GREEN.textApply()))); }
 
         /// Fill the equipment
-        int nbEquipment = gr.getNumberOfEquipmentInChest();
+        int nbEquipment;
+        if (isStart) {
+            nbEquipment = GameRule.getNumberOfEquipmentInStartChest();
+        } else {
+            nbEquipment = GameRule.getNumberOfEquipmentInChest();
+        }
+
         EquipmentFactory equipmentFactory = new EquipmentFactory(gameState.getPlayer().getClasse());
         if (nbEquipment > 0) {
             StringBuilder description = new StringBuilder();
             description.append("You found : ");
             for(int i=0; i<nbEquipment; i++){
-                EquipmentType equipmentType = gr.getEquipmentTypeInChest();
-                EquipmentRarity equipmentRarity = gr.getEquipmentRarityDroped(isClassic);
+                EquipmentRarity equipmentRarity;
+                if (isStart) {
+                    equipmentRarity = GameRule.getEquipmentRarityDropedStartChest();
+                } else {
+                    equipmentRarity = GameRule.getEquipmentRarityDroped(isClassic);
+                }
+                EquipmentType equipmentType = GameRule.getEquipmentTypeInChest();
                 Equipment equipment = equipmentFactory.getEquipment(player.getPlayerStats().getLevel(),equipmentType,equipmentRarity);
                 player.getInventory().addItem(equipment);
                 description.append(String.format(
@@ -112,14 +124,14 @@ public class Chest extends ObjectEntity {
 
 
         /// Fill the Gold
-        int nbGold = gr.getNumberOfGoldInChest(isClassic);
+        int nbGold = GameRule.getNumberOfGoldInChest(isClassic);
         player.getPlayerStats().gainMoney(nbGold);
         gameState.getDescriptor().updateDescriptor(String.format(
                 "You found %s BTC in the chest", colorize(String.valueOf(nbGold), Attribute.BOLD(), Colors.YELLOW.textApply())));
 
         /// Fill the golden key
         if (isClassic){
-            if(gr.presenceOfGoldenKeyInClassicChest()){
+            if(GameRule.presenceOfGoldenKeyInClassicChest()){
                 player.getInventory().addItem(new GoldKey());
                 gameState.getDescriptor().updateDescriptor(colorize(
                         "You found a GoldKey in the chest !", Attribute.BOLD(), Colors.YELLOW.textApply()));
@@ -148,13 +160,13 @@ public class Chest extends ObjectEntity {
             if (isClassic){
                 opened = true;
                 setSprites("/  ", "[¤]", Colors.BROWN);
-                fillChest(true,gameState);
+                fillChest(gameState);
             }
             else{
                 if(gameState.getPlayer().getInventory().containsItem(ItemType.GOLD_KEY)){
                     opened =true;
                     setSprites("/  ", "[¤]", Colors.YELLOW);
-                    fillChest(false,gameState);
+                    fillChest(gameState);
                     gameState.getPlayer().getInventory().removeItem(ItemType.GOLD_KEY);
                 }
                 else{

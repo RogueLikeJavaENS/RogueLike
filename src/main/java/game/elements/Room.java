@@ -48,6 +48,9 @@ public class Room {
         this.entities = new ArrayList<>();
         this.roomType = roomType;
         wasVisited = roomType == RoomType.START;
+        if (roomNum == 0) {
+            wasVisited = true;
+        }
     }
 
     /**
@@ -68,7 +71,7 @@ public class Room {
     public int getHeight() { return height; }
     public RoomType getRoomType() { return roomType; }
     public List<Entity> getEntities() { return new ArrayList<>(entities); }
-    public boolean getWasVisited(){ return !wasVisited;}
+    public boolean getWasVisited(){ return wasVisited;}
     public void setWasVisited(boolean wasVisited){ this.wasVisited = wasVisited;}
 
 

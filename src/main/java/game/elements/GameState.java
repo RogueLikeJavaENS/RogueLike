@@ -32,7 +32,6 @@ public class GameState {
     private Fighting fighting;
     private boolean help;
     private MiniMap miniMap;
-    private final GameRule gameRule;
     private final Descriptor descriptor;
     private HUD hud;
     private int currentFightExp;
@@ -47,7 +46,6 @@ public class GameState {
         this.sp = sp;
         this.currentRoom = dungeon.getRoomList().get(0); //dungeon.getRoomList().size()-2
         this.gridMap = dungeon.getGridMap(currentRoom);
-        this.gameRule = new GameRule();
         this.help = false;
         this.miniMap = new MiniMap(dungeon, this);
         this.descriptor = new Descriptor();
@@ -291,7 +289,6 @@ public class GameState {
     public State getState() { return state; }
     public Fighting getFighting() { return fighting; }
     public MiniMap getMiniMap() { return miniMap; }
-    public GameRule getGameRule() { return gameRule; }
     public Descriptor getDescriptor() { return descriptor; }
     public HUD getHud() {
         return hud;

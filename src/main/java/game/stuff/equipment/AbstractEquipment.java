@@ -50,13 +50,13 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         AbstractEquipment that = (AbstractEquipment) o;
-        return bonusLife == that.bonusLife && bonusMana == that.bonusMana && bonusInitiative == that.bonusInitiative && bonusDamage == that.bonusDamage && bonusArmor == that.bonusArmor && level == that.level && isEquiped == that.isEquiped && type == that.type && rarity == that.rarity;
+        return bonusLife == that.bonusLife && bonusMana == that.bonusMana && bonusInitiative == that.bonusInitiative && bonusDamage == that.bonusDamage && bonusArmor == that.bonusArmor && level == that.level && type == that.type && rarity == that.rarity;
     }
 
     // override the hashcode according to the equals
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), bonusLife, bonusMana, bonusInitiative, bonusDamage, bonusArmor, level, type, rarity, isEquiped);
+        return Objects.hash(super.hashCode(), bonusLife, bonusMana, bonusInitiative, bonusDamage, bonusArmor, level, type, rarity);
     }
 
     /* GETTERS */

@@ -1,8 +1,11 @@
 package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
+import game.elements.GameRule;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
+import game.entity.living.player.spell.SpellUtils;
 import utils.Colors;
 import utils.Direction;
 import utils.Position;
@@ -17,14 +20,12 @@ public class FireAura extends AbstractSpell {
 
     public FireAura() {
         super(colorize("Fire Aura", Attribute.BOLD(),Colors.RED.textApply()),
-                1.4,
-                15,
-                new Range(),
-                10,
                 true,
+                1,
                 1,
                 null
         );
+        GameRule.setSpellStats(this, InGameClasses.MAGE);
     }
 
     @Override
@@ -34,25 +35,11 @@ public class FireAura extends AbstractSpell {
 
     @Override
     public void setTopLeftCorner(Position entityPos, Direction direction) {
-        int availableRange = 1;
-        int topLeftAbs = entityPos.getAbs()-availableRange;
-        int topLeftOrd = entityPos.getOrd()-availableRange;
-
-        if (entityPos.getAbs() < availableRange) {
-            topLeftAbs = entityPos.getAbs();
-        }
-        if (entityPos.getOrd() < availableRange) {
-            topLeftOrd = entityPos.getOrd();
-        }
-        range.setTopLeftCorner(new Position(
-                topLeftAbs, topLeftOrd
-        ));
+        SpellUtils.setTopLeftCornerArround(range, entityPos, direction);
     }
 
     @Override
     public void setBottomRightCorner(Position entityPos, Direction direction) {
-        range.setBottomRightCorner(new Position(
-                entityPos.getAbs()+1, entityPos.getOrd()+1
-        ));
+        SpellUtils.setBottomRightCornerArround(range, entityPos, direction);
     }
 }

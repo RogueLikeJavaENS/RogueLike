@@ -28,16 +28,18 @@ public abstract class AbstractSpell implements Spell {
     private boolean damaging;
     private SpecialEffect effect;
     private int avalaibleRange;
+    private int level;
 
-    public AbstractSpell(String name, double damageMult, int damage, Range range, int manaCost, boolean damaging, int avalaibleRange, SpecialEffect effect) {
+    public AbstractSpell(String name, boolean damaging, int avalaibleRange, int level, SpecialEffect effect) {
         this.name = name;
-        this.damageMult = damageMult;
-        this.damage = damage;
-        this.range = range;
-        this.manaCost = manaCost;
+        this.damageMult = 0;
+        this.damage = 0;
+        this.manaCost = 0;
         this.damaging = damaging;
         this.effect = effect;
         this.avalaibleRange = avalaibleRange;
+        this.level = level;
+        range = new Range();
     }
 
     public boolean useSpell(GameState gameState) {
@@ -48,7 +50,8 @@ public abstract class AbstractSpell implements Spell {
         if (player.getPlayerStats().consumeMp(getManaCost())) {
             if (isDamaging()) {
                 boolean hitBoss = false;
-                for (Position pos : gridMap.getRangeList()) {
+                List<Position> rangeList = gridMap.getRangeList();
+                for (Position pos : rangeList) {
                     List<Entity> entityList = gridMap.getEntitiesAt(pos.getAbs(), pos.getOrd());
                     for (Entity currentEntity : entityList) {
                         if (pos.equals(currentEntity.getPosition())) {
@@ -133,12 +136,10 @@ public abstract class AbstractSpell implements Spell {
         return damaging;
     }
 
-    @Override
     public int getDamage() {
         return (damage);
     }
 
-    @Override
     public String toString() {
         return name;
     }
@@ -153,6 +154,20 @@ public abstract class AbstractSpell implements Spell {
 
     public int getManaCost() {
         return manaCost;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setDamageMult(double damageMult) {
+        this.damageMult = damageMult;
+    }
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+    public void setManaCost(int manaCost) {
+        this.manaCost = manaCost;
     }
 
     public void setRange(Position entityPos, Direction direction) {
@@ -225,4 +240,6 @@ public abstract class AbstractSpell implements Spell {
                 ));
         }
     }
+
+
 }
