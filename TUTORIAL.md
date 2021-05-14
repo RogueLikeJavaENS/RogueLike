@@ -81,16 +81,31 @@ You can gain spell by gaining level.<br>
 ## Merchant
 ![merchant](https://user-images.githubusercontent.com/57185748/115144943-96ee6b00-a04f-11eb-8c06-6c8837ba9554.png)<br>
 You can encounter Potion Merchant in the dungeon and interact with him with **E**<br>
-![menuMerchant](https://user-images.githubusercontent.com/71182082/118045032-b0958080-b377-11eb-9592-948f35a71793.png)<br>
-You can choose to buy him or sell him potions, equipments. Of course <br>
+![merchantShop](https://user-images.githubusercontent.com/71182082/118340168-3dc50a80-b51b-11eb-9b4c-c3d544f80bff.png)
+You can choose to buy him or sell him potions, equipments. Of course, the merchant will sell you items at a higher price than he gonna buy yours.<br>
 Or to attack him, but be ready to face the consequences.<br>
+![buy](https://user-images.githubusercontent.com/71182082/118340212-59c8ac00-b51b-11eb-837d-890d12b8f461.png)
+You can find all the item and stuff the merchant sell here.<br>
+Use **Q, D** to switch between the items and the equipment.<br>
+Use **Z, S** to switch between the stuff you can buy.<br>
+On the top you can see how much gold you have, how much the selected item cost and it's effect on the player.<br>
+On the bottom you can see what equipment you wear.<br>
+The same interface is used to sell some stuff to the merchant.<br>
 
 ## Map
-<img src="https://user-images.githubusercontent.com/57185748/115144962-aa013b00-a04f-11eb-8e2e-3c7c51660b85.png" width="350"><br>
-By openning the map, you can see all rooms of the current floor of the dungeon.
+![map](https://user-images.githubusercontent.com/71182082/118340551-5255d280-b51c-11eb-9a06-dd1a29e9a018.png)
+By openning the map with the key **M**, you can see the rooms of the current floor of the dungeon.<br>
+You can't see a room on your map if you don't have visited her already.<br>
+The ways to see all the map are to visit all the room or use a Map of the Floor.<br>
+![cutMap](https://user-images.githubusercontent.com/71182082/118340702-c7c1a300-b51c-11eb-9370-d19ac3081e98.png)
+When you are in the dungeon you can see where you are with a mini-map in the right of the screen. 
 
 ## Inventory
-The playerInventory isn't used in this version... please follow us to see the progress.
+![inventory-item](https://user-images.githubusercontent.com/71182082/118340767-05263080-b51d-11eb-8560-50eabd203bc7.png)
+
+
+![inventory-equip](https://user-images.githubusercontent.com/71182082/118340779-10795c00-b51d-11eb-8372-28a779756d78.png)
+
 
 ## Room Types
 ### Fighting Room
