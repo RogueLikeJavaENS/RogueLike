@@ -11,6 +11,7 @@ import utils.Colors;
 import utils.Position;
 import utils.Direction;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -49,6 +50,7 @@ public abstract class AbstractSpell implements Spell {
 
         if (player.getPlayerStats().consumeMp(getManaCost())) {
             if (isDamaging()) {
+                List<Entity> entityToRemove = new ArrayList<>();
                 boolean hitBoss = false;
                 List<Position> rangeList = gridMap.getRangeList();
                 for (Position pos : rangeList) {
@@ -68,11 +70,13 @@ public abstract class AbstractSpell implements Spell {
                                             colorize(Integer.toString(getManaCost()), Colors.BLUE.textApply()),
                                             colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
                                             monster.getName()));
-                                    gameState.isMonsterAlive(monster);
+                                    if (monster.getMonsterStats().getLifePointActual() == 0) {
+                                        entityToRemove.add(monster);
+                                    }
                                 }
                             }
                             else if (currentEntity.isDestroyable()) {
-                                gridMap.update(currentEntity, false);
+                                entityToRemove.add(currentEntity);
                                 descriptor.updateDescriptor(String.format("%s used %s for %s mana and destroyed a trap!",
                                         player.getName(),
                                         this,
@@ -90,10 +94,20 @@ public abstract class AbstractSpell implements Spell {
                                         colorize(Integer.toString(getManaCost()), Colors.BLUE.textApply()),
                                         colorize(Integer.toString(damages), Colors.ORANGE.textApply()),
                                         bossPart.getMyBoss().getName()));
-                                gameState.isMonsterAlive(bossPart.getMyBoss());
+                                if (bossPart.getMyBoss().getMonsterStats().getLifePointActual() == 0) {
+                                    entityToRemove.add(bossPart.getMyBoss());
+                                }
+                                //gameState.isMonsterAlive(bossPart.getMyBoss());
                                 hitBoss = true;
                             }
                         }
+                    }
+                }
+                for (Entity entity : entityToRemove) {
+                    if (entity.isMonster()) {
+                        gameState.isMonsterAlive((Monster) entity);
+                    } else {
+                      gameState.getGridMap().update(entity, false);
                     }
                 }
             }

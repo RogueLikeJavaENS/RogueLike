@@ -243,20 +243,18 @@ public class GridMap {
         if (entityList.size() == 1){
             return primaryEntity;
         }
-        for (int i = 1; i<entityList.size();i++ ){
-            if (primaryEntity instanceof Player) break;
-            else if (primaryEntity instanceof Monster){
-                if (entityList.get(i) instanceof Player){
-                    primaryEntity = entityList.get(i);
-                }
+        for (Entity entity : entityList) {
+            if (entity instanceof Player) {
+                primaryEntity = entity;
+                break;
             }
-            else {
-                if (entityList.get(i) instanceof Player || entityList.get(i) instanceof  Monster){
-                    primaryEntity = entityList.get(i);
-                }
+            else if (!entity.getIsPlayerAccessible()) {
+                primaryEntity = entity;
+            }
+            else if (!entity.getIsNPCAccessible()) {
+                primaryEntity = entity;
             }
         }
-
         return primaryEntity;
     }
 

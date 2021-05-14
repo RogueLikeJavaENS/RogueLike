@@ -124,7 +124,6 @@ public class Door extends ObjectEntity {
                 Player player = gameState.getPlayer();
                 if (player.getInventory().containsItem(ItemType.FLOORKEY)) {
                     player.getInventory().useItem(ItemType.FLOORKEY, gameState);
-                    player.getInventory().addItem(new FloorKey());
                     openRelyDoor();
                     gameState.getMusicStuff().playButtonFX();
                     gameState.getDescriptor().updateDescriptor("The door is open now.");

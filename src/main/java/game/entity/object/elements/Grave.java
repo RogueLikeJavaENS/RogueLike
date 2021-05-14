@@ -89,7 +89,7 @@ public class Grave extends ObjectEntity {
         //then the money from the monster
         gameState.getPlayer().getPlayerStats().gainMoney(droppedMoney);
         gameState.getDescriptor().updateDescriptor(String.format(
-                "You found %s BTC in the chest", colorize(String.valueOf(droppedMoney), Attribute.BOLD(), Colors.YELLOW.textApply())));
+                "You found %s BTC in the grave", colorize(String.valueOf(droppedMoney), Attribute.BOLD(), Colors.YELLOW.textApply())));
         //remove the entity from the grid (and the whole game with the garbage collector)
         gameState.getGridMap().update(this, false);
     }

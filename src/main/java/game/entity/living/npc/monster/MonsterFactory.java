@@ -82,6 +82,6 @@ public class MonsterFactory {
      */
     private int getLevel() {
         Random GEN = new Random();
-        return GEN.nextInt(3) + (3*floor)-2;
+        return GEN.nextInt(2) + (3*floor)-2;
     }
 }

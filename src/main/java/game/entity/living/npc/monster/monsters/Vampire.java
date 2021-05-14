@@ -22,7 +22,7 @@ public class Vampire extends AbstractMonster implements Monster {
      * @param strategy his strategy to apply
      */
     public Vampire(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.WHITE, strategy,
+        super(position, name, Colors.WHITE, MonsterType.VAMPIRE, strategy,
                 new MonsterStats(1,1,1,1,1,1,1,level, 1));
         GameRule.setMonstersStats(this, MonsterType.VAMPIRE);
         setSprites("\\o/", "/_\\", Colors.WHITE, Colors.RED);

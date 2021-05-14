@@ -234,14 +234,13 @@ public class RoomFactory {
     private void addChest(Room room, boolean isClassic, boolean isStart){
         if (currentAvailablePositions.size() != 0){
             if (isStart) {
-                room.addEntity(new Chest(currentAvailablePositions.remove(0),true, GameRule.isChestMimic(), true));
+                room.addEntity(new Chest(currentAvailablePositions.remove(0),true, false, true));
             } else {
                 if (isClassic){
                     room.addEntity(new Chest(currentAvailablePositions.remove(0),true, GameRule.isChestMimic(), false));
                 }
                 else{
                     room.addEntity(new Chest(currentAvailablePositions.remove(0),false, false, false));
-
                 }
             }
         }

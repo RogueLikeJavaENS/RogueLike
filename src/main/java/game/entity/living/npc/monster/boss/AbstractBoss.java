@@ -34,7 +34,7 @@ public abstract class AbstractBoss extends AbstractMonster implements Boss {
      * @param stats the boss main part stats.
      */
     public AbstractBoss(String name, Position position, Colors color, Strategy strategy, AbstractStats stats) {
-        super(position, name, color, strategy, stats);
+        super(position, name, color, null, strategy, stats);
         hasSpecial = true;
         bufferPath = new ArrayList<>();
         bufferInit();

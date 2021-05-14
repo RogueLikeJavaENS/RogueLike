@@ -18,7 +18,7 @@ public class BasicAttackRanger extends AbstractSpell {
     public BasicAttackRanger() {
         super(colorize("Attack", Attribute.BOLD()),
                 true,
-                3,
+                2,
                 0,
                 null
         );

@@ -1,5 +1,6 @@
 package game.elements;
 
+import display.GridMap;
 import game.entity.living.npc.monster.Monster;
 import game.entity.living.npc.monster.MonsterStats;
 import game.entity.living.npc.monster.MonsterType;
@@ -50,6 +51,10 @@ public class GameRule {
      * Get the item price int the merchant shop.
      */
     public static int getItemPrice(int level, ItemType type) {
+        int mult = 1;
+        if (level < 2) {
+            mult = 3;
+        }
         switch (type) {
             case HEALTH_POTION:
             case ELIXIR:
@@ -57,7 +62,7 @@ public class GameRule {
             case XP_BOTTLE:
                 return Math.max(15, (int) Math.floor(Math.log(level*level*2) *15));
             case GOLD_KEY:
-                return (int) Math.floor(Math.log(level*level*2) *300);
+                return (int) Math.floor(Math.log(level*level*2) *60*mult);
             case DUNGEON_MAP:
                 return Math.max(17, (int) Math.floor(Math.log(level*level*2) *20));
             default:
@@ -89,10 +94,10 @@ public class GameRule {
      */
     public static ItemType getPotionType(){
         int nb = GEN.nextInt(100);
-        if (nb < 40){
+        if (nb < 50){
             return ItemType.HEALTH_POTION;
         }
-        else if(nb < 80){
+        else if(nb < 90){
             return ItemType.ELIXIR;
         }
         else {
@@ -109,10 +114,10 @@ public class GameRule {
      */
     public static ItemType getItemType(){
         int nb = GEN.nextInt(100);
-        if (nb < 40){
+        if (nb < 50){
             return ItemType.HEALTH_POTION;
         }
-        else if(nb < 80){
+        else if(nb < 90){
             return ItemType.ELIXIR;
         }
         else if (nb < 97){
@@ -124,31 +129,31 @@ public class GameRule {
     }
 
     /**
-     * between 3 and 6 potions in Treasure Room.
+     * between 3 and 5 potions in Treasure Room.
      */
     public static int getNumberOfPotionInTreasureRoom(){
-        return GEN.nextInt(4)+3;
+        return GEN.nextInt(3)+3;
     }
 
     /**
-     * Between 1 and 3 potion in a classic chest
-     * Between 10 and 15 potion in a golden chest
+     * Between 1 and 2 potion in a classic chest
+     * Between 3 and 6 potion in a golden chest
      */
     public static int getNumberOfPotionInChest(boolean isClassic) {
         if (isClassic) {
-            return GEN.nextInt(3) + 1;
+            return GEN.nextInt(2) + 1;
         }
         else {
-            return GEN.nextInt(6)+10;
+            return GEN.nextInt(4)+3;
         }
     }
 
     /**
-     * Between 1 and 3 items on corpse.
+     * Between 1 and 2 items on corpse.
      * @return the number of items dropped on monster's corpse.
      */
     public static int getNumberOfItemsOnCorpse() {
-        return GEN.nextInt(3)+1;
+        return GEN.nextInt(2)+1;
     }
     /*/////////////////////////////   ITEMS  /////////////////////////////////////*/
 
@@ -219,7 +224,7 @@ public class GameRule {
      */
     public static EquipmentRarity getEquipmentRarityDropedStartChest(){
         int nb = GEN.nextInt(100);
-        if (nb < 70) {
+        if (nb < 80) {
             return EquipmentRarity.E;
         } else return EquipmentRarity.D;
     }
@@ -279,10 +284,10 @@ public class GameRule {
     }
 
     /**
-     * Between 3 and 5 equipment(s) in a classic chest
+     * Between 2 and 4 equipment(s) in a classic chest
      */
     public static int getNumberOfEquipmentInStartChest(){
-        return GEN.nextInt(3)+3;
+        return GEN.nextInt(3)+2;
     }
 
     /**

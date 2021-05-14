@@ -1,5 +1,6 @@
 package game.entity.living;
 
+import game.elements.GameRule;
 import utils.Check;
 
 import java.util.Random;

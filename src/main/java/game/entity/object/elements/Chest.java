@@ -152,6 +152,7 @@ public class Chest extends ObjectEntity {
             Monster mimic = mf.getMonster(MonsterType.MIMIC.ordinal(), pos);
             gameState.getGridMap().update(mimic, true);
             gameState.isThereMonsters();
+            gameState.getDescriptor().updateDescriptor("The chest was a mimic ! Prepare yourself !");
             return;
         }
 

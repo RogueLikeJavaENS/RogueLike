@@ -20,7 +20,7 @@ public class Mimic extends AbstractMonster {
      * @param strategy his strategy to apply
      */
     public Mimic(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.WHITE, strategy,
+        super(position, name, Colors.WHITE, MonsterType.MIMIC, strategy,
                 new MonsterStats(1,1,1,1,1,1,1,level, 1));
         GameRule.setMonstersStats(this, MonsterType.MIMIC);
         setUpSprites(colorize("\\v/", Colors.RED.textApply()));
