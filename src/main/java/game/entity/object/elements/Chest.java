@@ -156,14 +156,15 @@ public class Chest extends ObjectEntity {
         }
 
         if(!opened){
-            gameState.getMusicStuff().playChestFX();
             if (isClassic){
+                gameState.getMusicStuff().playChestFX();
                 opened = true;
                 setSprites("/  ", "[¤]", Colors.BROWN);
                 fillChest(gameState);
             }
             else{
                 if(gameState.getPlayer().getInventory().containsItem(ItemType.GOLD_KEY)){
+                    gameState.getMusicStuff().playChestFX();
                     opened =true;
                     setSprites("/  ", "[¤]", Colors.YELLOW);
                     fillChest(gameState);

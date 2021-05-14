@@ -131,65 +131,69 @@ public class MiniMap {
     private String buildRoom(Room room, int line) {
         String strLine = "";
 
-        if (room == null || !room.getWasVisited()){
+        if (room == null) {
             strLine = "       ";
-        }
-        else {
-            switch (line){
-                case 0:
-                    if (room.getRoomAt(Direction.NORTH) != -1){ return " __#__ "; }
-                    else { return " _____ "; }
+        } else {
+            if (!room.getWasVisited()) {
+                strLine = "       ";
+            }
+            else {
+                switch (line){
+                    case 0:
+                        if (room.getRoomAt(Direction.NORTH) != -1){ return " __#__ "; }
+                        else { return " _____ "; }
 
-                case 1:
-                    return  "|     |";
+                    case 1:
+                        return  "|     |";
 
-                case 2:
-                    StringBuilder sb = new StringBuilder();
-                    if (room.getRoomAt(Direction.WEST) != -1) {
-                        sb.append("#  ");
-                    } else {sb.append("|  ");}
+                    case 2:
+                        StringBuilder sb = new StringBuilder();
+                        if (room.getRoomAt(Direction.WEST) != -1) {
+                            sb.append("#  ");
+                        } else {sb.append("|  ");}
 
-                    if (gameState.getCurrentRoom().equals(room)){
-                        sb.append(colorize("@", Colors.PINK.textApply()));
-                    }
-
-                    else {
-                        RoomType roomType = room.getRoomType();
-                        switch (roomType){
-                            case START:
-                                sb.append(colorize("*",Colors.GREEN.textApply()));
-                                break;
-                            case END:
-                                sb.append(colorize("^",Colors.BROWN.textApply()));
-                                break;
-                            case BOSS:
-                                sb.append(colorize("B",Colors.ORANGE.textApply()));
-                                break;
-                            case REST:
-                                sb.append(colorize("~",Colors.CYAN.textApply()));
-                                break;
-                            case MONSTER:
-                                sb.append(colorize("M",Colors.RED.textApply()));
-                                break;
-                            case TREASURE:
-                                sb.append(colorize("$",Colors.YELLOW.textApply()));
-                                break;
-                            default:
-                                sb.append(" ");
-                                break;
+                        if (gameState.getCurrentRoom().equals(room)){
+                            sb.append(colorize("@", Colors.PINK.textApply()));
                         }
+
+                        else {
+                            RoomType roomType = room.getRoomType();
+                            switch (roomType){
+                                case START:
+                                    sb.append(colorize("*",Colors.GREEN.textApply()));
+                                    break;
+                                case END:
+                                    sb.append(colorize("^",Colors.BROWN.textApply()));
+                                    break;
+                                case BOSS:
+                                    sb.append(colorize("B",Colors.ORANGE.textApply()));
+                                    break;
+                                case REST:
+                                    sb.append(colorize("~",Colors.CYAN.textApply()));
+                                    break;
+                                case MONSTER:
+                                    sb.append(colorize("M",Colors.RED.textApply()));
+                                    break;
+                                case TREASURE:
+                                    sb.append(colorize("$",Colors.YELLOW.textApply()));
+                                    break;
+                                default:
+                                    sb.append(" ");
+                                    break;
+                            }
+                        }
+
+                        if (room.getRoomAt(Direction.EAST) != -1) {
+                            sb.append("  #");
+                        } else sb.append("  |");
+                        return  sb.toString();
+
+                    //case 2:{ return "|     |"; }
+
+                    case 3:{
+                        if (room.getRoomAt(Direction.SOUTH) != -1){ return "|__#__|";}
+                        else {return "|_____|";}
                     }
-
-                    if (room.getRoomAt(Direction.EAST) != -1) {
-                        sb.append("  #");
-                    } else sb.append("  |");
-                    return  sb.toString();
-
-                //case 2:{ return "|     |"; }
-
-                case 3:{
-                    if (room.getRoomAt(Direction.SOUTH) != -1){ return "|__#__|";}
-                    else {return "|_____|";}
                 }
             }
         }

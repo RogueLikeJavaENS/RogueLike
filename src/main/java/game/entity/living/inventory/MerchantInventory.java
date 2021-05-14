@@ -143,14 +143,15 @@ public class MerchantInventory extends AbstractInventory {
         } else {
             sb.append(headBuying);
         }
-        sb.append(toStringStatsSelectedStuff());
+        sb.append(toStringStatsSelectedStuff(gameState));
         sb.append(inventoryList);
+        equipped = gameState.getPlayer().getInventory().getEquiped();
         sb.append(toStringEquipped());
 
         return sb.toString();
     }
 
-    private String toStringStatsSelectedStuff() {
+    private String toStringStatsSelectedStuff(GameState gameState) {
         StringBuilder sb = new StringBuilder();
         if (indexOfSelectedStuff != -1) {
             sb.append(" _____________________________________________________________________\n");
@@ -201,6 +202,7 @@ public class MerchantInventory extends AbstractInventory {
                 sb.append("| Cost ").append(colorize(String.valueOf(cost), Colors.YELLOW.textApply(), Attribute.BOLD()))
                         .append(" BTC").append(" ".repeat(67-lineCount)).append("|\n");
 
+
             } else {
                 Item i = (Item) selectedStuff;
                 int lineCount = 4 + i.getName().length() + i.getDescription().length();
@@ -217,6 +219,11 @@ public class MerchantInventory extends AbstractInventory {
                 sb.append("| Cost ").append(colorize(String.valueOf(cost), Colors.YELLOW.textApply(), Attribute.BOLD()))
                         .append(" BTC").append(" ".repeat(67-lineCount)).append("|\n");
             }
+            int playerMoney = gameState.getPlayer().getPlayerStats().getMoneyCount();
+            int lineCount = 19 + String.valueOf(playerMoney).length();;
+
+            sb.append("| Player wealth : ").append(colorize(String.valueOf(playerMoney), Colors.YELLOW.textApply(), Attribute.BOLD()))
+                    .append(" BTC").append(" ".repeat(67-lineCount)).append("|\n");
             return sb.toString();
         }
         return "";

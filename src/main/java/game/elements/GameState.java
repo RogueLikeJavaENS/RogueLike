@@ -80,7 +80,7 @@ public class GameState {
      * @param room The new room
      */
     public void updateChangingRoom(Room room) {
-        if (room.getWasVisited()){
+        if (!room.getWasVisited()){
             room.setWasVisited(true);
             room.setNearRoomBossEndVisited();
             miniMap.updateMap();

@@ -1,11 +1,15 @@
 package game.entity.object.traps;
 
+import display.GridMap;
 import game.elements.GameState;
+import game.entity.Entity;
 import game.entity.living.LivingEntity;
+import game.entity.living.npc.monster.Monster;
 import game.entity.object.ObjectEntity;
 import utils.Colors;
 import utils.Position;
 
+import java.util.List;
 import java.util.Random;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -28,6 +32,13 @@ public class RangerTrap extends ObjectEntity {
         LivingEntity entity = (LivingEntity) gameState.getGridMap().getEntitiesAt(this.getPosition().getAbs(), this.getPosition().getOrd()).get(0);
         damage = entity.getStats().sufferDamage(damage);
         gameState.getDescriptor().updateDescriptor(String.format("%s is stuck in your trap and lost %d HP.",entity.getName(),damage));
+        GridMap gridMap = gameState.getGridMap();
+        List<Entity> entities = gridMap.getEntitiesAt(getPosition().getAbs(), getPosition().getOrd());
+        for (Entity e : entities) {
+            if (e.isMonster()) {
+                gameState.isMonsterAlive((Monster) e);
+            }
+        }
     }
 
     @Override
