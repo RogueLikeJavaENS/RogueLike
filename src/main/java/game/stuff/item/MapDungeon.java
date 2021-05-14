@@ -33,6 +33,7 @@ public class MapDungeon extends AbstractItem{
         for (Room room : gameState.getDungeon().getRoomList()) {
             room.setWasVisited(true);
         }
+        gameState.getDescriptor().updateDescriptor("You read the map and discover all the floor...");
         return true;
     }
 
