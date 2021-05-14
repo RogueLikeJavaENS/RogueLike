@@ -234,8 +234,7 @@ public class RoomFactory {
     private void addChest(Room room, boolean isClassic, boolean isStart){
         if (currentAvailablePositions.size() != 0){
             if (isStart) {
-                room.addEntity(new Chest(currentAvailablePositions.remove(0),true, GameRule.isChestMimic(), false));
-
+                room.addEntity(new Chest(currentAvailablePositions.remove(0),true, GameRule.isChestMimic(), true));
             } else {
                 if (isClassic){
                     room.addEntity(new Chest(currentAvailablePositions.remove(0),true, GameRule.isChestMimic(), false));
