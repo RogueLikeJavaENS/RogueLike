@@ -12,39 +12,28 @@
 ### On Mac
  - Mac Terminal
 
+
 ## How to run
 - java -jar RogueLike-v1.0-beta.jar
 - See the [tutorial sections](https://github.com/RogueLikeJavaENS/RogueLike/blob/main/TUTORIAL.md)<br>
+
 
 ## Implemented Features
 - Dungeon procedurally generated.
 - Differents types of Room.
 - Move with direction of the player.
-- Monsters.
+- Monsters with a path-finding.
 - Basic systems of game.entity.living.player.spell.
-- Basic merchants.
+- Basic merchants with a menu
 - Range of game.entity.living.player.spell.
 - Level and Xp management
 - BTC
+- Class system (Warrior, Ranger, Mage)
+- Traps
+- Implementing a real and functionning inventory for the player.
+- Boss.
+- Equipements with a rarity system
 
-## What's planned
-- Letting the player customize the game a bit more (let him choose his name...)
-- Improving monsters' IA
-- Adding a class system
-- Implementing traps
-- Implementing a real and functionning playerInventory
-- Adding equipements
-- Improving the turn order handling system
-- Adding bosses / the mega merchant
-- Adding a menu for the merchant
-- Correcting the procedural generation, to exploit the Seed in a more efficient way (less randomization)
-
-## What's planned if we have enough time
-- Skill tree
-- Implementing differente sizes for basic potions
-- Adding new types of potion
-- Creating a rarity system for equipement (and possibly every game.stuff)
-- Add Easter Eggs (sshhh you didn't see that)
 
 ## Project Member
 `Nom`: Vidal-Mazuy Antoine 
