@@ -52,12 +52,12 @@ You can gain spell by gaining level.<br>
 
 #### Ranger Spells
    - `Put Trap` : lvl 1, you can set a trap to trick the monster, be careful you can hurt yourself
-   - `Basic Attack` : lvl 1, don't consume mana and have a long range 
-   - `Fire Arrow` : lvl 2, du more damage than a basick attack, hut only the first monster in the range
-   - `Dash` : lvl 3, you can advance to the end of the range
-   - `Heal` : lvl 4, can heal yourself
-   - `Sniper` : lvl 5, hurt all the monster in the range
-   - `100 arrows` : lvl 6, have a special range and make a lot of damage
+   - `Basic Attack` : lvl 1, you shoot a single arrow which can go far or hit a monster  
+   - `Fire Arrow` : lvl 2, you shoot an arrow surrounded by flame to hit the first monster in front of you 
+   - `Dash` : lvl 3, with your great speed you move fast to the last position of your range
+   - `Heal` : lvl 4, with some medicinal herb you heal yourself
+   - `Sniper` : lvl 5, with this shoot of precision you hit all the monster you encounter
+   - `100 arrows` : lvl 6, has a master ranger you sumon 100 arrows and destroy everything in front of you
    
 #### Mage Spells
    - `Fire Aura` : lvl 1, cast a fire wall around you 
@@ -81,10 +81,10 @@ You can gain spell by gaining level.<br>
 ## Merchant
 ![merchant](https://user-images.githubusercontent.com/57185748/115144943-96ee6b00-a04f-11eb-8c06-6c8837ba9554.png)<br>
 You can encounter Potion Merchant in the dungeon and interact with him with **E**<br>
-![merchantShop](https://user-images.githubusercontent.com/71182082/118340168-3dc50a80-b51b-11eb-9b4c-c3d544f80bff.png)
+![merchantShop](https://user-images.githubusercontent.com/71182082/118340168-3dc50a80-b51b-11eb-9b4c-c3d544f80bff.png)<br>
 You can choose to buy him or sell him potions, equipments. Of course, the merchant will sell you items at a higher price than he gonna buy yours.<br>
 Or to attack him, but be ready to face the consequences.<br>
-![buy](https://user-images.githubusercontent.com/71182082/118340212-59c8ac00-b51b-11eb-837d-890d12b8f461.png)
+![buy](https://user-images.githubusercontent.com/71182082/118340212-59c8ac00-b51b-11eb-837d-890d12b8f461.png)<br>
 You can find all the item and stuff the merchant sell here.<br>
 Use **Q, D** to switch between the items and the equipment.<br>
 Use **Z, S** to switch between the stuff you can buy.<br>
@@ -93,19 +93,22 @@ On the bottom you can see what equipment you wear.<br>
 The same interface is used to sell some stuff to the merchant.<br>
 
 ## Map
-![map](https://user-images.githubusercontent.com/71182082/118340551-5255d280-b51c-11eb-9a06-dd1a29e9a018.png)
-By openning the map with the key **M**, you can see the rooms of the current floor of the dungeon.<br>
+![map](https://user-images.githubusercontent.com/71182082/118340551-5255d280-b51c-11eb-9a06-dd1a29e9a018.png)<br>
+By opening the map with the key **M**, you can see the rooms of the current floor of the dungeon.<br>
 You can't see a room on your map if you don't have visited her already.<br>
 The ways to see all the map are to visit all the room or use a Map of the Floor.<br>
-![cutMap](https://user-images.githubusercontent.com/71182082/118340702-c7c1a300-b51c-11eb-9370-d19ac3081e98.png)
-When you are in the dungeon you can see where you are with a mini-map in the right of the screen. 
+![cutMap](https://user-images.githubusercontent.com/71182082/118340702-c7c1a300-b51c-11eb-9370-d19ac3081e98.png)<br>
+When you are in the dungeon you can see where you are with a mini-map in the right of the screen.<br> 
 
 ## Inventory
-![inventory-item](https://user-images.githubusercontent.com/71182082/118340767-05263080-b51d-11eb-8560-50eabd203bc7.png)
+By opening the invenotry with the key **I** you can see all the items and the equipments you have and all your stats.<br>
+You can also use it (for the item) or equipy it (for the equipment) by pressing **E**.<br>
+To move on your inventory, use **Q, D** to switch between items and equipment and use **Z, S** to choose the items or equipment.<br>
+![inventory-item](https://user-images.githubusercontent.com/71182082/118340767-05263080-b51d-11eb-8560-50eabd203bc7.png)<br>
+On the item part you can find all your potions, keys and also the Map of the Floor.<br>
 
-
-![inventory-equip](https://user-images.githubusercontent.com/71182082/118340779-10795c00-b51d-11eb-8372-28a779756d78.png)
-
+![inventory-equip](https://user-images.githubusercontent.com/71182082/118340779-10795c00-b51d-11eb-8372-28a779756d78.png)<br>
+On the equipment part you can find all your equipment. Those in red are the one you used right know you can unequip them by pressing **E**.<br>
 
 ## Room Types
 ### Fighting Room
