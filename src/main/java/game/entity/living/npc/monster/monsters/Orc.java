@@ -25,10 +25,10 @@ public class Orc extends AbstractMonster {
      * @param strategy his strategy to apply
      */
     public Orc(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.WHITE, MonsterType.ORC, strategy,
+        super(position, name, Colors.RED,Colors.WHITE, MonsterType.ORC, strategy,
                 new MonsterStats(1,1,1,1,1,1,1,level, 1));
         GameRule.setMonstersStats(this, MonsterType.ORC);
-        setSprites("\\@/", "[ ]", Colors.RED, Colors.WHITE);
+        setSprites("\\@/", "[ ]", getUpColor(), getDownColor());
         setBasicSprites("\\@/", "[ ]");
     }
 }

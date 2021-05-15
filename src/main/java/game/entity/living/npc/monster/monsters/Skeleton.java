@@ -24,10 +24,10 @@ public class Skeleton extends AbstractMonster {
      * @param strategy his strategy to apply
      */
     public Skeleton(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.WHITE, MonsterType.SKELETON, strategy,
+        super(position, name, Colors.WHITE,Colors.WHITE, MonsterType.SKELETON, strategy,
                 new MonsterStats(1,1,1,1,1,1,1,level, 1));
         GameRule.setMonstersStats(this, MonsterType.SKELETON);
-        setSprites("_#_", "/ \\", Colors.WHITE);
+        setSprites("_#_", "/ \\", getUpColor());
         setBasicSprites("_#_", "/ \\");
     }
 }

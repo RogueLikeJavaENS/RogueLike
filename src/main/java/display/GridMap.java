@@ -104,11 +104,22 @@ public class GridMap {
                     if (entitiesAt.size() != 0)// print the first game.entity of the tile
                     {
                         Entity entityToPrint = getPrimaryEntity(entitiesAt);
-                        if (isInRange(abs, ord) && !(entities.get(0) instanceof Player)) {
+                        if (isInRange(abs, ord) && !(entityToPrint instanceof Player)) {
                             sb.append(colorize(entityToPrint.getSprites(i), Colors.DEEP_GREY.bgApply()));
                         }
                         else {
-                            sb.append(entityToPrint.getSprites(i));
+                            if (entityToPrint.isMonster()){
+                                Monster monster = (Monster) entityToPrint;
+                                if (monster.isAgroPlayer()){
+                                    sb.append(colorize(entityToPrint.getSprites(i),Colors.DARK_BLUE.bgApply()));
+                                }
+                                else{
+                                    sb.append(entityToPrint.getSprites(i));
+                                }
+                            }
+                            else {
+                                sb.append(entityToPrint.getSprites(i));
+                            }
                         }
                     }
                     else // if no game.entity, print the tile

@@ -14,7 +14,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class Spike extends ObjectEntity {
 
     public Spike(Position position) {
-        super(position, Colors.DARK_GREY, true, false);
+        super(position, Colors.DARK_GREY, Colors.DARK_GREY,true, false);
         setSprites(colorize("^^^",Colors.GREY.textApply()),colorize("^^^",Colors.GREY.textApply()));
     }
 

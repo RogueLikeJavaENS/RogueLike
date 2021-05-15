@@ -28,7 +28,7 @@ public class Door extends ObjectEntity {
      * @param isOpen boolean
      */
     public Door(Position position, Room nextRoom, Direction direction, boolean isOpen) {
-        super(position,Colors.BROWN, isOpen, false);
+        super(position,Colors.BROWN,Colors.BROWN, isOpen, false);
         this.direction = direction;
         this.nextRoom = nextRoom;
         this.isOpen = isOpen;
@@ -122,8 +122,8 @@ public class Door extends ObjectEntity {
             }
             else {
                 Player player = gameState.getPlayer();
-                if (player.getInventory().containsItem(ItemType.FLOORKEY)) {
-                    player.getInventory().useItem(ItemType.FLOORKEY, gameState);
+                if (player.getInventory().useItem(ItemType.FLOORKEY, gameState)) {
+
                     openRelyDoor();
                     gameState.getMusicStuff().playButtonFX();
                     gameState.getDescriptor().updateDescriptor("The door is open now.");

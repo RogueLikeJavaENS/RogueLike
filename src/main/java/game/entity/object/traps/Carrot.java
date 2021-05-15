@@ -16,7 +16,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class Carrot extends ObjectEntity {
 
     public Carrot(Position position, Colors color, boolean isPlayerAccessible, boolean isNPCAccessible) {
-        super(position, color, isPlayerAccessible, isNPCAccessible);
+        super(position, color,color, isPlayerAccessible, isNPCAccessible);
         setSprites("   ", colorize("<=", Colors.ORANGE.textApply()) + colorize("#", Colors.GREEN.textApply()));
     }
 

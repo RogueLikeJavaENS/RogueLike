@@ -25,13 +25,14 @@ public abstract class AbstractMonster extends NPC implements Monster {
      *
      * @param position of the monster
      * @param name name of the monster
-     * @param color basic color of the monster
+     * @param upColor basic color of the top of monster
+     * @param downColor basic color of the down of the monster
      * @param strategy strategy of the monster
      * @param stats stats of the monster
      * @throws IllegalArgumentException Position can't be negative
      */
-    public AbstractMonster(Position position, String name, Colors color, MonsterType monsterType, Strategy strategy, AbstractStats stats) throws IllegalArgumentException {
-        super(position, name, color, stats);
+    public AbstractMonster(Position position, String name, Colors upColor, Colors downColor, MonsterType monsterType, Strategy strategy, AbstractStats stats) throws IllegalArgumentException {
+        super(position, name, upColor, downColor, stats);
         this.strategy = strategy;
         this.agroPlayer = false;
         this.monsterType = monsterType;
@@ -51,18 +52,6 @@ public abstract class AbstractMonster extends NPC implements Monster {
      */
     public void setAgroPlayer(boolean agroPlayer) {
         this.agroPlayer = agroPlayer;
-        String upSprite = this.getBasicSprites(0);  // Create the sprite with the basic without color
-        String downSprite = this.getBasicSprites(1);
-        if (agroPlayer){                               // If the monster is aggro, colorize the new sprite in ORANGE
-            upSprite = (colorize(upSprite,Colors.ORANGE.textApply()));
-            downSprite = (colorize(downSprite,Colors.ORANGE.textApply()));
-        }
-        else {                                          // If the monsters is not aggro, colorize the sprite in his basic color
-            Colors color = this.getBasicColor();
-            upSprite = (colorize(upSprite,color.textApply()));
-            downSprite = (colorize(downSprite,color.textApply()));
-        }
-        this.setSprites(upSprite, downSprite, getBasicColor());
     }
 
     /**

@@ -21,10 +21,10 @@ public class MerchantMonster extends AbstractMonster {
      * @param strategy his strategy to apply
      */
     public MerchantMonster(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.WHITE, MonsterType.MERCHANT, strategy,
+        super(position, name, Colors.CYAN,Colors.MAGENTA, MonsterType.MERCHANT, strategy,
                 new MonsterStats(1,1,1,1,1,1,1,level, 1));
         GameRule.setMonstersStats(this, MonsterType.MERCHANT);
-        setSprites("~.~", "|_|", Colors.CYAN, Colors.MAGENTA);
+        setSprites("~.~", "|_|", getUpColor(), getDownColor());
         setBasicSprites("~.~", "|_|");
     }
 }

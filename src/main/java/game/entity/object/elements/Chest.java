@@ -41,7 +41,7 @@ public class Chest extends ObjectEntity {
      * @param isClassic true if the chest is classic false if the chest is golden
      */
     public Chest(Position position, boolean isClassic, boolean isMimic, boolean isStart) {
-        super(position, Colors.WHITE, false,false);
+        super(position, Colors.WHITE, Colors.WHITE,false,false);
         this.isClassic = isClassic;
         this.isMimic = isMimic;
         this.isStart = isStart;
@@ -164,12 +164,12 @@ public class Chest extends ObjectEntity {
                 fillChest(gameState);
             }
             else{
-                if(gameState.getPlayer().getInventory().containsItem(ItemType.GOLD_KEY)){
+                if(gameState.getPlayer().getInventory().useItem(ItemType.GOLD_KEY, gameState)){
                     gameState.getMusicStuff().playChestFX();
                     opened =true;
                     setSprites("/  ", "[¤]", Colors.YELLOW);
                     fillChest(gameState);
-                    gameState.getPlayer().getInventory().removeItem(ItemType.GOLD_KEY);
+
                 }
                 else{
                     gameState.getDescriptor().updateDescriptor("You don't have the gold key, you can't open this golden chest.");

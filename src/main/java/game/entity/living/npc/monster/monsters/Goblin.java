@@ -25,10 +25,10 @@ public class Goblin extends AbstractMonster implements Monster {
      * @param strategy his strategy to apply
      */
     public Goblin(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.GREEN, MonsterType.GOBLIN, strategy,
+        super(position, name, Colors.GREEN, Colors.GREEN, MonsterType.GOBLIN, strategy,
                 new MonsterStats(1,1,1,1,1,1,1,level, 1));
         GameRule.setMonstersStats(this, MonsterType.GOBLIN);
-        setSprites("_o_", "| |", Colors.GREEN);
+        setSprites("_o_", "| |", getUpColor());
         setBasicSprites("_o_", "| |");
     }
 

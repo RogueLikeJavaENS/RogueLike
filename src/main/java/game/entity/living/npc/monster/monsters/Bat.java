@@ -25,10 +25,10 @@ public class Bat extends AbstractMonster implements Monster {
      * @param strategy his strategy to apply
      */
     public Bat(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.BROWN, MonsterType.BAT, strategy,
+        super(position, name, Colors.BROWN, Colors.BROWN, MonsterType.BAT, strategy,
                 new MonsterStats(1,1,1,1,1,1,1,level, 1));
         GameRule.setMonstersStats(this, MonsterType.BAT);
-        setSprites("\\o/", "   ", Colors.BROWN);
+        setSprites("\\o/", "   ", getUpColor());
         setBasicSprites("\\o/", "   ");
     }
 

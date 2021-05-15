@@ -127,6 +127,8 @@ public abstract class AbstractInventory implements Inventory {
                 }
             }
         }
+        System.out.println("Item used "+itemToDelete);
+        System.out.println("utilisation "+used);
         if (itemToDelete != null && used) {
             inventory.remove(itemToDelete);
         }

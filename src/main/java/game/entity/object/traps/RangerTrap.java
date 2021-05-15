@@ -20,7 +20,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class RangerTrap extends ObjectEntity {
 
     public RangerTrap(Position position, Colors color, boolean isPlayerAccessible, boolean isNPCAccessible) {
-        super(position, color, isPlayerAccessible, isNPCAccessible);
+        super(position, color,color, isPlayerAccessible, isNPCAccessible);
         setSprites("   ", colorize("\\w/", Colors.YELLOW_GREEN.textApply()));
     }
 

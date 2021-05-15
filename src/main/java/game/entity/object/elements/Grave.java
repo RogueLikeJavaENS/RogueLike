@@ -33,7 +33,7 @@ public class Grave extends ObjectEntity {
      * @param gameState GameState used to decide the level of the Items.
      */
     public Grave(Monster monster, GameState gameState) {
-        super(monster.getPosition(), Colors.LIGHT_GREY, false, false);
+        super(monster.getPosition(), Colors.LIGHT_GREY, Colors.LIGHT_GREY,false, false);
         setSprites("/+\\", "|_|", Colors.LIGHT_GREY);
         droppedItems = new ArrayList<>();
         //plus tard quand les monstres auront des items dans un inventaire ça sera modifié en conséquent

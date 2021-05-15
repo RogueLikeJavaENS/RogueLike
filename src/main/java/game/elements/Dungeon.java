@@ -268,11 +268,26 @@ public class Dungeon {
      *
      */
     private void verifyALlRoom(){
-        for (GridMap gridMap : gridMapList) {
+        int i = 0;
+        while (i < gridMapList.size()){
+            GridMap gridMap = gridMapList.get(i);
             Room room = gridMap.getRoom();
             if (room.getRoomType() == RoomType.REST || room.getRoomType() == RoomType.MONSTER || room.getRoomType() == RoomType.START || room.getRoomType() == RoomType.NORMAL) {
-                VerificationRoom.verificationGenerationRoom(gridMap);
+                if (!VerificationRoom.verificationGenerationRoom(gridMap)){
+                    int width = room.getWidth();
+                    int height = room.getHeight();
+                    RoomFactory rf = new RoomFactory(width,height,2,floor);
+
+                    Room newRoom = rf.getRoom(null, room.getRoomType(), room.getRoomNum(), room.getNearRoom());
+                    roomList.remove(i);
+                    roomList.add(i, newRoom);
+                    GridMap newGridMap = new GridMap(newRoom);
+                    gridMapList.remove(i);
+                    gridMapList.add(i,newGridMap);
+                    i--;
+                }
             }
+            i++;
         }
     }
 }

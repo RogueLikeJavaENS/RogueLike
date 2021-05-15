@@ -14,7 +14,7 @@ public class AbstractItem extends AbstractStuff implements Item {
 
     @Override
     public boolean useItem(GameState gameState) {
-        return false;
+        return true;
     }
 
     @Override

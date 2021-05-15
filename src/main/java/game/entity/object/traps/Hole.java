@@ -14,7 +14,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class Hole extends ObjectEntity {
 
     public Hole(Position position) {
-        super(position, Colors.BLACK, true, false);
+        super(position, Colors.BLACK,  Colors.BLACK,true, false);
         setSprites(colorize("   ", Colors.SOFT_DARK.bgApply()),colorize("   ", Colors.SOFT_DARK.bgApply()));
     }
 

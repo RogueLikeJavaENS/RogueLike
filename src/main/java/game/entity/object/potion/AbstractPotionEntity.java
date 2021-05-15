@@ -20,7 +20,7 @@ public abstract class AbstractPotionEntity extends ObjectEntity implements Potio
     private final ItemType itemType;
 
     public AbstractPotionEntity(Position position, String sprite, Colors color, String potionName, ItemType itemType) {
-        super(position, color, true,true);
+        super(position, color, color, true,true);
         this.potionName = potionName;
         this.itemType = itemType;
         setSprites(sprite, sprite, color);
@@ -31,7 +31,7 @@ public abstract class AbstractPotionEntity extends ObjectEntity implements Potio
         GridMap gridMap = gameState.getGridMap();
         ItemFactory itemFactory = new ItemFactory();
         player.getInventory().addItem(itemFactory.getItem(itemType, player.getPlayerStats().getLevel()));
-        gameState.getDescriptor().updateDescriptor(String.format("%s picked up a %s !",player.getName(),(colorize(this.potionName, this.getBasicColor().textApply()))));
+        gameState.getDescriptor().updateDescriptor(String.format("%s picked up a %s !",player.getName(),(colorize(this.potionName, this.getUpColor().textApply()))));
         gridMap.update(this, false);
     }
 

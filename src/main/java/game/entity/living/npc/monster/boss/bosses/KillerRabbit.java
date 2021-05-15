@@ -27,12 +27,11 @@ public class KillerRabbit extends AbstractBoss {
      * different boss part, before setting them.
      * @param name the name of the bosses.
      * @param position the position we want to put the main boss (each bossPart position will be calculated with it).
-     * @param color the color used to color the main boss part.
      * @param strategy the bossStrategy we ant to use for this boss.
      * @param stats the boss main part stats.
      */
-    public KillerRabbit(String name, Position position, Colors color, Strategy strategy, AbstractStats stats) {
-        super(name, position, color, strategy, stats);
+    public KillerRabbit(String name, Position position, Strategy strategy, AbstractStats stats) {
+        super(name, position, Colors.PINK, Colors.PINK, strategy, stats);
         List<BossPart> listBossParts = new ArrayList<>();
         setSprites(colorize("   ", Attribute.BOLD(),Colors.PINK.textApply()),
                 colorize(" \\ ", Attribute.BOLD(),Colors.PINK.textApply()));

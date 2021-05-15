@@ -91,11 +91,6 @@ public class RendererUI {
                 globalSB.append(legendMinimap);
                 break;
 
-            case INVENTORY: // Print the inventory of the dungeon plus the HUD
-                globalSB.append(gs.getPlayer().getInventory().toStringInventory(gs));
-                globalSB.append(gs.getDescriptor().toString());
-                break;
-
             case NORMAL: // Print the HUD, the room and the minimap
                 globalSB.append(gs.getHud().toString());
                 globalSB.append(midRenderer());
@@ -107,10 +102,6 @@ public class RendererUI {
                 globalSB.append(midRenderer());
                 globalSB.append(gs.getHud().getSpellBar());
                 globalSB.append(gs.getFighting().toString());
-                globalSB.append(gs.getDescriptor().toString());
-                break;
-            case SHOP:
-                globalSB.append(gs.merchant.getMerchantInventory().toStringInventory(gs));
                 globalSB.append(gs.getDescriptor().toString());
                 break;
             default:

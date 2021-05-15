@@ -10,6 +10,10 @@ import game.menu.InGameMenu;
 import game.entity.living.inventory.OpenInventory;
 import game.menu.StartMenu;
 import game.stuff.item.ItemType;
+import game.stuff.item.keys.FloorKey;
+import game.stuff.item.keys.GoldKey;
+import game.stuff.item.potions.Elixir;
+import game.stuff.item.potions.PotionHealth;
 import game.stuff.item.potions.XpBottle;
 import generation.*;
 import utils.*;
@@ -43,11 +47,22 @@ public class RogueLike {
 
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1, start.getClasse());
-        Position initialPosition = dungeon.getRoom(0).getCenter();
+        Position initialPosition = dungeon.getRoom(dungeon.getDungeonSize()-3).getCenter();
         Player player = new Player(initialPosition, start.getName(), start.getClasse());
         gs = new GameState(player, dungeon, new HUD(player), sp, musicStuff);
         rendererUI = new RendererUI(gs);
         rendererUI.display();
+
+        player.getInventory().addItem(new FloorKey());
+        player.getInventory().addItem(new GoldKey());
+        player.getInventory().addItem(new Elixir());
+        player.getInventory().addItem(new Elixir());
+        player.getInventory().addItem(new XpBottle());
+        player.getInventory().addItem(new XpBottle());
+        player.getInventory().addItem(new PotionHealth());
+        player.getInventory().addItem(new PotionHealth());
+        player.getInventory().addItem(new PotionHealth());
+
 
         gameLoop(); // until state equals WIN or LOSE or END
 

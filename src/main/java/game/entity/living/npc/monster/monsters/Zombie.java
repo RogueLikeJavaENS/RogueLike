@@ -24,10 +24,10 @@ public class Zombie extends AbstractMonster {
      * @param strategy his strategy to apply
      */
     public Zombie(Position position, String name, int level, Strategy strategy) {
-        super(position, name, Colors.GREEN, MonsterType.ZOMBIE, strategy,
+        super(position, name, Colors.GREEN, Colors.GREEN, MonsterType.ZOMBIE, strategy,
                 new MonsterStats(1,1,1,1,1,1,1,level, 1));
         GameRule.setMonstersStats(this, MonsterType.ZOMBIE);
-        setSprites("_#_", "§ §", Colors.GREEN);
+        setSprites("_#_", "§ §", getUpColor());
         setBasicSprites("_#_", "§ §");
     }
 }

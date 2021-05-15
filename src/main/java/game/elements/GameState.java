@@ -44,7 +44,7 @@ public class GameState {
         this.dungeon = dungeon;
         this.player = player;
         this.sp = sp;
-        this.currentRoom = dungeon.getRoomList().get(0); //dungeon.getRoomList().size()-2
+        this.currentRoom = dungeon.getRoomList().get(dungeon.getDungeonSize()-3);
         this.gridMap = dungeon.getGridMap(currentRoom);
         this.help = false;
         this.miniMap = new MiniMap(dungeon, this);
@@ -183,7 +183,7 @@ public class GameState {
      * set the state NORMAL with no Monsters or FIGHT with monsters.
      */
     public void isThereMonsters() {
-        if (state != State.SHOP && state != State.PAUSE_MENU && state != State.SHOP_MENU) {
+        if (state != State.PAUSE_MENU && state != State.SHOP_MENU) {
             List<LivingEntity> monsters = getGridMap().getMonsters();
             if (monsters.size() > 0) {  // if there is no monsters in the current map
                 if (state == State.NORMAL) {    // if the state was at Normal, the fight is initialized.
