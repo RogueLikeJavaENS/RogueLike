@@ -46,6 +46,10 @@ public abstract class AbstractEntity implements Entity {
         this.spritesToPrint.add(colorize(basicSprites.get(1),downColor.textApply()));
     }
 
+    public boolean isPlayer(){
+        return false;
+    }
+
     @Override
     public void doAction(GameState gameState) {
         // do nothing

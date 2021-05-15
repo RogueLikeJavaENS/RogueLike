@@ -39,4 +39,9 @@ public class Bat extends AbstractMonster implements Monster {
             gameState.getDescriptor().updateDescriptor(getStrategy().getStrategyDescription());
         }
     }
+
+    @Override
+    public boolean isWeak() {
+        return true;
+    }
 }

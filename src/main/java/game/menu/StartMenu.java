@@ -42,26 +42,31 @@ public class StartMenu {
                         "              |___/                                       \n\n", Attribute.BOLD(), Colors.RED.textApply() );
 
     private final String classeArt =
-                    "\n           .-----.            / \\\n" +
-                    " \\ ' /   _/    )/             | |\n" +
-                    "- ( ) -('---''--)             |.|\n" +
-                    " / . \\((()\\^_^/)()            |.|\n" +
-                    "  \\\\_\\ (()_)-((()()           |:|      __\n" +
-                    "   '- \\ )/\\._./(()          ,_|:|_,   /  )                           /^\\     .\n" +
-                    "     '/\\/( X   ) \\            (Oo    / _I_                      /\\   \"V\"\n" +
-                    "     (___)|___/ ) \\            +\\ \\  || __|                    /__\\   I      O  o\n" +
-                    "          |.#_|(___)              \\ \\||___|                   //..\\\\  I     . \n" +
-                    "         /\\    \\ ( (_               \\ /.:.\\-\\                 \\].`[/  I\n" +
-                    "         \\/\\/\\/\\) \\\\                 |.:. /-----\\             /l\\/j\\  (]    .  O\n" +
-                    "         | / \\ |                     |___|::oOo::|           /. ~~ ,\\/I          .\n" +
-                    "         |(   \\|                     /   |:<_T_>:|           \\\\L__j^\\/I       o\n" +
-                    "        _|_)__|_\\_                  |_____\\ ::: /             \\/--v}  I     o   .\n" +
-                    "        )...()...(                   | |  \\ \\:/               |    |  I   _________\n" +
-                    "         | (   \\ |                   | |   | |                |    |  I c(`       ')o\n" +
-                    "      .-'__,)  (  \\                  \\ /   | \\___             |    l  I   \\.     ,/\n" +
-                    "                '\\_-,                / |   \\_____\\          _/j  L l\\_!  _//^---^\\\\_  \n" +
-                    "                                     `-'\n" +
-                    "Choose your class Hero :\n";
+                    "                    .)                     / \\\n" +
+                            "                   .   )                   | |\n" +
+                            "                  .      )                 |.|\n" +
+                            "                 .        )                |.|\n" +
+                            "          ~~~   .          )               |:|      __\n" +
+                            "        ~~~ o) .            )            ,_|:|_,   /  )                           /^\\     .\n" +
+                            "   ____~~~  =) .             )             (Oo    / _I_                      /\\   \"V\"\n" +
+                            "((______ |00%(============>>>>>            +\\ \\  || __|                    /__\\   I      O  o\n" +
+                            "        |      | .           )                \\ \\||___|                   //..\\\\  I     .\n" +
+                            "        |______|  .         )                   \\ /.:.\\-\\                 \\].`[/  I\n" +
+                            "        |___¤__|   .       )                     |.:. /-----\\             /l\\/j\\  (]    .  O\n" +
+                            "        |      |    .     )                      |___|::oOo::|           /. ~~ ,\\/I          .\n" +
+                            "        |       |    .   )                       /   |:<_T_>:|           \\\\L__j^\\/I       o\n" +
+                            "        |_______|     . )                       |_____\\ ::: /             \\/--v}  I     o   .\n" +
+                            "        | |   | |                                | |  \\ \\:/               |    |  I   _________\n" +
+                            "        | |   | |                                | |   | |                |    |  I c(`       ')o\n" +
+                            "        | |    | |                               \\ /   | \\___             |    l  I   \\.     ,/\n" +
+                            "        | |__  | |__                             / |   \\_____\\          _/j  L l\\_!  _//^---^\\\\_\n" +
+                            "                                                 `-'\n";
+
+    private final String chooseRanger =colorize("    ######################\n",Colors.RED.textApply());
+    private final String chooseWarrior = colorize("                                        ########################\n",Colors.RED.textApply());
+    private final String chooseMage =colorize("                                                                        ########################\n",Colors.RED.textApply());
+
+    private final String chooseClass ="Choose your class Hero :\n";
 
 
     private InGameClasses classe;
@@ -184,6 +189,21 @@ public class StartMenu {
     public void displayMenu() {
         StringBuilder sb = new StringBuilder();
         sb.append(headMenu);
+
+        if (selectedAction.getName().equals("Warrior")){
+            sb.append(chooseWarrior);
+            sb.append(chooseClass);
+        }
+        else if (selectedAction.getName().equals("Ranger")){
+            sb.append(chooseRanger);
+            sb.append(chooseClass);
+        }
+        else if (selectedAction.getName().equals("Mage")){
+            sb.append(chooseMage);
+            sb.append(chooseClass);
+        }
+
+
         sb.append(" ===============================================================\n");
         for (StartMenuAction action : actions) {
             sb.append("|");

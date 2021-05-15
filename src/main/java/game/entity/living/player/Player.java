@@ -25,4 +25,9 @@ public class Player extends LivingEntity {
         return (PlayerStats) stats;
     }
     public InGameClasses getClasse() { return classe; }
+
+    @Override
+    public boolean isPlayer() {
+        return true;
+    }
 }

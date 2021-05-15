@@ -78,4 +78,5 @@ public interface Entity {
     boolean isBossPart();
 
     void setSprites(String sprite1, String sprite2);
+    boolean isPlayer();
 }

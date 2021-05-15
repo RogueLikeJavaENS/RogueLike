@@ -37,5 +37,8 @@ public abstract class AbstractTile implements Tile {
         // Do nothing
     }
 
+    public boolean isEmptyTile(){
+        return false;
+    }
 
 }

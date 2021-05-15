@@ -18,4 +18,5 @@ public interface Tile {
     boolean isNPCAccessible();
     void setNPCAccessible(boolean isNPCAccessible);
     void doAction(GameState gameState);
+    boolean isEmptyTile();
 }

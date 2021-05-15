@@ -116,5 +116,9 @@ public abstract class AbstractMonster extends NPC implements Monster {
         return false;
     }
 
+    public boolean isWeak(){
+        return false;
+    }
+
 
 }

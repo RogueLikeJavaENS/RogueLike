@@ -104,7 +104,7 @@ public class GridMap {
                     if (entitiesAt.size() != 0)// print the first game.entity of the tile
                     {
                         Entity entityToPrint = getPrimaryEntity(entitiesAt);
-                        if (isInRange(abs, ord) && !(entityToPrint instanceof Player)) {
+                        if (isInRange(abs, ord) && !(entityToPrint.isPlayer())) {
                             if (i == 0) {
                                 sb.append(colorize(entityToPrint.getSprites(i), Colors.DEEP_GREY.bgApply()));
                             }
@@ -150,7 +150,7 @@ public class GridMap {
                         else {
                             sb.append(tiles[ord][abs]);
                         }
-                        if (tiles[ord][abs] instanceof EmptyTile) // if the tile is empty increment nbEmptyTile
+                        if (tiles[ord][abs].isEmptyTile()) // if the tile is empty increment nbEmptyTile
                         {
                             nbEmptyTile++;
                         }

@@ -367,7 +367,7 @@ public class GameRule {
      * Equal chance of every mobs.
      */
     public static int getMonsterType(){
-        return GEN.nextInt(6);
+        return GEN.nextInt(7);
     }
     /*////////////////////////////  GENERATION ////////////////////////////////*/
 
@@ -608,6 +608,16 @@ public class GameRule {
 
                 agility = 2+level;
                 damage = 2+level;
+                armor = level;
+                money = 3+level;
+                xp = 6*20;
+                break;
+            case WIZARD:
+                basicHP = 30;
+                hpModifier = 5;
+
+                agility = 1+level;
+                damage = 1+(level/2);
                 armor = level;
                 money = 3+level;
                 xp = 6*20;
