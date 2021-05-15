@@ -47,22 +47,11 @@ public class RogueLike {
 
         Seed seed = new Seed();
         Dungeon dungeon = DungeonStructure.createDungeon(seed, 1, start.getClasse());
-        Position initialPosition = dungeon.getRoom(dungeon.getDungeonSize()-3).getCenter();
+        Position initialPosition = dungeon.getRoom(0).getCenter();
         Player player = new Player(initialPosition, start.getName(), start.getClasse());
         gs = new GameState(player, dungeon, new HUD(player), sp, musicStuff);
         rendererUI = new RendererUI(gs);
         rendererUI.display();
-
-        player.getInventory().addItem(new FloorKey());
-        player.getInventory().addItem(new GoldKey());
-        player.getInventory().addItem(new Elixir());
-        player.getInventory().addItem(new Elixir());
-        player.getInventory().addItem(new XpBottle());
-        player.getInventory().addItem(new XpBottle());
-        player.getInventory().addItem(new PotionHealth());
-        player.getInventory().addItem(new PotionHealth());
-        player.getInventory().addItem(new PotionHealth());
-
 
         gameLoop(); // until state equals WIN or LOSE or END
 

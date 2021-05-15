@@ -44,7 +44,7 @@ public class GameState {
         this.dungeon = dungeon;
         this.player = player;
         this.sp = sp;
-        this.currentRoom = dungeon.getRoomList().get(dungeon.getDungeonSize()-3);
+        this.currentRoom = dungeon.getRoomList().get(0);
         this.gridMap = dungeon.getGridMap(currentRoom);
         this.help = false;
         this.miniMap = new MiniMap(dungeon, this);
