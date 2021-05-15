@@ -23,7 +23,7 @@ public enum Colors {
     DEEP_GREY(237), //for the spell range
     DARK_GREY(238), //for the walls
     LIGHT_GREY(244), //for the graves;
-    DARK_BLUE(238), // for the aggro
+    DARK_BLUE(17), // for the aggro
     WALL_WHITE(247);
     private final int value;
 
@@ -38,4 +38,6 @@ public enum Colors {
     public Attribute bgApply() {
         return Attribute.BACK_COLOR(value);
     }
+
+    public Attribute bgApplyAggro() {return Attribute.BACK_COLOR(51,0,0);}
 }

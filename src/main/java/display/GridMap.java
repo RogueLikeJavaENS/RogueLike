@@ -105,20 +105,40 @@ public class GridMap {
                     {
                         Entity entityToPrint = getPrimaryEntity(entitiesAt);
                         if (isInRange(abs, ord) && !(entityToPrint instanceof Player)) {
-                            sb.append(colorize(entityToPrint.getSprites(i), Colors.DEEP_GREY.bgApply()));
-                        }
-                        else {
-                            if (entityToPrint.isMonster()){
-                                Monster monster = (Monster) entityToPrint;
-                                if (monster.isAgroPlayer()){
-                                    sb.append(colorize(entityToPrint.getSprites(i),Colors.DARK_BLUE.bgApply()));
+                            if (i == 0) {
+                                sb.append(colorize(entityToPrint.getSprites(i), Colors.DEEP_GREY.bgApply()));
+                            }
+                            else {
+                                if (entityToPrint.isMonster()){
+                                    Monster monster = (Monster) entityToPrint;
+                                    if (monster.isAgroPlayer()){
+                                        sb.append(colorize(entityToPrint.getSprites(i),Colors.DARK_BLUE.bgApplyAggro()));
+                                    }
+                                    else{
+                                        sb.append(entityToPrint.getSprites(i));
+                                    }
                                 }
-                                else{
+                                else {
                                     sb.append(entityToPrint.getSprites(i));
                                 }
                             }
-                            else {
+                        }
+                        else {
+                            if (i == 0) {
                                 sb.append(entityToPrint.getSprites(i));
+                            } else {
+                                if (entityToPrint.isMonster()){
+                                    Monster monster = (Monster) entityToPrint;
+                                    if (monster.isAgroPlayer()){
+                                        sb.append(colorize(entityToPrint.getSprites(i),Colors.DARK_BLUE.bgApplyAggro()));
+                                    }
+                                    else{
+                                        sb.append(entityToPrint.getSprites(i));
+                                    }
+                                }
+                                else {
+                                    sb.append(entityToPrint.getSprites(i));
+                                }
                             }
                         }
                     }
