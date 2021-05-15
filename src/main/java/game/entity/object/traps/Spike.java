@@ -15,7 +15,7 @@ public class Spike extends ObjectEntity {
 
     public Spike(Position position) {
         super(position, Colors.DARK_GREY, Colors.DARK_GREY,true, false);
-        setSprites(colorize("^^^",Colors.GREY.textApply()),colorize("^^^",Colors.GREY.textApply()));
+        setSprites(colorize("^^^",Colors.WALL_WHITE.textApply()),colorize("^^^",Colors.WALL_WHITE.textApply()));
     }
 
     @Override

@@ -23,7 +23,8 @@ public enum Colors {
     DEEP_GREY(237), //for the spell range
     DARK_GREY(238), //for the walls
     LIGHT_GREY(244), //for the graves;
-    DARK_BLUE(238); // for the aggro
+    DARK_BLUE(238), // for the aggro
+    WALL_WHITE(247);
     private final int value;
 
     Colors(int value) {
