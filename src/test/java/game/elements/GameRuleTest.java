@@ -33,7 +33,6 @@ class GameRuleTest {
         assertEquals(2 + level, monster.getMonsterStats().getDamageTotal());
         assertEquals(level, monster.getMonsterStats().getArmorTotal());
         assertEquals(3 + level, monster.getMonsterStats().getMoneyCount());
-        assertEquals(5 * level, monster.getMonsterStats().getXpWorth());
     }
 
     @Test
