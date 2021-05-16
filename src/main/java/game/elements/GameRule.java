@@ -449,7 +449,7 @@ public class GameRule {
                         break;
                     case MAGE:
                         equipement.setBonusDamage(value);
-                        equipement.setBonusMana(value*10);
+                        equipement.setBonusMana(value*5);
                         break;
                 }
                 break;
@@ -471,7 +471,6 @@ public class GameRule {
                     case RANGER:
                         equipement.setBonusArmor(value);
                         equipement.setBonusAgility(Math.max(value/4, 1));
-                        equipement.setBonusMana(value);
                         break;
                     case MAGE:
                         equipement.setBonusMana(value*5);
