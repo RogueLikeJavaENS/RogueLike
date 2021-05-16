@@ -106,11 +106,11 @@ The spell which is selected is highlight in white and you can see just upward it
 
 #### Warrior Spells
    - `Basic Attack` : lvl 1, hit the monster in front of you with your sword 
-   - `Strong Punch` : lvl 1, powerful hit to the monster in front of you 
+   - `Throw Axe` : lvl 1, with a perfect throw of axe you hit the first monster in your range
    - `TourbiLOL` : lvl 2, you turn and turn and slice all the monster around you
    - `Iron Skin` : lvl 3, you make yourself more resistant 
    - `Charge` : lvl 4, you charge and hit every monster on your path
-   - `Throw Axe` : lvl 5, with a perfect throw of axe you hit the first monster in your range
+   - `Strong Punch` : lvl 5, powerful hit to the monster in front of you 
    - `Ground Punch` : lvl 6, a powerful punch on the ground hit all the enemies around you
 
 ## Merchant
@@ -165,13 +165,13 @@ The player can find **Merchant** Room, try to interact with him by pressing **E*
 In treasure room, you can find **BTC** and **Potions** and one golden chest.<br>
 
 ### Boss Room
-// photo de la room
+<img src="https://user-images.githubusercontent.com/57185748/118408590-85b47080-b686-11eb-9e16-3f141cdc8dfa.png" width="350"><br>
 In this room, you can find a boss. You have to beat him in order to gain a Floor Key, which permit to go to the stair. <br>
 ![boss-door](https://user-images.githubusercontent.com/71182082/118397081-a4990f80-b652-11eb-9944-b268f8c4c4fb.png)<br>
 This room is initialy close. If you want to open the door you have to turn on all the [button](#button) of this floor.<br>
 
 ### End Room
-<img src="https://user-images.githubusercontent.com/57185748/115143026-293d4180-a045-11eb-855d-1360b5a174b1.png" width="350"><br>
+<img src="https://user-images.githubusercontent.com/57185748/118408606-9d8bf480-b686-11eb-8c08-dade9bdc794a.png" width="350"><br>
 **Caution !** When You take a stair, you go up in the dungeon, but you _can't turn back..._
 The monsters up there are stronger, you may want to level up before going upstairs.
 
