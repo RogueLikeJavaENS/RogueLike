@@ -42,5 +42,7 @@ public interface Spell {
      */
     boolean isMovement();
 
+    boolean isDamaging();
+
     String getName();
 }
