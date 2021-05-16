@@ -862,7 +862,6 @@ public abstract class AbstractInventory implements Inventory {
                 sb.append(colorize("|", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
             } else sb.append("|");
 
-            /* BTC */ // TODO make stuffs a cost.
             int btc;
             if (selling) {
                 btc = item.getSellingPrice();
