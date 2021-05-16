@@ -71,7 +71,7 @@ When a monster is playing, you can skip the description by pressing any key.<br>
 During the player turn, he has 1 action.<br>
 `move`, `attack` and `use potion` are consuming the player turn.<br> 
 You can open the minimap, turn yourself with **Caps. lock**, select sorts, and open your inventory without consuming your action.<br>
-When a monster is killed, the hero gain **XP**, [BTC](#btc) and [Potions](#potions).
+When a monster is killed, the hero gain **XP**, and a grave spawn at his location, the grave(#Grave) will hold btc(#BTC), equipement(#Equipement) and items(#Items) (including potion(#Potions)) and can picked up by interacting with it using **E**
 
 
 ### Range 
@@ -307,7 +307,11 @@ The chest contains equipments and items, and the Golden Chest is full of more ra
 ### Button
 ![red-button](https://user-images.githubusercontent.com/71182082/118396944-16bd2480-b652-11eb-9a2a-cf5ff17129dc.png)<br>
 ![green-button](https://user-images.githubusercontent.com/71182082/118396955-2ccae500-b652-11eb-9951-3cf2f6d2e367.png)<br>
-To open the door of the [Boss Room](#boss-room) you have to activate all tu button (turn them in green) by pressing **E**.<br>
+To open the door of the [Boss Room](#boss-room) you have to activate all button (turn them in green) by pressing **E**.<br>
 This button are dispersed in the room of the floor.<br>
+
+### Grave
+![grave](![image](https://user-images.githubusercontent.com/48914003/118402766-e75ee580-b65a-11eb-96ba-e84b321b1d8f.png)<br>
+A grave will be spawned each time a monster is killed, you can pick up all your reward by coming close to it and pressing **E**.
 
 
