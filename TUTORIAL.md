@@ -28,11 +28,11 @@
 <img src="https://user-images.githubusercontent.com/71182082/118393813-4adc1980-b641-11eb-9cad-cdff995ccc1e.png" width="450"><br>
 At first you need to write your name. Keep focusing on the Panel "KEEP FOCUS HERE TO PLAY AND WRITE", to write it and press **Enter**.<br><br>
 <img src="https://user-images.githubusercontent.com/71182082/118393822-5cbdbc80-b641-11eb-9da7-b8d92a974a0d.png" width="450"><br>
-Here you can chose what you want to do. Switch between the choice with the keys **Z, S** and press **E** to select it.<br>
+Here you can chose what you want to do. Switch between the choices with the keys **Z, S** and press **E** or **Enter** to select it.<br>
 <br>
 <img src="https://user-images.githubusercontent.com/71182082/118393835-6fd08c80-b641-11eb-9e8e-b3045652ecef.png" width="450"><br>
 Now here is the capital choice, you have to choose your class. Are you gonna be a Mage, a Warrior or a Ranger ?<br>
-Switch between the choice with the keys **Z, S** and press **E** to select it.<br>
+Switch between the choice with the keys **Z, S** and press **E** or **Enter** to select it.<br>
 <br>
 And now the game can really begin ... <br>
 <img src="https://user-images.githubusercontent.com/71182082/118393985-3e0bf580-b642-11eb-9227-574590e81f80.png" width="450"><br>
@@ -41,7 +41,7 @@ And now the game can really begin ... <br>
 ## Controls
 ### Normal inputs
 `Movements`  **Z** Up, **Q** Left, **S** Down, **D** Right.<br>
-`Interaction`  **E** Interact with an game.entity (Merchants).<br>
+`Interaction`  **E** Interact with entity in game, merchant or chest alike.<br>
 `Menu`  **I** Open and close the playerInventory, **M** Open and close the Map, **H** Hide/show controls.<br>
 `Potion`  **V** Use Healing Potion, **B** Use Elixir, **N** Use XP Bottle<br>
 `Quit`  **ESC** Excape the game.<br>
@@ -53,7 +53,7 @@ And now the game can really begin ... <br>
 `Spells` **A** Use the selected Spell, **← →** Select a Spell.<br>
 
 ## Player Caracteristic
-![stats](https://user-images.githubusercontent.com/71182082/118400833-a5866d00-b663-11eb-9d3b-35241ce77b08.png)
+![stats](https://user-images.githubusercontent.com/71182082/118400833-a5866d00-b663-11eb-9d3b-35241ce77b08.png)<br>
 Your statistic are composed by :
    -  `XP` : number of point of experience
    -  `HP` : number of point of health
