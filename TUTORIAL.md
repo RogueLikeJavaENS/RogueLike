@@ -19,6 +19,9 @@
    - [Monsters](#monsters)
    - [BTC](#btc)
    - [Potions](#potions)
+   - [Items](#items)
+   - [Traps](#traps)
+   - [Other Elements](#other-element)
    
 ## How to begin 
 <img src="https://user-images.githubusercontent.com/71182082/118393813-4adc1980-b641-11eb-9cad-cdff995ccc1e.png" width="450"><br>
@@ -57,14 +60,17 @@ During the player turn, he has 1 action.<br>
 You can open the minimap, turn yourself with **Caps. lock**, select sorts, and open your inventory without consuming your action.<br>
 When a monster is killed, the hero gain **XP**, [BTC](#btc) and [Potions](#potions).
 
-![aggro](https://user-images.githubusercontent.com/71182082/118394001-6398ff00-b642-11eb-90b3-cd169d03a6fd.png)
 
-
+### Range 
+![range](https://user-images.githubusercontent.com/71182082/118395178-356aed80-b649-11eb-93ad-417a1bda05e8.png)<br>
+The rectangle in light grey is your range. If a monster is in your range you can inflict damage to him.<br> 
 
 ### Spells
 You can consumes an amout of mana in order to use a spell . It deals damage to all monsters within the range.<br>
-Each spell has diffents range area.<br>
+Each spell has diffents range area.<br>Q
 You can gain spell by gaining level.<br>
+![mana-spell](https://user-images.githubusercontent.com/71182082/118395227-76fb9880-b649-11eb-8592-b0d200e01ebd.png)<br>
+The spell which is selected is highlight in white and you can see just upward its cost in Mana Point.<br>
 
 #### Ranger Spells
    - `Put Trap` : lvl 1, you can set a trap to trick the monster, be careful you can hurt yourself
@@ -97,10 +103,10 @@ You can gain spell by gaining level.<br>
 ## Merchant
 ![merchant](https://user-images.githubusercontent.com/57185748/115144943-96ee6b00-a04f-11eb-8c06-6c8837ba9554.png)<br>
 You can encounter Potion Merchant in the dungeon and interact with him with **E**<br>
-![merchantShop](https://user-images.githubusercontent.com/71182082/118340168-3dc50a80-b51b-11eb-9b4c-c3d544f80bff.png)<br>
+<img src="https://user-images.githubusercontent.com/71182082/118340168-3dc50a80-b51b-11eb-9b4c-c3d544f80bff.png" width="500"><br>
 You can choose to buy him or sell him potions, equipments. Of course, the merchant will sell you items at a higher price than he gonna buy yours.<br>
 Or to attack him, but be ready to face the consequences.<br>
-![buy](https://user-images.githubusercontent.com/71182082/118340212-59c8ac00-b51b-11eb-837d-890d12b8f461.png)<br>
+<img src="https://user-images.githubusercontent.com/71182082/118340212-59c8ac00-b51b-11eb-837d-890d12b8f461.png" width="500"><br>
 You can find all the item and stuff the merchant sell here.<br>
 Use **Q, D** to switch between the items and the equipment.<br>
 Use **Z, S** to switch between the stuff you can buy.<br>
@@ -109,41 +115,47 @@ On the bottom you can see what equipment you wear.<br>
 The same interface is used to sell some stuff to the merchant.<br>
 
 ## Map
-![map](https://user-images.githubusercontent.com/71182082/118340551-5255d280-b51c-11eb-9a06-dd1a29e9a018.png)<br>
+<img src="https://user-images.githubusercontent.com/71182082/118340551-5255d280-b51c-11eb-9a06-dd1a29e9a018.png" width="500"><br>
 By opening the map with the key **M**, you can see the rooms of the current floor of the dungeon.<br>
 You can't see a room on your map if you don't have visited her already.<br>
 The ways to see all the map are to visit all the room or use a Map of the Floor.<br>
-![cutMap](https://user-images.githubusercontent.com/71182082/118340702-c7c1a300-b51c-11eb-9370-d19ac3081e98.png)<br>
+<img src="https://user-images.githubusercontent.com/71182082/118396389-a6150880-b64f-11eb-924f-c7b705204cdb.png" width="500"><br>
 When you are in the dungeon you can see where you are with a mini-map in the right of the screen.<br> 
 
 ## Inventory
 By opening the invenotry with the key **I** you can see all the items and the equipments you have and all your stats.<br>
 You can also use it (for the item) or equipy it (for the equipment) by pressing **E**.<br>
 To move on your inventory, use **Q, D** to switch between items and equipment and use **Z, S** to choose the items or equipment.<br>
-![inventory-item](https://user-images.githubusercontent.com/71182082/118340767-05263080-b51d-11eb-8560-50eabd203bc7.png)<br>
+<img src="https://user-images.githubusercontent.com/71182082/118340767-05263080-b51d-11eb-8560-50eabd203bc7.png" width="800"><br>
 On the item part you can find all your potions, keys and also the Map of the Floor.<br>
 
-![inventory-equip](https://user-images.githubusercontent.com/71182082/118340779-10795c00-b51d-11eb-8372-28a779756d78.png)<br>
+<img src="https://user-images.githubusercontent.com/71182082/118340779-10795c00-b51d-11eb-8372-28a779756d78.png" width="800"><br>
 On the equipment part you can find all your equipment. Those in red are the one you used right know you can unequip them by pressing **E**.<br>
 
 ## Room Types
 
 ### Start Room
+<img src="https://user-images.githubusercontent.com/71182082/118396217-c8f2ed00-b64e-11eb-8bc5-88226f719972.png" width="350"><br>
+This room is the room where you spwan in a new floor of the dungeon. You can find a chest in order to be equiped for the adventure.<br>
 
 ### Fighting Room
-<img src="https://user-images.githubusercontent.com/57185748/115142625-1d508000-a043-11eb-95cd-cd7f7f5b3c67.png" width="350"><br>
-In the fighting room, the player may encounters **Monsters**.
-The fight start and continue whenever there is **one** monster in the room.
+<img src="https://user-images.githubusercontent.com/71182082/118396235-e1fb9e00-b64e-11eb-9dfa-d3dd1f14d1aa.png" width="350"><br>
+In the fighting room, the player may encounters **Monsters**.<br>
+The fight start and continue whenever there is **one** monster in the room.<br>
   
 ### Merchant Room
-<img src="https://user-images.githubusercontent.com/57185748/115142959-c3e95080-a044-11eb-8a45-e42e66ac058a.png" width="350"><br>
-The player can find **Merchant** Room, try to interact with him by pressing **E** !
+<img src="https://user-images.githubusercontent.com/71182082/118396351-7534d380-b64f-11eb-81b7-662be47827ce.png" width="350"><br>
+The player can find **Merchant** Room, try to interact with him by pressing **E** !<br>
   
-### Treasure Room
-<img src="https://user-images.githubusercontent.com/57185748/115143030-2b9f9b80-a045-11eb-9864-5c005c88eb13.png" width="350"><br>
-In treasure room, you can find **BTC** and Potions
+### Treasure Roomaa
+<img src="https://user-images.githubusercontent.com/71182082/118396276-1a9b7780-b64f-11eb-94c3-57d047c76e95.png" width="350"><br>
+In treasure room, you can find **BTC** and Potions.<br>
 
 ### Boss Room
+// photo de la room
+In this room, you can find a boss. You have to beat him in order to gain a Floor Key, which permit to go to the stair. <br>
+![boss-door](https://user-images.githubusercontent.com/71182082/118397081-a4990f80-b652-11eb-9944-b268f8c4c4fb.png)<br>
+This room is initialy close. If you want to open the door you have to turn on all the [button](#button) of this floor.<br>
 
 ### End Room
 <img src="https://user-images.githubusercontent.com/57185748/115143026-293d4180-a045-11eb-855d-1360b5a174b1.png" width="350"><br>
@@ -152,8 +164,8 @@ The monsters up there are stronger, you may want to level up before going upstai
 
 # Game Elements
 ## Monsters
-![Agro](https://user-images.githubusercontent.com/71182082/115145205-af12ba00-a050-11eb-94b6-2769c4c871a3.png)<br>
-When you encounter monsters, some of them may want to attack you. When they decide to attack you their color changes to orange (like the bottom monster on the bottom-left of the room).<br>
+![aggro](https://user-images.githubusercontent.com/71182082/118394001-6398ff00-b642-11eb-90b3-cd169d03a6fd.png)<br>
+When you encounter monsters, some of them may want to attack you. When they decide to attack you their feet became red.<br>
 
 ### Goblin
 ![Goblin](https://user-images.githubusercontent.com/71182082/115144434-e2534a00-a04c-11eb-9bcf-55cf8ad6ab97.png)<br>
@@ -164,12 +176,15 @@ The Goblin is quick but once you decrease his life enough he prefers to ran away
 The Skeleton is an angry monster once he sees you, he will follow you to the death.<br>
 
 ### Wizard 
-The Wizzard can cast spell and attack you from a long distance. His spells are not very strong but if you don't pay attention they can decrease a lot your life.<br>
+![wizard](https://user-images.githubusercontent.com/71182082/118396976-3fddb500-b652-11eb-8fc9-2f803bbff666.png)
+
+The Wizard can cast spell and attack you from a long distance. His spells are not very strong but if you don't pay attention they can decrease a lot your life.<br>
 
 ### Orc
 The Orc is powerful and enraged. The damages he inflict are sizable.<br>
 
 ###  Bat
+![bat](https://user-images.githubusercontent.com/71182082/118397184-11140e80-b653-11eb-974d-f857ce7735b0.png)
 A bat is just a bat which live on this tower. The bat is not strong, it's just a bat.<br>
 
 ### Mimic 
@@ -181,9 +196,15 @@ You choose to attack the merchant, what a bad idea. Now he's angry and want to k
 ### Vampire
 A vampire never die, he rather became bat. But infortunatly for him, a bat can die.<br>
 
+### Zombie
+![zombie](https://user-images.githubusercontent.com/71182082/118397280-8253c180-b653-11eb-9543-2987bab613ac.png)<br>
+The undead are back, but they can die by your hand.
+
 ## Boss
 
 ### Killer Rabbit
+This big pink rabbit has a key but don't want to give it to you. If you want to continue your ascent you have to beat him.<br>
+Be careful he throws explosive carrots.
 
 ## BTC
 ![BTC](https://user-images.githubusercontent.com/71182082/115144673-33b00900-a04e-11eb-8c5c-1cc132de6027.png)<br>
@@ -224,11 +245,40 @@ Use her to gain Xp.<br>
 ## Items
 
 ### Floor Key
+This key is given by the boss when you defeat him. It's permit you to open the door of the End Room and go to next floor.<br> 
 
 ### Golden Key
+You can find this key in a Chest or you can buy one of the at the merchant.<br>
+It's permit to open a [Golden Chest](#Chest-and-Golden-Chest).<br>
 
-### Map of the Dungeon
+### Map of the Floor
+You can find this map on a Grave or a Chest but they are rare, or you can buy one at the merchant.<br>
+
+## Traps
+The traps are here to complicate your move in a room.<br>
+
+### Spike
+// screen spike
+You can walk on spike, but you're gonna be hurt.<br>
+
+### Hole
+// screen hole
+When you walk in a hole you are teleport in the start room of the floor. The fall hurt you of course.
+
+## Other elements
+
+### Chest and Golden Chest
+// screen chest and golden chest
+In many room you can find a Chest, and in a treasure room you can find a Golden Chest.<br>
+The chest contains equipments and items, and the Golden Chest is full of more rare equipment.<br>
+
+### Button
+![red-button](https://user-images.githubusercontent.com/71182082/118396944-16bd2480-b652-11eb-9a2a-cf5ff17129dc.png)
+![green-button](https://user-images.githubusercontent.com/71182082/118396955-2ccae500-b652-11eb-9951-3cf2f6d2e367.png)
+
+To open the door of the [Boss Room](#boss-room) you have to activate all tu button (turn them in green) by pressing **E**.<br>
+This button are dispersed in the room of the floor.<br>
 
 
-=======
+==================================================================================================================================
 
