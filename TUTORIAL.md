@@ -171,7 +171,7 @@ In this room, you can find a boss. You have to beat him in order to gain a Floor
 This room is initialy close. If you want to open the door you have to turn on all the [button](#button) of this floor.<br>
 
 ### End Room
-<img src="https://user-images.githubusercontent.com/57185748/118408606-9d8bf480-b686-11eb-8c08-dade9bdc794a.png" width="350"><br>
+<img src="https://user-images.githubusercontent.com/57185748/118408657-d5933780-b686-11eb-848e-f653ecccb888.png" width="350"><br>
 **Caution !** When You take a stair, you go up in the dungeon, but you _can't turn back..._
 The monsters up there are stronger, you may want to level up before going upstairs.
 
