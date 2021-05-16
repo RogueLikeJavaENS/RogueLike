@@ -115,7 +115,7 @@ The spell which is selected is highlight in white and you can see just upward it
 
 ## Merchant
 ![merchant](https://user-images.githubusercontent.com/57185748/115144943-96ee6b00-a04f-11eb-8c06-6c8837ba9554.png)<br>
-You can encounter Potion Merchant in the dungeon and interact with him with **E**<br>
+You can encounter Merchant in the dungeon and interact with him with **E**<br>
 <img src="https://user-images.githubusercontent.com/71182082/118340168-3dc50a80-b51b-11eb-9b4c-c3d544f80bff.png" width="500"><br>
 You can choose to buy him or sell him potions, equipments. Of course, the merchant will sell you items at a higher price than he gonna buy yours.<br>
 Or to attack him, but be ready to face the consequences.<br>
@@ -130,7 +130,7 @@ The same interface is used to sell some stuff to the merchant.<br>
 ## Map
 <img src="https://user-images.githubusercontent.com/71182082/118340551-5255d280-b51c-11eb-9a06-dd1a29e9a018.png" width="500"><br>
 By opening the map with the key **M**, you can see the rooms of the current floor of the dungeon.<br>
-You can't see a room on your map if you don't have visited her already.<br>
+You can't see a room on your map if you don't have visited it already.<br>
 The ways to see all the map are to visit all the room or use a Map of the Floor.<br>
 <img src="https://user-images.githubusercontent.com/71182082/118396389-a6150880-b64f-11eb-924f-c7b705204cdb.png" width="500"><br>
 When you are in the dungeon you can see where you are with a mini-map in the right of the screen.<br> 
@@ -149,12 +149,12 @@ On the equipment part you can find all your equipment. Those in red are the one 
 
 ### Start Room
 <img src="https://user-images.githubusercontent.com/71182082/118396217-c8f2ed00-b64e-11eb-8bc5-88226f719972.png" width="350"><br>
-This room is the room where you spwan in a new floor of the dungeon. You can find a chest in order to be equiped for the adventure.<br>
+This room is where you spwan in a new floor of the dungeon. You can find a chest in order to be equiped for the adventure.<br>
 
 ### Fighting Room
 <img src="https://user-images.githubusercontent.com/71182082/118396235-e1fb9e00-b64e-11eb-9dfa-d3dd1f14d1aa.png" width="350"><br>
 In the fighting room, the player may encounters **Monsters**.<br>
-The fight start and continue whenever there is **one** monster in the room.<br>
+The fight start and continue while there is still **one** monster in the room.<br>
   
 ### Merchant Room
 <img src="https://user-images.githubusercontent.com/71182082/118396351-7534d380-b64f-11eb-81b7-662be47827ce.png" width="350"><br>
@@ -162,7 +162,7 @@ The player can find **Merchant** Room, try to interact with him by pressing **E*
   
 ### Treasure Roomaa
 <img src="https://user-images.githubusercontent.com/71182082/118396276-1a9b7780-b64f-11eb-94c3-57d047c76e95.png" width="350"><br>
-In treasure room, you can find **BTC** and Potions.<br>
+In treasure room, you can find **BTC** and **Potions** and one golden chest.<br>
 
 ### Boss Room
 // photo de la room
@@ -198,13 +198,13 @@ The Orc is powerful and enraged. The damages he inflict are sizable.<br>
 
 ###  Bat
 ![bat](https://user-images.githubusercontent.com/71182082/118397184-11140e80-b653-11eb-974d-f857ce7735b0.png)<br>
-A bat is just a bat which live on this tower. The bat is not strong, it's just a bat.<br>
+A bat is just a bat which live in this tower. The bat is not strong, it's just a bat.<br>
 
 ### Mimic 
 The mimic looks exactly like a chest. But once you try to open it, it reveal it's true face and attack you.<br>
 
 ### Merchant Monster
-You choose to attack the merchant, what a bad idea. Now he's angry and want to kill you, don't underestimate him, his strength is incredible.<br>
+You chose to attack the merchant, what a bad idea. Now he's angry and want to kill you, don't underestimate him, his strength is incredible.<br>
 
 ### Vampire
 ![vampire](https://user-images.githubusercontent.com/71182082/118400218-ffd1fe80-b660-11eb-8117-5f26127ded1b.png)<br>
@@ -217,13 +217,13 @@ The undead are back, but they can die by your hand.<br>
 ## Boss
 
 ### Killer Rabbit
-This big pink rabbit has a key but don't want to give it to you. If you want to continue your ascent you have to beat him.<br>
+This big pink rabbit has a key but don't want to give it to you. If you want to continue your climb you have to beat him.<br>
 Be careful he throws explosive carrots.
 
 ## BTC
 ![BTC](https://user-images.githubusercontent.com/71182082/115144673-33b00900-a04e-11eb-8c5c-1cc132de6027.png)<br>
 You can find BTC on the floor in a lot of room, or drop them on monster you kill.<br>
-Thoses BTC allow you to buy anythyng you want from the merchant.<br>
+Thoses BTC allow you to buy anything you want from the merchant.<br>
 
 ## Equipment 
 The equipment are here to improve you stats. They can increase different type of stats like the ATK or the DEF.<br>
@@ -255,7 +255,7 @@ The rarity are :
 
 ## Potions
 
-You can find potions on the treasure room or buy them at the merchant room.<br>
+You can find potions on the treasure room or buy them at the merchant.<br>
 Potion have multiple uses and could be very useful during a fight.<br>
 ![NbPotion](https://user-images.githubusercontent.com/71182082/115144954-a077d300-a04f-11eb-8378-f5878bb695c8.png)<br>
 Be careful : Your HP and MP can't be greater than the maximum (in this example you can't have more than 100 HP even if you use a health potion).<br>
@@ -276,7 +276,7 @@ Use her to gain Xp.<br>
 ## Items
 
 ### Floor Key
-This key is given by the boss when you defeat him. It's permit you to open the door of the End Room and go to next floor.<br> 
+This key is given by the boss when you defeat him. It allows you to open the door of the End Room and go to next floor.<br> 
 
 ### Golden Key
 You can find this key in a Chest or you can buy one of the at the merchant.<br>
@@ -286,15 +286,15 @@ It's permit to open a [Golden Chest](#Chest-and-Golden-Chest).<br>
 You can find this map on a Grave or a Chest but they are rare, or you can buy one at the merchant.<br>
 
 ## Traps
-The traps are here to complicate your movment in a room.<br>
+The traps are here to complicate your movement in a room.<br>
 
 ### Spike
 ![spike](https://user-images.githubusercontent.com/71182082/118399882-91d90780-b65f-11eb-86ae-c5188fe6e0fe.png)<br>
-You can walk on spike, but you're gonna be hurt.<br>
+You can walk on spike, but you're gonna get hurt.<br>
 
 ### Hole
 ![hole](https://user-images.githubusercontent.com/71182082/118399898-a4534100-b65f-11eb-8b15-0d8b81abd409.png)<br>
-When you walk in a hole you are teleport in the start room of the floor. The fall hurt you of course.<br>
+When you walk in a hole you are teleported in the start room of the floor. The fall hurt you of course.<br>
 
 ## Other elements
 
@@ -302,12 +302,12 @@ When you walk in a hole you are teleport in the start room of the floor. The fal
 ![chest](https://user-images.githubusercontent.com/71182082/118399910-b92fd480-b65f-11eb-874f-338afa4d0884.png) Chest <br>
 ![golden-chest](https://user-images.githubusercontent.com/71182082/118399957-f5633500-b65f-11eb-929b-b28692fc5f34.png) Golden Chest<br>
 In many room you can find a Chest, and in a treasure room you can find a Golden Chest.<br>
-The chest contains equipments and items, and the Golden Chest is full of more rare equipment.<br>
+The chest contains equipments and items, and the Golden Chest is full of even more rare equipment.<br>
 
 ### Button
 ![red-button](https://user-images.githubusercontent.com/71182082/118396944-16bd2480-b652-11eb-9a2a-cf5ff17129dc.png)<br>
 ![green-button](https://user-images.githubusercontent.com/71182082/118396955-2ccae500-b652-11eb-9951-3cf2f6d2e367.png)<br>
-To open the door of the [Boss Room](#boss-room) you have to activate all button (turn them in green) by pressing **E**.<br>
+To open the door of the [Boss Room](#boss-room) you have to activate all button (turn them green) by pressing **E**.<br>
 This button are dispersed in the room of the floor.<br>
 
 ### Grave
