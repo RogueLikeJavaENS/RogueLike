@@ -31,7 +31,7 @@ public class AttackStrategy extends DecoratorStrategy {
     public boolean act(Monster monster, Player player, GridMap gridMap) {
         // look if the player has avoid the attack with his agility
         if (player.getPlayerStats().hasAvoided()){
-            this.updateStrategyDescription(String.format("%s dodged %s's attack!", player.getName(), monster.getName()));
+            this.updateStrategyDescription(String.format("%s",player.getName()) + colorize(" dodged ", Colors.GREEN.textApply()) + String.format("%s's attack!", monster.getName()));
         }
         // if he don't avoid the attack, calculate the damage make to the player, inflict the damage and update the descriptor
         else {
