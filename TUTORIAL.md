@@ -1,7 +1,7 @@
 # Tutorial of RogueLike
 
 ## Summary
-1. [How to play](#How-to-play)
+1. [How to play](#how-to-play)
 2. [Player caracteristic](#player-caracteristic)
 3. [Controls](#controls)
    - [Normal](#normal-inputs)
@@ -24,7 +24,7 @@
    - [Traps](#traps)
    - [Other Elements](#other-elements)
    
-## How to begin 
+## How to play
 <img src="https://user-images.githubusercontent.com/71182082/118393813-4adc1980-b641-11eb-9cad-cdff995ccc1e.png" width="450"><br>
 At first you need to write your name. Keep focusing on the Panel "KEEP FOCUS HERE TO PLAY AND WRITE", to write it and press **Enter**.<br><br>
 <img src="https://user-images.githubusercontent.com/71182082/118393822-5cbdbc80-b641-11eb-9da7-b8d92a974a0d.png" width="450"><br>
