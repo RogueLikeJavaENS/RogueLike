@@ -16,8 +16,12 @@ import game.stuff.item.Item;
 import game.stuff.item.ItemFactory;
 import game.stuff.item.ItemType;
 import game.stuff.item.keys.GoldKey;
+import game.stuff.item.potions.Elixir;
+import game.stuff.item.potions.PotionHealth;
 import utils.Colors;
 import utils.Position;
+
+import java.util.Random;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
@@ -87,6 +91,16 @@ public class Chest extends ObjectEntity {
             if(nbXPBottle > 0){ gameState.getDescriptor().updateDescriptor(String.format(
                     "You found %d %s in the chest", nbXPBottle, colorize(ItemType.XP_BOTTLE.toString(), Attribute.BOLD(), Colors.GREEN.textApply()))); }
 
+        } else {
+            Random Gen = new Random();
+            int nbHealthPotion = Gen.nextInt(2)+2;
+            int nbElixir = Gen.nextInt(1)+1;
+            for (int i = 0; i < nbHealthPotion; i++) {
+                player.getInventory().addItem(new PotionHealth());
+            }
+            for (int i = 0; i < nbElixir; i++) {
+                player.getInventory().addItem(new Elixir());
+            }
         }
 
         /// Fill the equipment
