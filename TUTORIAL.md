@@ -51,6 +51,18 @@ And now the game can really begin ... <br>
 `Movement` **Caps Lock.** Lock the player, you can turn without moving<br>
 `Spells` **A** Use the selected Spell, **← →** Select a Spell.<br>
 
+## Player Caracteristic
+![stats](https://user-images.githubusercontent.com/71182082/118400833-a5866d00-b663-11eb-9d3b-35241ce77b08.png)
+Your statistic are composed by :
+   -  `XP` : number of point of experience
+   -  `HP` : number of point of health
+   -  `MP` : number of point of mana
+   -  `LVL` : your current level
+   -  `ATK` : the more attack you have, the more damage you give
+   -  `DEF` : the more defense you have, the less damage you recevied
+   -  `AGI` : if you have enough agility you can sometimes dodges the monster's attack
+   -  `RGE` : distance of your range with a classic attack
+
 ## Fight
 <img src="https://user-images.githubusercontent.com/71182082/118394027-8f1be980-b642-11eb-9049-c9796a48d474.png" width="350"><br>
 A **fight** start whenever the player is in a room with a monster. The fight is organized with a turn order.<br>
@@ -176,15 +188,15 @@ The Goblin is quick but once you decrease his life enough he prefers to ran away
 The Skeleton is an angry monster once he sees you, he will follow you to the death.<br>
 
 ### Wizard 
-![wizard](https://user-images.githubusercontent.com/71182082/118396976-3fddb500-b652-11eb-8fc9-2f803bbff666.png)
-
+![wizard](https://user-images.githubusercontent.com/71182082/118396976-3fddb500-b652-11eb-8fc9-2f803bbff666.png)<br>
 The Wizard can cast spell and attack you from a long distance. His spells are not very strong but if you don't pay attention they can decrease a lot your life.<br>
 
 ### Orc
+![orc](https://user-images.githubusercontent.com/71182082/118400190-d87b3180-b660-11eb-8e6f-1301f277e6be.png)<br>
 The Orc is powerful and enraged. The damages he inflict are sizable.<br>
 
 ###  Bat
-![bat](https://user-images.githubusercontent.com/71182082/118397184-11140e80-b653-11eb-974d-f857ce7735b0.png)
+![bat](https://user-images.githubusercontent.com/71182082/118397184-11140e80-b653-11eb-974d-f857ce7735b0.png)<br>
 A bat is just a bat which live on this tower. The bat is not strong, it's just a bat.<br>
 
 ### Mimic 
@@ -194,11 +206,12 @@ The mimic looks exactly like a chest. But once you try to open it, it reveal it'
 You choose to attack the merchant, what a bad idea. Now he's angry and want to kill you, don't underestimate him, his strength is incredible.<br>
 
 ### Vampire
-A vampire never die, he rather became bat. But infortunatly for him, a bat can die.<br>
+![vampire](https://user-images.githubusercontent.com/71182082/118400218-ffd1fe80-b660-11eb-8117-5f26127ded1b.png)<br>
+A vampire never dies, he would rather became a bat. But infortunatly for him, a bat can die.<br>
 
 ### Zombie
 ![zombie](https://user-images.githubusercontent.com/71182082/118397280-8253c180-b653-11eb-9543-2987bab613ac.png)<br>
-The undead are back, but they can die by your hand.
+The undead are back, but they can die by your hand.<br>
 
 ## Boss
 
@@ -212,18 +225,35 @@ You can find BTC on the floor in a lot of room, or drop them on monster you kill
 Thoses BTC allow you to buy some potion to the merchant.<br>
 
 ## Equipment 
+The equipment are here to improve you stats. They can increase different type of stats like the ATK or the DEF.<br>
+A weapon will increase your ATK, and an armor will increase your DEF and sometimes other stats.<br>
+You can find equipment in chest, grave or buy them at the merchant. To equip them go on your inventory.<br>
 
 ### Type of Equipment
+The type of equipment are :
+   - `Weapon` : you need a weapon to beat your enemies
+   - `Shield` : used to counter the attack of monsters
+   - `Armor` : protect your body it is important
+   - `Boot` : wear some shoes you're not a hobbit
+   - `Glove` : to protect your delicate hands
+   - `Helmet` : protect your head is necessary
+   - `Pant` : wear a pant and explore the world
+
 
 ### Rarity of Equipment
-
-### 
-
-###
-
+They are different level of rarity for the equipment. The higher a rarity is the more the equipment is efficient.<br>
+This efficiency is associate with a level for an equipment, an armor level 1 with a high rarity is as efficient as an armor level 5 with a low rarity.<br>
+The rarity are :
+   - `L` (Legendary)
+   - `S` (Mythic)
+   - `A` (Heroic)
+   - `B` (Epic)
+   - `C` (Rare)
+   - `D` (Uncommon)
+   - `E` (Common)
 
 ## Potions
-![Potion](https://user-images.githubusercontent.com/71182082/115144721-825da300-a04e-11eb-9691-d53f02732e79.png)<br>
+
 You can find potions on the treasure room or buy them at the merchant room.<br>
 Potion have multiple uses and could be very useful during a fight.<br>
 ![NbPotion](https://user-images.githubusercontent.com/71182082/115144954-a077d300-a04f-11eb-8378-f5878bb695c8.png)<br>
@@ -255,30 +285,28 @@ It's permit to open a [Golden Chest](#Chest-and-Golden-Chest).<br>
 You can find this map on a Grave or a Chest but they are rare, or you can buy one at the merchant.<br>
 
 ## Traps
-The traps are here to complicate your move in a room.<br>
+The traps are here to complicate your movment in a room.<br>
 
 ### Spike
-// screen spike
+![spike](https://user-images.githubusercontent.com/71182082/118399882-91d90780-b65f-11eb-86ae-c5188fe6e0fe.png)<br>
 You can walk on spike, but you're gonna be hurt.<br>
 
 ### Hole
-// screen hole
-When you walk in a hole you are teleport in the start room of the floor. The fall hurt you of course.
+![hole](https://user-images.githubusercontent.com/71182082/118399898-a4534100-b65f-11eb-8b15-0d8b81abd409.png)<br>
+When you walk in a hole you are teleport in the start room of the floor. The fall hurt you of course.<br>
 
 ## Other elements
 
 ### Chest and Golden Chest
-// screen chest and golden chest
+![chest](https://user-images.githubusercontent.com/71182082/118399910-b92fd480-b65f-11eb-874f-338afa4d0884.png) Chest <br>
+![golden-chest](https://user-images.githubusercontent.com/71182082/118399957-f5633500-b65f-11eb-929b-b28692fc5f34.png) Golden Chest<br>
 In many room you can find a Chest, and in a treasure room you can find a Golden Chest.<br>
 The chest contains equipments and items, and the Golden Chest is full of more rare equipment.<br>
 
 ### Button
-![red-button](https://user-images.githubusercontent.com/71182082/118396944-16bd2480-b652-11eb-9a2a-cf5ff17129dc.png)
-![green-button](https://user-images.githubusercontent.com/71182082/118396955-2ccae500-b652-11eb-9951-3cf2f6d2e367.png)
-
+![red-button](https://user-images.githubusercontent.com/71182082/118396944-16bd2480-b652-11eb-9a2a-cf5ff17129dc.png)<br>
+![green-button](https://user-images.githubusercontent.com/71182082/118396955-2ccae500-b652-11eb-9951-3cf2f6d2e367.png)<br>
 To open the door of the [Boss Room](#boss-room) you have to activate all tu button (turn them in green) by pressing **E**.<br>
 This button are dispersed in the room of the floor.<br>
 
-
-==================================================================================================================================
 
