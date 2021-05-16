@@ -111,6 +111,9 @@ On the item part you can find all your potions, keys and also the Map of the Flo
 On the equipment part you can find all your equipment. Those in red are the one you used right know you can unequip them by pressing **E**.<br>
 
 ## Room Types
+
+### Start Room
+
 ### Fighting Room
 <img src="https://user-images.githubusercontent.com/57185748/115142625-1d508000-a043-11eb-95cd-cd7f7f5b3c67.png" width="350"><br>
 In the fighting room, the player may encounters **Monsters**.
@@ -123,6 +126,8 @@ The player can find **Merchant** Room, try to interact with him by pressing **E*
 ### Treasure Room
 <img src="https://user-images.githubusercontent.com/57185748/115143030-2b9f9b80-a045-11eb-9864-5c005c88eb13.png" width="350"><br>
 In treasure room, you can find **BTC** and Potions
+
+### Boss Room
 
 ### End Room
 <img src="https://user-images.githubusercontent.com/57185748/115143026-293d4180-a045-11eb-855d-1360b5a174b1.png" width="350"><br>
@@ -142,10 +147,42 @@ The Goblin is quick but once you decrease his life enough he prefers to ran away
 ![Skeleton](https://user-images.githubusercontent.com/71182082/115144394-a91ada00-a04c-11eb-9b46-5febe13361bc.png)<br>
 The Skeleton is an angry monster once he sees you, he will follow you to the death.<br>
 
+### Wizard 
+The Wizzard can cast spell and attack you from a long distance. His spells are not very strong but if you don't pay attention they can decrease a lot your life.<br>
+
+### Orc
+The Orc is powerful and enraged. The damages he inflict are sizable.<br>
+
+###  Bat
+A bat is just a bat which live on this tower. The bat is not strong, it's just a bat.<br>
+
+### Mimic 
+The mimic looks exactly like a chest. But once you try to open it, it reveal it's true face and attack you.<br>
+
+### Merchant Monster
+You choose to attack the merchant, what a bad idea. Now he's angry and want to kill you, don't underestimate him, his strength is incredible.<br>
+
+### Vampire
+A vampire never die, he rather became bat. But infortunatly for him, a bat can die.<br>
+
+## Boss
+
+### Killer Rabbit
+
 ## BTC
 ![BTC](https://user-images.githubusercontent.com/71182082/115144673-33b00900-a04e-11eb-8c5c-1cc132de6027.png)<br>
 You can find BTC on the floor in a lot of room, or drop them on monster you kill.<br>
 Thoses BTC allow you to buy some potion to the merchant.<br>
+
+## Equipment 
+
+### Type of Equipment
+
+### Rarity of Equipment
+
+### 
+
+###
 
 
 ## Potions
@@ -167,6 +204,14 @@ Use her to gain Mana.<br>
 ### XP Bottle
 ![image](https://user-images.githubusercontent.com/71182082/115144747-b042e780-a04e-11eb-9d84-bd391c360dd3.png)<br>
 Use her to gain Xp.<br>
+
+## Items
+
+### Floor Key
+
+### Golden Key
+
+### Map of the Dungeon
 
 
 =======
