@@ -1,6 +1,5 @@
 package game.elements;
 
-import display.GridMap;
 import game.entity.living.npc.monster.Monster;
 import game.entity.living.npc.monster.MonsterStats;
 import game.entity.living.npc.monster.MonsterType;
@@ -457,23 +456,21 @@ public class GameRule {
             case SHIELD:
                 switch (classe){
                     case RANGER:
-                        equipement.setBonusInitiative(Math.max(value/2, 1));
-                        equipement.setBonusArmor(value+1);
+                        equipement.setBonusAgility(Math.max(value/2, 1));
                         break;
                     case MAGE:
                         equipement.setBonusMana(value*5);
-                        equipement.setBonusArmor(value);
                         break;
                     case WARRIOR:
-                        equipement.setBonusArmor(value+2);
+                        equipement.setBonusArmor(value);
                         break;
                 }
                 break;
             case ARMOR:
                 switch (classe){
                     case RANGER:
-                        equipement.setBonusArmor(value+1);
-                        equipement.setBonusInitiative(Math.max(value/4, 1));
+                        equipement.setBonusArmor(value);
+                        equipement.setBonusAgility(Math.max(value/4, 1));
                         equipement.setBonusMana(value);
                         break;
                     case MAGE:
@@ -481,7 +478,7 @@ public class GameRule {
                         equipement.setBonusArmor(value);
                         break;
                     case WARRIOR:
-                        equipement.setBonusArmor(value+3);
+                        equipement.setBonusArmor(value+1);
                         equipement.setBonusLife(value*5);
                         break;
                 }
@@ -490,11 +487,11 @@ public class GameRule {
                 switch (classe){
                     case RANGER:
                     case MAGE:
-                        equipement.setBonusInitiative(Math.max(value/4, 1));
+                        equipement.setBonusAgility(Math.max(value/4, 1));
                         equipement.setBonusArmor(value);
                         break;
                     case WARRIOR:
-                        equipement.setBonusLife(value);
+                        equipement.setBonusLife(value*2);
                         equipement.setBonusArmor(value);
                         break;
                 }
@@ -506,40 +503,35 @@ public class GameRule {
                         break;
                     case MAGE:
                         equipement.setBonusMana(value);
-                        equipement.setBonusArmor(value);
                         break;
                     case WARRIOR:
                         equipement.setBonusDamage(value);
-                        equipement.setBonusArmor(value+2);
                         break;
                 }
                 break;
             case PANT:
                 switch (classe) {
                     case RANGER:
-                        equipement.setBonusArmor(value+1);
-                        break;
-                    case MAGE:
                         equipement.setBonusArmor(value);
                         break;
+                    case MAGE:
+                        equipement.setBonusMana(value*2);
+                        break;
                     case WARRIOR:
-                        equipement.setBonusLife(value*3);
-                        equipement.setBonusArmor(value+2);
+                        equipement.setBonusLife(value*2);
                         break;
                 }
                 break;
             case HELMET:
                 switch (classe){
                     case RANGER:
-                        equipement.setBonusArmor(value);
-                        break;
                     case MAGE:
-                        equipement.setBonusArmor(value+1);
-                        equipement.setBonusInitiative(value);
+                        equipement.setBonusArmor(value);
+                        equipement.setBonusAgility(value);
                         break;
                     case WARRIOR:
                         equipement.setBonusLife(value*2);
-                        equipement.setBonusArmor(value+1);
+                        equipement.setBonusArmor(value);
                         break;
                 }
                 break;
