@@ -22,8 +22,8 @@ public class Wizard extends AbstractMonster{
         super(position, name, Colors.BROWN, Colors.BLUE, MonsterType.WIZARD, strategy,
                 new MonsterStats(1,1,3,1,1,1,1,level,1));
         GameRule.setMonstersStats(this,MonsterType.WIZARD);
-        this.setSprites("0 Y","/\\|", getUpColor(),getDownColor());
-        setBasicSprites("0 Y","/\\|");
+        this.setSprites(" 0Y","/\\|", getUpColor(),getDownColor());
+        setBasicSprites(" 0Y","/\\|");
     }
 
     @Override
