@@ -83,12 +83,12 @@ public class MerchantInventory extends AbstractInventory {
                 removeStuff(selectedStuff);
                 stats.spendMoney(price);
                 gameState.getDescriptor().updateDescriptor(
-                        String.format("%s spend %s BTC to buy %s !",
+                        String.format("%s spent %s BTC to buy %s !",
                                 gameState.getPlayer().getName(),
                                 colorize(String.valueOf(price), Colors.YELLOW.textApply()),
                                 selectedStuff.getName()));
             } else {
-                gameState.getDescriptor().updateDescriptor(String.format("%s don't have enough BTC !",gameState.getPlayer().getName()));
+                gameState.getDescriptor().updateDescriptor(String.format("%s doesn't have enough BTC !",gameState.getPlayer().getName()));
             }
         } else {
             int price;
