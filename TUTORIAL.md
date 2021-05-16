@@ -71,7 +71,7 @@ When a monster is playing, you can skip the description by pressing any key.<br>
 During the player turn, he has 1 action.<br>
 `move`, `attack` and `use potion` are consuming the player turn.<br> 
 You can open the minimap, turn yourself with **Caps. lock**, select sorts, and open your inventory without consuming your action.<br>
-When a monster is killed, the hero gain **XP**, and a grave spawn at his location, the grave(#grave) will hold btc(#btc), equipement(#equipement) and items(#items) (including potion(#potions)) and can picked up by interacting with it using **E**
+When a monster is killed, the hero gain **XP**, and a grave spawn at his location, the [grave](#grave) will hold [btc](#btc), [equipement](#equipement) and [items](#items) (including [potion](#potions)) and can picked up by interacting with it using **E**
 
 
 ### Range 
