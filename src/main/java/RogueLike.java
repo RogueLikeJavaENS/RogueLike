@@ -132,7 +132,7 @@ public class RogueLike {
                 int turnPassed = gs.getPlayer().getPlayerStats().getTurnPassed();
                 if (turnPassed != -1){
                         gs.getDescriptor().updateDescriptor(
-                                String.format("Il vous reste %d tour sur votre Bonus", turnPassed));
+                                String.format("You still have %d turns on your bonus", turnPassed));
                         if (turnPassed == 0) {
                             gs.getPlayer().getPlayerStats().resetTurnPassed();
                         }
