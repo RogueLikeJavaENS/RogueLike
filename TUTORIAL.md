@@ -2,20 +2,21 @@
 
 ## Summary
 1. [How to play](#How-to-play)
-2. [Controls](#controls)
+2. [Player caracteristic](#player-caracteristic)
+3. [Controls](#controls)
    - [Normal](#normal-inputs)
    - [Fighting](#fighting-inputs)
-3. [Fight](#fight)
+4. [Fight](#fight)
    - [Spells](#spells)
-4. [Merchant](#merchant)
-5. [Map](#map)
-6. [Inventory](#Inventory)
-7. [Room Types](#room-types)
+5. [Merchant](#merchant)
+6. [Map](#map)
+7. [Inventory](#Inventory)
+8. [Room Types](#room-types)
    - [Fighting Room](#fighting-room)
    - [Merchant Room](#merchant-room)
    - [Treasure Room](#treasure-room)
    - [End Room](#end-room)
-8. [Game Elements](#game-elements)
+9. [Game Elements](#game-elements)
    - [Monsters](#monsters)
    - [BTC](#btc)
    - [Potions](#potions)
@@ -25,7 +26,7 @@
    
 ## How to begin 
 <img src="https://user-images.githubusercontent.com/71182082/118393813-4adc1980-b641-11eb-9cad-cdff995ccc1e.png" width="450"><br>
-At first you need to write your name. Keep focusing on the Panel "KEEP FOCUS HERE TO PLAY AND WRITE", to write it and pres **E**.<br><br>
+At first you need to write your name. Keep focusing on the Panel "KEEP FOCUS HERE TO PLAY AND WRITE", to write it and press **Enter**.<br><br>
 <img src="https://user-images.githubusercontent.com/71182082/118393822-5cbdbc80-b641-11eb-9da7-b8d92a974a0d.png" width="450"><br>
 Here you can chose what you want to do. Switch between the choice with the keys **Z, S** and press **E** to select it.<br>
 <br>
