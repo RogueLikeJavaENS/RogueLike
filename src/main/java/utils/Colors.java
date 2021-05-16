@@ -41,5 +41,5 @@ public enum Colors {
 
     public static Attribute bgApplyAggro() {return Attribute.BACK_COLOR(51,0,0);}
 
-    public static Attribute bgApplyNormal() { return Attribute.BACK_COLOR(35,35,34);}
+    public static Attribute bgApplyNormal() { return Attribute.BACK_COLOR(39,39,38);}
 }
