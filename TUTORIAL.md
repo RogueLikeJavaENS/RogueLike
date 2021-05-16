@@ -223,7 +223,7 @@ Be careful he throws explosive carrots.
 ## BTC
 ![BTC](https://user-images.githubusercontent.com/71182082/115144673-33b00900-a04e-11eb-8c5c-1cc132de6027.png)<br>
 You can find BTC on the floor in a lot of room, or drop them on monster you kill.<br>
-Thoses BTC allow you to buy some potion to the merchant.<br>
+Thoses BTC allow you to buy anythyng you want from the merchant.<br>
 
 ## Equipment 
 The equipment are here to improve you stats. They can increase different type of stats like the ATK or the DEF.<br>
