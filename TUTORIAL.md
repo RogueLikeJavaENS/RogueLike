@@ -22,7 +22,7 @@
    - [Potions](#potions)
    - [Items](#items)
    - [Traps](#traps)
-   - [Other Elements](#other-element)
+   - [Other Elements](#other-elements)
    
 ## How to begin 
 <img src="https://user-images.githubusercontent.com/71182082/118393813-4adc1980-b641-11eb-9cad-cdff995ccc1e.png" width="450"><br>
@@ -311,7 +311,7 @@ To open the door of the [Boss Room](#boss-room) you have to activate all button 
 This button are dispersed in the room of the floor.<br>
 
 ### Grave
-![grave](![image](https://user-images.githubusercontent.com/48914003/118402766-e75ee580-b65a-11eb-96ba-e84b321b1d8f.png)<br>
+![grave](https://user-images.githubusercontent.com/48914003/118402766-e75ee580-b65a-11eb-96ba-e84b321b1d8f.png)<br>
 A grave will be spawned each time a monster is killed, you can pick up all your reward by coming close to it and pressing **E**.
 
 
