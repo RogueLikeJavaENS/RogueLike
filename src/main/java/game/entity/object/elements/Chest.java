@@ -18,6 +18,7 @@ import game.stuff.item.ItemType;
 import game.stuff.item.keys.GoldKey;
 import game.stuff.item.potions.Elixir;
 import game.stuff.item.potions.PotionHealth;
+import game.stuff.item.potions.XpBottle;
 import utils.Colors;
 import utils.Position;
 
@@ -66,42 +67,43 @@ public class Chest extends ObjectEntity {
     private void fillChest(GameState gameState){
         Player player = gameState.getPlayer();
         /// Fill the potions
+        int nbElixir = 0;
+        int nbHealthPotion = 0;
+        int nbXPBottle = 0;
         if (!isStart) {
             int nbPotion = GameRule.getNumberOfPotionInChest(isClassic);
-            int nbElixir = 0;
-            int nbHealthPotion = 0;
-            int nbXPBottle = 0;
-            for (int i=0; i<nbPotion; i++){
+            for (int i=0; i<nbPotion; i++) {
                 Item itemToAdd = ItemFactory.getItem(GameRule.getItemType(), player.getPlayerStats().getLevel());
-                if (itemToAdd.getType() == ItemType.ELIXIR){
+                if (itemToAdd.getType() == ItemType.ELIXIR) {
                     nbElixir++;
-                }
-                else if (itemToAdd.getType() == ItemType.XP_BOTTLE){
+                } else if (itemToAdd.getType() == ItemType.XP_BOTTLE) {
                     nbXPBottle++;
-                }
-                else if(itemToAdd.getType() == ItemType.HEALTH_POTION){
+                } else if (itemToAdd.getType() == ItemType.HEALTH_POTION) {
                     nbHealthPotion++;
                 }
-                player.getInventory().addItem(itemToAdd);
             }
-            if (nbElixir > 0){ gameState.getDescriptor().updateDescriptor(String.format(
-                    "You found %d %s in the chest", nbElixir, colorize(ItemType.ELIXIR.toString(), Attribute.BOLD(), Colors.BLUE.textApply()))); }
-            if (nbHealthPotion > 0){ gameState.getDescriptor().updateDescriptor(String.format(
-                    "You found %d %s in the chest", nbHealthPotion, colorize(ItemType.HEALTH_POTION.toString(), Attribute.BOLD(), Colors.RED.textApply()))); }
-            if(nbXPBottle > 0){ gameState.getDescriptor().updateDescriptor(String.format(
-                    "You found %d %s in the chest", nbXPBottle, colorize(ItemType.XP_BOTTLE.toString(), Attribute.BOLD(), Colors.GREEN.textApply()))); }
-
         } else {
-            Random Gen = new Random();
-            int nbHealthPotion = Gen.nextInt(2)+2;
-            int nbElixir = Gen.nextInt(1)+1;
-            for (int i = 0; i < nbHealthPotion; i++) {
-                player.getInventory().addItem(new PotionHealth());
-            }
-            for (int i = 0; i < nbElixir; i++) {
-                player.getInventory().addItem(new Elixir());
-            }
+            Random gen = new Random();
+            nbHealthPotion = gen.nextInt(2)+2;
+            nbElixir = gen.nextInt(1)+2;
         }
+
+        for (int i=0; i<nbElixir; i++){
+            player.getInventory().addItem(new Elixir());
+        }
+        for (int i = 0; i < nbHealthPotion; i++) {
+            player.getInventory().addItem(new PotionHealth());
+        }
+        for (int i = 0; i < nbXPBottle; i++) {
+            player.getInventory().addItem(new XpBottle());
+        }
+
+        if (nbElixir > 0){ gameState.getDescriptor().updateDescriptor(String.format(
+                "You found %d %s in the chest", nbElixir, colorize(ItemType.ELIXIR.toString(), Attribute.BOLD(), Colors.BLUE.textApply()))); }
+        if (nbHealthPotion > 0){ gameState.getDescriptor().updateDescriptor(String.format(
+                "You found %d %s in the chest", nbHealthPotion, colorize(ItemType.HEALTH_POTION.toString(), Attribute.BOLD(), Colors.RED.textApply()))); }
+        if(nbXPBottle > 0){ gameState.getDescriptor().updateDescriptor(String.format(
+                "You found %d %s in the chest", nbXPBottle, colorize(ItemType.XP_BOTTLE.toString(), Attribute.BOLD(), Colors.GREEN.textApply()))); }
 
         /// Fill the equipment
         int nbEquipment;
