@@ -29,14 +29,17 @@ public class RangerTrap extends ObjectEntity {
         gameState.getMusicStuff().playStabsFX();
         Random gen = new Random();
         int damage = gameState.getPlayer().getPlayerStats().getDamageTotal() + gen.nextInt(20);
-        LivingEntity entity = (LivingEntity) gameState.getGridMap().getEntitiesAt(this.getPosition().getAbs(), this.getPosition().getOrd()).get(0);
-        damage = entity.getStats().sufferDamage(damage);
-        gameState.getDescriptor().updateDescriptor(String.format("%s is stuck in your trap and lost %d HP.",entity.getName(),damage));
-        GridMap gridMap = gameState.getGridMap();
-        List<Entity> entities = gridMap.getEntitiesAt(getPosition().getAbs(), getPosition().getOrd());
-        for (Entity e : entities) {
-            if (e.isMonster()) {
-                gameState.isMonsterAlive((Monster) e);
+        Entity entity = gameState.getGridMap().getEntitiesAt(this.getPosition().getAbs(), this.getPosition().getOrd()).get(0);
+        if (entity.isMonster() || entity.isPlayer()) {
+            LivingEntity livingEntity = (LivingEntity) entity;
+            damage = livingEntity.getStats().sufferDamage(damage);
+            gameState.getDescriptor().updateDescriptor(String.format("%s is stuck in your trap and lost %d HP.",livingEntity.getName(),damage));
+            GridMap gridMap = gameState.getGridMap();
+            List<Entity> entities = gridMap.getEntitiesAt(getPosition().getAbs(), getPosition().getOrd());
+            for (Entity e : entities) {
+                if (e.isMonster()) {
+                    gameState.isMonsterAlive((Monster) e);
+                }
             }
         }
     }

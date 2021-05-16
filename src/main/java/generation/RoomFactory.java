@@ -66,6 +66,7 @@ public class RoomFactory {
             case START:
                 currentAvailablePositions.remove(room.getCenter()); // remove the center for the available position because it's where the player spawn
                 addHoleAndSpike(room);
+
                 addChest(room,true, true);
                 break;
             case BOSS:

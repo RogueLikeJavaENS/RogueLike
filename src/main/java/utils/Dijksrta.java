@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class Dijksrta {
     HashMap<Position, Integer> associateNumberPosition;   // Associate all the Position with a number
-    List<Integer>[] adj;            // List of the adjacent of the vertex
+    ArrayList[] adj;            // List of the adjacent of the vertex
     int n;                  // Number of vertex
     int acc;
 

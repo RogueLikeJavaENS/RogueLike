@@ -67,7 +67,8 @@ public abstract class AbstractStats{
     }
 
     public int sufferDamage(int damage) {
-        damage = Check.checkPositivity(damage-armorTotal);
+        int armor = (Math.max (1, armorTotal/2));
+        damage = Check.checkPositivity(damage-armor);
         this.lifePointActual = Check.checkPositivity(getLifePointActual() - damage);
         return damage;
     }

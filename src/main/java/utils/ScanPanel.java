@@ -38,8 +38,8 @@ public class ScanPanel extends JFrame implements KeyListener{
         setSize(340,100);
         setLocationRelativeTo(null);
         setResizable(false);
-        JLabel text = new JLabel("KEEP FOCUSING THIS WINDOW TO PLAY", JLabel.CENTER);
-        text.setForeground(Color.WHITE);
+        JLabel text = new JLabel("KEEP FOCUS HERE TO PLAY AND WRITE", JLabel.CENTER);
+        text.setForeground(Color.RED);
         add(text);
         getContentPane().setBackground(Color.BLACK);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

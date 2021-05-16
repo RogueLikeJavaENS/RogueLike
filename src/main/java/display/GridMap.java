@@ -112,32 +112,32 @@ public class GridMap {
                                 if (entityToPrint.isMonster()){
                                     Monster monster = (Monster) entityToPrint;
                                     if (monster.isAgroPlayer()){
-                                        sb.append(colorize(entityToPrint.getSprites(i),Colors.DARK_BLUE.bgApplyAggro()));
+                                        sb.append(colorize(entityToPrint.getSprites(i),Colors.bgApplyAggro()));
                                     }
                                     else{
-                                        sb.append(entityToPrint.getSprites(i));
+                                        sb.append(colorize(entityToPrint.getSprites(i), Colors.bgApplyNormal()));
                                     }
                                 }
                                 else {
-                                    sb.append(entityToPrint.getSprites(i));
+                                    sb.append(colorize(entityToPrint.getSprites(i), Colors.bgApplyNormal()));
                                 }
                             }
                         }
                         else {
                             if (i == 0) {
-                                sb.append(entityToPrint.getSprites(i));
+                                sb.append(colorize(entityToPrint.getSprites(i), Colors.bgApplyNormal()));
                             } else {
                                 if (entityToPrint.isMonster()){
                                     Monster monster = (Monster) entityToPrint;
                                     if (monster.isAgroPlayer()){
-                                        sb.append(colorize(entityToPrint.getSprites(i),Colors.DARK_BLUE.bgApplyAggro()));
+                                        sb.append(colorize(entityToPrint.getSprites(i),Colors.bgApplyAggro()));
                                     }
                                     else{
-                                        sb.append(entityToPrint.getSprites(i));
+                                        sb.append(colorize(entityToPrint.getSprites(i), Colors.bgApplyNormal()));
                                     }
                                 }
                                 else {
-                                    sb.append(entityToPrint.getSprites(i));
+                                    sb.append(colorize(entityToPrint.getSprites(i), Colors.bgApplyNormal()));
                                 }
                             }
                         }
@@ -148,7 +148,11 @@ public class GridMap {
                             sb.append(colorize(tiles[ord][abs].toString(), Colors.DEEP_GREY.bgApply()));
                         }
                         else {
-                            sb.append(tiles[ord][abs]);
+                            if (tiles[ord][abs].isEmptyTile()) {
+                                sb.append(colorize(tiles[ord][abs].toString()));
+                            } else {
+                                sb.append(colorize(tiles[ord][abs].toString(), Colors.bgApplyNormal()));
+                            }
                         }
                         if (tiles[ord][abs].isEmptyTile()) // if the tile is empty increment nbEmptyTile
                         {
