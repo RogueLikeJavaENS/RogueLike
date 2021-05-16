@@ -277,15 +277,17 @@ public class GameState {
         for (LivingEntity entity : monsters) {
             if (entity.isMonster()) {
                 Monster monster = (Monster) entity;
-                int playerLevel = player.getPlayerStats().getLevel();
-                int monsterLevel = monster.getMonsterStats().getLevel();
-                int dif = monsterLevel - playerLevel;
-                if (dif < -1 || dif > 1) {
-                    int level = playerLevel + gen.nextInt(3)-1;
+                if (!monster.isBoss()) {
+                    int playerLevel = player.getPlayerStats().getLevel();
+                    int monsterLevel = monster.getMonsterStats().getLevel();
+                    int dif = monsterLevel - playerLevel;
+                    if (dif < -1 || dif > 1) {
+                        int level = playerLevel + gen.nextInt(3)-1;
 
-                    monster.getMonsterStats().setLevel(level);
-                    GameRule.setMonstersStats(monster, monster.getMonsterType());
-                    getDescriptor().updateDescriptor("It looks like monsters have become "+colorize("stronger", Colors.RED.textApply())+"...");
+                        monster.getMonsterStats().setLevel(level);
+                        GameRule.setMonstersStats(monster, monster.getMonsterType());
+                        getDescriptor().updateDescriptor("It looks like monsters have become "+colorize("stronger", Colors.RED.textApply())+"...");
+                    }
                 }
             }
         }
