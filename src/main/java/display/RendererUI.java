@@ -1,11 +1,15 @@
 package display;
 
+import com.diogonunes.jcolor.Attribute;
 import game.elements.GameState;
 import game.elements.MiniMap;
+import utils.Colors;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 
 /**
@@ -24,7 +28,7 @@ public class RendererUI {
     private final String[] gridAndMapArray;
     private static final String controls = "Controls :\n\n"
             + "| Escape : Go on the menu  \n"
-            + "\nMove on the room : \n| Z : Up | Q : Left | S : Down | D : Right \n"
+            + "\nMove in the room : \n| Z : Up | Q : Left | S : Down | D : Right \n"
             + "\nShortcut Potion : \n| V : Potion Health | B : Elixir | N : XpBottle\n\n"
             + "| I : Open Inventory | M : Open Minimap | Escape : Close Inventory or Minimap \n\n"
             + "| E : Interact with the world (merchant, chest ...) \n"
@@ -34,6 +38,15 @@ public class RendererUI {
             + "| A : Use a spell\n"
             + "\n\n";
     private static final String miniHelp = "Escape : Go on the menu\n\n";
+
+    private static final String legendMinimap =
+            "| "+colorize("@", Attribute.BOLD(), Colors.PINK.textApply())+ ": Player location "
+            + "| "+colorize("*", Attribute.BOLD(), Colors.GREEN.textApply())+ ": Start room "
+            + "| "+colorize("^", Attribute.BOLD(), Colors.BROWN.textApply())+ ": Stairs room"
+            + "| "+colorize("B", Attribute.BOLD(), Colors.ORANGE.textApply())+ ": Boss room\n"
+            + "| "+colorize("M", Attribute.BOLD(), Colors.RED.textApply())+ ": Monster room "
+            + "| "+colorize("$", Attribute.BOLD(), Colors.YELLOW.textApply())+ ": Treasure room "
+            + "| "+colorize("~", Attribute.BOLD(), Colors.CYAN.textApply())+ ": Merchant room \n";
 
 
     /**
@@ -69,19 +82,19 @@ public class RendererUI {
 
         switch (gs.getState()){
             case MAP: // Print the map of the dungeon
-                globalSB.append("\t\t###################################\n" + "\t\t#             MINIMAP             #\n")
-                        .append(gs.getDungeon().getFloor())
+                globalSB.append("\t\t###################################\n" + "\t\t#              MAP                #\n")
                         .append("\t\t###################################\n");
+                globalSB.append("Floor : ")
+                        .append(colorize(String.valueOf(gs.getDungeon().getFloor()), Attribute.BOLD(), Colors.RED.textApply()))
+                        .append("\n");
                 globalSB.append(gs.getMiniMap().toStringMap());
-                break;
-
-            case INVENTORY: // Print the inventory of the dungeon plus the HUD
-                globalSB.append(gs.getPlayer().getInventory().toStringInventory(gs));
+                globalSB.append(legendMinimap);
                 break;
 
             case NORMAL: // Print the HUD, the room and the minimap
                 globalSB.append(gs.getHud().toString());
                 globalSB.append(midRenderer());
+                globalSB.append(gs.getDescriptor().toString());
                 break;
 
             case FIGHT: // Print the HUD, the room, the minimap and the information about the fight
@@ -89,15 +102,12 @@ public class RendererUI {
                 globalSB.append(midRenderer());
                 globalSB.append(gs.getHud().getSpellBar());
                 globalSB.append(gs.getFighting().toString());
-
-                break;
-            case SHOP:
-                globalSB.append(gs.merchant.getMerchantInventory().toStringInventory(gs));
+                globalSB.append(gs.getDescriptor().toString());
                 break;
             default:
                 break;
         }
-        globalSB.append(gs.getDescriptor().toString());
+
         return globalSB.toString();
     }
 

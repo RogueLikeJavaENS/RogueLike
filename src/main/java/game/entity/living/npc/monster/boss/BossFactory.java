@@ -23,13 +23,11 @@ public class BossFactory {
         if (bossType == Bosses.KILLER_RABBIT) {
             boss = new KillerRabbit("Killer Rabbit",
                     position,
-                    Colors.PINK,
                     new BossAttackStrategy(new BossApproachStrategy(null)),
                     new MonsterStats(120 + (floor * 5 * 2), 1, 1, 1, 5 + floor, 5, 100, floor + 3, 200));
         } else {
             boss = new KillerRabbit("Killer Rabbit?",
                     position,
-                    Colors.PINK,
                     new BossAttackStrategy(new BossApproachStrategy(null)),
                     new MonsterStats(120 + (floor * 5 * 2), 1, 1, 1, 5 + floor, 5, 100, floor + 3, 200));
         }

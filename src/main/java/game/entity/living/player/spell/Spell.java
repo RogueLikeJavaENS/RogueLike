@@ -15,6 +15,13 @@ public interface Spell {
 
     Range getRange();
 
+    int getLevel();
+
+    void setDamageMult(double damageMult);
+    void setDamage(int damage);
+    void setManaCost(int manaCost);
+
+
     void setRange(Position entityPos, Direction direction);
 
     /**

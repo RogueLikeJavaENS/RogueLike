@@ -10,5 +10,10 @@ public class EmptyTile extends AbstractTile {
     public Tile getTileFromId(int id){
         return null;
     }
+
+    @Override
+    public boolean isEmptyTile() {
+        return true;
+    }
 }
 

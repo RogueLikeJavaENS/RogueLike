@@ -32,7 +32,6 @@ public class GameState {
     private Fighting fighting;
     private boolean help;
     private MiniMap miniMap;
-    private final GameRule gameRule;
     private final Descriptor descriptor;
     private HUD hud;
     private int currentFightExp;
@@ -45,9 +44,8 @@ public class GameState {
         this.dungeon = dungeon;
         this.player = player;
         this.sp = sp;
-        this.currentRoom = dungeon.getRoomList().get(0); //dungeon.getRoomList().size()-2
+        this.currentRoom = dungeon.getRoomList().get(0);
         this.gridMap = dungeon.getGridMap(currentRoom);
-        this.gameRule = new GameRule();
         this.help = false;
         this.miniMap = new MiniMap(dungeon, this);
         this.descriptor = new Descriptor();
@@ -82,7 +80,7 @@ public class GameState {
      * @param room The new room
      */
     public void updateChangingRoom(Room room) {
-        if (room.getWasVisited()){
+        if (!room.getWasVisited()){
             room.setWasVisited(true);
             room.setNearRoomBossEndVisited();
             miniMap.updateMap();
@@ -185,7 +183,7 @@ public class GameState {
      * set the state NORMAL with no Monsters or FIGHT with monsters.
      */
     public void isThereMonsters() {
-        if (state != State.SHOP && state != State.PAUSE_MENU && state != State.SHOP_MENU) {
+        if (state != State.PAUSE_MENU && state != State.SHOP_MENU) {
             List<LivingEntity> monsters = getGridMap().getMonsters();
             if (monsters.size() > 0) {  // if there is no monsters in the current map
                 if (state == State.NORMAL) {    // if the state was at Normal, the fight is initialized.
@@ -268,6 +266,31 @@ public class GameState {
         if (state == State.NORMAL) {
             musicStuff.playNormalMusic();
         }
+        if (state == State.FIGHT) {
+            upMonsters();
+        }
+    }
+
+    private void upMonsters() {
+        List<LivingEntity> monsters = gridMap.getMonsters();
+        Random gen = new Random();
+        for (LivingEntity entity : monsters) {
+            if (entity.isMonster()) {
+                Monster monster = (Monster) entity;
+                if (!monster.isBoss()) {
+                    int playerLevel = player.getPlayerStats().getLevel();
+                    int monsterLevel = monster.getMonsterStats().getLevel();
+                    int dif = monsterLevel - playerLevel;
+                    if (dif < -1 || dif > 1) {
+                        int level = playerLevel + gen.nextInt(3)-1;
+
+                        monster.getMonsterStats().setLevel(level);
+                        GameRule.setMonstersStats(monster, monster.getMonsterType());
+                        getDescriptor().updateDescriptor("It looks like monsters have become "+colorize("stronger", Colors.RED.textApply())+"...");
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -291,7 +314,6 @@ public class GameState {
     public State getState() { return state; }
     public Fighting getFighting() { return fighting; }
     public MiniMap getMiniMap() { return miniMap; }
-    public GameRule getGameRule() { return gameRule; }
     public Descriptor getDescriptor() { return descriptor; }
     public HUD getHud() {
         return hud;

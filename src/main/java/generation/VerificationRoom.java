@@ -18,7 +18,7 @@ public class VerificationRoom {
      *
      * @param gridMap gridMap to verify
      */
-    public static void verificationGenerationRoom(GridMap gridMap){
+    public static boolean verificationGenerationRoom(GridMap gridMap){
         Dijksrta dij = new Dijksrta(gridMap);
         Room room = gridMap.getRoom();
 
@@ -29,10 +29,13 @@ public class VerificationRoom {
         positionOfEntityList.add(room.getCenter());
         List<Position> positionAroundList;
 
+        int debug = 0;
         for (Position entityPos: positionOfEntityList) {
             positionAroundList = positionAround(entityPos,room);
             boolean isOkay = dij.isThereAPath(basePosition, positionAroundList);
+
             while (!isOkay){
+                debug++;
                 Entity entityToRemove = removeSpikeOrHole(room);
                 if (entityToRemove != null){
                     room.removeEntity(entityToRemove);
@@ -40,8 +43,13 @@ public class VerificationRoom {
                     dij.update(gridMap, entityToRemove.getPosition());
                 }
                 isOkay = dij.isThereAPath(basePosition, positionAroundList);
+                if (debug> 150){  // génération buggé
+                    return false;
+                }
             }
+
         }
+        return true;
     }
 
     /**

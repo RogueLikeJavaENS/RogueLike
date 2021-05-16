@@ -21,7 +21,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 /**
  * This class Contains the actual gameElement.Room. It contains the actual room, an array of the tile which compose the room, a list of all the entities one the room.
  * It also contains a list of all the strings used to print it.
- * Range list ?
+ *
  */
 public class GridMap {
     private final Room room;
@@ -104,11 +104,42 @@ public class GridMap {
                     if (entitiesAt.size() != 0)// print the first game.entity of the tile
                     {
                         Entity entityToPrint = getPrimaryEntity(entitiesAt);
-                        if (isInRange(abs, ord) && !(entities.get(0) instanceof Player)) {
-                            sb.append(colorize(entityToPrint.getSprites(i), Colors.DEEP_GREY.bgApply()));
+                        if (isInRange(abs, ord) && !(entityToPrint.isPlayer())) {
+                            if (i == 0) {
+                                sb.append(colorize(entityToPrint.getSprites(i), Colors.DEEP_GREY.bgApply()));
+                            }
+                            else {
+                                if (entityToPrint.isMonster()){
+                                    Monster monster = (Monster) entityToPrint;
+                                    if (monster.isAgroPlayer()){
+                                        sb.append(colorize(entityToPrint.getSprites(i),Colors.bgApplyAggro()));
+                                    }
+                                    else{
+                                        sb.append(colorize(entityToPrint.getSprites(i), Colors.bgApplyNormal()));
+                                    }
+                                }
+                                else {
+                                    sb.append(colorize(entityToPrint.getSprites(i), Colors.bgApplyNormal()));
+                                }
+                            }
                         }
                         else {
-                            sb.append(entityToPrint.getSprites(i));
+                            if (i == 0) {
+                                sb.append(colorize(entityToPrint.getSprites(i), Colors.bgApplyNormal()));
+                            } else {
+                                if (entityToPrint.isMonster()){
+                                    Monster monster = (Monster) entityToPrint;
+                                    if (monster.isAgroPlayer()){
+                                        sb.append(colorize(entityToPrint.getSprites(i),Colors.bgApplyAggro()));
+                                    }
+                                    else{
+                                        sb.append(colorize(entityToPrint.getSprites(i), Colors.bgApplyNormal()));
+                                    }
+                                }
+                                else {
+                                    sb.append(colorize(entityToPrint.getSprites(i), Colors.bgApplyNormal()));
+                                }
+                            }
                         }
                     }
                     else // if no game.entity, print the tile
@@ -117,9 +148,13 @@ public class GridMap {
                             sb.append(colorize(tiles[ord][abs].toString(), Colors.DEEP_GREY.bgApply()));
                         }
                         else {
-                            sb.append(tiles[ord][abs]);
+                            if (tiles[ord][abs].isEmptyTile()) {
+                                sb.append(colorize(tiles[ord][abs].toString()));
+                            } else {
+                                sb.append(colorize(tiles[ord][abs].toString(), Colors.bgApplyNormal()));
+                            }
                         }
-                        if (tiles[ord][abs] instanceof EmptyTile) // if the tile is empty increment nbEmptyTile
+                        if (tiles[ord][abs].isEmptyTile()) // if the tile is empty increment nbEmptyTile
                         {
                             nbEmptyTile++;
                         }
@@ -243,20 +278,18 @@ public class GridMap {
         if (entityList.size() == 1){
             return primaryEntity;
         }
-        for (int i = 1; i<entityList.size();i++ ){
-            if (primaryEntity instanceof Player) break;
-            else if (primaryEntity instanceof Monster){
-                if (entityList.get(i) instanceof Player){
-                    primaryEntity = entityList.get(i);
-                }
+        for (Entity entity : entityList) {
+            if (entity instanceof Player) {
+                primaryEntity = entity;
+                break;
             }
-            else {
-                if (entityList.get(i) instanceof Player || entityList.get(i) instanceof  Monster){
-                    primaryEntity = entityList.get(i);
-                }
+            else if (!entity.getIsPlayerAccessible()) {
+                primaryEntity = entity;
+            }
+            else if (!entity.getIsNPCAccessible()) {
+                primaryEntity = entity;
             }
         }
-
         return primaryEntity;
     }
 

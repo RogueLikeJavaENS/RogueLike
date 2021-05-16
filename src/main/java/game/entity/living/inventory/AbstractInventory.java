@@ -175,7 +175,6 @@ public abstract class AbstractInventory implements Inventory {
      * @param level the level of the player to set the price according to the player level.
      */
     public void openInventory(int level) {
-        GameRule gameRule = new GameRule();
         indexOfSelectedStuff = -1;
         if (!inventory.isEmpty()) {
             sortedItem.clear();
@@ -187,7 +186,7 @@ public abstract class AbstractInventory implements Inventory {
                         sortedItem.get(index).addStuff();
                     } else {
                         Item item = (Item) stuff;
-                        stuff.setPrice(gameRule.getItemPrice(level, item.getType()));
+                        stuff.setPrice(GameRule.getItemPrice(level, item.getType()));
                         sortedItem.add(new CoupleStuff(stuff));
                     }
                 }
@@ -356,7 +355,72 @@ public abstract class AbstractInventory implements Inventory {
         String stats = toStringStats(gameState);
         String inventoryList = toStringInventoryList();
         sb.append(head).append(stats).append(inventoryList);
+        sb.append(toStringEquipped());
+        return sb.toString();
+    }
 
+    public String toStringEquipped() {
+        return  "| Weapon Equipped: " + getEquipedEquipments(EquipmentType.WEAPON) + "\n" +
+                "| Second hand    : " + getEquipedEquipments(EquipmentType.SHIELD) + "\n" +
+                "| Helmet Equipped: " + getEquipedEquipments(EquipmentType.HELMET) + "\n" +
+                "| Armor Equipped : " + getEquipedEquipments(EquipmentType.ARMOR) + "\n" +
+                "| Pant Equipped  : " + getEquipedEquipments(EquipmentType.PANT) + "\n" +
+                "| Glove Equipped : " + getEquipedEquipments(EquipmentType.GLOVE) + "\n" +
+                "| Boot Equipped  : " + getEquipedEquipments(EquipmentType.BOOT) + "\n";
+    }
+
+    private String getEquipedEquipments(EquipmentType equipmentType) {
+        StringBuilder sb = new StringBuilder();
+        Equipment equipmentToPrint = null;
+        for (Stuff stuff : equipped) {
+            Equipment equipment = (Equipment) stuff;
+            if (equipment.getType().equals(equipmentType)) {
+                equipmentToPrint = equipment;
+                break;
+            }
+        }
+        if (equipmentToPrint == null) {
+            return colorize("[ X ]", Colors.RED.textApply(), Attribute.BOLD());
+        } else {
+            sb.append("[ ")
+            .append(colorize(equipmentToPrint.getName(), Attribute.BOLD()))
+                    .append(" ");
+            sb.append(colorize(equipmentToPrint.getRarity().toString(), EquipmentRarity.getColor(equipmentToPrint.getRarity()).textApply()))
+                    .append(" ");
+            sb.append("LVL ").append(equipmentToPrint.getLevel())
+                    .append(" | ");
+            int hpBonus = equipmentToPrint.getBonusLife();
+            if (hpBonus > 0) {
+                sb.append("+")
+                        .append(hpBonus)
+                        .append(colorize(" HP ", Attribute.BOLD(), Colors.RED.textApply()));
+            }
+            int mpBonus = equipmentToPrint.getBonusMana();
+            if (mpBonus > 0) {
+                sb.append("+")
+                        .append(mpBonus)
+                        .append(colorize(" MP ", Attribute.BOLD(), Colors.BLUE.textApply()));
+            }
+            int atkBonus = equipmentToPrint.getBonusDamage();
+            if (atkBonus > 0) {
+                sb.append("+")
+                        .append(atkBonus)
+                        .append(colorize(" ATK ", Attribute.BOLD()));
+            }
+            int defBonus = equipmentToPrint.getBonusArmor();
+            if (defBonus > 0) {
+                sb.append("+")
+                        .append(defBonus)
+                        .append(colorize(" DEF ", Attribute.BOLD()));
+            }
+            int agiBonus = equipmentToPrint.getBonusAgility();
+            if (agiBonus > 0) {
+                sb.append("+")
+                        .append(agiBonus)
+                        .append(colorize(" AGI ", Attribute.BOLD()));
+            }
+            sb.append(" ]");
+        }
         return sb.toString();
     }
 
@@ -443,28 +507,28 @@ public abstract class AbstractInventory implements Inventory {
      * @return the string of the inventory.
      */
     protected String toStringInventoryList() {
-        int MAX_HEIGHT = 6;
+        int MAX_HEIGHT = 8;
         StringBuilder sb = new StringBuilder();
 
-        String separationItems =
-                "|"+
-                        colorize("----------------------", Colors.GREY.textApply())+"|"+
-                        colorize("----", Colors.GREY.textApply())+"|"+
-                        colorize("---", Colors.GREY.textApply())+"|"+
-                        colorize("-----", Colors.GREY.textApply())+"|"+
-                        colorize("-----", Colors.GREY.textApply())+"|"+
-                        colorize("------------------------------------------------------------------", Colors.GREY.textApply())+"|\n";
-
-        sb.append("|------------------------------|--------------------------------------|\n");
+        sb.append("|---------------------------------------------------------------------|\n");
         if (onEquipments) {
-            sb.append("|##############    ITEMS    ######## ").append(colorize("-> EQUIPMENTS", Colors.CYAN.textApply())).append("    ################|\n");
+            sb.append("|##############    ITEMS    ######## ").append(colorize("-> EQUIPMENTS", Colors.RED.textApply())).append("    ################|\n");
         } else {
-            sb.append("|############## ").append(colorize("-> ITEMS", Colors.CYAN.textApply())).append("    ########    EQUIPMENTS    ################\n");
+            sb.append("|############## ").append(colorize("-> ITEMS", Colors.RED.textApply())).append("    ########    EQUIPMENTS    ################\n");
         }
         sb.append("|_____________________________________________________________________|_________________________________\n" + "|    ")
                 .append(colorize("Stuffs            | NB | R | LVL | BTC | Description", Attribute.BOLD()))
                 .append("                                               |\n");
-        sb.append("|--------------------------------------------------------------------------------------------------------------\n");
+
+        if (indexOfSelectedStuff < MAX_HEIGHT) {
+            sb.append("|-------------------------------------------------------------------------------------------------------------\n");
+        } else {
+            sb.append(colorize(
+                    "|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+                    Colors.LIGHT_GREY.textApply())
+            );
+        }
+
 
         List<CoupleStuff> listTodisplay;
         if (onEquipments) {
@@ -477,19 +541,26 @@ public abstract class AbstractInventory implements Inventory {
         for (CoupleStuff coupleStuff : listTodisplay) {
             if ((indexOfSelectedStuff < MAX_HEIGHT && i < MAX_HEIGHT)
                     || (indexOfSelectedStuff >= MAX_HEIGHT && ( i <= indexOfSelectedStuff && i > indexOfSelectedStuff-MAX_HEIGHT))) {
-                if (i != 0 ) {
-                    sb.append(separationItems);
-                }
                 sb.append(stuffLineToString(coupleStuff));
             }
             i++;
         }
         while (i < MAX_HEIGHT) {
-            sb.append(separationItems);
             sb.append("|                      |    |   |     |     |                                                                  |\n");
             i++;
         }
-        sb.append(" -------------------------------------------------------------------------------------------------------------- \n");
+        if ((onEquipments && (indexOfSelectedStuff == sortedEquipment.size()-1
+                            || (sortedEquipment.size()-1 <= MAX_HEIGHT)))
+            || (!onEquipments &&
+                            (indexOfSelectedStuff == sortedItem.size()-1
+                            || (sortedItem.size()-1 <= MAX_HEIGHT)))) {
+            sb.append(" -------------------------------------------------------------------------------------------------------------- \n");
+        } else {
+            sb.append(colorize(
+                    " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv \n",
+                    Colors.LIGHT_GREY.textApply())
+            );
+        }
         return sb.toString();
     }
 
@@ -698,7 +769,7 @@ public abstract class AbstractInventory implements Inventory {
             Equipment selectedEquipment = (Equipment) selectedStuff;
             Equipment equipment = (Equipment) coupleStuff.getStuff();
             if (equipment.equals(selectedEquipment)) {
-                sb.append(colorize(" -> ", Colors.CYAN.textApply()));
+                sb.append(colorize(" -> ", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
             } else sb.append("    ");
             /* NAME */
             if (equipment.isEquiped()) {
@@ -706,19 +777,36 @@ public abstract class AbstractInventory implements Inventory {
             } else {
                 sb.append(equipment.getName());
             }
-            sb.append(" ".repeat(name_size-equipment.getName().length())).append("|");
+            sb.append(" ".repeat(name_size-equipment.getName().length()));
+
+            if (equipment.equals(selectedEquipment)) {
+                sb.append(colorize("|", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
+            } else sb.append("|");
 
             /* NB */
             int nb = coupleStuff.getCount();
-            sb.append(" ").append(nb).append(" ".repeat(nb_size- String.valueOf(nb).length())).append("|");
+            sb.append(" ").append(nb).append(" ".repeat(nb_size- String.valueOf(nb).length()));
 
+
+            if (equipment.equals(selectedEquipment)) {
+                sb.append(colorize("|", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
+            } else sb.append("|");
             /* RARITY */
             EquipmentRarity rarity = equipment.getRarity();
-            sb.append(" ").append(colorize(rarity.toString(), EquipmentRarity.getColor(rarity).textApply())).append(" |");
+            sb.append(" ").append(colorize(rarity.toString(), EquipmentRarity.getColor(rarity).textApply()));
+
+            sb.append(" ");
+            if (equipment.equals(selectedEquipment)) {
+                sb.append(colorize("|", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
+            } else sb.append("|");
 
             /* LVL */
             int lvl = equipment.getLevel();
-            sb.append(" ").append(lvl).append(" ".repeat(lvl_size-String.valueOf(lvl).length())).append("|");
+            sb.append(" ").append(lvl).append(" ".repeat(lvl_size-String.valueOf(lvl).length()));
+
+            if (equipment.equals(selectedEquipment)) {
+                sb.append(colorize("|", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
+            } else sb.append("|");
             /* BTC */
             int btc;
             if (selling) {
@@ -726,7 +814,11 @@ public abstract class AbstractInventory implements Inventory {
             } else {
                 btc = equipment.getBuyingPrice();
             }
-            sb.append(" ").append(colorize(String.valueOf(btc), Colors.YELLOW.textApply())).append(" ".repeat(btc_size-String.valueOf(btc).length())).append("|");
+            sb.append(" ").append(colorize(String.valueOf(btc), Colors.YELLOW.textApply())).append(" ".repeat(btc_size-String.valueOf(btc).length()));
+
+            if (equipment.equals(selectedEquipment)) {
+                sb.append(colorize("|", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
+            } else sb.append("|");
 
             /* DESCRIPTION */
             String description = equipment.getDescription();
@@ -739,20 +831,36 @@ public abstract class AbstractInventory implements Inventory {
             Item selectedItem = (Item) selectedStuff;
             Item item = (Item) coupleStuff.getStuff();
             if (item.equals(selectedItem)) {
-                sb.append(colorize(" -> ", Colors.CYAN.textApply()));
+                sb.append(colorize(" -> ", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
             } else sb.append("    ");
             sb.append(item.getName());
-            sb.append(" ".repeat(name_size-item.getName().length())).append("|");
+            sb.append(" ".repeat(name_size-item.getName().length()));
+
+            if (item.equals(selectedItem)) {
+                sb.append(colorize("|", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
+            } else sb.append("|");
 
             /* NB */
             int nb = coupleStuff.getCount();
-            sb.append(" ").append(nb).append(" ".repeat(nb_size- String.valueOf(nb).length())).append("|");
+            sb.append(" ").append(nb).append(" ".repeat(nb_size- String.valueOf(nb).length()));
+
+            if (item.equals(selectedItem)) {
+                sb.append(colorize("|", Colors.RED.textApply(), Colors.LIGHT_GREY.bgApply(), Attribute.BOLD()));
+            } else sb.append("|");
 
             /* RARITY */
-            sb.append(" ").append(colorize("X", Colors.GREY.textApply())).append(" |");
+            sb.append(" ").append(colorize("X ", Colors.GREY.textApply()));
+
+            if (item.equals(selectedItem)) {
+                sb.append(colorize("|", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
+            } else sb.append("|");
 
             /* LVL */
-            sb.append(colorize(" XXX ", Colors.GREY.textApply())).append("|");
+            sb.append(colorize(" XXX ", Colors.GREY.textApply()));
+
+            if (item.equals(selectedItem)) {
+                sb.append(colorize("|", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
+            } else sb.append("|");
 
             /* BTC */ // TODO make stuffs a cost.
             int btc;
@@ -761,7 +869,11 @@ public abstract class AbstractInventory implements Inventory {
             } else {
                 btc = item.getBuyingPrice();
             }
-            sb.append(" ").append(colorize(String.valueOf(btc), Colors.YELLOW.textApply())).append(" ".repeat(btc_size-String.valueOf(btc).length())).append("|");
+            sb.append(" ").append(colorize(String.valueOf(btc), Colors.YELLOW.textApply())).append(" ".repeat(btc_size-String.valueOf(btc).length()));
+
+            if (item.equals(selectedItem)) {
+                sb.append(colorize("|", Colors.RED.textApply(), Attribute.BOLD(), Colors.LIGHT_GREY.bgApply()));
+            } else sb.append("|");
 
             /* DESCRIPTION */
             sb.append(" ").append(item.getDescription()).append(" ".repeat(des_size-item.getDescription().length())).append("|\n");

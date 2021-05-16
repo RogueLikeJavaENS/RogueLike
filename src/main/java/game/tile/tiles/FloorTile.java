@@ -9,7 +9,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class FloorTile extends AbstractTile {
 
     public FloorTile() {
-        super(colorize(". .", Colors.GREY.textApply()), true,true);
+        super("   ", true,true);
     }
 
     public  Tile getTileFromId(int id){

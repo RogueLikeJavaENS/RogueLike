@@ -17,7 +17,7 @@ public enum EquipmentRarity {
     public static Colors getColor(EquipmentRarity rarity) {
         switch (rarity) {
             case E:
-                return Colors.GREY;
+                return Colors.BROWN;
             case D:
                 return Colors.GREEN;
             case C:

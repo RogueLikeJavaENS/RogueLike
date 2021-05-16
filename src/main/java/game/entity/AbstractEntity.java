@@ -20,27 +20,34 @@ public abstract class AbstractEntity implements Entity {
     private boolean isPlayerAccessible;
     private boolean isNPCAccessible;
     private List<String> basicSprites; // sprite without color
-    private final Colors basicColor; // color of the Entity if it's not in a specific state
+    private final Colors upColor; // color of the top of the Entity
+    private final Colors downColor; // // color of the down of the Entity
     private List<String> spritesToPrint; // the sprite to print on the console
 
     /**
      * Creates an abstractEntity
      *
      * @param position position of the abstractEntity
-     * @param color color of the abstractEntity
+     * @param upColor color of the top of the abstractEntity
+     * @param downColor color of the down of the AbstractEntity
      * @param isPlayerAccessible true if another entity can be on the same position, false otherwise
      */
-    public AbstractEntity(Position position, Colors color, boolean isPlayerAccessible, boolean isNPCAccessible){
+    public AbstractEntity(Position position, Colors upColor, Colors downColor, boolean isPlayerAccessible, boolean isNPCAccessible){
         this.position = position;
         this.isPlayerAccessible = isPlayerAccessible;
         this.isNPCAccessible = isNPCAccessible;
         basicSprites = new ArrayList<>();
         basicSprites.add("");
         basicSprites.add("");
-        this.basicColor = color;
+        this.upColor = upColor;
+        this.downColor = downColor;
         this.spritesToPrint = new ArrayList<>();
-        this.spritesToPrint.add(colorize(basicSprites.get(0),basicColor.textApply()));
-        this.spritesToPrint.add(colorize(basicSprites.get(1),basicColor.textApply()));
+        this.spritesToPrint.add(colorize(basicSprites.get(0),upColor.textApply()));
+        this.spritesToPrint.add(colorize(basicSprites.get(1),downColor.textApply()));
+    }
+
+    public boolean isPlayer(){
+        return false;
     }
 
     @Override
@@ -92,11 +99,18 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * Returns the entity's basic color.
+     * Returns the entity's up basic color.
      *
-     * @return the original entity's color
+     * @return the original entity's up color
      */
-    public Colors getBasicColor() { return basicColor; }
+    public Colors getUpColor() { return upColor; }
+
+    /**
+     * Returns the entity's down basic color.
+     *
+     * @return the original entity's down color
+     */
+    public Colors getDownColor(){ return downColor;}
 
     /**
      * Returns the entity's sprite to print.

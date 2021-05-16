@@ -22,7 +22,7 @@ public class Button extends ObjectEntity {
      * @param position the position of the button
      */
     public Button(Position position) {
-        super(position, Colors.RED, false, false);
+        super(position, Colors.RED, Colors.RED,false, false);
         // Create the sprite in red at first because it's not pressed
         setUpSprites(
                 colorize("#", Colors.DARK_GREY.textApply()) +

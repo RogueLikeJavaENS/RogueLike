@@ -2,9 +2,11 @@ package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
 import display.GridMap;
+import game.elements.GameRule;
 import game.elements.GameState;
 import game.entity.Entity;
 import game.entity.living.player.Player;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import utils.Colors;
@@ -21,11 +23,8 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class Charge extends AbstractSpell {
     public Charge() {
         super(colorize("Charge", Attribute.BOLD(),Colors.RED.textApply()),
-                0,
-                15,
-                new Range(),
-                25,
                 true,
+                3,
                 3,
                 (gameState -> {
                     GridMap gridMap = gameState.getGridMap();
@@ -45,7 +44,9 @@ public class Charge extends AbstractSpell {
                         }
                     }
                     return false;
-                }));
+                })
+        );
+        GameRule.setSpellStats(this, InGameClasses.WARRIOR);
     }
 
     private static void chargePlayer(GameState gameState, Position position) {

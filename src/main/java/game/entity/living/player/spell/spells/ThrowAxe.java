@@ -1,6 +1,8 @@
 package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
+import game.elements.GameRule;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import game.entity.living.player.spell.SpecialEffect;
@@ -14,12 +16,11 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class ThrowAxe extends AbstractSpell {
     public ThrowAxe() {
         super(colorize("Throw Axe", Attribute.BOLD(), Colors.RED.textApply()),
-                1.5,
-                30,
-                new Range(),
-                20,
                 true,
                 3,
-                null);
+                5,
+                null
+        );
+        GameRule.setSpellStats(this, InGameClasses.WARRIOR);
     }
 }

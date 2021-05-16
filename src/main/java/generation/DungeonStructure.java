@@ -26,7 +26,7 @@ public class DungeonStructure {
         GraphDungeon dungeon1 = new GraphDungeon(seed);
         HashMap<Integer,int[]> graph = dungeon1.getGraph();
         List<RoomType> roomTypes = dungeon1.getRoomsType();
-        RoomFactory rs = new RoomFactory(15, 11, 2, floor);
+        RoomFactory rs = new RoomFactory(ROOM_WIDTH, ROOM_HEIGHT, 2, floor);
         for (int i = 0; i < graph.size(); i++) {
             Room room = rs.getRoom(seed, roomTypes.get(i), i, graph.get(i));
             roomList.add(room);

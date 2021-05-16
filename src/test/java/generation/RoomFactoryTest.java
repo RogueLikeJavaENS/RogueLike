@@ -78,7 +78,7 @@ class RoomFactoryTest {
                 nbCoins++;
             }
         }
-        assertTrue(nbCoins >= 8 && nbCoins <= 15);
+        assertTrue(nbCoins >= 0 && nbCoins <=50);
     }
 
     @Test

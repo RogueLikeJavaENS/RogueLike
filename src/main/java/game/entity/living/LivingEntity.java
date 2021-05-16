@@ -22,12 +22,13 @@ public class LivingEntity extends AbstractEntity {
      *
      * @param position the position of the living entity
      * @param name the name of the living entity
-     * @param color the color of the living entity
+     * @param upColor the color of the top of the living entity
+     * @param downColor the color of the down of the living entity
      * @param stats the stats of the living entity
      * @throws IllegalArgumentException
      */
-    public LivingEntity(Position position, String name, Colors color, AbstractStats stats) throws IllegalArgumentException {
-        super(position, color,false,false); // false because a living game.entity is never accessible.
+    public LivingEntity(Position position, String name, Colors upColor, Colors downColor, AbstractStats stats) throws IllegalArgumentException {
+        super(position, upColor, downColor, false,false); // false because a living game.entity is never accessible.
         this.name = name;
         this.stats = stats;
     }
@@ -36,13 +37,14 @@ public class LivingEntity extends AbstractEntity {
      * Create a Living Entity with a special boolean to describe the is NPCAccessible
      * @param position the position of the living entity
      * @param name the name of the living entity
-     * @param color the color of the living entity
+     * @param upColor the color of the top of the living entity
+     * @param downColor the color of the down of the living entity
      * @param stats the stats of the living entity
      * @param isNPCAccessible boolean which describe the special accessibility for the NPC
      * @throws IllegalArgumentException
      */
-    public LivingEntity(Position position, String name, Colors color, AbstractStats stats, boolean isNPCAccessible) throws IllegalArgumentException {
-        super(position, color,false, isNPCAccessible); // false because a living game.entity is never accessible.
+    public LivingEntity(Position position, String name, Colors upColor, Colors downColor, AbstractStats stats, boolean isNPCAccessible) throws IllegalArgumentException {
+        super(position, upColor, downColor,false, isNPCAccessible); // false because a living game.entity is never accessible.
         this.name = name;
         this.stats = stats;
     }

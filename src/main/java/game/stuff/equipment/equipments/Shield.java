@@ -17,8 +17,5 @@ public class Shield extends AbstractEquipment {
      */
     public Shield(int level, EquipmentRarity rarity) {
         super(level, rarity, EquipmentType.SHIELD);
-        GameRule gameRule = new GameRule();
-        super.setBonusArmor(gameRule.getBonusArmor(level+rarity.ordinal()));        // Set the bonus of the shield according to gameRule
-        super.setName("Shield");
     }
 }

@@ -18,21 +18,24 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public abstract class AbstractMonster extends NPC implements Monster {
     private final Strategy strategy;
     private boolean agroPlayer;
+    private final MonsterType monsterType;
 
     /**
      * Create an abstract monster
      *
      * @param position of the monster
      * @param name name of the monster
-     * @param color basic color of the monster
+     * @param upColor basic color of the top of monster
+     * @param downColor basic color of the down of the monster
      * @param strategy strategy of the monster
      * @param stats stats of the monster
      * @throws IllegalArgumentException Position can't be negative
      */
-    public AbstractMonster(Position position, String name, Colors color, Strategy strategy, AbstractStats stats) throws IllegalArgumentException {
-        super(position, name, color, stats);
+    public AbstractMonster(Position position, String name, Colors upColor, Colors downColor, MonsterType monsterType, Strategy strategy, AbstractStats stats) throws IllegalArgumentException {
+        super(position, name, upColor, downColor, stats);
         this.strategy = strategy;
         this.agroPlayer = false;
+        this.monsterType = monsterType;
     }
 
     /**
@@ -49,18 +52,6 @@ public abstract class AbstractMonster extends NPC implements Monster {
      */
     public void setAgroPlayer(boolean agroPlayer) {
         this.agroPlayer = agroPlayer;
-        String upSprite = this.getBasicSprites(0);  // Create the sprite with the basic without color
-        String downSprite = this.getBasicSprites(1);
-        if (agroPlayer){                               // If the monster is aggro, colorize the new sprite in ORANGE
-            upSprite = (colorize(upSprite,Colors.ORANGE.textApply()));
-            downSprite = (colorize(downSprite,Colors.ORANGE.textApply()));
-        }
-        else {                                          // If the monsters is not aggro, colorize the sprite in his basic color
-            Colors color = this.getBasicColor();
-            upSprite = (colorize(upSprite,color.textApply()));
-            downSprite = (colorize(downSprite,color.textApply()));
-        }
-        this.setSprites(upSprite, downSprite, getBasicColor());
     }
 
     /**
@@ -82,7 +73,7 @@ public abstract class AbstractMonster extends NPC implements Monster {
      * @author Raphael
      */
     public void doActionOnDeath(GameState gameState) {
-        Grave grave = new Grave(this, gameState.getGameRule(), gameState);
+        Grave grave = new Grave(this, gameState);
         gameState.getGridMap().update(grave, true);
     }
 
@@ -107,6 +98,10 @@ public abstract class AbstractMonster extends NPC implements Monster {
      */
     public String getName(){ return super.getName();}
 
+    public MonsterType getMonsterType() {
+        return monsterType;
+    }
+
     @Override
     public boolean isMonster() {
         return true;
@@ -120,4 +115,10 @@ public abstract class AbstractMonster extends NPC implements Monster {
     public boolean isBossPart() {
         return false;
     }
+
+    public boolean isWeak(){
+        return false;
+    }
+
+
 }

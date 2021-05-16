@@ -10,8 +10,8 @@ import java.util.HashMap;
 public abstract class AbstractMerchant extends NPC implements Merchant {
     HashMap<Stuff, Integer> shop;
 
-    public AbstractMerchant(Position position, String name, Colors color, AbstractStats stats) throws IllegalArgumentException {
-        super(position, name, color, stats);
+    public AbstractMerchant(Position position, String name, Colors upColor, Colors downColors, AbstractStats stats) throws IllegalArgumentException {
+        super(position, name, upColor, downColors, stats);
     }
 
     @Override

@@ -16,7 +16,7 @@ import utils.Position;
 public class Stair extends ObjectEntity {
 
     public Stair(Position position) {
-        super(position,Colors.BROWN, true, false);
+        super(position,Colors.BROWN, Colors.BROWN,true, false);
         setSprites("  _", "_=|", Colors.BROWN);
     }
 
@@ -38,7 +38,6 @@ public class Stair extends ObjectEntity {
         gameState.getPlayer().setPosition(initialPos);
         gameState.updateChangingRoom(dungeon.getRoom(0));
         gameState.setMiniMap(new MiniMap(dungeon, gameState));
-        gameState.getPlayer().getInventory().removeItem(ItemType.FLOORKEY);
         gameState.getDescriptor().updateDescriptor(String.format("%s found the stairs and is now on the floor %d", gameState.getPlayer().getName(), gameState.getDungeon().getFloor()));
     }
 }

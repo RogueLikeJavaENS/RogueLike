@@ -1,6 +1,8 @@
 package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
+import game.elements.GameRule;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import game.entity.living.player.spell.SpecialEffect;
@@ -16,12 +18,16 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class FireBolt extends AbstractSpell {
     public FireBolt() {
         super(colorize("Fire Bolt", Attribute.BOLD(), Colors.RED.textApply()),
-                1.5,
-                60,
-                new Range(),
-                40,
                 true,
                 5,
-                null);
+                5,
+                null
+        );
+        GameRule.setSpellStats(this, InGameClasses.MAGE);
+    }
+
+    @Override
+    public boolean isZoning() {
+        return true;
     }
 }

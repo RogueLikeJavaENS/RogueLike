@@ -29,12 +29,13 @@ public abstract class AbstractBoss extends AbstractMonster implements Boss {
      * Create an AbstractBoss (only called as a super for different bosses).
      * @param name name of the boss.
      * @param position position of the boss.
-     * @param color color of the boss.
+     * @param upColor color of top of the boss.
+     * @param downColor color of the down of the boss.
      * @param strategy bossStrategy attributed to the bosses.
      * @param stats the boss main part stats.
      */
-    public AbstractBoss(String name, Position position, Colors color, Strategy strategy, AbstractStats stats) {
-        super(position, name, color, strategy, stats);
+    public AbstractBoss(String name, Position position, Colors upColor, Colors downColor, Strategy strategy, AbstractStats stats) {
+        super(position, name, upColor, downColor, null, strategy, stats);
         hasSpecial = true;
         bufferPath = new ArrayList<>();
         bufferInit();

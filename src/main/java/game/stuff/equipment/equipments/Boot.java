@@ -18,8 +18,5 @@ public class Boot extends AbstractEquipment {
      */
     public Boot(int level, EquipmentRarity rarity) {
         super(level, rarity, EquipmentType.BOOT);
-        GameRule gameRule = new GameRule();
-        super.setBonusArmor(gameRule.getBonusArmor(level+rarity.ordinal()));      // Set the bonus of the boot according to gameRule
-        super.setName("Boot");
     }
 }

@@ -18,6 +18,7 @@ public class MapDungeon extends AbstractItem{
      */
     public MapDungeon() {
         super("Map of the Floor", ItemType.DUNGEON_MAP);
+        setDescription("Discover all the floor in the map. One Use.");
     }
 
     /**
@@ -32,6 +33,7 @@ public class MapDungeon extends AbstractItem{
         for (Room room : gameState.getDungeon().getRoomList()) {
             room.setWasVisited(true);
         }
+        gameState.getDescriptor().updateDescriptor("You read the map and discover all the floor...");
         return true;
     }
 

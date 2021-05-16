@@ -23,7 +23,7 @@ public class Coins extends ObjectEntity {
      * @param position the position of the coins
      **/
     public Coins(Position position) {
-        super(position,Colors.YELLOW, true,true);
+        super(position,Colors.YELLOW, Colors.YELLOW,true,true);
         this.value = 1;
         setSprites(" O ", "   ", Colors.YELLOW);
     }

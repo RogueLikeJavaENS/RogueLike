@@ -7,6 +7,7 @@ import game.elements.GameState;
 import game.stuff.Stuff;
 import game.stuff.equipment.Equipment;
 import game.stuff.equipment.EquipmentFactory;
+import game.stuff.equipment.EquipmentRarity;
 import game.stuff.item.Item;
 import utils.Colors;
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -71,8 +72,7 @@ public class MerchantInventory extends AbstractInventory {
             // if the selectedStuff is an Item.
             if (selectedStuff.isUsable()) {
                 Item item = (Item) selectedStuff;
-                GameRule gameRule = new GameRule();
-                price = gameRule.getItemPrice(stats.getLevel(), item.getType());
+                price = GameRule.getItemPrice(stats.getLevel(), item.getType());
             }
             // if the selected game.stuff is an Equipment.
             else {
@@ -83,19 +83,18 @@ public class MerchantInventory extends AbstractInventory {
                 removeStuff(selectedStuff);
                 stats.spendMoney(price);
                 gameState.getDescriptor().updateDescriptor(
-                        String.format("%s spend %s BTC to buy %s !",
+                        String.format("%s spent %s BTC to buy %s !",
                                 gameState.getPlayer().getName(),
                                 colorize(String.valueOf(price), Colors.YELLOW.textApply()),
                                 selectedStuff.getName()));
             } else {
-                gameState.getDescriptor().updateDescriptor(String.format("%s don't have enough BTC !",gameState.getPlayer().getName()));
+                gameState.getDescriptor().updateDescriptor(String.format("%s doesn't have enough BTC !",gameState.getPlayer().getName()));
             }
         } else {
             int price;
             if (selectedStuff.isUsable()) {
                 Item item = (Item) selectedStuff;
-                GameRule gameRule = new GameRule();
-                price = (int) (gameRule.getItemPrice(stats.getLevel(), item.getType()) * 0.60);
+                price = (int) (GameRule.getItemPrice(stats.getLevel(), item.getType()) * 0.60);
             } else {
                 Equipment equipment = (Equipment) selectedStuff;
                 if (equipment.isEquiped()) {
@@ -129,25 +128,105 @@ public class MerchantInventory extends AbstractInventory {
     public String toStringInventory(GameState gameState) {
         StringBuilder sb = new StringBuilder();
         String headSelling =
-                colorize(String.format("Hello %s ! There might be something you want to buy...\n", gameState.getPlayer().getName()) +
+                String.format("Hello %s ! There might be something you want to buy...\n", gameState.getPlayer().getName()) +
                         "################################ | Q, D : Switch categories.\n" +
                         "#    MERCHANT SHOP INVENTORY   # | Z, S : Switch selected stuffs. \n" +
-                        "################################ | E : Buy | ESC : Quit shop\n", Attribute.BOLD(), Colors.MAGENTA.textApply());
+                        "################################ | E : Buy | ESC : Quit shop\n";
         String headBuying =
-                colorize(String.format("Hello %s ! Show me your stuffs you want to sell...\n", gameState.getPlayer().getName()) +
+               String.format("Hello %s ! Show me your stuffs you want to sell...\n", gameState.getPlayer().getName()) +
                         "################################ | Q, D : Switch categories.\n" +
                         "#       PLAYER INVENTORY       # | Z, S : Switch selected stuffs. \n" +
-                        "################################ | E : Sell | ESC : Quit shop\n", Attribute.BOLD(), Colors.CYAN.textApply());
-        String stats = toStringStats(gameState);
+                        "################################ | E : Sell | ESC : Quit shop\n";
         String inventoryList = toStringInventoryList();
         if (selling) {
             sb.append(headSelling);
         } else {
             sb.append(headBuying);
         }
-        sb.append(stats).append(inventoryList);
+        sb.append(toStringStatsSelectedStuff(gameState));
+        sb.append(inventoryList);
+        equipped = gameState.getPlayer().getInventory().getEquiped();
+        sb.append(toStringEquipped());
 
         return sb.toString();
+    }
+
+    private String toStringStatsSelectedStuff(GameState gameState) {
+        StringBuilder sb = new StringBuilder();
+        if (indexOfSelectedStuff != -1) {
+            sb.append(" _____________________________________________________________________\n");
+            if (onEquipments) {
+                int lineCount = 8;
+                Equipment e = (Equipment) selectedStuff;
+                lineCount += e.getName().length() + String.valueOf(e.getLevel()).length() + e.getRarity().getRarity().length();
+                sb.append("| A ").append(colorize(e.getRarity().getRarity(), EquipmentRarity.getColor(e.getRarity()).textApply()))
+                        .append(" ")
+                        .append(e.getName())
+                        .append(" ");
+                sb.append(" LVL ").append(e.getLevel()).append(" ".repeat(67-lineCount)).append("|\n");
+                lineCount = 6;
+                sb.append("| Stats: ");
+                int hpBonus = e.getBonusLife();
+                int mpBonus = e.getBonusMana();
+                int agiBonus = e.getBonusAgility();
+                int defBonus = e.getBonusArmor();
+                int atkBonus = e.getBonusDamage();
+                if (hpBonus > 0) {
+                    sb.append("+").append(hpBonus).append(colorize(" HP ", Colors.RED.textApply()));
+                    lineCount += 5+ String.valueOf(hpBonus).length();
+                }
+                if (mpBonus > 0) {
+                    sb.append("+").append(mpBonus).append(colorize(" MP ", Colors.BLUE.textApply()));
+                    lineCount += 5+ String.valueOf(mpBonus).length();
+                }
+                if (atkBonus > 0) {
+                    sb.append("+").append(atkBonus).append(colorize(" ATK ", Attribute.BOLD()));
+                    lineCount += 6+ String.valueOf(atkBonus).length();
+                }
+                if (defBonus > 0) {
+                    sb.append("+").append(defBonus).append(colorize(" DEF ", Attribute.BOLD()));
+                    lineCount += 6+ String.valueOf(defBonus).length();
+                }
+                if (agiBonus > 0) {
+                    sb.append("+").append(agiBonus).append(colorize(" AGI ", Attribute.BOLD()));
+                    lineCount += 6+ String.valueOf(agiBonus).length();
+                }
+                sb.append(" ".repeat(67-lineCount)).append("|\n");
+                int cost;
+                if (selling) {
+                    cost = e.getSellingPrice();
+                } else {
+                    cost = e.getBuyingPrice();
+                }
+                lineCount = 8 + String.valueOf(cost).length();
+                sb.append("| Cost ").append(colorize(String.valueOf(cost), Colors.YELLOW.textApply(), Attribute.BOLD()))
+                        .append(" BTC").append(" ".repeat(67-lineCount)).append("|\n");
+
+
+            } else {
+                Item i = (Item) selectedStuff;
+                int lineCount = 4 + i.getName().length() + i.getDescription().length();
+                sb.append("| A ").append(i.getName()).append(" : ").append(i.getDescription())
+                        .append(" ".repeat(67-lineCount)).append("|\n");
+
+                int cost;
+                if (selling) {
+                    cost = i.getSellingPrice();
+                } else {
+                    cost = i.getBuyingPrice();
+                }
+                lineCount = 8 + String.valueOf(cost).length();
+                sb.append("| Cost ").append(colorize(String.valueOf(cost), Colors.YELLOW.textApply(), Attribute.BOLD()))
+                        .append(" BTC").append(" ".repeat(67-lineCount)).append("|\n");
+            }
+            int playerMoney = gameState.getPlayer().getPlayerStats().getMoneyCount();
+            int lineCount = 19 + String.valueOf(playerMoney).length();;
+
+            sb.append("| Player wealth : ").append(colorize(String.valueOf(playerMoney), Colors.YELLOW.textApply(), Attribute.BOLD()))
+                    .append(" BTC").append(" ".repeat(67-lineCount)).append("|\n");
+            return sb.toString();
+        }
+        return "";
     }
 
     /**
