@@ -550,7 +550,7 @@ public class GameRule {
                 damage = 2+level;
                 armor = level;
                 money = 5+level;
-                xp = 5*level;
+                xp = 8*(level+1);
                 break;
             case SKELETON:
                 basicHP = 50;
@@ -561,7 +561,7 @@ public class GameRule {
                 damage = 2+level;
                 armor = level;
                 money = 3+level;
-                xp = 5*level;
+                xp = 8*(level+1);
                 break;
             case BAT:
                 basicHP = 20;
@@ -571,7 +571,7 @@ public class GameRule {
                 damage = 1+(level/2);
                 armor = level;
                 money = 1+level;
-                xp = 5*level;
+                xp = 5*(level+1);
                 break;
             case ZOMBIE:
                 basicHP = 40;
@@ -581,7 +581,7 @@ public class GameRule {
                 damage = 2+level;
                 armor = level;
                 money = 2+level;
-                xp = 5*level;
+                xp = 5*(level+1);
                 break;
             case ORC:
                 basicHP = 60;
@@ -591,7 +591,7 @@ public class GameRule {
                 damage = 2+level;
                 armor = level;
                 money = 5+level;
-                xp = 7*level;
+                xp = 9*(level+1);
                 break;
             case VAMPIRE:
                 basicHP = 45;
@@ -601,7 +601,7 @@ public class GameRule {
                 damage = 2+level;
                 armor = level;
                 money = 3+level;
-                xp = 6*level;
+                xp = 8*(level+1);
                 break;
             case WIZARD:
                 basicHP = 30;
@@ -611,7 +611,7 @@ public class GameRule {
                 damage = 1+(level/2);
                 armor = level;
                 money = 3+level;
-                xp = 6*level;
+                xp = 8*(level+1);
                 break;
             case MIMIC:
                 basicHP = 100;
@@ -621,7 +621,7 @@ public class GameRule {
                 damage = 2+level;
                 armor = 1+level;
                 money = 20+level;
-                xp = 7*level;
+                xp = 9*(level+1);
                 break;
             case MERCHANT:
                 basicHP = 150;
@@ -631,7 +631,7 @@ public class GameRule {
                 damage = 15+level;
                 armor = 1+level;
                 money = 200+level;
-                xp = 15*level;
+                xp = 15*(level+1);
                 break;
             default:
                 basicHP = 1;
@@ -703,9 +703,9 @@ public class GameRule {
                     case 0: // BasicAttack
                         damageMult = 1.0;
                         manaCost = 0;
-                        damage = 11;
+                        damage = 14;
                         break;
-                    case 1: // StrongPunch
+                    case 1: // ThrowAxe
                         damageMult = 1.4;
                         manaCost = 10;
                         damage = 15;
@@ -725,7 +725,7 @@ public class GameRule {
                         manaCost = 15;
                         damage = 0;
                         break;
-                    case 5: // ThrowAxe
+                    case 5: // StrongPunch
                         damageMult = 1.5;
                         manaCost = 25;
                         damage = 20;

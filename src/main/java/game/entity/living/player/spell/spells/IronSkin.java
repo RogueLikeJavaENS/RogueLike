@@ -20,11 +20,11 @@ public class IronSkin extends AbstractSpell {
         super(colorize("Iron Skin", Attribute.BOLD(), Colors.MAGENTA.textApply()),
                 false,
                 0,
-                4,
+                1,
                 (gameState -> {
-                    int numberTurn = 3;
+                    int numberTurn = 5;
                     int level = gameState.getPlayer().getPlayerStats().getLevel();
-                    int armorBonus = 4+level;
+                    int armorBonus = 8+level;
                     gameState.getPlayer().getPlayerStats().setBonusArmorTemporary(armorBonus, numberTurn);
                     gameState.getDescriptor().updateDescriptor(
                     String.format("%s used "+

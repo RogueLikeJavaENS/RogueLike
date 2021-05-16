@@ -17,8 +17,8 @@ public class ThrowAxe extends AbstractSpell {
     public ThrowAxe() {
         super(colorize("Throw Axe", Attribute.BOLD(), Colors.RED.textApply()),
                 true,
-                3,
-                5,
+                2,
+                1,
                 null
         );
         GameRule.setSpellStats(this, InGameClasses.WARRIOR);

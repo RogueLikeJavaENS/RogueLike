@@ -19,7 +19,7 @@ public class StrongPunch extends AbstractSpell {
         super(colorize("Strong Punch", Attribute.BOLD(), Colors.RED.textApply()),
                 true,
                 1,
-                1,
+                5,
                 null
         );
         GameRule.setSpellStats(this, InGameClasses.WARRIOR);
