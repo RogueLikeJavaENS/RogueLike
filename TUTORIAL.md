@@ -100,7 +100,7 @@ The spell which is selected is highlight in white and you can see just upward it
    - `Fire Ball` : lvl 2, throw a ball of fire on the first monster you found 
    - `Teleport` : lvl 3, teleport you at the end of your range
    - `Heal` : lvl 4, can heal yourself
-   - `Fire Stroke` : lvl 5, throw a powerful strike of fire which hit all the monster he encounters
+   - `Fire Bolt` : lvl 5, throw a powerful strike of fire which hit all the monster he encounters
    - `HellWave` : lvl 6, throw a powerful wave of fire in front of you
    
 
@@ -123,7 +123,7 @@ Or to attack him, but be ready to face the consequences.<br>
 You can find all the item and stuff the merchant sell here.<br>
 Use **Q, D** to switch between the items and the equipment.<br>
 Use **Z, S** to switch between the stuff you can buy.<br>
-On the top you can see how much gold you have, how much the selected item cost and it's effect on the player.<br>
+On the top you can see how much gold you have, how much the selected item cost and his effect on the player.<br>
 On the bottom you can see what equipment you wear.<br>
 The same interface is used to sell some stuff to the merchant.<br>
 
@@ -131,12 +131,12 @@ The same interface is used to sell some stuff to the merchant.<br>
 <img src="https://user-images.githubusercontent.com/71182082/118340551-5255d280-b51c-11eb-9a06-dd1a29e9a018.png" width="500"><br>
 By opening the map with the key **M**, you can see the rooms of the current floor of the dungeon.<br>
 You can't see a room on your map if you don't have visited it already.<br>
-The ways to see all the map are to visit all the room or use a Map of the Floor.<br>
+The ways to see all the map is to visit all the room or use a Map of the Floor.<br>
 <img src="https://user-images.githubusercontent.com/71182082/118396389-a6150880-b64f-11eb-924f-c7b705204cdb.png" width="500"><br>
-When you are in the dungeon you can see where you are with a mini-map in the right of the screen.<br> 
+When you are in the dungeon you can see where you are with a mini-map on the right of the screen.<br> 
 
 ## Inventory
-By opening the invenotry with the key **I** you can see all the items and the equipments you have and all your stats.<br>
+By opening your inventory with the key **I** you can see all the items and the equipments you have and all your stats.<br>
 You can also use it (for the item) or equipy it (for the equipment) by pressing **E**.<br>
 To move on your inventory, use **Q, D** to switch between items and equipment and use **Z, S** to choose the items or equipment.<br>
 <img src="https://user-images.githubusercontent.com/71182082/118340767-05263080-b51d-11eb-8560-50eabd203bc7.png" width="800"><br>
@@ -280,7 +280,7 @@ This key is given by the boss when you defeat him. It allows you to open the doo
 
 ### Golden Key
 You can find this key in a Chest or you can buy one of the at the merchant.<br>
-It's permit to open a [Golden Chest](#Chest-and-Golden-Chest).<br>
+It allows to open a [Golden Chest](#Chest-and-Golden-Chest).<br>
 
 ### Map of the Floor
 You can find this map on a Grave or a Chest but they are rare, or you can buy one at the merchant.<br>
