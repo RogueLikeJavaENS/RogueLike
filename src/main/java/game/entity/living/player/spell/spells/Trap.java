@@ -2,6 +2,8 @@ package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
 import display.GridMap;
+import game.elements.GameRule;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import game.entity.object.traps.RangerTrap;
@@ -17,13 +19,10 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class Trap extends AbstractSpell {
     public Trap() {
         super(colorize("Trap", Attribute.BOLD(), Colors.GREEN.textApply()),
-                0.0,
-                0,
-                new Range(),
-                15,
                 false,
                 1,
-                gameState -> {
+                1,
+                (gameState -> {
                     GridMap gridmap = gameState.getGridMap();
                     List<Position> posToPlace = gridmap.getRangeList();
                     for (Position position : posToPlace) {
@@ -35,6 +34,8 @@ public class Trap extends AbstractSpell {
                         }
                     }
                     return false;
-                });
+                })
+        );
+        GameRule.setSpellStats(this, InGameClasses.RANGER);
     }
 }

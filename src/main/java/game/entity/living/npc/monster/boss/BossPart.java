@@ -15,7 +15,7 @@ public class BossPart extends LivingEntity {
     private final Boss myBoss;
 
     public BossPart(Boss boss, Position position, String name, Colors color, AbstractStats stats, String spritesUp, String spritesDown) throws IllegalArgumentException {
-        super(position, name, color, stats, true);
+        super(position, name, color, color, stats, true);
         setSprites(spritesUp, spritesDown);
         myBoss = boss;
     }

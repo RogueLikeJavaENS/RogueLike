@@ -1,6 +1,8 @@
 package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
+import game.elements.GameRule;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import utils.Direction;
@@ -15,13 +17,11 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class BasicAttackRanger extends AbstractSpell {
     public BasicAttackRanger() {
         super(colorize("Attack", Attribute.BOLD()),
-                1.0,
-                11,
-                new Range(),
-                0,
                 true,
-                3,
+                2,
+                0,
                 null
         );
+        GameRule.setSpellStats(this, InGameClasses.RANGER);
     }
 }

@@ -24,7 +24,6 @@ import game.stuff.item.potions.*;
 import utils.Position;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import java.util.List;
 import java.util.Random;
@@ -34,7 +33,6 @@ public class RoomFactory {
     private final int height; // 11
     private final int space; // 2
     private final int floor;
-    private final static GameRule gameRule = new GameRule();
     private final static Random GEN = new Random();
     private List<Position> currentAvailablePositions;       // list of the position where we can put entities
 
@@ -68,7 +66,8 @@ public class RoomFactory {
             case START:
                 currentAvailablePositions.remove(room.getCenter()); // remove the center for the available position because it's where the player spawn
                 addHoleAndSpike(room);
-                addChest(room,true);
+
+                addChest(room,true, true);
                 break;
             case BOSS:
                 addBoss(room);      // put a boss
@@ -83,8 +82,8 @@ public class RoomFactory {
             case MONSTER:
                 addHoleAndSpike(room);
                 addMonsters(room);
-                if (gameRule.presenceOfClassicChestOnMonsterRoom()){    // accordint to the GameRule put a chest or not
-                    addChest(room,true);
+                if (GameRule.presenceOfClassicChestOnMonsterRoom()){    // accordint to the GameRule put a chest or not
+                    addChest(room,true, false);
                 }
                 break;
             case REST:
@@ -92,14 +91,13 @@ public class RoomFactory {
                 addCoins(room, 5);
                 break;
             case TREASURE:
-                addChest(room,false);
-                addCoins(room, gameRule.getNumberOfGoldInTreasureRoom());
-                addPotions(room, gameRule.getNumberOfPotionInTreasureRoom());
+                addChest(room,false, false);
+                addCoins(room, GameRule.getNumberOfGoldInTreasureRoom());
+                addPotions(room, GameRule.getNumberOfPotionInTreasureRoom());
                 break;
         }
         return room;
     }
-
 
     /**
      * Adding a merchant in the room
@@ -113,15 +111,14 @@ public class RoomFactory {
                 List<Position> availablePositions = room.getAvailablePositions();
                 GeneralMerchant generalMerchant = new GeneralMerchant(availablePositions.remove(0)); // create the merchant
                 EquipmentFactory equipmentFactory = new EquipmentFactory(playerClasse);
-                GameRule gm = new GameRule();
 
                 Inventory merchantInventory = generalMerchant.getMerchantInventory();
 
                 // Add a number of equipment in the merchant inventory (according to the GameRule)
-                for (int i = 0; i < gm.getNumberOfEquipMerchantShop(); i++) {
+                for (int i = 0; i < GameRule.getNumberOfEquipMerchantShop(); i++) {
                     int level = 1;
-                    EquipmentRarity equipmentRarity = gm.getRarityEquipmentInMerchantShop();
-                    EquipmentType equipmentType = gm.getEquipmentTypeInMerchantShop();
+                    EquipmentRarity equipmentRarity = GameRule.getRarityEquipmentInMerchantShop();
+                    EquipmentType equipmentType = GameRule.getEquipmentTypeInMerchantShop();
                     merchantInventory.addItem(equipmentFactory.getEquipment(level, equipmentType, equipmentRarity));
                 }
 
@@ -174,7 +171,7 @@ public class RoomFactory {
         int monsterCount = GEN.nextInt(10) % 2 + 2;
         int type;
         for (int i = 0; i < monsterCount; i++) {        // create monsterCount monster with a type chosen by the gameRule and put it in the list of entity of the room
-            type = gameRule.getMonsterType();
+            type = GameRule.getMonsterType();
             room.addEntity(monsterFactory.getMonster(type, currentAvailablePositions.get(0)));
             currentAvailablePositions.remove(0);
         }
@@ -209,7 +206,7 @@ public class RoomFactory {
         PotionEntityFactory potionFactory = new PotionEntityFactory();
         for (int i = 0; i < numberOfPotion; i++) {
             if (currentAvailablePositions.size() != 0) {
-                room.addEntity((Entity) potionFactory.getPotionEntity(gameRule.getPotionType(), currentAvailablePositions.get(0)));
+                room.addEntity((Entity) potionFactory.getPotionEntity(GameRule.getPotionType(), currentAvailablePositions.get(0)));
                 currentAvailablePositions.remove(0);
             }
         }
@@ -235,27 +232,29 @@ public class RoomFactory {
      * @param room the room
      * @param isClassic true if the chest is classic, false if the chest is golden
      */
-    private void addChest(Room room, boolean isClassic){
+    private void addChest(Room room, boolean isClassic, boolean isStart){
         if (currentAvailablePositions.size() != 0){
-            if (isClassic){
-                room.addEntity(new Chest(currentAvailablePositions.get(0),true, gameRule.isChestMimic()));
-                currentAvailablePositions.remove(0);
+            if (isStart) {
+                room.addEntity(new Chest(currentAvailablePositions.remove(0),true, false, true));
+            } else {
+                if (isClassic){
+                    room.addEntity(new Chest(currentAvailablePositions.remove(0),true, GameRule.isChestMimic(), false));
+                }
+                else{
+                    room.addEntity(new Chest(currentAvailablePositions.remove(0),false, false, false));
+                }
             }
-            else{
-                room.addEntity(new Chest(currentAvailablePositions.get(0),false, false));
-                currentAvailablePositions.remove(0);
-            }
-
         }
     }
+
 
     /**
      * Add holes and spikes in the room (number of holes and spikes according to the GameRule)
      * @param room the room
      */
     private void addHoleAndSpike(Room room){
-        int nbHole = gameRule.numberOfHoleAtGeneration();
-        int nbSpike = gameRule.numberOfSpikeAtGeneration();
+        int nbHole = GameRule.numberOfHoleAtGeneration();
+        int nbSpike = GameRule.numberOfSpikeAtGeneration();
 
         for(int i = 0; i< nbSpike; i++){
             room.addEntity(new Spike(currentAvailablePositions.remove(0)));

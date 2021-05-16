@@ -1,5 +1,6 @@
 package game.entity.living;
 
+import game.elements.GameRule;
 import utils.Check;
 
 import java.util.Random;
@@ -66,7 +67,13 @@ public abstract class AbstractStats{
     }
 
     public int sufferDamage(int damage) {
-        damage = Check.checkPositivity(damage-armorTotal);
+        damage = Math.max(damage/3, damage-armorTotal);
+        damage = Check.checkPositivity(damage);
+        this.lifePointActual = Check.checkPositivity(getLifePointActual() - damage);
+        return damage;
+    }
+
+    public int sufferDamageIgnoringArmor(int damage) {
         this.lifePointActual = Check.checkPositivity(getLifePointActual() - damage);
         return damage;
     }
@@ -172,4 +179,26 @@ public abstract class AbstractStats{
     public int getLifePointTotal() { return lifePointTotal; }
     public int getLifePointNatural() { return lifePointNatural; }
     public int getLifePointActual() { return lifePointActual; }
+
+    public void setLifePoint(int lifePoint) {
+        lifePointNatural = lifePoint;
+        lifePointActual = lifePoint;
+        lifePointTotal = lifePoint;
+    }
+
+    public void setAgility(int agility) {
+        agilityNatural = agility;
+        agilityTotal = agility;
+    }
+    public void setDamage(int damage) {
+        damageNatural = damage;
+        damageTotal = damage;
+    }
+    public void setArmor(int armor) {
+        armorNatural = armor;
+        armorTotal = armor;
+    }
+    public void setMoney(int money) {
+        moneyCount = money;
+    }
 }

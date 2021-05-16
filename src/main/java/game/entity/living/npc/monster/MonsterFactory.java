@@ -17,6 +17,7 @@ public class MonsterFactory {
 
     // Create Condition to use for a strategy
     // public final Condition nameCondition = (Monster monster, Player player) -> a condition which return a boolean
+    public final Condition isVeryLowLife = (Monster monster, Player player) -> monster.getMonsterStats().getLifePointActual() <= monster.getMonsterStats().getLifePointNatural()/5;
     public final Condition isMidlife = (Monster monster, Player player) -> monster.getMonsterStats().getLifePointActual() <= monster.getMonsterStats().getLifePointNatural()/2;
     public final Condition alwaysTrue = (Monster monster, Player player) -> true;
     public final Condition isFarFromPlayer = (Monster monster, Player player) -> StrategyUtils.getDistance(monster,player) > AGRO;
@@ -25,7 +26,7 @@ public class MonsterFactory {
     // private final Strategy nameStrategy = new ...Strategy(Condition, new Strategy(...))
     private final Strategy goblinStrategy = new IdleStrategy(isFarFromPlayer, new EscapeStrategy(isMidlife, new ApproachStrategy(alwaysTrue, new AttackStrategy(null))));
     private final Strategy classicAttackStrategy = new IdleStrategy(isFarFromPlayer, new ApproachStrategy(alwaysTrue, new AttackStrategy(null)));
-
+    //private final Strategy wizardStrategy = new IdleStrategy(isFarFromPlayer, new EscapeStrategy(isVeryLowLife, new ApproachStrategy(alwaysTrue,new AttackStrategy(null))));
 
     /**
      * Create a monster factory with the parameter floor
@@ -62,6 +63,9 @@ public class MonsterFactory {
         else if(monsterType == MonsterType.VAMPIRE.ordinal()) {
             return new Vampire(position, "Vampire", getLevel(), classicAttackStrategy);
         }
+        else if (monsterType == MonsterType.WIZARD.ordinal()){
+            return new Wizard(position, "Wizard", getLevel(), classicAttackStrategy);
+        }
         else if (monsterType == MonsterType.MIMIC.ordinal()) {
             return new Mimic(position, "Mimic", getLevel(), classicAttackStrategy);
 
@@ -82,6 +86,6 @@ public class MonsterFactory {
      */
     private int getLevel() {
         Random GEN = new Random();
-        return GEN.nextInt(3) + (3*floor)-2;
+        return GEN.nextInt(2) + (3*floor)-2;
     }
 }

@@ -1,8 +1,11 @@
 package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
+import game.elements.GameRule;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
+import game.entity.living.player.spell.SpellUtils;
 import utils.Colors;
 import utils.Direction;
 import utils.Position;
@@ -13,13 +16,12 @@ public class HellWave extends AbstractSpell {
 
     public HellWave() {
         super(colorize("HellWave", Attribute.BOLD(), Colors.RED.textApply()),
-                2.0,
-                420,
-                new Range(),
-                50,
                 true,
                 1,
-                null);
+                6,
+                null
+        );
+        GameRule.setSpellStats(this, InGameClasses.MAGE);
     }
 
     @Override
@@ -29,77 +31,11 @@ public class HellWave extends AbstractSpell {
 
     @Override
     public void setTopLeftCorner(Position entityPos, Direction direction) {
-        int rangeAbs = entityPos.getAbs();
-        int rangeOrd = entityPos.getOrd();
-        switch (direction) {
-            case NORTH:
-                rangeOrd = entityPos.getOrd()-3; //3 parce qu'on veut faire du 3x3
-                rangeAbs = entityPos.getAbs()-1;
-
-                if (entityPos.getAbs() < 1) {
-                    rangeAbs = entityPos.getAbs();
-                }
-                if (entityPos.getOrd() < 3) {
-                    rangeOrd = entityPos.getOrd() + (3 - entityPos.getOrd());
-                }
-                break;
-
-            case WEST:
-                rangeOrd = entityPos.getOrd()-1;
-                rangeAbs = entityPos.getAbs()-3; //3 parce qu'on veut faire du 3x3
-
-                if (entityPos.getAbs() < 3) {
-                    rangeAbs = entityPos.getAbs() + (3 - entityPos.getAbs());
-                }
-                if (entityPos.getOrd() < 1) {
-                    rangeOrd = entityPos.getOrd();
-                }
-                break;
-
-            case SOUTH:
-                rangeOrd = entityPos.getOrd()+1;
-                rangeAbs = entityPos.getAbs()-1;
-                break;
-
-            case EAST:
-                rangeOrd = entityPos.getOrd()-1;
-                rangeAbs = entityPos.getAbs()+1;
-                break;
-        }
-        range.setTopLeftCorner(new Position(
-                rangeAbs, rangeOrd
-        ));
+        SpellUtils.setTopLeftCornerUlti(range, entityPos, direction);
     }
 
     @Override
     public void setBottomRightCorner(Position entityPos, Direction direction) {
-        int rangeAbs = entityPos.getAbs();
-        int rangeOrd = entityPos.getOrd();
-        switch (direction) {
-            case NORTH:
-                rangeOrd = entityPos.getOrd()-1;
-                rangeAbs = entityPos.getAbs()+1;
-                break;
-
-            case WEST:
-                rangeOrd = entityPos.getOrd()+1;
-                rangeAbs = entityPos.getAbs()-1;
-                break;
-
-            case SOUTH:
-                rangeOrd = entityPos.getOrd()+3; //3 parce qu'on veut faire du 3x3
-                rangeAbs = entityPos.getAbs()+1;
-
-                break;
-
-            case EAST:
-                rangeOrd = entityPos.getOrd()+1;
-                rangeAbs = entityPos.getAbs()+3; //3 parce qu'on veut faire du 3x3
-
-                break;
-        }
-        range.setBottomRightCorner(new Position(
-                rangeAbs, rangeOrd
-        ));
+        SpellUtils.setBottomRightCornerUlti(range, entityPos, direction);
     }
 }

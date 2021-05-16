@@ -30,11 +30,10 @@ public class Grave extends ObjectEntity {
      * Creates the Grave and initializes the items the Player will get when interacting with it.
      *
      * @param monster Monster from which the Grave is created.
-     * @param gameRule GameRule used to decide which Items the Grave will contain.
      * @param gameState GameState used to decide the level of the Items.
      */
-    public Grave(Monster monster, GameRule gameRule, GameState gameState) {
-        super(monster.getPosition(), Colors.LIGHT_GREY, false, false);
+    public Grave(Monster monster, GameState gameState) {
+        super(monster.getPosition(), Colors.LIGHT_GREY, Colors.LIGHT_GREY,false, false);
         setSprites("/+\\", "|_|", Colors.LIGHT_GREY);
         droppedItems = new ArrayList<>();
         //plus tard quand les monstres auront des items dans un inventaire ça sera modifié en conséquent
@@ -42,17 +41,17 @@ public class Grave extends ObjectEntity {
         ItemFactory itemFactory = new ItemFactory();
         EquipmentFactory equipmentFactory = new EquipmentFactory(gameState.getPlayer().getClasse());
 
-        for (int i = 0; i < gameRule.getNumberOfItemsOnCorpse(); i++) {
-            droppedItems.add(itemFactory.getItem(gameRule.getItemType(), level));
+        for (int i = 0; i < GameRule.getNumberOfItemsOnCorpse(); i++) {
+            droppedItems.add(itemFactory.getItem(GameRule.getItemType(), level));
         }
         if (monster.isBoss()) {
-            for (int i = 0; i < gameRule.getNumberOfEquipmentsOnBossCorpse(); i++) {
-                droppedItems.add(equipmentFactory.getEquipment(level, gameRule.getEquipmentTypeInMerchantShop(), gameRule.getRarityOnBossCorpse()));
+            for (int i = 0; i < GameRule.getNumberOfEquipmentsOnBossCorpse(); i++) {
+                droppedItems.add(equipmentFactory.getEquipment(level, GameRule.getEquipmentTypeInMerchantShop(), GameRule.getRarityOnBossCorpse()));
             }
             droppedItems.add(itemFactory.getItem(ItemType.FLOORKEY, level));
         } else {
-            for (int i = 0; i < gameRule.getNumberOfEquipmentsOnCorpse(); i++) {
-                droppedItems.add(equipmentFactory.getEquipment(level, gameRule.getEquipmentTypeInMerchantShop(), gameRule.getEquipmentRarityDroped(true)));
+            for (int i = 0; i < GameRule.getNumberOfEquipmentsOnCorpse(); i++) {
+                droppedItems.add(equipmentFactory.getEquipment(level, GameRule.getEquipmentTypeInMerchantShop(), GameRule.getEquipmentRarityDroped(true)));
             }
         }
         droppedMoney = monster.getMonsterStats().getMoneyCount();
@@ -90,7 +89,7 @@ public class Grave extends ObjectEntity {
         //then the money from the monster
         gameState.getPlayer().getPlayerStats().gainMoney(droppedMoney);
         gameState.getDescriptor().updateDescriptor(String.format(
-                "You found %s BTC in the chest", colorize(String.valueOf(droppedMoney), Attribute.BOLD(), Colors.YELLOW.textApply())));
+                "You found %s BTC in the grave", colorize(String.valueOf(droppedMoney), Attribute.BOLD(), Colors.YELLOW.textApply())));
         //remove the entity from the grid (and the whole game with the garbage collector)
         gameState.getGridMap().update(this, false);
     }

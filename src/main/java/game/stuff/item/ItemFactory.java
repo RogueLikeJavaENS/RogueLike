@@ -9,7 +9,7 @@ public class ItemFactory {
 
     public ItemFactory(){ }
 
-    public Item getItem(ItemType itemType, int level) {
+    public static Item getItem(ItemType itemType, int level) {
         Item item;
         switch (itemType) {
             case HEALTH_POTION:
@@ -34,8 +34,7 @@ public class ItemFactory {
                 item = new EmptyBottle();
                 break;
         }
-        GameRule gm = new GameRule();
-        item.setPrice(gm.getItemPrice(level, itemType));
+        item.setPrice(GameRule.getItemPrice(level, itemType));
         return item;
     }
 }

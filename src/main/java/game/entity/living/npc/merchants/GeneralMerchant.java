@@ -19,8 +19,8 @@ public class GeneralMerchant extends AbstractMerchant {
      * @param position the position where we want it to spawn.
      */
     public GeneralMerchant(Position position) {
-        super(position, "Jean-Charles", Colors.WHITE, new NPCStats(100,100,5, 1, 1 ,1 ,1 ,1));
-        setSprites("~.~", "|_|", Colors.CYAN, Colors.MAGENTA);
+        super(position, "Jean-Charles", Colors.CYAN, Colors.MAGENTA, new NPCStats(100,100,5, 1, 1 ,1 ,1 ,1));
+        setSprites("~.~", "|_|", getUpColor(), getDownColor());
         this.merchantInventory = new MerchantInventory();
     }
 

@@ -50,17 +50,17 @@ public class PlayerStats extends AbstractStats {
         getRewardForLevelForClass(classe, level);
         selectedSpell = spellList.get(0);
          //Default selected attack is the BasicAttack
-        switch (classe.ordinal()) {
-            case 0:
-                this.classFactor = new int[] {10, 7, 2, 2, 1};
+        switch (classe) {
+            case RANGER:
+                this.classFactor = new int[] {15, 7, 2, 2, 1};
                 break;
-            case 1:
-                this.classFactor = new int[] {20, 5, 1, 3, 2};
+            case WARRIOR:
+                this.classFactor = new int[] {25, 5, 1, 3, 2};
                 break;
-            case 2:
-                this.classFactor = new int[] {5, 20, 1, 1, 1};
+            case MAGE:
+                this.classFactor = new int[] {10, 15, 1, 1, 1};
                 break;
-            case 3:
+            case DUMMY:
             default:
                 this.classFactor = new int[] {10, 10, 1, 1, 1};
                 break;

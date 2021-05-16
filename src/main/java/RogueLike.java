@@ -10,6 +10,10 @@ import game.menu.InGameMenu;
 import game.entity.living.inventory.OpenInventory;
 import game.menu.StartMenu;
 import game.stuff.item.ItemType;
+import game.stuff.item.keys.FloorKey;
+import game.stuff.item.keys.GoldKey;
+import game.stuff.item.potions.Elixir;
+import game.stuff.item.potions.PotionHealth;
 import game.stuff.item.potions.XpBottle;
 import generation.*;
 import utils.*;
@@ -128,7 +132,7 @@ public class RogueLike {
                 int turnPassed = gs.getPlayer().getPlayerStats().getTurnPassed();
                 if (turnPassed != -1){
                         gs.getDescriptor().updateDescriptor(
-                                String.format("Il vous reste %d tour sur votre Bonus", turnPassed));
+                                String.format("You still have %d turns on your bonus", turnPassed));
                         if (turnPassed == 0) {
                             gs.getPlayer().getPlayerStats().resetTurnPassed();
                         }

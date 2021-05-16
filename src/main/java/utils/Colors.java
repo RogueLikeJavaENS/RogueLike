@@ -19,11 +19,12 @@ public enum Colors {
     ORANGE(131), //for the monster agro
     YELLOW_GREEN(190), //for the RangerTrap
     PINK(200), // KillerRabbit
-    SOFT_DARK(234),
+    SOFT_DARK(234), // holes
     DEEP_GREY(237), //for the spell range
     DARK_GREY(238), //for the walls
-    LIGHT_GREY(244); //for the graves;
-
+    LIGHT_GREY(244), //for the graves;
+    DARK_BLUE(17), // for the aggro
+    WALL_WHITE(247);
     private final int value;
 
     Colors(int value) {
@@ -37,4 +38,8 @@ public enum Colors {
     public Attribute bgApply() {
         return Attribute.BACK_COLOR(value);
     }
+
+    public static Attribute bgApplyAggro() {return Attribute.BACK_COLOR(1);}
+
+    public static Attribute bgApplyNormal() { return Attribute.BACK_COLOR(39,39,38);}
 }

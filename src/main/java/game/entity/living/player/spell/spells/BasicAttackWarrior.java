@@ -2,6 +2,8 @@ package game.entity.living.player.spell.spells;
 
 
 import com.diogonunes.jcolor.Attribute;
+import game.elements.GameRule;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import utils.Direction;
@@ -16,13 +18,11 @@ public class BasicAttackWarrior extends AbstractSpell {
 
     public BasicAttackWarrior() {
         super(colorize("Attack", Attribute.BOLD()),
-                1.0,
-                12,
-                new Range(),
-                0,
                 true,
                 1,
+                0,
                 null
         );
+        GameRule.setSpellStats(this, InGameClasses.WARRIOR);
     }
 }

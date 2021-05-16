@@ -76,4 +76,7 @@ public interface Entity {
      * @return True if the entity is a part of a Boss, false otherwise. It returns false by default unless the method is overridden.
      */
     boolean isBossPart();
+
+    void setSprites(String sprite1, String sprite2);
+    boolean isPlayer();
 }

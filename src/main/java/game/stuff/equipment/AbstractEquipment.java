@@ -13,7 +13,7 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
 
     private int bonusLife;
     private int bonusMana;
-    private int bonusInitiative;
+    private int bonusAgility;
     private int bonusDamage;
     private int bonusArmor;
     private int level;
@@ -37,7 +37,7 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
         this.type = type;
         this.bonusArmor = 0;
         this.bonusDamage = 0;
-        this.bonusInitiative = 0;
+        this.bonusAgility = 0;
         this.bonusLife = 0;
         this.bonusMana = 0;
     }
@@ -50,13 +50,13 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         AbstractEquipment that = (AbstractEquipment) o;
-        return bonusLife == that.bonusLife && bonusMana == that.bonusMana && bonusInitiative == that.bonusInitiative && bonusDamage == that.bonusDamage && bonusArmor == that.bonusArmor && level == that.level && isEquiped == that.isEquiped && type == that.type && rarity == that.rarity;
+        return bonusLife == that.bonusLife && bonusMana == that.bonusMana && bonusAgility == that.bonusAgility && bonusDamage == that.bonusDamage && bonusArmor == that.bonusArmor && level == that.level && type == that.type && rarity == that.rarity;
     }
 
     // override the hashcode according to the equals
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), bonusLife, bonusMana, bonusInitiative, bonusDamage, bonusArmor, level, type, rarity, isEquiped);
+        return Objects.hash(super.hashCode(), bonusLife, bonusMana, bonusAgility, bonusDamage, bonusArmor, level, type, rarity);
     }
 
     /* GETTERS */
@@ -64,7 +64,7 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
     public EquipmentType getType() { return type; }
     public int getBonusDamage() { return bonusDamage; }
     public int getBonusArmor() { return bonusArmor; }
-    public int getBonusAgility() { return bonusInitiative; }
+    public int getBonusAgility() { return bonusAgility; }
     public int getBonusLife() { return bonusLife; }
     public int getBonusMana() { return bonusMana; }
     public int getLevel() { return level; }
@@ -76,7 +76,7 @@ public abstract class AbstractEquipment extends AbstractStuff implements Equipme
     public void setBonusArmor(int bonus) { this.bonusArmor = Math.max(bonus, 1); }
     public void setBonusLife(int bonus) { this.bonusLife = Math.max(bonus, 1); }
     public void setBonusMana(int bonus) { this.bonusMana = Math.max(bonus, 1); }
-    public void setBonusInitiative(int bonus) { this.bonusInitiative = Math.max(bonus, 1); }
+    public void setBonusAgility(int bonus) { this.bonusAgility = Math.max(bonus, 1); }
     public void setBonusDamage(int bonus) { this.bonusDamage = Math.max(bonus, 1); }
     public void equip() {
         this.isEquiped = true;

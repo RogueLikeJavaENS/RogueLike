@@ -1,6 +1,8 @@
 package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
+import game.elements.GameRule;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import utils.Colors;
@@ -16,16 +18,13 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class IronSkin extends AbstractSpell {
     public IronSkin() {
         super(colorize("Iron Skin", Attribute.BOLD(), Colors.MAGENTA.textApply()),
-                0,
-                0,
-                new Range(),
-                10,
                 false,
                 0,
+                1,
                 (gameState -> {
-                    int numberTurn = 3;
+                    int numberTurn = 5;
                     int level = gameState.getPlayer().getPlayerStats().getLevel();
-                    int armorBonus = 4+level;
+                    int armorBonus = 8+level;
                     gameState.getPlayer().getPlayerStats().setBonusArmorTemporary(armorBonus, numberTurn);
                     gameState.getDescriptor().updateDescriptor(
                     String.format("%s used "+
@@ -34,6 +33,8 @@ public class IronSkin extends AbstractSpell {
                             colorize(String.format(" %d ",armorBonus), Attribute.BOLD(), Colors.DEEP_GREY.textApply()) +
                             "DEF.", gameState.getPlayer().getName()));
                     return true;
-                }));
+                })
+        );
+        GameRule.setSpellStats(this, InGameClasses.WARRIOR);
     }
 }

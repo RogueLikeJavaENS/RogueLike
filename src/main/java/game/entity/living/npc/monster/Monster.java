@@ -13,6 +13,7 @@ public interface Monster extends Entity {
     void doActionOnDeath(GameState gameState);
 
     String getName();
+    MonsterType getMonsterType();
     MonsterStats getMonsterStats();
     Position getPosition();
     boolean isAgroPlayer();
@@ -25,4 +26,5 @@ public interface Monster extends Entity {
     void setPosition(Position position);
     void setAgroPlayer(boolean agroPlayer);
     boolean isBoss();
+    boolean isWeak();
 }

@@ -40,7 +40,7 @@ public abstract class AbstractStuff implements Stuff {
         return price;
     }
     public int getBuyingPrice() {
-        return (int) (price*0.60);
+        return (int) (price*0.30);
     }
 
     @Override

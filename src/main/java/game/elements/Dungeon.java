@@ -23,7 +23,6 @@ import java.util.Objects;
  *
  * @author Antoine
  */
-
 public class Dungeon {
     private final int maxRoomHeight;
     private final int maxRoomWidth;
@@ -46,7 +45,7 @@ public class Dungeon {
         this.maxRoomWidth = maxRoomWidth;
         this.floor = floor;
         buttons = new ArrayList<>();
-        createAllDoor();
+        createAllDoorAllRoom();
         setAllNextDoor();
         closeDoorOfEndRoom();
         initGridMapList();
@@ -163,14 +162,18 @@ public class Dungeon {
      * Create all the doors of the dungeon
      *
      */
-    private void createAllDoor(){
+    private void createAllDoorAllRoom(){
         for (Room room : roomList) {
-            int[] nearRoom = room.getNearRoom();
-            for (int j = 0; j < nearRoom.length; j++) {
-                if (nearRoom[j] != -1) {
-                    Door door = new Door(getDoorPosition(j, room), getRoom(nearRoom[j]), Direction.intToDirection(j),true);
-                    room.addEntity(door);
-                }
+            createAllDoor(room);
+        }
+    }
+
+    private void createAllDoor(Room room) {
+        int[] nearRoom = room.getNearRoom();
+        for (int j = 0; j < nearRoom.length; j++) {
+            if (nearRoom[j] != -1) {
+                Door door = new Door(getDoorPosition(j, room), getRoom(nearRoom[j]), Direction.intToDirection(j),true);
+                room.addEntity(door);
             }
         }
     }
@@ -192,6 +195,23 @@ public class Dungeon {
                     assert door != null;
                     door.setNext(nextDoor);
                 }
+            }
+        }
+    }
+
+    private void setAllNextDoorBug(Room room) {
+        int[] nearRoom = room.getNearRoom();
+        for (int j = 0; j < nearRoom.length; j++) {
+            if (nearRoom[j] != -1) {
+                Position posDoor = getDoorPosition(j,room);
+                Door door = getDoorAt(posDoor,room);
+                Room nextRoom = getRoom(nearRoom[j]);
+                Position posNextDoor = getDoorPosition((j+2)%4,nextRoom);
+                Door nextDoor = getDoorAt(posNextDoor, nextRoom);
+                assert nextDoor != null;
+                nextDoor.setNext(door);
+                assert door != null;
+                door.setNext(nextDoor);
             }
         }
     }
@@ -269,11 +289,36 @@ public class Dungeon {
      *
      */
     private void verifyALlRoom(){
-        for (GridMap gridMap : gridMapList) {
+        int i = 0;
+        while (i < gridMapList.size()){
+            GridMap gridMap = gridMapList.get(i);
             Room room = gridMap.getRoom();
             if (room.getRoomType() == RoomType.REST || room.getRoomType() == RoomType.MONSTER || room.getRoomType() == RoomType.START || room.getRoomType() == RoomType.NORMAL) {
-                VerificationRoom.verificationGenerationRoom(gridMap);
+                if (!VerificationRoom.verificationGenerationRoom(gridMap)){
+                    int width = room.getWidth();
+                    int height = room.getHeight();
+                    RoomFactory rf = new RoomFactory(width,height,2,floor);
+                    int[] newNextList = new int[6];
+                    int[] nearRoom = room.getNearRoom();
+                    int abs = room.getPosition().getAbs();
+                    int ord = room.getPosition().getOrd();
+                    System.arraycopy(nearRoom, 0, newNextList, 0, 4);
+                    newNextList[4] = ord;
+                    newNextList[5] = abs;
+
+                    Room newRoom = rf.getRoom(null, room.getRoomType(), room.getRoomNum(), newNextList);
+                    roomList.remove(i);
+                    roomList.add(i, newRoom);
+
+                    createAllDoor(newRoom);
+                    setAllNextDoorBug(newRoom);
+                    GridMap newGridMap = new GridMap(newRoom);
+                    gridMapList.remove(i);
+                    gridMapList.add(i,newGridMap);
+                    i--;
+                }
             }
+            i++;
         }
     }
 }

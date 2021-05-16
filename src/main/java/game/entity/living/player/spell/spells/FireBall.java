@@ -1,6 +1,8 @@
 package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
+import game.elements.GameRule;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import utils.Colors;
@@ -17,18 +19,12 @@ public class FireBall extends AbstractSpell {
 
     public FireBall() {
         super(colorize("Fire Ball", Attribute.BOLD(), Colors.RED.textApply()),
-                1.6,
-                16,
-                new Range(),
-                15,
                 true,
                 3,
+                2,
                 null
         );
+        GameRule.setSpellStats(this, InGameClasses.MAGE);
     }
 
-    @Override
-    public boolean isZoning() {
-        return true;
-    }
 }

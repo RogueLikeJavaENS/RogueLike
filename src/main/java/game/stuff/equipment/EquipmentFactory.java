@@ -47,12 +47,11 @@ public class EquipmentFactory {
             default:
                 equipment = null;
         }
-        GameRule gm = new GameRule();
         List<String> namePlusDesctription = buildDescriptionAndName(type, rarity);
         equipment.setDescription(namePlusDesctription.get(1));
         equipment.setName(namePlusDesctription.get(0));
-        gm.SetBonusEquipement(equipment, classe);
-        equipment.setPrice(gm.getEquipmentPrice(level, rarity));
+        GameRule.setBonusEquipement(equipment, classe);
+        equipment.setPrice(GameRule.getEquipmentPrice(level, rarity));
         return equipment;
     }
 

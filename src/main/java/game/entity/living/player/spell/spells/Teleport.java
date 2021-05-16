@@ -2,9 +2,11 @@ package game.entity.living.player.spell.spells;
 
 import com.diogonunes.jcolor.Attribute;
 import display.GridMap;
+import game.elements.GameRule;
 import game.elements.GameState;
 import game.entity.Entity;
 import game.entity.living.player.Player;
+import game.entity.living.player.classeSystem.InGameClasses;
 import game.entity.living.player.spell.AbstractSpell;
 import game.entity.living.player.spell.Range;
 import utils.Colors;
@@ -24,12 +26,9 @@ public class Teleport extends AbstractSpell {
 
     public Teleport() {
         super(colorize("Teleport", Attribute.BOLD(), Colors.BLUE.textApply()),
-                0,
-                0,
-                new Range(),
-                20,
                 false,
                 4,
+                3,
                 (gameState -> {
                     GridMap gridMap = gameState.getGridMap();
                     List<Position> rangeList = gridMap.getRangeList();
@@ -48,7 +47,9 @@ public class Teleport extends AbstractSpell {
                         }
                     }
                     return false;
-                }));
+                })
+        );
+        GameRule.setSpellStats(this, InGameClasses.MAGE);
     }
 
     /*change the position of the player without him moving on the map, take a Gamestate to know the state of the game,

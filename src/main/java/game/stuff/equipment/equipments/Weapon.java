@@ -17,8 +17,5 @@ public class Weapon extends AbstractEquipment {
      */
     public Weapon(int level, EquipmentRarity rarity) {
         super(level, rarity, EquipmentType.WEAPON);
-        GameRule gameRule = new GameRule();
-        super.setBonusDamage(gameRule.getBonusDamage(level+rarity.ordinal()));
-        super.setName("Weapon");
     }
 }
