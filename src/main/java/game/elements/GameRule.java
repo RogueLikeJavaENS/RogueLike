@@ -601,7 +601,7 @@ public class GameRule {
                 damage = 2+level;
                 armor = level;
                 money = 3+level;
-                xp = 6*20;
+                xp = 6*level;
                 break;
             case WIZARD:
                 basicHP = 30;
@@ -611,7 +611,7 @@ public class GameRule {
                 damage = 1+(level/2);
                 armor = level;
                 money = 3+level;
-                xp = 6*20;
+                xp = 6*level;
                 break;
             case MIMIC:
                 basicHP = 100;

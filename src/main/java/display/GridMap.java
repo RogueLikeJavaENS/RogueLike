@@ -21,7 +21,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 /**
  * This class Contains the actual gameElement.Room. It contains the actual room, an array of the tile which compose the room, a list of all the entities one the room.
  * It also contains a list of all the strings used to print it.
- * Range list ?
+ *
  */
 public class GridMap {
     private final Room room;
