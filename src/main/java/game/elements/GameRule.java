@@ -140,7 +140,7 @@ public class GameRule {
      */
     public static int getNumberOfPotionInChest(boolean isClassic) {
         if (isClassic) {
-            return GEN.nextInt(2) + 1;
+            return GEN.nextInt(3) + 2;
         }
         else {
             return GEN.nextInt(4)+3;
@@ -148,11 +148,11 @@ public class GameRule {
     }
 
     /**
-     * Between 1 and 2 items on corpse.
+     * Between 2 and 3 items on corpse.
      * @return the number of items dropped on monster's corpse.
      */
     public static int getNumberOfItemsOnCorpse() {
-        return GEN.nextInt(2)+1;
+        return GEN.nextInt(3)+2;
     }
     /*/////////////////////////////   ITEMS  /////////////////////////////////////*/
 

@@ -35,13 +35,10 @@ public class AttackStrategy extends DecoratorStrategy {
         }
         // if he don't avoid the attack, calculate the damage make to the player, inflict the damage and update the descriptor
         else {
-            int damage = 2 * monster.getMonsterStats().getDamageNatural() + 5 * monster.getMonsterStats().getLevel();
-            if (monster.isWeak()){
-                damage = player.getPlayerStats().sufferDamageIgnoringArmor(damage);
-            }
-            else{
-                damage = player.getPlayerStats().sufferDamage(damage);
-            }
+            int damage =  Math.max(13, 2 * monster.getMonsterStats().getDamageNatural() + 3 * monster.getMonsterStats().getLevel());
+
+            damage = player.getPlayerStats().sufferDamage(damage);
+
             this.updateStrategyDescription(String.format("%s attacked and inflicted %s damages to %s", monster.getName(), colorize(Integer.toString(damage), Colors.RED.textApply()), player.getName()));
         }
         return true;   // always because when we arrive to this strategy we can always attack the player
