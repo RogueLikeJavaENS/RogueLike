@@ -1,10 +1,11 @@
 # Tutorial of RogueLike
 
 ## Summary
-1. [Controls](#controls)
+1. [How to play](#How-to-play)
+2. [Controls](#controls)
    - [Normal](#normal-inputs)
    - [Fighting](#fighting-inputs)
-2. [Fight](#fight)
+3. [Fight](#fight)
    - [Spells](#spells)
 4. [Merchant](#merchant)
 5. [Map](#map)
@@ -19,7 +20,19 @@
    - [BTC](#btc)
    - [Potions](#potions)
    
-
+## How to begin 
+<img src="https://user-images.githubusercontent.com/71182082/118393813-4adc1980-b641-11eb-9cad-cdff995ccc1e.png" width="450"><br>
+At first you need to write your name. Keep focusing on the Panel "KEEP FOCUS HERE TO PLAY AND WRITE", to write it and pres **E**.<br><br>
+<img src="https://user-images.githubusercontent.com/71182082/118393822-5cbdbc80-b641-11eb-9da7-b8d92a974a0d.png" width="450"><br>
+Here you can chose what you want to do. Switch between the choice with the keys **Z, S** and press **E** to select it.<br>
+<br>
+<img src="https://user-images.githubusercontent.com/71182082/118393835-6fd08c80-b641-11eb-9e8e-b3045652ecef.png" width="450"><br>
+Now here is the capital choice, you have to choose your class. Are you gonna be a Mage, a Warrior or a Ranger ?<br>
+Switch between the choice with the keys **Z, S** and press **E** to select it.<br>
+<br>
+And now the game can really begin ... <br>
+<img src="https://user-images.githubusercontent.com/71182082/118393985-3e0bf580-b642-11eb-9227-574590e81f80.png" width="450"><br>
+<br>
 
 ## Controls
 ### Normal inputs
@@ -36,13 +49,16 @@
 `Spells` **A** Use the selected Spell, **← →** Select a Spell.<br>
 
 ## Fight
-<img src="https://user-images.githubusercontent.com/57185748/115145041-05cbc400-a050-11eb-99d7-4e3600ae8415.png" width="350"><br>
+<img src="https://user-images.githubusercontent.com/71182082/118394027-8f1be980-b642-11eb-9049-c9796a48d474.png" width="350"><br>
 A **fight** start whenever the player is in a room with a monster. The fight is organized with a turn order.<br>
 When a monster is playing, you can skip the description by pressing any key.<br>
 During the player turn, he has 1 action.<br>
 `move`, `attack` and `use potion` are consuming the player turn.<br> 
 You can open the minimap, turn yourself with **Caps. lock**, select sorts, and open your inventory without consuming your action.<br>
 When a monster is killed, the hero gain **XP**, [BTC](#btc) and [Potions](#potions).
+
+![aggro](https://user-images.githubusercontent.com/71182082/118394001-6398ff00-b642-11eb-90b3-cd169d03a6fd.png)
+
 
 
 ### Spells
